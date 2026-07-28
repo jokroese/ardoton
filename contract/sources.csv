@@ -1,0 +1,25 @@
+product,topic,url,contract_use
+Ableton Live 12,Concepts and Browser,https://www.ableton.com/en/live-manual/12/live-concepts/,"Browser, devices, clips and project mental model"
+Ableton Live 12,Arrangement View,https://www.ableton.com/en/live-manual/12/arrangement-view/,Linear editing and track controls
+Ableton Live 12,Session View,https://www.ableton.com/en/live-manual/12/session-view/,Clip/scene launching and capture behavior
+Ableton Live 12,Clip View,https://www.ableton.com/en/manual/clip-view/,Clip properties and MIDI/audio editing
+Ableton Live 12,Devices,https://www.ableton.com/en/live-manual/12/working-with-instruments-and-effects/,Device View and processor-chain interaction
+Ableton Live 12,Automation,https://www.ableton.com/en/manual/automation-and-editing-envelopes/,Automation recording and editing
+Ableton Live 12,Comping,https://www.ableton.com/en/live-manual/11/comping/,Take lanes and composite editing
+Ableton Live 12,Mixing,https://www.ableton.com/en/live-manual/12/mixing/,"Tracks, groups, returns and mixer behavior"
+Ableton Live 12,Keyboard shortcuts,https://www.ableton.com/en/live-manual/12/live-keyboard-shortcuts/,Muscle-memory shortcut baseline
+Ableton Live 12,Audio warping,https://www.ableton.com/en/live-manual/12/audio-clips-tempo-and-warping/,Warp/tempo-sync parity boundary
+Ardour 9.7,Release baseline,https://ardour.org/whatsnew.html,Current target release and MIDI improvements
+Ardour 9.7,Interface overview,https://manual.ardour.org/ardours-interface/about/,"Editor, Mixer, Recorder and Cue Grid"
+Ardour 9.7,Bottom pane,https://manual.ardour.org/ardours-interface/bottom-pane/,Clip/plugin detail editing
+Ardour 9.7,Keyboard bindings,https://manual.ardour.org/default-keyboard-bindings/,Configurable action baseline
+Ardour 9.7,Tracks and buses,https://manual.ardour.org/working-with-tracks/adding-tracks-and-busses/,Creation and grouping
+Ardour 9.7,Regions and editing,https://manual.ardour.org/working-with-regions/,Timeline editing semantics
+Ardour 9.7,MIDI editing,https://manual.ardour.org/working-with-midi/,MIDI region capabilities and limitations
+Ardour 9.7,Processor Box,https://manual.ardour.org/working-with-plugins/processor-box/,Plugin-chain behavior
+Ardour 9.7,Cue Grid,https://manual.ardour.org/cue/cue-window-elements/,Non-linear grid and scene/cue mapping
+Ardour 9.7,Cue recording,https://manual.ardour.org/cue/cue-recording/,Clip-slot recording
+Ardour 9.7,Linear/non-linear mix,https://manual.ardour.org/cue/mixing-linear-nonlinear-workflows/,Cue markers and Arrangement coexistence
+Ardour 9.7,Export,https://manual.ardour.org/exporting/export-dialog/,Master export
+Ardour 9.7,Stem export,https://manual.ardour.org/working-with-sessions/interchange-with-other-daws/stem-exports/,DAW interchange
+Ardour 9.7,Lua scripting,https://manual.ardour.org/lua-scripting/,Pack-level action composition
