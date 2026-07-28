@@ -12,15 +12,14 @@ The contract deliberately measures task completion and observable output rather 
 
 ## Scope and initial classification
 
-The CSVs under `contract/` define:
+The contract files define:
 
-- 50 high-value workflows (`workflows.csv`)
-- 30 proposed Windows/macOS shortcut mappings (`shortcuts.csv`)
-- 25 terminology mappings (`terminology.csv`)
-- 15 moderated acceptance tests (`acceptance-tests.csv`)
-- Primary documentation sources (`sources.csv`)
+- 50 high-value workflows
+- 30 proposed Windows/macOS shortcut mappings
+- 25 terminology mappings
+- 15 moderated acceptance tests
 
-Classification counts are derived from `workflows.csv` (`mapping_class`):
+Initial workflow classification:
 
 | Classification | Count |
 |---|---:|
@@ -33,7 +32,7 @@ Classification counts are derived from `workflows.csv` (`mapping_class`):
 
 Thirty workflows are P0 migration requirements. Four of those currently require an Ardour source change.
 
-## P0 Ardour source-change requirements
+## P0 source-change requirements
 
 1. **W02 — Deterministic Clip/Devices lower-pane switching**
    - `Shift+Tab` must switch the selected clip editor and selected track's processors without opening a modal.
@@ -112,7 +111,7 @@ Build the reversible pack prototype against unmodified Ardour 9.7 first:
 4. terminology overlay and migration tour;
 5. installer backup/apply/restore mechanism.
 
-Run all acceptance tests that are not blocked by Ardour source changes. Use observed failures to refine the Ardour source-change specifications before writing or proposing UI code.
+Run all acceptance tests that are not source-change-blocked. Use observed failures to refine the downstream Ardour change specifications before writing or proposing UI code.
 
 ## Primary documentation
 
@@ -122,4 +121,3 @@ Run all acceptance tests that are not blocked by Ardour source changes. Use obse
 - [Ardour default keyboard bindings](https://manual.ardour.org/default-keyboard-bindings/)
 - [Ardour 9.7 release notes](https://ardour.org/whatsnew.html)
 
-See also `contract/sources.csv` for the full Phase 1 source list.

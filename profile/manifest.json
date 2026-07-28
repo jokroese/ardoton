@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "name": "Ardourton",
+  "version": "0.2.2",
+  "license": "GPL-2.0-or-later",
+  "ardour": {
+    "supported": ["9.7"],
+    "tested": ["9.7.0"],
+    "config_major": 9
+  },
+  "platforms": {
+    "macos": {
+      "config_directory": "~/Library/Preferences/Ardour9",
+      "keymap": "keybindings/macos/ardour.keys"
+    },
+    "windows": {
+      "config_directory": "%LOCALAPPDATA%/Ardour9",
+      "keymap": "keybindings/windows/ardour.keys"
+    }
+  },
+  "theme": "theme/ardourton-ardour.colors",
+  "preferences": "preferences/ui-options.tsv",
+  "lua_action_slots": {
+    "28": "Ardourton: Add Stereo Audio Track",
+    "29": "Ardourton: Add MIDI Track",
+    "30": "Ardourton: Add Return",
+    "31": "Ardourton: Set and Toggle Loop",
+    "32": "Ardourton: Duplicate Tracks"
+  }
+}
