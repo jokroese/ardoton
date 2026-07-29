@@ -7,6 +7,7 @@ import argparse
 import csv
 import re
 import sys
+import tomllib
 from collections import Counter
 from pathlib import Path
 
@@ -78,6 +79,7 @@ CONTROLLED_VALUES = {
     "Status": {
         "Implemented",
         "Implemented with divergence",
+        "Static verified",
         "Proposed",
         "Needs audit",
         "Blocked",
@@ -214,6 +216,22 @@ def validate_contract(source_path: Path, mapping_path: Path) -> list[str]:
                     f"mapping line {line}: Implemented with divergence requires "
                     "Mapping class 'Similar'"
                 )
+        elif status == "Static verified":
+            for field in (
+                "Proposed macOS",
+                "Ardour context",
+                "Ardour action target",
+                "Implementation type",
+                "Mapping class",
+                "Availability",
+                "Evidence type",
+                "Evidence reference",
+            ):
+                require(errors, row, line, field, status)
+            if row.get("Static verification") != "Passed":
+                errors.append(
+                    f"mapping line {line}: Static verified requires Static verification 'Passed'"
+                )
         elif status == "Blocked":
             for field in (
                 "Implementation type",
@@ -225,6 +243,32 @@ def validate_contract(source_path: Path, mapping_path: Path) -> list[str]:
 
     for source_id in sorted(source_ids - mapped_source_ids):
         errors.append(f"source ID {source_id!r}: has no mapping")
+    return errors
+
+
+def validate_expectations(expectations_path: Path, mapping_path: Path) -> list[str]:
+    """Validate expectation mappings against profile-bound implementations."""
+    mappings, errors = read_csv(mapping_path, MAPPING_FIELDS)
+    mapping_by_id = {row.get("Mapping ID", ""): row for row in mappings}
+    data = tomllib.loads(expectations_path.read_text(encoding="utf-8"))
+
+    for section in ("binding", "exclusive"):
+        for index, row in enumerate(data.get(section, []), start=1):
+            mapping_id = row.get("mapping_id", "")
+            mapping = mapping_by_id.get(mapping_id)
+            prefix = f"expectations {section} {index}"
+            if not mapping:
+                errors.append(f"{prefix}: unknown mapping_id {mapping_id!r}")
+                continue
+            if mapping.get("Implementation type") not in {"Keymap", "Lua"}:
+                errors.append(
+                    f"{prefix}: mapping_id {mapping_id!r} requires Implementation type "
+                    "Keymap or Lua"
+                )
+            if mapping.get("Availability") != "Profile bound":
+                errors.append(
+                    f"{prefix}: mapping_id {mapping_id!r} requires Availability 'Profile bound'"
+                )
     return errors
 
 
@@ -250,6 +294,7 @@ def main() -> int:
     source_path = root / "contract" / "ableton-shortcuts.csv"
     mapping_path = root / "contract" / "shortcuts-map.csv"
     errors = validate_contract(source_path, mapping_path)
+    errors.extend(validate_expectations(root / "tests" / "expectations.toml", mapping_path))
     if errors:
         print("\n".join(f"error: {error}" for error in errors), file=sys.stderr)
         return 1

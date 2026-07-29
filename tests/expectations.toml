@@ -2,95 +2,95 @@
 # Do not derive this file from ardour.keys.
 
 [[binding]]
-feature = "S01-03"
+mapping_id = "M003"
 context = "Global"
 key = "Tab"
 action = "Common/next-tab"
 
 [[binding]]
-feature = "S01-04"
+mapping_id = "M004"
 context = "Global"
 key = "Tertiary-ISO_Left_Tab"
 action = "Common/previous-tab"
 
 [[binding]]
-feature = "S19-01"
+mapping_id = "M243"
 context = "Global"
 key = "Primary-t"
 action = "LuaAction/script-28"
 
 [[binding]]
-feature = "S19-02"
+mapping_id = "M244"
 context = "Global"
 key = "Primary-Tertiary-t"
 action = "LuaAction/script-29"
 
 [[binding]]
-feature = "S19-03"
+mapping_id = "M245"
 context = "Global"
 key = "Primary-Level4-t"
 action = "LuaAction/script-30"
 
 [[binding]]
-feature = "S05-01"
+mapping_id = "M058"
 context = "Mixer"
 key = "Primary-d"
 action = "LuaAction/script-32"
 
 [[binding]]
-feature = "S20-06"
+mapping_id = "M266"
 context = "Global"
 key = "F9"
 action = "Transport/record-roll"
 
 [[binding]]
-feature = "S16-01"
+mapping_id = "M200"
 context = "Editor"
 key = "Primary-e"
 action = "Editor/split-region"
 
 [[binding]]
-feature = "S16-02"
+mapping_id = "M201"
 context = "Editor"
 key = "Primary-j"
 action = "Editor/editor-consolidate"
 
 [[binding]]
-feature = "S16-11"
+mapping_id = "M210"
 context = "Global"
 key = "Primary-l"
 action = "LuaAction/script-31"
 
 [[binding]]
-feature = "S11-01"
+mapping_id = "M138"
 context = "Notes"
 key = "Primary-u"
 action = "Notes/quantize-selected-notes"
 
 [[binding]]
-feature = "S19-13"
+mapping_id = "M255"
 context = "Editor"
 key = "c"
 action = "Editor/track-record-enable-toggle"
 
 [[binding]]
-feature = "S19-14"
+mapping_id = "M256"
 context = "Editor"
 key = "s"
 action = "Editor/track-solo-toggle"
 
 [[binding]]
-feature = "S17-01"
+mapping_id = "M235"
 context = "Editor"
 key = "Primary-Level4-u"
 action = "Editor/show-plist-selector"
 
 [[exclusive]]
-feature = "S20-06"
+mapping_id = "M266"
 key = "F9"
 contexts = ["Global"]
 
 [[exclusive]]
-feature = "S16-11"
+mapping_id = "M210"
 key = "Primary-l"
 contexts = ["Global"]

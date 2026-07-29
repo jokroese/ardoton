@@ -1,8 +1,8 @@
 Mapping ID,Ableton shortcut ID,Ardour context,Proposed macOS,Ardour action target,Implementation type,Mapping class,Availability,Evidence type,Evidence reference,Static verification,Behavior verification,Conflict / implementation note,Status
 M001,S01-01,,,,,,,,,,,,Needs audit
 M002,S01-02,,,,,,,,,,,,Needs audit
-M003,S01-03,,,,,,,,,,,,Needs audit
-M004,S01-04,,,,,,,,,,,,Needs audit
+M003,S01-03,Global,Tab,Common/next-tab,Keymap,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab,Passed,Not run,Static keymap evidence only; workspace tab cycling does not establish Session or Arrangement behavior.,Static verified
+M004,S01-04,Global,Tertiary-ISO_Left_Tab,Common/previous-tab,Keymap,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global Tertiary-ISO_Left_Tab -> Common/previous-tab,Passed,Not run,Static keymap evidence only; previous tab does not establish Device or Clip behavior.,Static verified
 M005,S01-05,,,,,,,,,,,,Needs audit
 M006,S01-06,,,,,,,,,,,,Needs audit
 M007,S01-07,,,,,,,,,,,,Needs audit
@@ -56,7 +56,7 @@ M054,S04-12,,,,,,,,,,,,Needs audit
 M055,S05-01,,,,,,,,,,,,Needs audit
 M056,S05-02,,,,,,,,,,,,Needs audit
 M057,S05-03,,,,,,,,,,,,Needs audit
-M058,S05-04,,,,,,,,,,,,Needs audit
+M058,S05-04,Mixer,Primary-d,LuaAction/script-32,Lua,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Mixer Primary-d -> LuaAction/script-32,Passed,Not run,Static keymap evidence only; duplicate behavior has not been exercised.,Static verified
 M059,S05-05,,,,,,,,,,,,Needs audit
 M060,S05-06,,,,,,,,,,,,Needs audit
 M061,S05-07,,,,,,,,,,,,Needs audit
@@ -136,7 +136,7 @@ M134,S12-08,,,,,,,,,,,,Needs audit
 M135,S12-09,,,,,,,,,,,,Needs audit
 M136,S12-10,,,,,,,,,,,,Needs audit
 M137,S12-11,,,,,,,,,,,,Needs audit
-M138,S12-12,,,,,,,,,,,,Needs audit
+M138,S12-12,Notes,Primary-u,Notes/quantize-selected-notes,Keymap,Exact,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Notes Primary-u -> Notes/quantize-selected-notes,Passed,Not run,Static keymap evidence only; MIDI note quantization behavior remains untested.,Static verified
 M139,S12-13,,,,,,,,,,,,Needs audit
 M140,S12-14,,,,,,,,,,,,Needs audit
 M141,S12-15,,,,,,,,,,,,Needs audit
@@ -198,8 +198,8 @@ M196,S15-20,,,,,,,,,,,,Needs audit
 M197,S15-21,,,,,,,,,,,,Needs audit
 M198,S15-22,,,,,,,,,,,,Needs audit
 M199,S15-23,,,,,,,,,,,,Needs audit
-M200,S16-01,,,,,,,,,,,,Needs audit
-M201,S16-02,,,,,,,,,,,,Needs audit
+M200,S16-01,Editor,Primary-e,Editor/split-region,Keymap,Exact,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Editor Primary-e -> Editor/split-region,Passed,Not run,Static keymap evidence only; split behavior at the arrangement selection remains untested.,Static verified
+M201,S16-02,Editor,Primary-j,Editor/editor-consolidate,Keymap,Exact,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Editor Primary-j -> Editor/editor-consolidate,Passed,Not run,Static keymap evidence only; consolidation behavior for the arrangement selection remains untested.,Static verified
 M202,S16-03,,,,,,,,,,,,Needs audit
 M203,S16-04,,,,,,,,,,,,Needs audit
 M204,S16-05,,,,,,,,,,,,Needs audit
@@ -208,7 +208,7 @@ M206,S16-07,,,,,,,,,,,,Needs audit
 M207,S16-08,,,,,,,,,,,,Needs audit
 M208,S16-09,,,,,,,,,,,,Needs audit
 M209,S16-10,,,,,,,,,,,,Needs audit
-M210,S16-11,,,,,,,,,,,,Needs audit
+M210,S16-11,Global,Primary-l,LuaAction/script-31,Lua,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global Primary-l -> LuaAction/script-31,Passed,Not run,Static keymap evidence only; loop-brace behavior requires an Editor selection and remains untested.,Static verified
 M211,S16-12,,,,,,,,,,,,Needs audit
 M212,S16-13,,,,,,,,,,,,Needs audit
 M213,S16-14,,,,,,,,,,,,Needs audit
@@ -233,7 +233,7 @@ M231,S16-32,,,,,,,,,,,,Needs audit
 M232,S16-33,,,,,,,,,,,,Needs audit
 M233,S16-34,,,,,,,,,,,,Needs audit
 M234,S16-35,,,,,,,,,,,,Needs audit
-M235,S17-01,,,,,,,,,,,,Needs audit
+M235,S17-01,Editor,Primary-Level4-u,Editor/show-plist-selector,Keymap,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Editor Primary-Level4-u -> Editor/show-plist-selector,Passed,Not run,Static keymap evidence only; plist selector behavior is not a verified take-lane workflow.,Static verified
 M236,S17-02,,,,,,,,,,,,Needs audit
 M237,S17-03,,,,,,,,,,,,Needs audit
 M238,S17-04,,,,,,,,,,,,Needs audit
@@ -241,9 +241,9 @@ M239,S17-05,,,,,,,,,,,,Needs audit
 M240,S17-06,,,,,,,,,,,,Needs audit
 M241,S18-01,,,,,,,,,,,,Needs audit
 M242,S18-02,,,,,,,,,,,,Needs audit
-M243,S19-01,,,,,,,,,,,,Needs audit
-M244,S19-02,,,,,,,,,,,,Needs audit
-M245,S19-03,,,,,,,,,,,,Needs audit
+M243,S19-01,Global,Primary-t,LuaAction/script-28,Lua,Exact,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global Primary-t -> LuaAction/script-28,Passed,E2E passed,E2E verifies that the profile Lua action creates one audio track.,Implemented
+M244,S19-02,Global,Primary-Tertiary-t,LuaAction/script-29,Lua,Exact,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-t -> LuaAction/script-29,Passed,E2E passed,E2E verifies that the profile Lua action creates one MIDI track.,Implemented
+M245,S19-03,Global,Primary-Level4-t,LuaAction/script-30,Lua,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global Primary-Level4-t -> LuaAction/script-30,Passed,Not run,Static keymap evidence only; return-track creation behavior has not been exercised.,Static verified
 M246,S19-04,,,,,,,,,,,,Needs audit
 M247,S19-05,,,,,,,,,,,,Needs audit
 M248,S19-06,,,,,,,,,,,,Needs audit
@@ -253,8 +253,8 @@ M251,S19-09,,,,,,,,,,,,Needs audit
 M252,S19-10,,,,,,,,,,,,Needs audit
 M253,S19-11,,,,,,,,,,,,Needs audit
 M254,S19-12,,,,,,,,,,,,Needs audit
-M255,S19-13,,,,,,,,,,,,Needs audit
-M256,S19-14,,,,,,,,,,,,Needs audit
+M255,S19-13,Editor,c,Editor/track-record-enable-toggle,Keymap,Exact,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Editor c -> Editor/track-record-enable-toggle,Passed,Not run,Static keymap evidence only; selected-track arming behavior remains untested.,Static verified
+M256,S19-14,Editor,s,Editor/track-solo-toggle,Keymap,Exact,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Editor s -> Editor/track-solo-toggle,Passed,Not run,Static keymap evidence only; selected-track solo behavior remains untested.,Static verified
 M257,S19-15,,,,,,,,,,,,Needs audit
 M258,S19-16,,,,,,,,,,,,Needs audit
 M259,S19-17,,,,,,,,,,,,Needs audit
@@ -264,7 +264,7 @@ M262,S20-02,,,,,,,,,,,,Needs audit
 M263,S20-03,,,,,,,,,,,,Needs audit
 M264,S20-04,,,,,,,,,,,,Needs audit
 M265,S20-05,,,,,,,,,,,,Needs audit
-M266,S20-06,,,,,,,,,,,,Needs audit
+M266,S20-06,Global,F9,Transport/record-roll,Keymap,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global F9 -> Transport/record-roll,Passed,E2E passed,E2E verifies a record-roll request; this differs from Ableton Record behavior.,Implemented with divergence
 M267,S20-07,,,,,,,,,,,,Needs audit
 M268,S20-08,,,,,,,,,,,,Needs audit
 M269,S20-09,,,,,,,,,,,,Needs audit

@@ -6,6 +6,7 @@ from support import (
     keymap_duplicates,
     load_expectations,
     load_keymap,
+    mapping_source_ids,
 )
 
 
@@ -16,6 +17,7 @@ def test_no_duplicate_keys_within_context() -> None:
 def test_expected_bindings_present(coverage_tracker: dict) -> None:
     bindings, _ = load_expectations()
     actual = load_keymap()
+    source_ids = mapping_source_ids()
     failures: list[str] = []
 
     for binding in bindings:
@@ -33,7 +35,7 @@ def test_expected_bindings_present(coverage_tracker: dict) -> None:
             if got is None and alt is not None:
                 failures.append(
                     format_binding_failure(
-                        binding.feature,
+                        binding.mapping_id,
                         binding.context,
                         binding.key,
                         binding.action,
@@ -45,7 +47,7 @@ def test_expected_bindings_present(coverage_tracker: dict) -> None:
             else:
                 failures.append(
                     format_binding_failure(
-                        binding.feature,
+                        binding.mapping_id,
                         binding.context,
                         binding.key,
                         binding.action,
@@ -54,9 +56,9 @@ def test_expected_bindings_present(coverage_tracker: dict) -> None:
                         got,
                     )
                 )
-            coverage_tracker[binding.feature]["static"] = "failed"
+            coverage_tracker[source_ids[binding.mapping_id]]["static"] = "failed"
         else:
-            coverage_tracker[binding.feature]["static"] = "passed"
+            coverage_tracker[source_ids[binding.mapping_id]]["static"] = "passed"
 
     assert not failures, "\n\n".join(failures)
 

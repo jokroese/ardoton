@@ -28,13 +28,13 @@ def test_contract_csv_rectangular() -> None:
         assert all(len(row) == width for row in rows), filename
 
 
-def test_expectation_features_exist_in_shortcuts() -> None:
-    shortcut_ids = contract_ids("ableton-shortcuts.csv")
+def test_expectation_mapping_ids_exist_in_shortcuts_map() -> None:
+    mapping_ids = contract_ids("shortcuts-map.csv", "Mapping ID")
     bindings, exclusives = load_expectations()
     for binding in bindings:
-        assert binding.feature in shortcut_ids, binding.feature
+        assert binding.mapping_id in mapping_ids, binding.mapping_id
     for exclusive in exclusives:
-        assert exclusive.feature in shortcut_ids, exclusive.feature
+        assert exclusive.mapping_id in mapping_ids, exclusive.mapping_id
 
 
 def test_expectation_context_key_unique() -> None:
