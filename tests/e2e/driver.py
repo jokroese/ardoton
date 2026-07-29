@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import shutil
 import signal
 import subprocess
 import time
+import urllib.request
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -15,6 +18,7 @@ from support import ARDOUR_BIN, REAL_CONFIG, ROOT, TESTS
 
 WINDOW_WIDTH = 1440
 WINDOW_HEIGHT = 900
+MCP_PORT = 4820
 
 
 class DriverError(RuntimeError):
@@ -23,6 +27,39 @@ class DriverError(RuntimeError):
 
 class AccessibilityPermissionError(DriverError):
     pass
+
+
+class McpClient:
+    def __init__(self) -> None:
+        self.request_id = 0
+        self._request(
+            "initialize",
+            {
+                "protocolVersion": "2025-03-26",
+                "capabilities": {},
+                "clientInfo": {"name": "ardourton-e2e", "version": "1"},
+            },
+        )
+
+    def transport_state(self) -> dict:
+        result = self._request("tools/call", {"name": "transport_get_state", "arguments": {}})
+        return result["structuredContent"]
+
+    def _request(self, method: str, params: dict) -> dict:
+        self.request_id += 1
+        payload = json.dumps(
+            {"jsonrpc": "2.0", "id": self.request_id, "method": method, "params": params}
+        ).encode()
+        request = urllib.request.Request(
+            f"http://127.0.0.1:{MCP_PORT}/mcp",
+            payload,
+            {"Content-Type": "application/json", "Accept": "application/json"},
+        )
+        with urllib.request.urlopen(request, timeout=5) as response:
+            body = json.load(response)
+        if "error" in body:
+            raise DriverError(str(body["error"]))
+        return body["result"]
 
 
 def _sha256(path: Path) -> str:
@@ -63,6 +100,29 @@ class ArdourSession:
     session_file: Path
     process: subprocess.Popen | None = None
     real_config_before: dict[str, str] | None = None
+
+    def enable_mcp(self) -> None:
+        config_path = self.config_dir / "config"
+        config = ET.parse(config_path)
+        protocols = ET.SubElement(config.getroot(), "ControlProtocols")
+        ET.SubElement(
+            protocols,
+            "Protocol",
+            name="MCP HTTP Server (Experimental)",
+            active="1",
+            config="",
+        )
+        config.write(config_path, encoding="utf-8", xml_declaration=True)
+
+    def mcp(self) -> McpClient:
+        last_error: Exception | None = None
+        for _ in range(10):
+            try:
+                return McpClient()
+            except Exception as exc:
+                last_error = exc
+                time.sleep(0.25)
+        raise DriverError(f"MCP HTTP server did not start: {last_error}")
 
     def ensure_safe_config_dir(self) -> None:
         resolved = self.config_dir.resolve()
@@ -320,6 +380,7 @@ def create_isolated_session(tmp_path: Path) -> ArdourSession:
     session.seed_config()
     session.install_profile()
     session.prepare_session_copy()
+    session.enable_mcp()
 
     # Theme must be active via color-file preference after install.
     theme_path = config_dir / "themes" / "ardourton-ardour.colors"
@@ -334,6 +395,7 @@ KEY_T = 17
 KEY_L = 37
 KEY_F9 = 101
 KEY_S = 1
+KEY_C = 8
 
 FLAG_SHIFT = 1 << 17  # kCGEventFlagMaskShift
 FLAG_COMMAND = 1 << 20  # kCGEventFlagMaskCommand

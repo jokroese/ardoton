@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 import pytest
 
-from e2e.driver import FLAG_COMMAND, FLAG_SHIFT, KEY_T
+from e2e.driver import FLAG_COMMAND, FLAG_SHIFT, KEY_C, KEY_F9, KEY_T
 
 pytestmark = [pytest.mark.e2e, pytest.mark.requires_ardour]
 
@@ -68,3 +68,27 @@ def test_cmd_shift_t_adds_midi_track(ardour_session, coverage_tracker) -> None:
         _dump_failure(ardour_session, "S04-cmd-shift-t")
         raise
 
+
+def test_f9_starts_record_roll(ardour_session, coverage_tracker) -> None:
+    try:
+        # Ardour requires an armed track before entering record-roll.
+        ardour_session.send_hotkey(KEY_T, FLAG_COMMAND)
+        time.sleep(1.5)
+        ardour_session.send_hotkey(KEY_C)
+        time.sleep(0.5)
+        ardour_session.send_hotkey(KEY_F9)
+        state = ardour_session.mcp().transport_state()
+        # The Dummy backend does not process transport cycles, but Ardour
+        # reports the requested record-roll speed immediately.
+        assert state["speed"] == 1, state
+        coverage_tracker["S13"]["e2e"] = "passed"
+    except Exception:
+        coverage_tracker["S13"]["e2e"] = "failed"
+        _dump_failure(ardour_session, "S13-f9")
+        raise
+
+
+# S19 remains static-only. Cmd+L needs a real Editor time selection; neither
+# native start/finish-range actions nor mouse drags establish one under the
+# Dummy backend. Continue with a fixture that persists an Editor selection, or
+# an Ardour MCP API that creates and reads editor selections plus loop state.
