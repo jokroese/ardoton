@@ -29,7 +29,7 @@ default-groups = ["dev"]
 # Future packaging should stage a clean copy, run static + installer + e2e
 # against the staged profile, ZIP, extract, and re-check the artifact.
 testpaths = ["tests"]
-pythonpath = ["tests"]
+pythonpath = [".", "tests"]
 python_files = ["test_*.py"]
 python_functions = ["test_*"]
 timeout = 120
