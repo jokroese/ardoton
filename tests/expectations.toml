@@ -2,95 +2,95 @@
 # Do not derive this file from ardour.keys.
 
 [[binding]]
-feature = "S01"
+feature = "S01-03"
 context = "Global"
 key = "Tab"
 action = "Common/next-tab"
 
 [[binding]]
-feature = "S02"
+feature = "S01-04"
 context = "Global"
 key = "Tertiary-ISO_Left_Tab"
 action = "Common/previous-tab"
 
 [[binding]]
-feature = "S03"
+feature = "S19-01"
 context = "Global"
 key = "Primary-t"
 action = "LuaAction/script-28"
 
 [[binding]]
-feature = "S04"
+feature = "S19-02"
 context = "Global"
 key = "Primary-Tertiary-t"
 action = "LuaAction/script-29"
 
 [[binding]]
-feature = "S05"
+feature = "S19-03"
 context = "Global"
 key = "Primary-Level4-t"
 action = "LuaAction/script-30"
 
 [[binding]]
-feature = "S07"
+feature = "S05-01"
 context = "Mixer"
 key = "Primary-d"
 action = "LuaAction/script-32"
 
 [[binding]]
-feature = "S13"
+feature = "S20-06"
 context = "Global"
 key = "F9"
 action = "Transport/record-roll"
 
 [[binding]]
-feature = "S17"
+feature = "S16-01"
 context = "Editor"
 key = "Primary-e"
 action = "Editor/split-region"
 
 [[binding]]
-feature = "S18"
+feature = "S16-02"
 context = "Editor"
 key = "Primary-j"
 action = "Editor/editor-consolidate"
 
 [[binding]]
-feature = "S19"
+feature = "S16-11"
 context = "Global"
 key = "Primary-l"
 action = "LuaAction/script-31"
 
 [[binding]]
-feature = "S20"
+feature = "S11-01"
 context = "Notes"
 key = "Primary-u"
 action = "Notes/quantize-selected-notes"
 
 [[binding]]
-feature = "S28"
+feature = "S19-13"
 context = "Editor"
 key = "c"
 action = "Editor/track-record-enable-toggle"
 
 [[binding]]
-feature = "S29"
+feature = "S19-14"
 context = "Editor"
 key = "s"
 action = "Editor/track-solo-toggle"
 
 [[binding]]
-feature = "S30"
+feature = "S17-01"
 context = "Editor"
 key = "Primary-Level4-u"
 action = "Editor/show-plist-selector"
 
 [[exclusive]]
-feature = "S13"
+feature = "S20-06"
 key = "F9"
 contexts = ["Global"]
 
 [[exclusive]]
-feature = "S19"
+feature = "S16-11"
 key = "Primary-l"
 contexts = ["Global"]

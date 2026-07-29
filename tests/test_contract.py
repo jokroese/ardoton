@@ -6,7 +6,7 @@ from support import CONTRACT, contract_ids, contract_row_count, load_expectation
 
 EXPECTED_ROWS = {
     "workflows.csv": 50,
-    "shortcuts.csv": 30,
+    "ableton-shortcuts.csv": 339,
     "terminology.csv": 25,
     "acceptance-tests.csv": 15,
     "sources.csv": 24,
@@ -28,7 +28,7 @@ def test_contract_csv_rectangular() -> None:
 
 
 def test_expectation_features_exist_in_shortcuts() -> None:
-    shortcut_ids = contract_ids("shortcuts.csv")
+    shortcut_ids = contract_ids("ableton-shortcuts.csv")
     bindings, exclusives = load_expectations()
     for binding in bindings:
         assert binding.feature in shortcut_ids, binding.feature

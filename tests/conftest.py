@@ -38,7 +38,7 @@ def coverage_tracker() -> dict[str, dict[str, str]]:
 
     coverage: dict[str, dict[str, str]] = {
         feature_id: {"static": "not-covered", "e2e": "not-covered"}
-        for feature_id in sorted(contract_ids("shortcuts.csv"))
+        for feature_id in sorted(contract_ids("ableton-shortcuts.csv"))
     }
     bindings, _ = load_expectations()
     for binding in bindings:
