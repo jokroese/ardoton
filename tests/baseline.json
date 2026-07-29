@@ -1,0 +1,28 @@
+{
+  "git_commit": "164379df5527e12cdbbd43ccdac6b3f3edca3bc1",
+  "ardour_version": "9.7.0",
+  "ardour_lua_version": "ardour-lua version 9.7.0",
+  "manifest_version": "0.2.2",
+  "macos_keymap_sha256": "19e94985fa715497195d6c679efee00876eccfdfa07769158eec8bb7f3b1e7c0",
+  "lua_action_state_sha256": "4f7394f666b000a057d4f8fd2c84b53ef9d0d8d3948d4081d9f724ceca424611",
+  "lua_action_slots": {
+    "28": "Ardourton: Add Stereo Audio Track",
+    "29": "Ardourton: Add MIDI Track",
+    "30": "Ardourton: Add Return",
+    "31": "Ardourton: Set and Toggle Loop",
+    "32": "Ardourton: Duplicate Tracks"
+  },
+  "profile_files": [
+    "profile/keybindings/macos/ardour.keys",
+    "profile/manifest.json",
+    "profile/preferences/ui-options.tsv",
+    "profile/scripts/ardourton_add_audio_track.lua",
+    "profile/scripts/ardourton_add_midi_track.lua",
+    "profile/scripts/ardourton_add_return.lua",
+    "profile/scripts/ardourton_beat_production.lua",
+    "profile/scripts/ardourton_duplicate_tracks.lua",
+    "profile/scripts/ardourton_set_loop.lua",
+    "profile/theme/ardourton-ardour.colors",
+    "profile/ui-scripts/ardourton-actions.lua-state"
+  ]
+}

@@ -1,0 +1,96 @@
+# Independent shortcut oracle for the frozen Phase 2 macOS profile.
+# Do not derive this file from ardour.keys.
+
+[[binding]]
+feature = "S01"
+context = "Global"
+key = "Tab"
+action = "Common/next-tab"
+
+[[binding]]
+feature = "S02"
+context = "Global"
+key = "Tertiary-ISO_Left_Tab"
+action = "Common/previous-tab"
+
+[[binding]]
+feature = "S03"
+context = "Global"
+key = "Primary-t"
+action = "LuaAction/script-28"
+
+[[binding]]
+feature = "S04"
+context = "Global"
+key = "Primary-Tertiary-t"
+action = "LuaAction/script-29"
+
+[[binding]]
+feature = "S05"
+context = "Global"
+key = "Primary-Level4-t"
+action = "LuaAction/script-30"
+
+[[binding]]
+feature = "S07"
+context = "Mixer"
+key = "Primary-d"
+action = "LuaAction/script-32"
+
+[[binding]]
+feature = "S13"
+context = "Global"
+key = "F9"
+action = "Transport/record-roll"
+
+[[binding]]
+feature = "S17"
+context = "Editor"
+key = "Primary-e"
+action = "Editor/split-region"
+
+[[binding]]
+feature = "S18"
+context = "Editor"
+key = "Primary-j"
+action = "Editor/editor-consolidate"
+
+[[binding]]
+feature = "S19"
+context = "Global"
+key = "Primary-l"
+action = "LuaAction/script-31"
+
+[[binding]]
+feature = "S20"
+context = "Notes"
+key = "Primary-u"
+action = "Notes/quantize-selected-notes"
+
+[[binding]]
+feature = "S28"
+context = "Editor"
+key = "c"
+action = "Editor/track-record-enable-toggle"
+
+[[binding]]
+feature = "S29"
+context = "Editor"
+key = "s"
+action = "Editor/track-solo-toggle"
+
+[[binding]]
+feature = "S30"
+context = "Editor"
+key = "Primary-Level4-u"
+action = "Editor/show-plist-selector"
+
+[[exclusive]]
+feature = "S13"
+key = "F9"
+contexts = ["Global"]
+
+[[exclusive]]
+feature = "S19"
+key = "Primary-l"
+contexts = ["Global"]

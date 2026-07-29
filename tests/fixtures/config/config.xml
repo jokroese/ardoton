@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ardour>
+  <Config>
+    <Option name="capture-buffer-seconds" value="5"/>
+    <Option name="playback-buffer-seconds" value="5"/>
+    <Option name="default-session-parent-dir" value="SESSIONS_PLACEHOLDER"/>
+    <Option name="denormal-model" value="DenormalNone"/>
+    <Option name="try-autostart-engine" value="1"/>
+  </Config>
+  <Metadata/>
+  <Extra>
+    <UI status-bar="Audio,Disk,DSP">
+      <Window name="audio-midi-setup" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+    </UI>
+    <AudioMIDISetup>
+      <EngineStates>
+        <State backend="None" driver="" device="" input-device="" output-device="" sample-rate="48000" buffer-size="1024" n-periods="0" input-latency="0" output-latency="0" lm-input="" lm-output="" active="1" use-buffered-io="0" midi-option="MidiPort" lru="1">
+          <MIDIDevices/>
+        </State>
+      </EngineStates>
+    </AudioMIDISetup>
+  </Extra>
+</Ardour>
