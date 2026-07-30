@@ -86,12 +86,10 @@ def test_audit_statuses_have_required_mapping_roles(tmp_path) -> None:
     contract = copied_contract(tmp_path)
     mapping = contract / "shortcut-mappings" / "01.json"
     document = json.loads(mapping.read_text(encoding="utf-8"))
-    needs_audit = document["shortcuts"][0]
-    assessed = document["shortcuts"][1]
-    partially_assessed = document["shortcuts"][2]
-    assert needs_audit["auditStatus"] == "Needs audit"
-    assert partially_assessed["auditStatus"] == "Partially assessed"
-    assert assessed["auditStatus"] == "Assessed"
+    statuses = {record["auditStatus"] for record in document["shortcuts"]}
+    assert "Needs audit" not in statuses
+    assert "Partially assessed" in statuses
+    assert "Assessed" in statuses
     write(mapping, document)
     assert (
         validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings") == []

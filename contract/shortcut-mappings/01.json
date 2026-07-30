@@ -8,8 +8,28 @@
   "shortcuts": [
     {
       "sourceId": "S01-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Ctrl+Cmd+F",
+          "actionTarget": "Common/toggle-fullscreen (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour has fullscreen support for individual editor and mixer windows, but no application-wide bindable fullscreen action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor.cc:3653-3668;gtk2_ardour/mixer_ui.cc:3158-3173;gtk2_ardour/ardour_ui_ed.cc:803-804",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-02",
@@ -123,8 +143,34 @@
     },
     {
       "sourceId": "S01-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor attachment controls",
+          "proposedMacos": "Option+click view toggle",
+          "actionTarget": "Editor/toggle-editor-attachments (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "The existing attachment actions toggle independent left and bottom panels; matching Live's modified click requires pointer-event handling and a defined combined-panel state.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-204",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-204",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-06",
@@ -159,13 +205,61 @@
     },
     {
       "sourceId": "S01-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Drum instrument",
+          "proposedMacos": "D",
+          "keyToken": "d",
+          "actionTarget": "Instrument/toggle-drum-pad-view (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour's MIDI editor has no drum-rack or selected-pad model to switch to, so a bindable view requires an instrument-pad data model as well as UI work.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7: searched gtk2_ardour and libs/ardour for drum rack, drum pad, selected pad, and last pad; only factory drum-track scripts were found.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+?",
+          "keyToken": "Tertiary-question",
+          "actionTarget": "Editor/toggle-log-window",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native unbound",
+          "note": "Ardour's log window exposes diagnostics rather than Live's contextual Info View.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:442-443;gtk2_ardour/ardour.menus.in:770",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:442-443",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-09",
@@ -339,23 +433,125 @@
     },
     {
       "sourceId": "S01-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+3",
+          "keyToken": "Primary-Level4-3",
+          "actionTarget": "Editor/show-editor-props",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native unbound",
+          "note": "The Editor Properties Box is a toggleable bottom panel, but it does not provide Live's selected-clip detail view.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204;gtk2_ardour/ardour.keys.in:193",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+4",
+          "keyToken": "Primary-Level4-4",
+          "actionTarget": "Editor/show-editor-mixer",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native unbound",
+          "note": "The Editor Mixer is a toggleable left panel, not Live's selected-device chain view.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199;gtk2_ardour/ardour.keys.in:171",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-17",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+6",
+          "keyToken": "Primary-Level4-6",
+          "actionTarget": "Editor/toggle-groove-pool (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no session-level groove-pool model to display or apply, so this requires persisted groove data and an editor UI.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7: searched gtk2_ardour, libs/ardour, and share/scripts for Groove Pool and groove-pool actions; no session-level groove feature was found.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-18",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+7",
+          "keyToken": "Primary-Level4-7",
+          "actionTarget": "Common/tutorial",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native unbound",
+          "note": "Ardour launches its tutorial rather than toggling an embedded Learn View.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:301-305",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:301-305",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-19",
