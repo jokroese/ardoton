@@ -1,0 +1,2 @@
+# Snapshot baselines for visual regression.
+# Update only with: uv run pytest -m visual --update-snapshots

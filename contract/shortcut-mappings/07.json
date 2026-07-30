@@ -1,0 +1,40 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "07",
+    "title": "41.7 Commands for Breakpoint Envelopes"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S07-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S07-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S07-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S07-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S07-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S07-06",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

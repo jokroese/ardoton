@@ -1,0 +1,127 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "20",
+    "title": "41.20 Transport"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S20-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-06",
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F9",
+          "keyToken": "F9",
+          "actionTarget": "Transport/record-roll",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Profile bound",
+          "note": "E2E verifies a record-roll request; this differs from Ableton Record behavior.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_shortcuts.py:M266",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global F9 -> Transport/record-roll",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "S20-07",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-08",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-09",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-10",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-11",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-12",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-13",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-14",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-15",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-16",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-17",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S20-18",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Installation
 
-Ardourton currently supports Ardour 9.7 on macOS and Windows.
+Ardourton currently supports Ardour 9.7 on macOS. Windows and Linux support will follow later.
 
 Quit Ardour before installing or restoring.
 
@@ -8,15 +8,11 @@ Quit Ardour before installing or restoring.
 
 Double-click `install.command`. To remove Ardourton and return to the pre-install configuration, double-click `restore.command`.
 
-## Windows
-
-Double-click `install.cmd`. To remove Ardourton and return to the pre-install configuration, double-click `restore.cmd`.
-
 The installer creates a dated backup inside Ardour's configuration directory before changing anything. Restore returns the touched files to that exact pre-install state.
 
 ## What is installed
 
-- Platform-appropriate Live-style keybindings
+- Live-style macOS keybindings
 - The Ardourton theme and track-color palette
 - Toolbar and panel preferences
 - The Beat Production session template

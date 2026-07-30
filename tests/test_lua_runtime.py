@@ -1,0 +1,77 @@
+from __future__ import annotations
+
+import re
+import shutil
+import subprocess
+from pathlib import Path
+
+import pytest
+
+from support import ARDOUR_LUA, PROFILE, ROOT, TESTS
+
+pytestmark = [pytest.mark.requires_ardour]
+
+
+def _ardour_lua() -> Path:
+    if not ARDOUR_LUA.is_file():
+        pytest.skip(f"Ardour Lua runtime not found: {ARDOUR_LUA}")
+    return ARDOUR_LUA
+
+
+def _lua_version(executable: Path) -> str:
+    result = subprocess.run(
+        [str(executable), "--version"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    return (result.stdout + result.stderr).strip()
+
+
+def test_ardour_lua_reports_9_7() -> None:
+    version = _lua_version(_ardour_lua())
+    assert re.search(r"9\.7", version), version
+
+
+def test_check_lua_passes_against_profile() -> None:
+    executable = _ardour_lua()
+    result = subprocess.run(
+        [str(executable), str(TESTS / "check_lua.lua"), str(PROFILE)],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "Lua checks passed" in result.stdout
+
+
+def test_incompatible_action_state_fails(tmp_path: Path) -> None:
+    """Bytecode from system Lua (or a corrupt payload) must be rejected by ardour9-lua."""
+    executable = _ardour_lua()
+    fixture_profile = tmp_path / "profile"
+    shutil.copytree(PROFILE, fixture_profile)
+
+    # Replace action state with Lua source that system lua can parse but that
+    # embeds invalid binary for Ardour's loader when load(..., "b") is used.
+    bad_state = fixture_profile / "ui-scripts" / "ardourton-actions.lua-state"
+    # Valid Lua text that defines scripts[28] with non-bytecode string as f.
+    bad_state.write_text(
+        'scripts[28] = { n = "Bad", a = {}, f = "not-bytecode", s = "" }\n'
+        'scripts[29] = { n = "Bad", a = {}, f = "not-bytecode", s = "" }\n'
+        'scripts[30] = { n = "Bad", a = {}, f = "not-bytecode", s = "" }\n'
+        'scripts[31] = { n = "Bad", a = {}, f = "not-bytecode", s = "" }\n'
+        'scripts[32] = { n = "Bad", a = {}, f = "not-bytecode", s = "" }\n',
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [str(executable), str(TESTS / "check_lua.lua"), str(fixture_profile)],
+        check=False,
+        capture_output=True,
+        text=True,
+        cwd=str(ROOT),
+    )
+    assert result.returncode != 0
+    combined = result.stdout + result.stderr
+    assert re.search(r"action|slot|bytecode|invalid|attempt", combined, re.I), combined
+

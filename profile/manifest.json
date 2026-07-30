@@ -12,10 +12,6 @@
     "macos": {
       "config_directory": "~/Library/Preferences/Ardour9",
       "keymap": "keybindings/macos/ardour.keys"
-    },
-    "windows": {
-      "config_directory": "%LOCALAPPDATA%/Ardour9",
-      "keymap": "keybindings/windows/ardour.keys"
     }
   },
   "theme": "theme/ardourton-ardour.colors",

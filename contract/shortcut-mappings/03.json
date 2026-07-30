@@ -1,0 +1,50 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "03",
+    "title": "41.3 Working with Sets and the Program"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S03-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S03-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S03-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S03-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S03-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S03-06",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S03-07",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S03-08",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

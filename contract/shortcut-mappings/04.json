@@ -1,0 +1,70 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "04",
+    "title": "41.4 Working with Devices and Plug-Ins"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S04-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-06",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-07",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-08",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-09",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-10",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-11",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S04-12",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

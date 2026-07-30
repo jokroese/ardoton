@@ -1,0 +1,15 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "21",
+    "title": "41.21 Audio Engine"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S21-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

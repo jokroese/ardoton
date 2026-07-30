@@ -1,0 +1,20 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "18",
+    "title": "41.18 Bounce to Audio"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S18-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S18-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

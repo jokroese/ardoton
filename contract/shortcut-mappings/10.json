@@ -1,0 +1,35 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "10",
+    "title": "41.10 Clip View Editor View Modes"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S10-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S10-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S10-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S10-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S10-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

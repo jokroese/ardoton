@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ardour>
+  <UI>
+    <Option name="flat-buttons" value="0"/>
+    <Option name="show-secondary-clock" value="0"/>
+    <Option name="use-system-font" value="1"/>
+  </UI>
+  <Canvas/>
+</Ardour>

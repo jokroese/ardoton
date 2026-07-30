@@ -1,0 +1,40 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "24",
+    "title": "41.24 Key/MIDI Map Mode and the Computer MIDI Keyboard"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S24-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S24-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S24-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S24-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S24-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S24-06",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

@@ -15,7 +15,7 @@ The contract deliberately measures task completion and observable output rather 
 The contract files define:
 
 - 50 high-value workflows
-- 30 proposed Windows/macOS shortcut mappings
+- 30 proposed macOS shortcut mappings
 - 25 terminology mappings
 - 15 moderated acceptance tests
 

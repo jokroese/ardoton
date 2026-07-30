@@ -1,0 +1,52 @@
+[project]
+name = "ardourton"
+version = "0.2.2"
+description = "Ardourton regression harness and profile tests"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3",
+  "pytest-timeout>=2.3",
+  "ruff>=0.9",
+  "pillow>=11.0",
+  "pyobjc-framework-ApplicationServices>=11.0",
+  "pyobjc-framework-Quartz>=11.0",
+  "pyobjc-framework-Cocoa>=11.0",
+  "jsonschema>=4.26.0",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.pytest.ini_options]
+# Local release gate:
+#   uv sync --frozen
+#   uv run ruff check .
+#   uv run pytest -m "not e2e"
+#   uv run pytest -m e2e
+#
+# Future packaging should stage a clean copy, run static + installer + e2e
+# against the staged profile, ZIP, extract, and re-check the artifact.
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+timeout = 120
+norecursedirs = ["fixtures", "snapshots", "e2e/__pycache__"]
+markers = [
+  "installer: installer/restore round-trip (no Ardour GUI)",
+  "e2e: real Ardour GUI / keyboard tests",
+  "visual: GUI screenshot regression",
+  "requires_ardour: needs Ardour 9.7 installed locally",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "W"]
