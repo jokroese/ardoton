@@ -245,18 +245,27 @@ def validate_expectations(expectations_path: Path, mapping_dir: Path) -> list[st
     return errors
 
 
-def report(source_path: Path, mapping_dir: Path, section_number: str | None = None) -> str:
+def section_numbers(section_number: str | list[str] | None) -> set[str] | None:
+    if section_number is None:
+        return None
+    return {section_number} if isinstance(section_number, str) else set(section_number)
+
+
+def report(
+    source_path: Path, mapping_dir: Path, section_number: str | list[str] | None = None
+) -> str:
     sources, mapping_docs = documents(source_path, mapping_dir)
+    selected_sections = section_numbers(section_number)
     source_records = [
         (section, shortcut)
         for section in sources["sections"]
         for shortcut in section["shortcuts"]
-        if section_number is None or section["number"] == section_number
+        if selected_sections is None or section["number"] in selected_sections
     ]
     mapping_records = [
         record
         for _, document in mapping_docs
-        if section_number is None or document["section"]["number"] == section_number
+        if selected_sections is None or document["section"]["number"] in selected_sections
         for record in document["shortcuts"]
     ]
     status_counts = Counter(
@@ -347,7 +356,7 @@ def section_report(source_path: Path, mapping_dir: Path, section_number: str) ->
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", action="store_true")
-    parser.add_argument("--section", metavar="NN")
+    parser.add_argument("--section", metavar="NN", action="append")
     args = parser.parse_args()
     source_path = CONTRACT / "ableton-shortcuts.json"
     mapping_dir = CONTRACT / "shortcut-mappings"
@@ -359,11 +368,16 @@ def main() -> int:
         print("\n".join(f"error: {error}" for error in errors), file=sys.stderr)
         return 1
     sources, _ = documents(source_path, mapping_dir)
+    known_sections = {section["number"] for section in sources["sections"]}
+    unknown_sections = set(args.section or []) - known_sections
+    if unknown_sections:
+        parser.error(f"unknown section(s): {', '.join(sorted(unknown_sections))}")
     print(f"Validated {sum(len(section['shortcuts']) for section in sources['sections'])} sources.")
     if args.report:
         print(report(source_path, mapping_dir, args.section))
     if args.section:
-        print(section_report(source_path, mapping_dir, args.section))
+        for section in args.section:
+            print(section_report(source_path, mapping_dir, section))
     return 0
 
 
