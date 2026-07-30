@@ -8,18 +8,81 @@
   "shortcuts": [
     {
       "sourceId": "S05-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+X",
+          "keyToken": "Primary-x",
+          "actionTarget": "Editing/editor-cut",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-x -> Editing/editor-cut",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+C",
+          "keyToken": "Primary-c",
+          "actionTarget": "Editing/editor-copy",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-c -> Editing/editor-copy",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+V",
+          "keyToken": "Primary-v",
+          "actionTarget": "Editing/editor-paste",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-v -> Editing/editor-paste",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-04",
@@ -55,63 +118,312 @@
     },
     {
       "sourceId": "S05-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "Editing/editor-delete",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Delete -> Editing/editor-delete",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+Z",
+          "keyToken": "Primary-z",
+          "actionTarget": "Editing/undo",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-z -> Editing/undo",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+Shift+Z",
+          "keyToken": "Primary-Tertiary-z",
+          "actionTarget": "Editing/alternate-alternate-redo",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-Tertiary-z -> Editing/alternate-alternate-redo",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+R",
+          "keyToken": "Primary-r",
+          "actionTarget": "Region/rename-region",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-r -> Region/rename-region",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+A",
+          "keyToken": "Primary-a",
+          "actionTarget": "Editor/select-all-objects",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-a -> Editor/select-all-objects",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+click",
+          "actionTarget": "Editor/select-multiple-items (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc;gtk2_ardour/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+click",
+          "actionTarget": "Editor/select-item-range (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc;gtk2_ardour/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Inline rename",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Editor/rename-next-item (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc;gtk2_ardour/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+drag",
+          "actionTarget": "Editing/ignore-grid-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc;gtk2_ardour/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift",
+          "keyToken": "Tertiary",
+          "actionTarget": "Editing/apply-across-tracks (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc;gtk2_ardour/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift",
+          "keyToken": "Tertiary",
+          "actionTarget": "Editing/apply-time-across-tracks (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc;gtk2_ardour/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Automation",
+          "proposedMacos": "Option",
+          "keyToken": "Level4",
+          "actionTarget": "Automation/edit-envelope-segment (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour provides related editing behavior with context-dependent selection semantics.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc;gtk2_ardour/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
