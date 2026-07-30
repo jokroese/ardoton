@@ -268,18 +268,48 @@ def report(
         if selected_sections is None or document["section"]["number"] in selected_sections
         for record in document["shortcuts"]
     ]
-    status_counts = Counter(
+    mapping_status_counts = Counter(
         mapping["status"] for record in mapping_records for mapping in record["mappings"]
     )
-    lines = ["Source input kinds:"]
+    audit_status_counts = Counter(record["auditStatus"] for record in mapping_records)
+    implementation_counts = Counter(
+        mapping["implementationType"]
+        for record in mapping_records
+        for mapping in record["mappings"]
+    )
+    lines = ["Audit status:"]
+    lines.extend(
+        f"  {status}: {audit_status_counts[status]}" for status in sorted(audit_status_counts)
+    )
+    lines.append("Source input kinds:")
     lines.extend(
         f"  {kind}: {count}"
         for kind, count in sorted(
             Counter(source["inputKind"] for _, source in source_records).items()
         )
     )
+    lines.append("Implementation types:")
+    lines.extend(
+        f"  {implementation_type}: {count}"
+        for implementation_type, count in sorted(implementation_counts.items())
+    )
     lines.append("Mapping statuses:")
-    lines.extend(f"  {status}: {count}" for status, count in sorted(status_counts.items()))
+    lines.extend(f"  {status}: {count}" for status, count in sorted(mapping_status_counts.items()))
+    lines.append("Section progress:")
+    lines.append("  Section | Sources | Needs audit | Partial | Assessed | Mappings")
+    source_by_section = Counter(section["number"] for section, _ in source_records)
+    records_by_section: dict[str, list[dict]] = defaultdict(list)
+    for record in mapping_records:
+        records_by_section[record["sourceId"][1:3]].append(record)
+    for number in sorted(source_by_section):
+        records = records_by_section[number]
+        statuses = Counter(record["auditStatus"] for record in records)
+        mapping_count = sum(len(record["mappings"]) for record in records)
+        lines.append(
+            "  "
+            f"{number} | {source_by_section[number]} | {statuses['Needs audit']} | "
+            f"{statuses['Partially assessed']} | {statuses['Assessed']} | {mapping_count}"
+        )
     return "\n".join(lines)
 
 
