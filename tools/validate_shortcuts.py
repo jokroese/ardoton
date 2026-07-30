@@ -48,13 +48,13 @@ INPUT_KINDS = {
 }
 CONTROLLED_VALUES = {
     "Implementation type": {
-        "Keymap",
-        "Lua",
-        "Native UI",
-        "Native gesture",
-        "UI patch",
-        "Engine patch",
-        "Documentation only",
+        "Profile keybinding",
+        "Profile Lua",
+        "None",
+        "Ardour action patch",
+        "Ardour input patch",
+        "Ardour UI patch",
+        "Ardour engine patch",
         "Undetermined",
     },
     "Mapping class": {"Exact", "Similar", "No equivalent", "Needs audit"},
@@ -161,12 +161,15 @@ def validate_contract(source_path: Path, mapping_path: Path) -> list[str]:
                 errors.append(f"mapping line {line}: duplicate mapping tuple {mapping_tuple!r}")
             mapping_tuples.add(mapping_tuple)
 
-        if row.get("Implementation type") == "Keymap" and source_kinds.get(source_id) not in {
+        if row.get("Implementation type") == "Profile keybinding" and source_kinds.get(
+            source_id
+        ) not in {
             "Keyboard",
             "Keyboard hold",
         }:
             errors.append(
-                f"mapping line {line}: Keymap requires a Keyboard or Keyboard hold source"
+                f"mapping line {line}: Profile keybinding requires a Keyboard or Keyboard hold "
+                "source"
             )
 
         if status == "Proposed":
@@ -260,10 +263,10 @@ def validate_expectations(expectations_path: Path, mapping_path: Path) -> list[s
             if not mapping:
                 errors.append(f"{prefix}: unknown mapping_id {mapping_id!r}")
                 continue
-            if mapping.get("Implementation type") not in {"Keymap", "Lua"}:
+            if mapping.get("Implementation type") not in {"Profile keybinding", "Profile Lua"}:
                 errors.append(
                     f"{prefix}: mapping_id {mapping_id!r} requires Implementation type "
-                    "Keymap or Lua"
+                    "Profile keybinding or Profile Lua"
                 )
             if mapping.get("Availability") != "Profile bound":
                 errors.append(

@@ -83,7 +83,7 @@ def test_static_verified_exact_mapping_can_await_behavior_test(tmp_path) -> None
                     "Proposed macOS": "Primary-a",
                     "Ardour context": "Global",
                     "Ardour action target": "Action/test",
-                    "Implementation type": "Keymap",
+                    "Implementation type": "Profile keybinding",
                     "Mapping class": "Exact",
                     "Availability": "Profile bound",
                     "Evidence type": "Profile keymap",
@@ -100,7 +100,7 @@ def test_static_verified_exact_mapping_can_await_behavior_test(tmp_path) -> None
     assert validate_contract(sources, mappings) == []
 
 
-def test_expectation_requires_profile_bound_keymap_or_lua_mapping(tmp_path) -> None:
+def test_expectation_requires_profile_bound_keybinding_or_lua_mapping(tmp_path) -> None:
     mappings = tmp_path / "mappings.csv"
     expectations = tmp_path / "expectations.toml"
     write_csv(mappings, MAPPING_FIELDS, [mapping("M001", "S01-01")])
@@ -108,5 +108,5 @@ def test_expectation_requires_profile_bound_keymap_or_lua_mapping(tmp_path) -> N
 
     errors = validate_expectations(expectations, mappings)
 
-    assert "requires Implementation type Keymap or Lua" in errors[0]
+    assert "requires Implementation type Profile keybinding or Profile Lua" in errors[0]
     assert "requires Availability 'Profile bound'" in errors[1]
