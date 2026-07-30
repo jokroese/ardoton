@@ -8,48 +8,237 @@
   "shortcuts": [
     {
       "sourceId": "S06-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Mixer",
+          "proposedMacos": "Down",
+          "keyToken": "Down",
+          "actionTarget": "Mixer/decrement-gain",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Down -> Mixer/decrement-gain",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Mixer",
+          "proposedMacos": "Up",
+          "keyToken": "Up",
+          "actionTarget": "Mixer/increment-gain",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Up -> Mixer/increment-gain",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value control",
+          "proposedMacos": "Shift+Up / Shift+Down",
+          "keyToken": "Tertiary-Up / Tertiary-Down",
+          "actionTarget": "ValueControl/fine-adjust (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/gain_meter.cc;libs/gtkmm2ext/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value control",
+          "proposedMacos": "Shift",
+          "keyToken": "Tertiary",
+          "actionTarget": "ValueControl/fine-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/gain_meter.cc;libs/gtkmm2ext/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value control",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "ValueControl/reset-default (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/gain_meter.cc;libs/gtkmm2ext/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value entry",
+          "proposedMacos": "0 through 9",
+          "keyToken": "0-9",
+          "actionTarget": "GTK/value-entry",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/gain_meter.cc;libs/gtkmm2ext/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value entry",
+          "proposedMacos": "period / comma",
+          "keyToken": "period / comma",
+          "actionTarget": "GTK/value-entry-next-field",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/gain_meter.cc;libs/gtkmm2ext/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value entry",
+          "proposedMacos": "Escape",
+          "keyToken": "Escape",
+          "actionTarget": "GTK/value-entry-cancel",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/gain_meter.cc;libs/gtkmm2ext/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value entry",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "GTK/value-entry-confirm",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour value behavior is control-specific rather than a universal Live value-control command.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/gain_meter.cc;libs/gtkmm2ext/keyboard.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
