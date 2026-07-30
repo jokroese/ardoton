@@ -1,0 +1,34 @@
+repos:
+  - repo: local
+    hooks:
+      - id: uv-lock
+        name: uv lock
+        entry: uv lock
+        language: system
+        files: ^(uv\.lock|pyproject\.toml|uv\.toml)$
+        pass_filenames: false
+
+      - id: ruff-check
+        name: ruff check (uv)
+        types: [python]
+        entry: uv run ruff check --fix --exit-non-zero-on-fix
+        language: system
+
+      - id: ruff-format
+        name: ruff format (uv)
+        types: [python]
+        entry: uv run ruff format
+        language: system
+
+      - id: format-shortcut-contract
+        name: format shortcut contract (uv)
+        files: ^contract/.*\.json$
+        entry: uv run python tools/format_shortcuts.py --write
+        language: system
+        pass_filenames: false
+
+      - id: pyright
+        name: pyright (uv)
+        entry: uv run pyright
+        language: system
+        pass_filenames: false

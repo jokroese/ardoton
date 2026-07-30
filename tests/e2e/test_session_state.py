@@ -19,23 +19,14 @@ def _count_routes(session_file: Path) -> int:
 
 
 def test_fixture_session_has_master_route() -> None:
-    session_file = (
-        ROOT / "tests" / "fixtures" / "session" / "baseline" / "Baseline.ardour"
-    )
+    session_file = ROOT / "tests" / "fixtures" / "session" / "baseline" / "Baseline.ardour"
     assert session_file.is_file()
-    names = [
-        route.get("name")
-        for route in ET.parse(session_file).getroot().findall(".//Route")
-    ]
+    names = [route.get("name") for route in ET.parse(session_file).getroot().findall(".//Route")]
     assert any(name and "Master" in name for name in names)
 
 
 def test_beat_production_script_is_installed(isolated_home_ready) -> None:
-    script = (
-        isolated_home_ready.config_dir
-        / "scripts"
-        / "ardourton_beat_production.lua"
-    )
+    script = isolated_home_ready.config_dir / "scripts" / "ardourton_beat_production.lua"
     assert script.is_file()
     text = script.read_text(encoding="utf-8")
     assert "SessionInit" in text or "session" in text.lower()

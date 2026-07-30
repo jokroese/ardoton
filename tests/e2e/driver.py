@@ -261,9 +261,7 @@ class ArdourSession:
             err, windows = AXUIElementCopyAttributeValue(app, kAXWindowsAttribute, None)
             if err == kAXErrorSuccess and windows:
                 for window in windows:
-                    err_title, title = AXUIElementCopyAttributeValue(
-                        window, "AXTitle", None
-                    )
+                    err_title, title = AXUIElementCopyAttributeValue(window, "AXTitle", None)
                     if err_title == kAXErrorSuccess and title:
                         return window
                 return windows[0]

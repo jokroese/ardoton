@@ -93,8 +93,8 @@ assert_expected_files_installed "${config_dir}"
 /usr/bin/grep -q 'BindingSet name="Ardourton macOS"' "${config_dir}/ardour.keys"
 [[ ! -e "${config_dir}/ardour-9.7.bindings" ]]
 
-# Receipt version matches what the installer writes today (may lag manifest).
-/usr/bin/grep -q '^version=0\.2\.1$' "${config_dir}/ardourton/receipt"
+# Receipt version matches the profile manifest.
+/usr/bin/grep -q '^version=0\.2\.2$' "${config_dir}/ardourton/receipt"
 /usr/bin/grep -q '^backup=' "${config_dir}/ardourton/receipt"
 backup_path="$(/usr/bin/awk -F= '/^backup=/{print $2}' "${config_dir}/ardourton/receipt")"
 [[ -d "${backup_path}" ]]

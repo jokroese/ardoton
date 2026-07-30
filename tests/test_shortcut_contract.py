@@ -94,8 +94,7 @@ def test_audit_statuses_have_required_mapping_roles(tmp_path) -> None:
     assert assessed["auditStatus"] == "Assessed"
     write(mapping, document)
     assert (
-        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
-        == []
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings") == []
     )
 
 
@@ -129,8 +128,7 @@ def test_mapping_tuples_are_unique_per_source(tmp_path) -> None:
     second["mappings"][0].update(first["mappings"][0])
     write(mapping, document)
     assert (
-        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
-        == []
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings") == []
     )
     second["mappings"].append(first["mappings"][0].copy())
     write(mapping, document)
@@ -195,8 +193,7 @@ def test_formatter_check_and_section_report() -> None:
     )
     assert (
         "  Mapping | Current fallback | Profile keybinding | Similar | Implemented | "
-        "Common/next-tab"
-        in output
+        "Common/next-tab" in output
     )
     assert "    Evidence | Profile binding | Binding exists | Confirmed |" in output
     result = subprocess.run(
