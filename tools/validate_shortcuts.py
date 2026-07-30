@@ -68,6 +68,9 @@ CONTROLLED_VALUES = {
     },
     "Evidence type": {
         "Profile keymap",
+        "Ardour source",
+        "Ardour Lua API",
+        "Installed resource",
         "Ardour defaults",
         "Ardour manual",
         "Ardour action list",

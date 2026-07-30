@@ -1,24 +1,24 @@
 Mapping ID,Ableton shortcut ID,Ardour context,Proposed macOS,Ardour action target,Implementation type,Mapping class,Availability,Evidence type,Evidence reference,Static verification,Behavior verification,Conflict / implementation note,Status
 M001,S01-01,,,,,,,,,,,,Needs audit
-M002,S01-02,,,,,,,,,,,,Needs audit
+M002,S01-02,Global,Cmd+Shift+W,Window/toggle-second-window (new),Ardour UI patch,Similar,Missing,Ardour source,../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:ARDOUR_UI::show_tabbable,Not run,Not run,Add a separately visible editor or mixer window state; show_tabbable only selects a tab.,Proposed
 M003,S01-03,Global,Tab,Common/next-tab,Profile keybinding,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab,Passed,Not run,Static keymap evidence only; workspace tab cycling does not establish Session or Arrangement behavior.,Static verified
 M004,S01-04,Global,Tertiary-ISO_Left_Tab,Common/previous-tab,Profile keybinding,Similar,Profile bound,Profile keymap,profile/keybindings/macos/ardour.keys: Global Tertiary-ISO_Left_Tab -> Common/previous-tab,Passed,Not run,Static keymap evidence only; previous tab does not establish Device or Clip behavior.,Static verified
 M005,S01-05,,,,,,,,,,,,Needs audit
-M006,S01-06,,,,,,,,,,,,Needs audit
+M006,S01-06,Processor editor,Q,ProcessorBox/toggle-hot-swap (new),Ardour UI patch,Similar,Missing,Ardour source,../ardour@9.7:gtk2_ardour/processor_box.cc:ProcessorBox::choose_plugin,Not run,Not run,Add hot-swap selection and filtered browser state for the selected processor.,Proposed
 M007,S01-07,,,,,,,,,,,,Needs audit
 M008,S01-08,,,,,,,,,,,,Needs audit
-M009,S01-09,,,,,,,,,,,,Needs audit
-M010,S01-10,,,,,,,,,,,,Needs audit
-M011,S01-11,,,,,,,,,,,,Needs audit
-M012,S01-12,,,,,,,,,,,,Needs audit
-M013,S01-13,,,,,,,,,,,,Needs audit
-M014,S01-14,,,,,,,,,,,,Needs audit
+M009,S01-09,Editor,Cmd+Option+V,Editor/ToggleJadeo,Profile keybinding,Exact,Native bound,Installed resource,/Applications/Ardour9.app/Contents/Resources/ardour.keys:Editor/ToggleJadeo,Not run,Not run,,Proposed
+M010,S01-10,Editor,Cmd+Option+B,Editor/toggle-media-browser (new),Ardour UI patch,Similar,UI only,Ardour source,../ardour@9.7:gtk2_ardour/editor_audio_import.cc:Editor::external_audio_dialog,Not run,Not run,Expose persistent media-browser visibility; import opens a modal file chooser.,Proposed
+M011,S01-11,Editor,Cmd+Option+O,Editor/ToggleSummary,Profile keybinding,Exact,Native bound,Installed resource,/Applications/Ardour9.app/Contents/Resources/ardour.keys:Editor/ToggleSummary,Not run,Not run,,Proposed
+M012,S01-12,Editor,Cmd+Option+I,Editor/toggle-route-io (new),Ardour UI patch,Similar,UI only,Ardour source,../ardour@9.7:gtk2_ardour/route_params_ui.cc:RouteParams_UI::setup_io_selector,Not run,Not run,Expose selected-route input and output controls as a toggleable pane.,Proposed
+M013,S01-13,Mixer,Cmd+Option+S,Mixer/toggle-selected-bus-sends (new),Ardour UI patch,Similar,UI only,Ardour source,../ardour@9.7:gtk2_ardour/route_ui.cc:RouteUI::show_sends_press,Not run,Not run,Expose the selected bus send display as an action; it currently requires a bus button click.,Proposed
+M014,S01-14,Global,Cmd+Option+M,Common/show-mixer,Profile keybinding,Similar,Native bound,Installed resource,/Applications/Ardour9.app/Contents/Resources/ardour.keys:Common/show-mixer,Not run,Not run,Shows the mixer tab but does not toggle its visibility.,Proposed
 M015,S01-15,,,,,,,,,,,,Needs audit
 M016,S01-16,,,,,,,,,,,,Needs audit
 M017,S01-17,,,,,,,,,,,,Needs audit
 M018,S01-18,,,,,,,,,,,,Needs audit
-M019,S01-19,,,,,,,,,,,,Needs audit
-M020,S01-20,,,,,,,,,,,,Needs audit
+M019,S01-19,Global,Cmd+comma,Window/toggle-session-options-editor,Profile keybinding,Exact,Native bound,Installed resource,/Applications/Ardour9.app/Contents/Resources/ardour.keys:Window/toggle-session-options-editor,Not run,Not run,,Proposed
+M020,S01-20,Global,Escape,Main/Escape,Profile keybinding,Similar,Native bound,Installed resource,/Applications/Ardour9.app/Contents/Resources/ardour.keys:Main/Escape,Not run,Not run,Breaks drags or deselects rather than universally closing a window or dialog.,Proposed
 M021,S02-01,,,,,,,,,,,,Needs audit
 M022,S02-02,,,,,,,,,,,,Needs audit
 M023,S02-03,,,,,,,,,,,,Needs audit

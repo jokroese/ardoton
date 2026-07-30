@@ -56,6 +56,19 @@ def test_rejects_invalid_controlled_value(tmp_path) -> None:
     assert "invalid Availability 'Elsewhere'" in errors[0]
 
 
+def test_accepts_ardour_source_evidence_type(tmp_path) -> None:
+    sources = tmp_path / "sources.csv"
+    mappings = tmp_path / "mappings.csv"
+    write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
+    write_csv(
+        mappings,
+        MAPPING_FIELDS,
+        [mapping("M001", "S01-01", **{"Evidence type": "Ardour source"})],
+    )
+
+    assert validate_contract(sources, mappings) == []
+
+
 def test_rejects_source_without_mapping(tmp_path) -> None:
     sources = tmp_path / "sources.csv"
     mappings = tmp_path / "mappings.csv"
