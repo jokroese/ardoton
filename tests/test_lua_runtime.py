@@ -74,4 +74,3 @@ def test_incompatible_action_state_fails(tmp_path: Path) -> None:
     assert result.returncode != 0
     combined = result.stdout + result.stderr
     assert re.search(r"action|slot|bytecode|invalid|attempt", combined, re.I), combined
-

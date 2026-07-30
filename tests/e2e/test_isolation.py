@@ -80,10 +80,9 @@ def test_hotkey_is_posted_directly_to_ardour(monkeypatch, tmp_path: Path) -> Non
     posted = []
     events = []
     quartz = SimpleNamespace(
-        CGEventCreateKeyboardEvent=lambda source, key, down: events.append(
-            {"key": key, "down": down}
-        )
-        or events[-1],
+        CGEventCreateKeyboardEvent=lambda source, key, down: (
+            events.append({"key": key, "down": down}) or events[-1]
+        ),
         CGEventPostToPid=lambda pid, event: posted.append((pid, event.copy())),
         CGEventSetFlags=lambda event, flags: event.update(flags=flags),
     )
