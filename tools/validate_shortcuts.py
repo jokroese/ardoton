@@ -8,7 +8,7 @@ import json
 import sys
 import tomllib
 import xml.etree.ElementTree as ET
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -47,6 +47,7 @@ def validate_contract(
     errors: list[str] = []
     try:
         schema = load_json(source_path.parent / "shortcut-schema.json")
+        Draft202012Validator.check_schema(schema)
         sources, mapping_docs = documents(source_path, mapping_dir)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         return [str(exc)]
@@ -109,6 +110,17 @@ def validate_contract(
                     errors.append(f"duplicate mapping tuple {tuple_value!r}")
                 tuples.add(tuple_value)
                 evidence = mapping.get("evidence", [])
+                if mapping.get("actionTarget", "").endswith(" (new)") and any(
+                    item.get("claim") == "Target exists" for item in evidence
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: new target requires "
+                        "Building block exists evidence"
+                    )
+                if source.get("inputKind") in {"Keyboard", "Keyboard hold"} and not mapping.get(
+                    "keyToken"
+                ):
+                    errors.append(f"source ID {source_id!r}: keyboard mapping requires keyToken")
                 if mapping.get("mappingClass") == "Exact" and not any(
                     item.get("kind") in {"Callback implementation", "Manual test", "E2E test"}
                     and item.get("claim") in {"Behavior verified", "Behavior candidate"}
@@ -137,6 +149,17 @@ def validate_contract(
                         f"source ID {source_id!r}: implemented profile mapping requires "
                         "profile binding evidence"
                     )
+                if mapping.get("implementationType") == "Profile Lua" and not any(
+                    (item.get("kind") == "Lua API" and item.get("claim") == "Lua feasible")
+                    or (
+                        item.get("kind") == "Action registration"
+                        and item.get("claim") == "Building block exists"
+                    )
+                    for item in evidence
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: Profile Lua requires Lua API or action evidence"
+                    )
                 if mapping.get("implementationType") == "Profile keybinding" and source.get(
                     "inputKind"
                 ) not in {"Keyboard", "Keyboard hold"}:
@@ -147,25 +170,37 @@ def validate_contract(
         errors.append(f"source ID {source_id!r}: has no mapping")
 
     if keymap_path is not None:
-        keymap = {
-            (group.get("name") or "", binding.get("key") or ""): binding.get("action") or ""
-            for group in ET.parse(keymap_path).getroot().findall("Bindings")
-            for binding in group.findall("./Press/Binding")
-        }
+        keymap: dict[tuple[str, str], list[str]] = defaultdict(list)
+        for group in ET.parse(keymap_path).getroot().findall("Bindings"):
+            for binding in group.findall("./Press/Binding"):
+                keymap[(group.get("name") or "", binding.get("key") or "")].append(
+                    binding.get("action") or ""
+                )
         for source_id, mappings in mappings_by_source.items():
             for mapping in mappings:
                 pair = (mapping.get("context", ""), mapping.get("keyToken", ""))
                 if (
                     mapping.get("role") == "Preferred"
-                    and mapping.get("implementationType") == "Profile keybinding"
                     and pair[1]
-                    and keymap.get(pair) not in {None, mapping.get("actionTarget", "")}
+                    and any(
+                        action != mapping.get("actionTarget", "") for action in keymap.get(pair, [])
+                    )
                     and not any(
                         item.get("kind") == "Key conflict" and item.get("result") == "Conflict"
                         for item in mapping.get("evidence", [])
                     )
                 ):
                     errors.append(f"source ID {source_id!r}: key token collision for {pair!r}")
+                if (
+                    mapping.get("implementationType") in {"Profile keybinding", "Profile Lua"}
+                    and mapping.get("status") == "Implemented"
+                    and mapping.get("keyToken")
+                    and mapping.get("actionTarget") not in keymap.get(pair, [])
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: implemented profile mapping is absent "
+                        "from keymap"
+                    )
     return errors
 
 
@@ -190,7 +225,6 @@ def validate_expectations(expectations_path: Path, mapping_dir: Path) -> list[st
                 item
                 for item in candidates
                 if item.get("implementationType") in {"Profile keybinding", "Profile Lua"}
-                and item.get("availability") == "Profile bound"
                 and item.get("status") == "Implemented"
             ]
             if not profile_candidates:

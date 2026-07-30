@@ -18,7 +18,7 @@
           "actionTarget": "Editor/show-plist-selector",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Static keymap evidence only; plist selector behavior is not a verified take-lane workflow.",
           "status": "Implemented",
           "evidence": [

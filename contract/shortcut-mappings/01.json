@@ -14,18 +14,25 @@
           "role": "Preferred",
           "context": "Global",
           "proposedMacos": "Ctrl+Cmd+F",
+          "keyToken": "Primary-Secondary-f",
           "actionTarget": "Common/toggle-fullscreen (new)",
           "implementationType": "Ardour action patch",
           "mappingClass": "Similar",
           "availability": "UI only",
           "note": "Ardour has fullscreen support for individual editor and mixer windows, but no application-wide bindable fullscreen action.",
-          "status": "Proposed",
+          "status": "Blocked",
           "evidence": [
             {
               "kind": "Capability audit",
               "claim": "UI only",
               "reference": "../ardour@9.7:gtk2_ardour/editor.cc:3653-3668;gtk2_ardour/mixer_ui.cc:3158-3173;gtk2_ardour/ardour_ui_ed.cc:803-804",
               "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Secondary-f -> Common/ToggleMaximalEditor",
+              "result": "Conflict"
             }
           ]
         }
@@ -49,9 +56,9 @@
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Target exists",
+              "claim": "Building block exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:764-774;792-800",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -69,15 +76,15 @@
           "actionTarget": "Common/key-change-mixer-visibility",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "For a detached visible mixer the existing key action presents the main window; it is not a second-window toggle.",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Target exists",
+              "claim": "Building block exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:796-800",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -101,7 +108,7 @@
           "actionTarget": "Common/next-tab",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Workspace tab cycling does not implement Live Session/Arrangement view toggling.",
           "status": "Implemented",
           "evidence": [
@@ -127,7 +134,7 @@
           "actionTarget": "Common/previous-tab",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Workspace tab cycling does not implement Live Device/Clip view toggling.",
           "status": "Implemented",
           "evidence": [
@@ -158,9 +165,9 @@
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Target exists",
+              "claim": "Building block exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-204",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -178,8 +185,9 @@
       "mappings": [
         {
           "role": "Preferred",
-          "context": "Processor editor",
+          "context": "Processor Box",
           "proposedMacos": "Q",
+          "keyToken": "q",
           "actionTarget": "ProcessorBox/toggle-hot-swap (new)",
           "implementationType": "Ardour UI patch",
           "mappingClass": "Similar",
@@ -241,7 +249,7 @@
           "actionTarget": "Editor/toggle-log-window",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Ardour's log window exposes diagnostics rather than Live's contextual Info View.",
           "status": "Proposed",
           "evidence": [
@@ -249,7 +257,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:442-443;gtk2_ardour/ardour.menus.in:770",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -273,14 +281,14 @@
           "actionTarget": "Editor/ToggleJadeo",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Native unbound",
+          "availability": "Native",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:601-605",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -300,6 +308,7 @@
           "role": "Preferred",
           "context": "Editor",
           "proposedMacos": "Cmd+Option+B",
+          "keyToken": "Primary-Level4-b",
           "actionTarget": "Editor/toggle-media-browser (new)",
           "implementationType": "Ardour UI patch",
           "mappingClass": "Similar",
@@ -309,9 +318,9 @@
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Target exists",
+              "claim": "Building block exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:189-194",
-              "result": "Candidate"
+              "result": "Confirmed"
             }
           ]
         }
@@ -329,7 +338,7 @@
           "actionTarget": "Editor/ToggleSummary",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Summary visibility is not evidenced as Live Overview-equivalent.",
           "status": "Proposed",
           "evidence": [
@@ -337,7 +346,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:672-674",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -357,6 +366,7 @@
           "role": "Preferred",
           "context": "Editor",
           "proposedMacos": "Cmd+Option+I",
+          "keyToken": "Primary-Level4-i",
           "actionTarget": "Editor/toggle-route-io (new)",
           "implementationType": "Ardour action patch",
           "mappingClass": "Similar",
@@ -365,7 +375,7 @@
           "status": "Proposed",
           "evidence": [
             {
-              "kind": "Callback implementation",
+              "kind": "Capability audit",
               "claim": "UI only",
               "reference": "../ardour@9.7:gtk2_ardour/route_params_ui.cc:265-280",
               "result": "Candidate"
@@ -382,6 +392,7 @@
           "role": "Preferred",
           "context": "Mixer",
           "proposedMacos": "Cmd+Option+S",
+          "keyToken": "Primary-Level4-s",
           "actionTarget": "Mixer/toggle-selected-bus-sends (new)",
           "implementationType": "Ardour action patch",
           "mappingClass": "Similar",
@@ -390,7 +401,7 @@
           "status": "Proposed",
           "evidence": [
             {
-              "kind": "Callback implementation",
+              "kind": "Capability audit",
               "claim": "UI only",
               "reference": "../ardour@9.7:gtk2_ardour/route_ui.cc:1166-1203",
               "result": "Candidate"
@@ -411,7 +422,7 @@
           "actionTarget": "Common/key-change-mixer-visibility",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Shows or presents the Mixer workspace rather than toggling an inline mixer section.",
           "status": "Proposed",
           "evidence": [
@@ -419,7 +430,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:792-800",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -443,7 +454,7 @@
           "actionTarget": "Editor/show-editor-props",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "The Editor Properties Box is a toggleable bottom panel, but it does not provide Live's selected-clip detail view.",
           "status": "Proposed",
           "evidence": [
@@ -451,7 +462,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204;gtk2_ardour/ardour.keys.in:193",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -475,7 +486,7 @@
           "actionTarget": "Editor/show-editor-mixer",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "The Editor Mixer is a toggleable left panel, not Live's selected-device chain view.",
           "status": "Proposed",
           "evidence": [
@@ -483,7 +494,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199;gtk2_ardour/ardour.keys.in:171",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -533,7 +544,7 @@
           "actionTarget": "Common/tutorial",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Ardour launches its tutorial rather than toggling an embedded Learn View.",
           "status": "Proposed",
           "evidence": [
@@ -541,7 +552,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:301-305",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -565,7 +576,7 @@
           "actionTarget": "Common/menu-show-preferences",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Conflicts with Global Common/start-punch-range.",
           "status": "Blocked",
           "evidence": [
@@ -573,7 +584,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:754-756",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -593,8 +604,40 @@
     },
     {
       "sourceId": "S01-20",
-      "auditStatus": "Partially assessed",
+      "auditStatus": "Assessed",
       "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Escape",
+          "keyToken": "Escape",
+          "actionTarget": "Main/close-current-dialog",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Closes Ardour's tracked current dialog, not every arbitrary window, and conflicts with the profile deselect binding.",
+          "status": "Blocked",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:162-167",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:479-496",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Escape -> Main/Escape",
+              "result": "Conflict"
+            }
+          ]
+        },
         {
           "role": "Current fallback",
           "context": "Global",
@@ -603,7 +646,7 @@
           "actionTarget": "Main/Escape",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Main/Escape emits the deselect signal; dialog closing is separately provided by Main/close-current-dialog.",
           "status": "Implemented",
           "evidence": [
@@ -611,7 +654,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:162-167",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",

@@ -18,8 +18,8 @@
           "actionTarget": "LuaAction/script-28",
           "implementationType": "Profile Lua",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
-          "note": "E2E verifies that the profile Lua action creates one audio track.",
+          "availability": "Lua accessible",
+          "note": "E2E verifies creation of one audio track; insertion state and undo behavior are not separately verified.",
           "status": "Implemented",
           "evidence": [
             {
@@ -27,6 +27,12 @@
               "claim": "Behavior verified",
               "reference": "tests/e2e/test_shortcuts.py:M243",
               "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "profile/scripts/ardourton_add_audio_track.lua:22-40",
+              "result": "Candidate"
             },
             {
               "kind": "Profile binding",
@@ -50,8 +56,8 @@
           "actionTarget": "LuaAction/script-29",
           "implementationType": "Profile Lua",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
-          "note": "E2E verifies that the profile Lua action creates one MIDI track.",
+          "availability": "Lua accessible",
+          "note": "E2E verifies creation of one MIDI track; instrument selection and undo behavior are not separately verified.",
           "status": "Implemented",
           "evidence": [
             {
@@ -59,6 +65,12 @@
               "claim": "Behavior verified",
               "reference": "tests/e2e/test_shortcuts.py:M244",
               "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "profile/scripts/ardourton_add_midi_track.lua:20-46",
+              "result": "Candidate"
             },
             {
               "kind": "Profile binding",
@@ -82,10 +94,16 @@
           "actionTarget": "LuaAction/script-30",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
-          "note": "Static keymap evidence only; return-track creation behavior has not been exercised.",
+          "availability": "Lua accessible",
+          "note": "Creates a return bus and sends from selected tracks; empty selection, duplicate-name, and undo behavior remain untested.",
           "status": "Implemented",
           "evidence": [
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "profile/scripts/ardourton_add_return.lua:34-62",
+              "result": "Candidate"
+            },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
@@ -153,7 +171,7 @@
           "actionTarget": "Editor/track-record-enable-toggle",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Static keymap evidence only; selected-track arming behavior remains untested.",
           "status": "Implemented",
           "evidence": [
@@ -185,7 +203,7 @@
           "actionTarget": "Editor/track-solo-toggle",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Static keymap evidence only; selected-track solo behavior remains untested.",
           "status": "Implemented",
           "evidence": [

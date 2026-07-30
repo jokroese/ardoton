@@ -33,10 +33,16 @@
           "actionTarget": "LuaAction/script-32",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
-          "note": "Static keymap evidence only; duplicate behavior has not been exercised.",
+          "availability": "Lua accessible",
+          "note": "Invokes Ardour's duplicate-routes action for the current selection; dialog state and undo behavior remain untested.",
           "status": "Implemented",
           "evidence": [
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "profile/scripts/ardourton_duplicate_tracks.lua:9-13",
+              "result": "Candidate"
+            },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",

@@ -18,7 +18,7 @@
           "actionTarget": "Transport/focus-on-clock",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native bound",
+          "availability": "Native",
           "note": "Focuses Ardour's clock control rather than the complete Live Control Bar.",
           "status": "Proposed",
           "evidence": [
@@ -26,7 +26,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:455-457",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Default binding",
@@ -50,7 +50,7 @@
           "actionTarget": "Common/show-trigger",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Shows Ardour's Cues page, its closest Session View analogue, but does not target a specific grid control.",
           "status": "Proposed",
           "evidence": [
@@ -58,7 +58,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:770-774",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -82,7 +82,7 @@
           "actionTarget": "Common/show-editor",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Shows Ardour's Editor timeline, but does not focus a particular arrangement control.",
           "status": "Proposed",
           "evidence": [
@@ -90,7 +90,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:770-771",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -114,7 +114,7 @@
           "actionTarget": "Editor/show-editor-props",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native bound",
+          "availability": "Native",
           "note": "Shows Ardour's bottom Editor Properties Box rather than a selected-clip editor.",
           "status": "Proposed",
           "evidence": [
@@ -122,7 +122,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Default binding",
@@ -146,7 +146,7 @@
           "actionTarget": "Editor/show-editor-mixer",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native bound",
+          "availability": "Native",
           "note": "Shows Ardour's left Editor Mixer panel rather than a selected-device chain.",
           "status": "Proposed",
           "evidence": [
@@ -154,7 +154,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Default binding",
@@ -178,7 +178,7 @@
           "actionTarget": "Editor/show-editor-list",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native bound",
+          "availability": "Native",
           "note": "Shows Ardour's right source-list panel rather than Live's searchable Browser.",
           "status": "Proposed",
           "evidence": [
@@ -186,7 +186,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:191-194",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Default binding",
@@ -236,7 +236,7 @@
           "actionTarget": "Common/tutorial",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Ardour launches its tutorial rather than focusing an embedded Learn View.",
           "status": "Proposed",
           "evidence": [
@@ -244,7 +244,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:301-305",
-              "result": "Candidate"
+              "result": "Confirmed"
             }
           ]
         }
@@ -262,7 +262,7 @@
           "actionTarget": "Editor/show-editor-props",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native bound",
+          "availability": "Native",
           "note": "Shows the Editor Properties Box, which is not Live's selected-clip panel and has no selected-clip focus target.",
           "status": "Proposed",
           "evidence": [
@@ -270,7 +270,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
-              "result": "Candidate"
+              "result": "Confirmed"
             }
           ]
         }
@@ -293,7 +293,7 @@
           "status": "Proposed",
           "evidence": [
             {
-              "kind": "Callback implementation",
+              "kind": "Capability audit",
               "claim": "UI only",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
               "result": "Candidate"
@@ -340,7 +340,7 @@
           "actionTarget": "Common/next-tab",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Cycles Ardour workspace tabs instead of focusable controls.",
           "status": "Implemented",
           "evidence": [
@@ -392,7 +392,7 @@
           "actionTarget": "Common/previous-tab",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Cycles Ardour workspace tabs instead of focusable controls.",
           "status": "Implemented",
           "evidence": [

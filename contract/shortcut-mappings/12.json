@@ -73,7 +73,7 @@
           "actionTarget": "Notes/quantize-selected-notes",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Static keymap evidence only; MIDI note quantization behavior remains untested.",
           "status": "Implemented",
           "evidence": [

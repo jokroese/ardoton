@@ -43,7 +43,7 @@
           "actionTarget": "Transport/record-roll",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "E2E verifies a record-roll request; this differs from Ableton Record behavior.",
           "status": "Implemented",
           "evidence": [

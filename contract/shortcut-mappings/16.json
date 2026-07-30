@@ -18,7 +18,7 @@
           "actionTarget": "Editor/split-region",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Static keymap evidence only; split behavior at the arrangement selection remains untested.",
           "status": "Implemented",
           "evidence": [
@@ -50,7 +50,7 @@
           "actionTarget": "Editor/editor-consolidate",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Static keymap evidence only; consolidation behavior for the arrangement selection remains untested.",
           "status": "Implemented",
           "evidence": [
@@ -122,10 +122,16 @@
           "actionTarget": "LuaAction/script-31",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
-          "note": "Static keymap evidence only; loop-brace behavior requires an Editor selection and remains untested.",
+          "availability": "Lua accessible",
+          "note": "Uses the current Editor range selection to set and toggle loop playback; empty selections and undo behavior remain untested.",
           "status": "Implemented",
           "evidence": [
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "profile/scripts/ardourton_set_loop.lua:9-14",
+              "result": "Candidate"
+            },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
