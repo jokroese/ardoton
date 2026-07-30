@@ -1,0 +1,45 @@
+Evidence ID,Mapping ID,Evidence kind,Claim,Reference,Result
+E001,M002,Action registration,Target exists,../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:796-800,Candidate
+E002,M002,Callback implementation,Behavior candidate,../ardour@9.7:gtk2_ardour/ardour_ui_dialogs.cc:498-511,Candidate
+E003,M006,Callback implementation,Behavior candidate,../ardour@9.7:gtk2_ardour/processor_box.cc:2836-2852,Candidate
+E004,M006,Lua API,Lua feasible,../ardour@9.7:share/scripts/s_replaceplugin.lua:5-8,Candidate
+E005,M009,Action registration,Target exists,../ardour@9.7:gtk2_ardour/editor_actions.cc:601-605,Candidate
+E006,M009,Callback implementation,Behavior candidate,../ardour@9.7:gtk2_ardour/editor_actions.cc:1010-1017,Candidate
+E007,M010,Action registration,Target exists,../ardour@9.7:gtk2_ardour/editor_actions.cc:189-194,Candidate
+E008,M011,Action registration,Target exists,../ardour@9.7:gtk2_ardour/editor_actions.cc:672-674,Candidate
+E009,M011,Callback implementation,Behavior candidate,../ardour@9.7:gtk2_ardour/editor_actions.cc:952-956,Candidate
+E010,M012,Callback implementation,UI only,../ardour@9.7:gtk2_ardour/route_params_ui.cc:265-280,Candidate
+E011,M013,Callback implementation,UI only,../ardour@9.7:gtk2_ardour/route_ui.cc:1166-1203,Candidate
+E012,M014,Action registration,Target exists,../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:792-800,Candidate
+E013,M003,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab,Confirmed
+E014,M004,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Global Tertiary-ISO_Left_Tab -> Common/previous-tab,Confirmed
+E015,M058,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Mixer Primary-d -> LuaAction/script-32,Confirmed
+E016,M138,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Notes Primary-u -> Notes/quantize-selected-notes,Confirmed
+E017,M200,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Editor Primary-e -> Editor/split-region,Confirmed
+E018,M201,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Editor Primary-j -> Editor/editor-consolidate,Confirmed
+E019,M210,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Global Primary-l -> LuaAction/script-31,Confirmed
+E020,M235,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Editor Primary-Level4-u -> Editor/show-plist-selector,Confirmed
+E021,M243,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Global Primary-t -> LuaAction/script-28,Confirmed
+E022,M244,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-t -> LuaAction/script-29,Confirmed
+E023,M245,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Global Primary-Level4-t -> LuaAction/script-30,Confirmed
+E024,M255,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Editor c -> Editor/track-record-enable-toggle,Confirmed
+E025,M256,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Editor s -> Editor/track-solo-toggle,Confirmed
+E026,M266,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Global F9 -> Transport/record-roll,Confirmed
+E027,M019,Action registration,Target exists,../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:754-756,Candidate
+E028,M019,Callback implementation,Behavior candidate,../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:542-549,Candidate
+E029,M020,Profile binding,Binding exists,profile/keybindings/macos/ardour.keys: Global Escape -> Main/Escape,Confirmed
+E030,M138,Callback implementation,Behavior candidate,Notes/quantize-selected-notes,Candidate
+E031,M200,Callback implementation,Behavior candidate,Editor/split-region,Candidate
+E032,M201,Callback implementation,Behavior candidate,Editor/editor-consolidate,Candidate
+E033,M255,Callback implementation,Behavior candidate,Editor/track-record-enable-toggle,Candidate
+E034,M256,Callback implementation,Behavior candidate,Editor/track-solo-toggle,Candidate
+E035,M243,E2E test,Behavior verified,tests/e2e/test_shortcuts.py:M243,Confirmed
+E036,M244,E2E test,Behavior verified,tests/e2e/test_shortcuts.py:M244,Confirmed
+E037,M266,E2E test,Behavior verified,tests/e2e/test_shortcuts.py:M266,Confirmed
+E038,M014,Callback implementation,Behavior candidate,../ardour@9.7:gtk2_ardour/ardour_ui_dialogs.cc:498-511,Candidate
+E040,M019,Key conflict,Key conflict,profile/keybindings/macos/ardour.keys: Global Primary-comma -> Common/start-punch-range,Conflict
+E041,M020,Action registration,Target exists,../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:162-167,Candidate
+E042,M020,Callback implementation,Behavior candidate,../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:144-152,Candidate
+E043,M020,Callback implementation,Behavior candidate,../ardour@9.7:libs/gtkmm2ext/keyboard.cc:440-452;479-496,Candidate
+E044,M340,Action registration,Target exists,../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:764-774;792-800,Candidate
+E045,M340,Callback implementation,Behavior candidate,../ardour@9.7:gtk2_ardour/ardour_ui_dialogs.cc:498-577,Candidate

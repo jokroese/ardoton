@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 
 from tools.validate_shortcuts import (
+    EVIDENCE_FIELDS,
     MAPPING_FIELDS,
     SOURCE_FIELDS,
     validate_contract,
@@ -33,7 +34,12 @@ def source(source_id: str) -> dict[str, str]:
 def mapping(mapping_id: str, source_id: str, **values: str) -> dict[str, str]:
     row = {field: "" for field in MAPPING_FIELDS}
     row.update(
-        {"Mapping ID": mapping_id, "Ableton shortcut ID": source_id, "Status": "Needs audit"}
+        {
+            "Mapping ID": mapping_id,
+            "Ableton shortcut ID": source_id,
+            "Mapping role": "Placeholder",
+            "Status": "Needs audit",
+        }
     )
     row.update(values)
     return row
@@ -41,7 +47,12 @@ def mapping(mapping_id: str, source_id: str, **values: str) -> dict[str, str]:
 
 def test_real_shortcut_contract_is_valid() -> None:
     assert (
-        validate_contract(CONTRACT / "ableton-shortcuts.csv", CONTRACT / "shortcuts-map.csv") == []
+        validate_contract(
+            CONTRACT / "ableton-shortcuts.csv",
+            CONTRACT / "shortcuts-map.csv",
+            CONTRACT / "shortcut-evidence.csv",
+        )
+        == []
     )
 
 
@@ -56,17 +67,28 @@ def test_rejects_invalid_controlled_value(tmp_path) -> None:
     assert "invalid Availability 'Elsewhere'" in errors[0]
 
 
-def test_accepts_ardour_source_evidence_type(tmp_path) -> None:
+def test_rejects_invalid_evidence_reference(tmp_path) -> None:
     sources = tmp_path / "sources.csv"
     mappings = tmp_path / "mappings.csv"
     write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
+    evidence = tmp_path / "evidence.csv"
+    write_csv(mappings, MAPPING_FIELDS, [mapping("M001", "S01-01")])
     write_csv(
-        mappings,
-        MAPPING_FIELDS,
-        [mapping("M001", "S01-01", **{"Evidence type": "Ardour source"})],
+        evidence,
+        EVIDENCE_FIELDS,
+        [
+            {
+                "Evidence ID": "E001",
+                "Mapping ID": "M999",
+                "Evidence kind": "Action registration",
+                "Claim": "Target exists",
+                "Reference": "test",
+                "Result": "Candidate",
+            }
+        ],
     )
 
-    assert validate_contract(sources, mappings) == []
+    assert "unknown Mapping ID 'M999'" in validate_contract(sources, mappings, evidence)[0]
 
 
 def test_rejects_source_without_mapping(tmp_path) -> None:
@@ -80,7 +102,7 @@ def test_rejects_source_without_mapping(tmp_path) -> None:
     assert "source ID 'S01-02': has no mapping" in errors
 
 
-def test_static_verified_exact_mapping_can_await_behavior_test(tmp_path) -> None:
+def test_rejects_exact_without_behavior_evidence(tmp_path) -> None:
     sources = tmp_path / "sources.csv"
     mappings = tmp_path / "mappings.csv"
     write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
@@ -91,26 +113,37 @@ def test_static_verified_exact_mapping_can_await_behavior_test(tmp_path) -> None
             mapping(
                 "M001",
                 "S01-01",
-                Status="Static verified",
+                Status="Proposed",
+                **{"Mapping role": "Preferred"},
                 **{
-                    "Proposed macOS": "Primary-a",
+                    "Proposed macOS": "Cmd+A",
                     "Ardour context": "Global",
+                    "Ardour key token": "Primary-a",
                     "Ardour action target": "Action/test",
                     "Implementation type": "Profile keybinding",
                     "Mapping class": "Exact",
-                    "Availability": "Profile bound",
-                    "Evidence type": "Profile keymap",
-                    "Evidence reference": (
-                        "profile/keybindings/macos/ardour.keys: Global Primary-a -> Action/test"
-                    ),
-                    "Static verification": "Passed",
-                    "Behavior verification": "Not run",
+                    "Availability": "Native bound",
                 },
             )
         ],
     )
 
-    assert validate_contract(sources, mappings) == []
+    evidence = tmp_path / "evidence.csv"
+    write_csv(
+        evidence,
+        EVIDENCE_FIELDS,
+        [
+            {
+                "Evidence ID": "E001",
+                "Mapping ID": "M001",
+                "Evidence kind": "Action registration",
+                "Claim": "Target exists",
+                "Reference": "test",
+                "Result": "Candidate",
+            }
+        ],
+    )
+    assert "Exact requires behavior evidence" in validate_contract(sources, mappings, evidence)[0]
 
 
 def test_expectation_requires_profile_bound_keybinding_or_lua_mapping(tmp_path) -> None:
@@ -123,3 +156,98 @@ def test_expectation_requires_profile_bound_keybinding_or_lua_mapping(tmp_path) 
 
     assert "requires Implementation type Profile keybinding or Profile Lua" in errors[0]
     assert "requires Availability 'Profile bound'" in errors[1]
+
+
+def test_rejects_missing_capability_audit(tmp_path) -> None:
+    sources = tmp_path / "sources.csv"
+    mappings = tmp_path / "mappings.csv"
+    evidence = tmp_path / "evidence.csv"
+    write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
+    write_csv(
+        mappings,
+        MAPPING_FIELDS,
+        [
+            mapping(
+                "M001",
+                "S01-01",
+                Status="Proposed",
+                **{
+                    "Mapping role": "Preferred",
+                    "Ardour context": "Global",
+                    "Ardour action target": "Action/test",
+                    "Implementation type": "Ardour UI patch",
+                    "Mapping class": "Similar",
+                    "Availability": "Missing",
+                },
+            )
+        ],
+    )
+    write_csv(
+        evidence,
+        EVIDENCE_FIELDS,
+        [
+            {
+                "Evidence ID": "E001",
+                "Mapping ID": "M001",
+                "Evidence kind": "Callback implementation",
+                "Claim": "UI only",
+                "Reference": "test",
+                "Result": "Candidate",
+            }
+        ],
+    )
+
+    assert (
+        "Missing requires capability audit evidence"
+        in validate_contract(sources, mappings, evidence)[0]
+    )
+
+
+def test_rejects_profile_token_collision(tmp_path) -> None:
+    sources = tmp_path / "sources.csv"
+    mappings = tmp_path / "mappings.csv"
+    evidence = tmp_path / "evidence.csv"
+    keymap = tmp_path / "ardour.keys"
+    write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
+    write_csv(
+        mappings,
+        MAPPING_FIELDS,
+        [
+            mapping(
+                "M001",
+                "S01-01",
+                Status="Proposed",
+                **{
+                    "Mapping role": "Preferred",
+                    "Ardour context": "Global",
+                    "Ardour key token": "Primary-a",
+                    "Ardour action target": "Action/test",
+                    "Implementation type": "Profile keybinding",
+                    "Mapping class": "Similar",
+                    "Availability": "Profile bound",
+                },
+            )
+        ],
+    )
+    write_csv(
+        evidence,
+        EVIDENCE_FIELDS,
+        [
+            {
+                "Evidence ID": "E001",
+                "Mapping ID": "M001",
+                "Evidence kind": "Profile binding",
+                "Claim": "Binding exists",
+                "Reference": "test",
+                "Result": "Confirmed",
+            }
+        ],
+    )
+    keymap.write_text(
+        "<BindingSet><Bindings name=\"Global\"><Press>"
+        "<Binding key=\"Primary-a\" action=\"Action/other\" />"
+        "</Press></Bindings></BindingSet>",
+        encoding="utf-8",
+    )
+
+    assert "key token collision" in validate_contract(sources, mappings, evidence, keymap)[0]

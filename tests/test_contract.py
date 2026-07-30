@@ -7,7 +7,8 @@ from support import CONTRACT, contract_ids, contract_row_count, load_expectation
 EXPECTED_ROWS = {
     "workflows.csv": 50,
     "ableton-shortcuts.csv": 339,
-    "shortcuts-map.csv": 339,
+    "shortcuts-map.csv": 340,
+    "shortcut-evidence.csv": 44,
     "terminology.csv": 25,
     "acceptance-tests.csv": 15,
     "sources.csv": 24,

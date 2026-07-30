@@ -8,11 +8,13 @@ import csv
 import re
 import sys
 import tomllib
+import xml.etree.ElementTree as ET
 from collections import Counter
 from pathlib import Path
 
 SOURCE_ID_PATTERN = re.compile(r"S[0-9]{2}-[0-9]{2}$")
 MAPPING_ID_PATTERN = re.compile(r"M[0-9]{3}$")
+EVIDENCE_ID_PATTERN = re.compile(r"E[0-9]{3}$")
 
 SOURCE_FIELDS = (
     "ID",
@@ -25,19 +27,18 @@ SOURCE_FIELDS = (
 MAPPING_FIELDS = (
     "Mapping ID",
     "Ableton shortcut ID",
+    "Mapping role",
     "Ardour context",
     "Proposed macOS",
+    "Ardour key token",
     "Ardour action target",
     "Implementation type",
     "Mapping class",
     "Availability",
-    "Evidence type",
-    "Evidence reference",
-    "Static verification",
-    "Behavior verification",
     "Conflict / implementation note",
     "Status",
 )
+EVIDENCE_FIELDS = ("Evidence ID", "Mapping ID", "Evidence kind", "Claim", "Reference", "Result")
 
 INPUT_KINDS = {
     "Keyboard",
@@ -62,32 +63,38 @@ CONTROLLED_VALUES = {
         "Profile bound",
         "Native bound",
         "Native unbound",
+        "Lua accessible",
         "UI only",
         "Missing",
         "Unknown",
     },
-    "Evidence type": {
-        "Profile keymap",
-        "Ardour source",
-        "Ardour Lua API",
-        "Installed resource",
-        "Ardour defaults",
+    "Mapping role": {"Preferred", "Current fallback", "Alternative", "Placeholder"},
+    "Status": {"Needs audit", "Proposed", "Implemented", "Blocked", "Rejected"},
+}
+EVIDENCE_VALUES = {
+    "Evidence kind": {
+        "Action registration",
+        "Callback implementation",
+        "Lua API",
+        "Default binding",
+        "Profile binding",
         "Ardour manual",
-        "Ardour action list",
         "Manual test",
-        "None",
+        "E2E test",
+        "Capability audit",
+        "Key conflict",
     },
-    "Static verification": {"Not applicable", "Not run", "Passed", "Failed"},
-    "Behavior verification": {"Not run", "Manual passed", "E2E passed", "Failed", "Blocked"},
-    "Status": {
-        "Implemented",
-        "Implemented with divergence",
-        "Static verified",
-        "Proposed",
-        "Needs audit",
-        "Blocked",
-        "No equivalent",
+    "Claim": {
+        "Target exists",
+        "Behavior candidate",
+        "Binding exists",
+        "Lua feasible",
+        "UI only",
+        "Capability missing",
+        "Key conflict",
+        "Behavior verified",
     },
+    "Result": {"Confirmed", "Candidate", "Conflict", "Unverified"},
 }
 
 
@@ -107,11 +114,22 @@ def require(errors: list[str], row: dict[str, str], line: int, field: str, statu
         errors.append(f"mapping line {line}: {status} requires {field}")
 
 
-def validate_contract(source_path: Path, mapping_path: Path) -> list[str]:
+def validate_contract(
+    source_path: Path,
+    mapping_path: Path,
+    evidence_path: Path | None = None,
+    keymap_path: Path | None = None,
+) -> list[str]:
     """Validate contract CSVs and return human-readable errors."""
     sources, errors = read_csv(source_path, SOURCE_FIELDS)
     mappings, mapping_errors = read_csv(mapping_path, MAPPING_FIELDS)
     errors.extend(mapping_errors)
+    if evidence_path is None:
+        evidence_path = mapping_path.with_name("shortcut-evidence.csv")
+    evidence, evidence_errors = (
+        read_csv(evidence_path, EVIDENCE_FIELDS) if evidence_path.exists() else ([], [])
+    )
+    errors.extend(evidence_errors)
 
     source_ids: set[str] = set()
     source_kinds: dict[str, str] = {}
@@ -175,78 +193,102 @@ def validate_contract(source_path: Path, mapping_path: Path) -> list[str]:
                 "source"
             )
 
-        if status == "Proposed":
-            for field in (
-                "Ardour action target",
-                "Implementation type",
-                "Mapping class",
-                "Availability",
-            ):
-                require(errors, row, line, field, status)
-        elif status == "No equivalent":
-            for field in ("Evidence type", "Evidence reference", "Conflict / implementation note"):
-                require(errors, row, line, field, status)
-            if row.get("Mapping class") != "No equivalent":
+        role = row.get("Mapping role", "")
+        if role == "Placeholder":
+            if status != "Needs audit":
+                errors.append(f"mapping line {line}: Placeholder requires Status 'Needs audit'")
+            if any(row.get(field) for field in MAPPING_FIELDS[3:-1]):
                 errors.append(
-                    f"mapping line {line}: No equivalent requires Mapping class 'No equivalent'"
+                    f"mapping line {line}: Placeholder must contain no implementation fields"
                 )
-            if row.get("Availability") != "Missing":
-                errors.append(f"mapping line {line}: No equivalent requires Availability 'Missing'")
-        elif status in {"Implemented", "Implemented with divergence"}:
+        if role == "Current fallback":
+            if status != "Implemented":
+                errors.append(
+                    f"mapping line {line}: Current fallback requires Status 'Implemented'"
+                )
+            if row.get("Mapping class") not in {"Similar", "Needs audit"}:
+                errors.append(
+                    f"mapping line {line}: Current fallback requires Mapping class "
+                    "Similar or Needs audit"
+                )
+        if status in {"Proposed", "Implemented"}:
             for field in (
-                "Proposed macOS",
                 "Ardour context",
                 "Ardour action target",
                 "Implementation type",
                 "Mapping class",
                 "Availability",
-                "Evidence type",
-                "Evidence reference",
             ):
                 require(errors, row, line, field, status)
-            if row.get("Static verification") != "Passed":
+            if role in {"", "Placeholder"}:
                 errors.append(
-                    f"mapping line {line}: {status} requires Static verification 'Passed'"
+                    f"mapping line {line}: {status} requires a non-placeholder Mapping role"
                 )
-            if row.get("Behavior verification") in {"", "Not run"}:
-                errors.append(
-                    f"mapping line {line}: {status} requires Behavior verification "
-                    "other than 'Not run'"
-                )
-            if status == "Implemented" and row.get("Mapping class") == "Similar":
-                errors.append(
-                    f"mapping line {line}: Implemented cannot use Mapping class 'Similar'"
-                )
-            if status == "Implemented with divergence" and row.get("Mapping class") != "Similar":
-                errors.append(
-                    f"mapping line {line}: Implemented with divergence requires "
-                    "Mapping class 'Similar'"
-                )
-        elif status == "Static verified":
-            for field in (
-                "Proposed macOS",
-                "Ardour context",
-                "Ardour action target",
-                "Implementation type",
-                "Mapping class",
-                "Availability",
-                "Evidence type",
-                "Evidence reference",
-            ):
-                require(errors, row, line, field, status)
-            if row.get("Static verification") != "Passed":
-                errors.append(
-                    f"mapping line {line}: Static verified requires Static verification 'Passed'"
-                )
-        elif status == "Blocked":
-            for field in (
-                "Implementation type",
-                "Evidence type",
-                "Evidence reference",
-                "Conflict / implementation note",
-            ):
-                require(errors, row, line, field, status)
 
+    evidence_ids: set[str] = set()
+    evidence_by_mapping: dict[str, list[dict[str, str]]] = {}
+    for line, row in enumerate(evidence, start=2):
+        evidence_id = row.get("Evidence ID", "")
+        if not EVIDENCE_ID_PATTERN.fullmatch(evidence_id):
+            errors.append(f"evidence line {line}: invalid Evidence ID {evidence_id!r}")
+        if evidence_id in evidence_ids:
+            errors.append(f"evidence line {line}: duplicate Evidence ID {evidence_id!r}")
+        evidence_ids.add(evidence_id)
+        if row.get("Mapping ID") not in mapping_ids:
+            errors.append(f"evidence line {line}: unknown Mapping ID {row.get('Mapping ID', '')!r}")
+        evidence_by_mapping.setdefault(row.get("Mapping ID", ""), []).append(row)
+        for field, allowed in EVIDENCE_VALUES.items():
+            if row.get(field) not in allowed:
+                errors.append(f"evidence line {line}: invalid {field} {row.get(field, '')!r}")
+    for line, row in enumerate(mappings, start=2):
+        mapping_evidence = evidence_by_mapping.get(row.get("Mapping ID", ""), [])
+        if row.get("Mapping role") != "Placeholder" and not mapping_evidence:
+            errors.append(f"mapping line {line}: non-placeholder requires evidence")
+        if row.get("Mapping class") == "Exact" and not any(
+            item.get("Evidence kind") in {"Callback implementation", "Manual test", "E2E test"}
+            and item.get("Claim") in {"Behavior verified", "Behavior candidate"}
+            for item in mapping_evidence
+        ):
+            errors.append(f"mapping line {line}: Exact requires behavior evidence")
+        if row.get("Availability") == "Missing" and not any(
+            item.get("Evidence kind") == "Capability audit"
+            and item.get("Claim") == "Capability missing"
+            for item in mapping_evidence
+        ):
+            errors.append(f"mapping line {line}: Missing requires capability audit evidence")
+        if (
+            row.get("Implementation type") in {"Profile keybinding", "Profile Lua"}
+            and row.get("Status") == "Implemented"
+            and not any(
+                item.get("Evidence kind") == "Profile binding"
+                and item.get("Claim") == "Binding exists"
+                and item.get("Result") == "Confirmed"
+                for item in mapping_evidence
+            )
+        ):
+            errors.append(
+                f"mapping line {line}: implemented profile mapping requires "
+                "profile binding evidence"
+            )
+    if keymap_path is not None:
+        keymap = {
+            (group.get("name") or "", binding.get("key") or ""): binding.get("action") or ""
+            for group in ET.parse(keymap_path).getroot().findall("Bindings")
+            for binding in group.findall("./Press/Binding")
+        }
+        for line, row in enumerate(mappings, start=2):
+            pair = (row.get("Ardour context", ""), row.get("Ardour key token", ""))
+            if (
+                row.get("Mapping role") == "Preferred"
+                and row.get("Implementation type") == "Profile keybinding"
+                and pair[1]
+                and keymap.get(pair) not in {None, row.get("Ardour action target", "")}
+                and not any(
+                    item.get("Evidence kind") == "Key conflict" and item.get("Result") == "Conflict"
+                    for item in evidence_by_mapping.get(row.get("Mapping ID", ""), [])
+                )
+            ):
+                errors.append(f"mapping line {line}: key token collision for {pair!r}")
     for source_id in sorted(source_ids - mapped_source_ids):
         errors.append(f"source ID {source_id!r}: has no mapping")
     return errors
@@ -278,15 +320,17 @@ def validate_expectations(expectations_path: Path, mapping_path: Path) -> list[s
     return errors
 
 
-def report(source_path: Path, mapping_path: Path) -> str:
+def report(source_path: Path, mapping_path: Path, evidence_path: Path) -> str:
     sources, _ = read_csv(source_path, SOURCE_FIELDS)
     mappings, _ = read_csv(mapping_path, MAPPING_FIELDS)
+    evidence, _ = read_csv(evidence_path, EVIDENCE_FIELDS)
     source_counts = Counter(row.get("Input kind", "") for row in sources)
     status_counts = Counter(row.get("Status", "") for row in mappings)
     lines = ["Source input kinds:"]
     lines.extend(f"  {kind}: {count}" for kind, count in sorted(source_counts.items()))
     lines.append("Mapping statuses:")
     lines.extend(f"  {status}: {count}" for status, count in sorted(status_counts.items()))
+    lines.append(f"Evidence records: {len(evidence)}")
     return "\n".join(lines)
 
 
@@ -299,7 +343,9 @@ def main() -> int:
     root = Path(__file__).resolve().parents[1]
     source_path = root / "contract" / "ableton-shortcuts.csv"
     mapping_path = root / "contract" / "shortcuts-map.csv"
-    errors = validate_contract(source_path, mapping_path)
+    evidence_path = root / "contract" / "shortcut-evidence.csv"
+    keymap_path = root / "profile" / "keybindings" / "macos" / "ardour.keys"
+    errors = validate_contract(source_path, mapping_path, evidence_path, keymap_path)
     errors.extend(validate_expectations(root / "tests" / "expectations.toml", mapping_path))
     if errors:
         print("\n".join(f"error: {error}" for error in errors), file=sys.stderr)
@@ -308,7 +354,7 @@ def main() -> int:
     mapping_count = len(read_csv(mapping_path, MAPPING_FIELDS)[0])
     print(f"Validated {source_count} sources and {mapping_count} mappings.")
     if args.report:
-        print(report(source_path, mapping_path))
+        print(report(source_path, mapping_path, evidence_path))
     return 0
 
 
