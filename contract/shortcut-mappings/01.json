@@ -35,6 +35,32 @@
               "result": "Conflict"
             }
           ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Ctrl+Cmd+F",
+          "keyToken": "Primary-Secondary-f",
+          "actionTarget": "Common/ToggleMaximalEditor",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "The installed binding maximizes the Editor space rather than toggling fullscreen for the active Ardour workspace.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:803-804",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Secondary-f -> Common/ToggleMaximalEditor",
+              "result": "Confirmed"
+            }
+          ]
         }
       ]
     },
@@ -192,7 +218,7 @@
           "implementationType": "Ardour UI patch",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Plugin selection adds a processor; Lua can replace one, but no selected-processor hot-swap browser workflow exists.",
+          "note": "Plugin selection adds a processor; Lua replacement must preserve selected-processor position and state, define undo behavior, and cannot provide Live's hot-swap browser workflow.",
           "status": "Proposed",
           "evidence": [
             {
@@ -230,7 +256,7 @@
             {
               "kind": "Capability audit",
               "claim": "Capability missing",
-              "reference": "../ardour@9.7: searched gtk2_ardour and libs/ardour for drum rack, drum pad, selected pad, and last pad; only factory drum-track scripts were found.",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour and libs/ardour for 'drum rack', 'drum pad', 'selected pad', and 'last pad'; no drum-rack or selected-pad view model was found.",
               "result": "Candidate"
             }
           ]
@@ -313,7 +339,7 @@
           "implementationType": "Ardour UI patch",
           "mappingClass": "Similar",
           "availability": "UI only",
-          "note": "Editor/show-editor-list toggles the right source-list panel, not a persistent unified media browser.",
+          "note": "Editor/show-editor-list toggles the right source-list panel, not a persistent unified media browser; Live also accepts Cmd+Option+5.",
           "status": "Proposed",
           "evidence": [
             {
@@ -339,7 +365,7 @@
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
           "availability": "Native",
-          "note": "Summary visibility is not evidenced as Live Overview-equivalent.",
+          "note": "Ardour Summary is an Editor navigation strip, while Live Overview is a global arrangement navigator with different view semantics.",
           "status": "Proposed",
           "evidence": [
             {
@@ -371,7 +397,7 @@
           "implementationType": "Ardour action patch",
           "mappingClass": "Similar",
           "availability": "UI only",
-          "note": "Existing input/output selectors need ActionManager exposure only.",
+          "note": "Route Properties contains input/output selectors, but a new action must define selected-route behavior and differs from Live's global In/Out section visibility.",
           "status": "Proposed",
           "evidence": [
             {
@@ -397,7 +423,7 @@
           "implementationType": "Ardour action patch",
           "mappingClass": "Similar",
           "availability": "UI only",
-          "note": "Existing bus send display handler needs ActionManager exposure only.",
+          "note": "Ardour spills sends for a selected bus or route, while Live toggles Sends controls for the active Session or Arrangement view.",
           "status": "Proposed",
           "evidence": [
             {
@@ -429,7 +455,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:792-800",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:791",
               "result": "Confirmed"
             },
             {
@@ -525,7 +551,7 @@
             {
               "kind": "Capability audit",
               "claim": "Capability missing",
-              "reference": "../ardour@9.7: searched gtk2_ardour, libs/ardour, and share/scripts for Groove Pool and groove-pool actions; no session-level groove feature was found.",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour, libs/ardour, and share/scripts for 'Groove Pool' and 'groove-pool'; no session-level groove model or action was found.",
               "result": "Candidate"
             }
           ]
@@ -541,11 +567,31 @@
           "context": "Global",
           "proposedMacos": "Cmd+Option+7",
           "keyToken": "Primary-Level4-7",
+          "actionTarget": "Common/focus-learn-view (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no embedded Learn View to focus or hide.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour and share for Learn View and embedded tutorial panes; only the external tutorial launcher was found.",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+7",
+          "keyToken": "Primary-Level4-7",
           "actionTarget": "Common/tutorial",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
           "availability": "Native",
-          "note": "Ardour launches its tutorial rather than toggling an embedded Learn View.",
+          "note": "Launches Ardour's external tutorial URL instead of showing or focusing an embedded Learn View.",
           "status": "Proposed",
           "evidence": [
             {
@@ -557,7 +603,7 @@
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:301-305",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_access_web.cc:69-72",
               "result": "Candidate"
             }
           ]
@@ -575,9 +621,9 @@
           "keyToken": "Primary-comma",
           "actionTarget": "Common/menu-show-preferences",
           "implementationType": "Profile keybinding",
-          "mappingClass": "Similar",
+          "mappingClass": "Exact",
           "availability": "Native",
-          "note": "Conflicts with Global Common/start-punch-range.",
+          "note": "Matches Ardour's Preferences command but is blocked by the existing punch-range binding.",
           "status": "Blocked",
           "evidence": [
             {
