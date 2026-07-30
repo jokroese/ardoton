@@ -8,63 +8,316 @@
   "shortcuts": [
     {
       "sourceId": "S04-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Cmd+G",
+          "keyToken": "Primary-g",
+          "actionTarget": "ProcessorBox/group-processors (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no nested processor-group model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Cmd+Shift+G",
+          "keyToken": "Primary-Tertiary-g",
+          "actionTarget": "ProcessorBox/ungroup-processors (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no nested processor-group model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Option+click device activator",
+          "actionTarget": "ProcessorBox/toggle-group-processors (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Requires modifier-click handling across a processor group.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Shift+click",
+          "actionTarget": "ProcessorBox/select-multiple-processors (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Requires multiple processor selection in a device-chain view.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "right-click Device View selector",
+          "actionTarget": "ProcessorBox/show-processor-list (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour exposes processors in mixer strips rather than a Live Device View selector.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "ProcessorBox/reset-parameter (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Processor deletion exists, but parameter reset is not a Processor Box key action.",
+          "status": "Blocked",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Processor Box Delete -> ProcessorMenu/delete",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "double-click",
+          "actionTarget": "ProcessorBox/reset-parameter (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Parameter double-click reset needs dedicated control behavior.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "PluginSelector/load-selected-plugin (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "The plugin selector can add a plugin but lacks a documented Browser Enter action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Q",
+          "keyToken": "q",
+          "actionTarget": "ProcessorBox/toggle-hot-swap (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Replacement requires selected-processor state and a browser workflow.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Cmd+Option+P",
+          "keyToken": "Primary-Level4-p",
+          "actionTarget": "ProcessorBox/toggle-plugin-windows (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour has individual plug-in windows but no global visibility toggle.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Cmd+click Show/Hide Plug-In Window button",
+          "actionTarget": "ProcessorBox/open-multiple-plugin-windows (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Requires modifier-click behavior across processor window controls.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Mixer",
+          "proposedMacos": "P",
+          "keyToken": "p",
+          "actionTarget": "Mixer/ab-plugins",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "A/B compares plug-in state for selected mixer processors, not arbitrary Live device state.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
