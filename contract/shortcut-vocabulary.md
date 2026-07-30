@@ -105,3 +105,16 @@ Confidence assigned to the individual evidence claim.
 - `Confirmed`: The narrow claim is directly established.
 - `Candidate`: The claim is source-based and not behaviorally exercised.
 - `Conflict`: The key is occupied by a different action.
+
+## Evidence Compatibility
+
+The schema permits only these kind, claim, and result combinations:
+
+- `Action registration`: `Target exists` or `Building block exists`, `Confirmed`.
+- `Callback implementation`: `Behavior candidate`, `Candidate`.
+- `Lua API`: `Lua feasible`, `Candidate`.
+- `Default binding` and `Profile binding`: `Binding exists`, `Confirmed`.
+- `Ardour manual`: `Behavior candidate`, `Candidate`.
+- `Manual test` and `E2E test`: `Behavior verified`, `Confirmed`.
+- `Capability audit`: `UI only` or `Capability missing`, `Candidate`.
+- `Key conflict`: `Key conflict`, `Conflict`.

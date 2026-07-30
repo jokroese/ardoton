@@ -31,7 +31,7 @@
             {
               "kind": "Default binding",
               "claim": "Binding exists",
-              "reference": "/Applications/Ardour9.app/Contents/Resources/ardour.keys: Global KP_Divide -> Transport/focus-on-clock",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:350",
               "result": "Confirmed"
             }
           ]
@@ -67,6 +67,26 @@
               "result": "Candidate"
             }
           ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Option+1",
+          "keyToken": "Level4-1",
+          "actionTarget": "Common/show-trigger",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Cues page but does not focus its grid.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:774",
+              "result": "Confirmed"
+            }
+          ]
         }
       ]
     },
@@ -99,6 +119,26 @@
               "result": "Candidate"
             }
           ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Option+2",
+          "keyToken": "Level4-2",
+          "actionTarget": "Common/show-editor",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Editor but does not focus an arrangement control.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:770",
+              "result": "Confirmed"
+            }
+          ]
         }
       ]
     },
@@ -127,7 +167,27 @@
             {
               "kind": "Default binding",
               "claim": "Binding exists",
-              "reference": "/Applications/Ardour9.app/Contents/Resources/ardour.keys: Editor Tertiary-p -> Editor/show-editor-props",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:193",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Option+3",
+          "keyToken": "Level4-3",
+          "actionTarget": "Editor/show-editor-props",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Editor Properties Box but does not focus a Clip View control.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
               "result": "Confirmed"
             }
           ]
@@ -159,7 +219,27 @@
             {
               "kind": "Default binding",
               "claim": "Binding exists",
-              "reference": "/Applications/Ardour9.app/Contents/Resources/ardour.keys: Editor Tertiary-e -> Editor/show-editor-mixer",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:171",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Option+4",
+          "keyToken": "Level4-4",
+          "actionTarget": "Editor/show-editor-mixer",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Editor Mixer but does not focus a device chain.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199",
               "result": "Confirmed"
             }
           ]
@@ -191,7 +271,27 @@
             {
               "kind": "Default binding",
               "claim": "Binding exists",
-              "reference": "/Applications/Ardour9.app/Contents/Resources/ardour.keys: Editor Tertiary-l -> Editor/show-editor-list",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:230",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Option+5",
+          "keyToken": "Level4-5",
+          "actionTarget": "Editor/show-editor-list",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the source-list panel but does not focus a Live-style Browser.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:191-194",
               "result": "Confirmed"
             }
           ]
@@ -269,6 +369,26 @@
             {
               "kind": "Action registration",
               "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Option+8",
+          "keyToken": "Level4-8",
+          "actionTarget": "Editor/show-editor-props",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows a generic Editor Properties Box but does not focus selected-clip controls.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
               "result": "Confirmed"
             }

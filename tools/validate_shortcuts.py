@@ -136,6 +136,21 @@ def validate_contract(
                         f"source ID {source_id!r}: Missing requires capability audit evidence"
                     )
                 if (
+                    mapping.get("implementationType") == "Profile Lua"
+                    and mapping.get("availability") != "Lua accessible"
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: Profile Lua requires Lua accessible availability"
+                    )
+                if (
+                    mapping.get("implementationType") == "Ardour engine patch"
+                    and mapping.get("availability") != "Missing"
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: Ardour engine patch requires "
+                        "Missing availability"
+                    )
+                if (
                     mapping.get("implementationType") in {"Profile keybinding", "Profile Lua"}
                     and mapping.get("status") == "Implemented"
                     and not any(
@@ -277,6 +292,21 @@ def report(
         for record in mapping_records
         for mapping in record["mappings"]
     )
+    role_counts = Counter(
+        mapping["role"] for record in mapping_records for mapping in record["mappings"]
+    )
+    class_counts = Counter(
+        mapping["mappingClass"] for record in mapping_records for mapping in record["mappings"]
+    )
+    availability_counts = Counter(
+        mapping["availability"] for record in mapping_records for mapping in record["mappings"]
+    )
+    evidence_result_counts = Counter(
+        evidence["result"]
+        for record in mapping_records
+        for mapping in record["mappings"]
+        for evidence in mapping["evidence"]
+    )
     lines = ["Audit status:"]
     lines.extend(
         f"  {status}: {audit_status_counts[status]}" for status in sorted(audit_status_counts)
@@ -293,6 +323,14 @@ def report(
         f"  {implementation_type}: {count}"
         for implementation_type, count in sorted(implementation_counts.items())
     )
+    for title, counts in (
+        ("Mapping roles", role_counts),
+        ("Mapping classes", class_counts),
+        ("Availability", availability_counts),
+        ("Evidence results", evidence_result_counts),
+    ):
+        lines.append(f"{title}:")
+        lines.extend(f"  {value}: {count}" for value, count in sorted(counts.items()))
     lines.append("Mapping statuses:")
     lines.extend(f"  {status}: {count}" for status, count in sorted(mapping_status_counts.items()))
     lines.append("Section progress:")
