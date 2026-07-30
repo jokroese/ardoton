@@ -1,0 +1,25 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "28",
+    "title": "41.28 Accessing Menus"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S28-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S28-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S28-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

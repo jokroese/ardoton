@@ -1,0 +1,35 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "14",
+    "title": "41.14 Global Quantization"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S14-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S14-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S14-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S14-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S14-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

@@ -34,17 +34,16 @@ def update_snapshots(request: pytest.FixtureRequest) -> bool:
 
 @pytest.fixture(scope="session")
 def coverage_tracker() -> dict[str, dict[str, str]]:
-    from support import contract_ids, mapping_source_ids
+    from support import shortcut_sources
 
     coverage: dict[str, dict[str, str]] = {
         feature_id: {"static": "not-covered", "e2e": "not-covered"}
-        for feature_id in sorted(contract_ids("ableton-shortcuts.csv"))
+        for feature_id in sorted(shortcut_sources())
     }
     bindings, _ = load_expectations()
-    source_ids = mapping_source_ids()
     for binding in bindings:
         coverage.setdefault(
-            source_ids[binding.mapping_id],
+            binding.source_id,
             {"static": "not-covered", "e2e": "not-covered"},
         )
     return coverage

@@ -1,0 +1,229 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "19",
+    "title": "41.19 Commands for Tracks"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S19-01",
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+T",
+          "keyToken": "Primary-t",
+          "actionTarget": "LuaAction/script-28",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Exact",
+          "availability": "Profile bound",
+          "note": "E2E verifies that the profile Lua action creates one audio track.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_shortcuts.py:M243",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-t -> LuaAction/script-28",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "S19-02",
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Shift+T",
+          "keyToken": "Primary-Tertiary-t",
+          "actionTarget": "LuaAction/script-29",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Exact",
+          "availability": "Profile bound",
+          "note": "E2E verifies that the profile Lua action creates one MIDI track.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_shortcuts.py:M244",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-t -> LuaAction/script-29",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "S19-03",
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+T",
+          "keyToken": "Primary-Level4-t",
+          "actionTarget": "LuaAction/script-30",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Profile bound",
+          "note": "Static keymap evidence only; return-track creation behavior has not been exercised.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Level4-t -> LuaAction/script-30",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "S19-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-06",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-07",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-08",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-09",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-10",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-11",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-12",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-13",
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "c",
+          "keyToken": "c",
+          "actionTarget": "Editor/track-record-enable-toggle",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Profile bound",
+          "note": "Static keymap evidence only; selected-track arming behavior remains untested.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "Editor/track-record-enable-toggle",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor c -> Editor/track-record-enable-toggle",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "S19-14",
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "s",
+          "keyToken": "s",
+          "actionTarget": "Editor/track-solo-toggle",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Profile bound",
+          "note": "Static keymap evidence only; selected-track solo behavior remains untested.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "Editor/track-solo-toggle",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor s -> Editor/track-solo-toggle",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "S19-15",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-16",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-17",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S19-18",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

@@ -1,21 +1,19 @@
 from __future__ import annotations
 
 import csv
+import json
 
-from support import CONTRACT, contract_ids, contract_row_count, load_expectations
+from support import CONTRACT, contract_row_count, load_expectations, shortcut_sources
 
 EXPECTED_ROWS = {
     "workflows.csv": 50,
-    "ableton-shortcuts.csv": 339,
-    "shortcuts-map.csv": 340,
-    "shortcut-evidence.csv": 44,
     "terminology.csv": 25,
     "acceptance-tests.csv": 15,
     "sources.csv": 24,
 }
 
 
-def test_contract_row_counts() -> None:
+def test_contract_csv_row_counts() -> None:
     for filename, count in EXPECTED_ROWS.items():
         assert contract_row_count(filename) == count, filename
 
@@ -29,13 +27,25 @@ def test_contract_csv_rectangular() -> None:
         assert all(len(row) == width for row in rows), filename
 
 
-def test_expectation_mapping_ids_exist_in_shortcuts_map() -> None:
-    mapping_ids = contract_ids("shortcuts-map.csv", "Mapping ID")
+def test_source_shortcut_count_is_frozen() -> None:
+    assert len(shortcut_sources()) == 339
+
+
+def test_mapping_documents_cover_sources_once() -> None:
+    records = []
+    for path in (CONTRACT / "shortcut-mappings").glob("*.json"):
+        records.extend(json.loads(path.read_text(encoding="utf-8"))["shortcuts"])
+    assert {record["sourceId"] for record in records} == set(shortcut_sources())
+    assert len(records) == len(shortcut_sources())
+
+
+def test_expectation_source_ids_exist() -> None:
+    source_ids = shortcut_sources()
     bindings, exclusives = load_expectations()
     for binding in bindings:
-        assert binding.mapping_id in mapping_ids, binding.mapping_id
+        assert binding.source_id in source_ids, binding.source_id
     for exclusive in exclusives:
-        assert exclusive.mapping_id in mapping_ids, exclusive.mapping_id
+        assert exclusive.source_id in source_ids, exclusive.source_id
 
 
 def test_expectation_context_key_unique() -> None:

@@ -1,0 +1,2549 @@
+{
+  "$schema": "shortcut-schema.json",
+  "documentType": "shortcut-sources",
+  "product": "Ableton Live 12",
+  "urlReference": "sources.csv",
+  "sections": [
+    {
+      "number": "01",
+      "title": "41.1 Showing and Hiding Views",
+      "shortcuts": [
+        {
+          "sourceId": "S01-01",
+          "action": "Toggle Full Screen Mode",
+          "inputKind": "Keyboard",
+          "liveMacos": "Ctrl+Cmd+F",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-02",
+          "action": "Toggle Second Window",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+W",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-03",
+          "action": "Toggle Session/Arrangement View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Tab",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-04",
+          "action": "Toggle Between Device/Clip View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Tab / F12",
+          "context": "Device or Clip View"
+        },
+        {
+          "sourceId": "S01-05",
+          "action": "Toggle Device and Clip View",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Option+click view toggle",
+          "context": "View toggle"
+        },
+        {
+          "sourceId": "S01-06",
+          "action": "Toggle Hot-Swap Mode",
+          "inputKind": "Keyboard",
+          "liveMacos": "Q",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-07",
+          "action": "Toggle Drum Rack/Last Selected Pad",
+          "inputKind": "Keyboard",
+          "liveMacos": "D",
+          "context": "Drum Rack"
+        },
+        {
+          "sourceId": "S01-08",
+          "action": "Hide/Show Info View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+?",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-09",
+          "action": "Hide/Show Video Window",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+V",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-10",
+          "action": "Hide/Show Browser",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+B / Cmd+Option+5",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-11",
+          "action": "Hide/Show Overview",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+O",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-12",
+          "action": "Hide/Show In/Out",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+I",
+          "context": "Session or Arrangement View"
+        },
+        {
+          "sourceId": "S01-13",
+          "action": "Hide/Show Sends",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+S",
+          "context": "Session or Arrangement View"
+        },
+        {
+          "sourceId": "S01-14",
+          "action": "Hide/Show Mixer",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+M",
+          "context": "Session or Arrangement View"
+        },
+        {
+          "sourceId": "S01-15",
+          "action": "Hide/Show Clip View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+3",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-16",
+          "action": "Hide/Show Device View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+4",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-17",
+          "action": "Hide/Show the Groove Pool",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+6",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-18",
+          "action": "Hide/Show the Learn View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+7",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-19",
+          "action": "Open the Settings",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+comma",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S01-20",
+          "action": "Close Window/Dialog",
+          "inputKind": "Keyboard",
+          "liveMacos": "Escape",
+          "context": "Window or dialog"
+        }
+      ]
+    },
+    {
+      "number": "02",
+      "title": "41.2 Keyboard Focus and Navigation",
+      "shortcuts": [
+        {
+          "sourceId": "S02-01",
+          "action": "Move Focus to the Control Bar",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+0",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-02",
+          "action": "Move Focus to the Session View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+1",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-03",
+          "action": "Move Focus to the Arrangement View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+2",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-04",
+          "action": "Move Focus to the Clip View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+3",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-05",
+          "action": "Move Focus to the Device View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+4",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-06",
+          "action": "Move Focus to the Browser",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+5",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-07",
+          "action": "Move Focus to the Groove Pool",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+6",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-08",
+          "action": "Move Focus to the Learn View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+7",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-09",
+          "action": "Move Focus to the Selected Clip Panel",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+8",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S02-10",
+          "action": "Move Focus to the Clip Panels",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+P",
+          "context": "Clip View"
+        },
+        {
+          "sourceId": "S02-11",
+          "action": "Move to Next Focusable Control",
+          "inputKind": "Keyboard",
+          "liveMacos": "Tab",
+          "context": "Use Tab to Move Focus enabled"
+        },
+        {
+          "sourceId": "S02-12",
+          "action": "Move to Previous Focusable Control",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Tab",
+          "context": "Use Tab to Move Focus enabled"
+        },
+        {
+          "sourceId": "S02-13",
+          "action": "Move to Next Neighbor of Current Control",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Tab",
+          "context": "Use Tab to Move Focus enabled"
+        },
+        {
+          "sourceId": "S02-14",
+          "action": "Move to Previous Neighbor of Current Control",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+Tab",
+          "context": "Use Tab to Move Focus enabled"
+        }
+      ]
+    },
+    {
+      "number": "03",
+      "title": "41.3 Working with Sets and the Program",
+      "shortcuts": [
+        {
+          "sourceId": "S03-01",
+          "action": "New Live Set",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+N",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S03-02",
+          "action": "Open Live Set",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+O",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S03-03",
+          "action": "Save Live Set",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+S",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S03-04",
+          "action": "Save Live Set As",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+S",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S03-05",
+          "action": "Quit Live",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Q",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S03-06",
+          "action": "Hide Live",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+H",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S03-07",
+          "action": "Export Audio/Video",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+R",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S03-08",
+          "action": "Export MIDI File",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+E",
+          "context": "Main window"
+        }
+      ]
+    },
+    {
+      "number": "04",
+      "title": "41.4 Working with Devices and Plug-Ins",
+      "shortcuts": [
+        {
+          "sourceId": "S04-01",
+          "action": "Group Devices",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+G",
+          "context": "Device selection"
+        },
+        {
+          "sourceId": "S04-02",
+          "action": "Ungroup Devices",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+G",
+          "context": "Device group"
+        },
+        {
+          "sourceId": "S04-03",
+          "action": "Activate/Deactivate All Devices in Group",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Hold Option and click device activator",
+          "context": "Device group"
+        },
+        {
+          "sourceId": "S04-04",
+          "action": "Add Device(s) to Selection",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Shift+click",
+          "context": "Device chain"
+        },
+        {
+          "sourceId": "S04-05",
+          "action": "See List of Devices on a Track",
+          "inputKind": "Mouse gesture",
+          "liveMacos": "right-click Device View selector",
+          "context": "Device View selector"
+        },
+        {
+          "sourceId": "S04-06",
+          "action": "Reset Parameter Value",
+          "inputKind": "Keyboard",
+          "liveMacos": "Delete",
+          "context": "Device parameter"
+        },
+        {
+          "sourceId": "S04-07",
+          "action": "Reset Parameter Value",
+          "inputKind": "Mouse gesture",
+          "liveMacos": "double-click",
+          "context": "Device parameter"
+        },
+        {
+          "sourceId": "S04-08",
+          "action": "Load Selected Device from Browser",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S04-09",
+          "action": "Hot-Swap Selected Device",
+          "inputKind": "Keyboard",
+          "liveMacos": "Q",
+          "context": "Selected device"
+        },
+        {
+          "sourceId": "S04-10",
+          "action": "Hide/Show Open Plug-In Windows",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+P",
+          "context": "Plug-In window"
+        },
+        {
+          "sourceId": "S04-11",
+          "action": "Open Multiple Windows with Show/Hide Plug-In Window Button",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+click Show/Hide Plug-In Window button",
+          "context": "Device View"
+        },
+        {
+          "sourceId": "S04-12",
+          "action": "Compare A/B: Switch Device State",
+          "inputKind": "Keyboard",
+          "liveMacos": "P",
+          "context": "Device View"
+        }
+      ]
+    },
+    {
+      "number": "05",
+      "title": "41.5 Editing",
+      "shortcuts": [
+        {
+          "sourceId": "S05-01",
+          "action": "Cut",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+X",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-02",
+          "action": "Copy",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+C",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-03",
+          "action": "Paste",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+V",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-04",
+          "action": "Duplicate",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+D",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-05",
+          "action": "Delete",
+          "inputKind": "Keyboard",
+          "liveMacos": "Delete",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-06",
+          "action": "Undo",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Z",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-07",
+          "action": "Redo",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+Z",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-08",
+          "action": "Rename",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+R",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-09",
+          "action": "Select All",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+A",
+          "context": "Editable selection"
+        },
+        {
+          "sourceId": "S05-10",
+          "action": "Select Multiple Items",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+click",
+          "context": "Editable items"
+        },
+        {
+          "sourceId": "S05-11",
+          "action": "Select Multiple Items by First and Last Item",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Shift+click",
+          "context": "Editable items"
+        },
+        {
+          "sourceId": "S05-12",
+          "action": "Move to Next Track/Scene When Renaming",
+          "inputKind": "Keyboard",
+          "liveMacos": "Tab",
+          "context": "Inline rename"
+        },
+        {
+          "sourceId": "S05-13",
+          "action": "Ignore Grid Quantization When Dragging",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+drag",
+          "context": "Editable item"
+        },
+        {
+          "sourceId": "S05-14",
+          "action": "Apply Editing Shortcut to Clips and Slots Across All Tracks",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Shift",
+          "context": "Clips and slots"
+        },
+        {
+          "sourceId": "S05-15",
+          "action": "Apply Editing Shortcut to Time Across All Tracks",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Shift",
+          "context": "Time selection"
+        },
+        {
+          "sourceId": "S05-16",
+          "action": "Apply Editing Shortcut to Selected Part of Envelope",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Option",
+          "context": "Breakpoint envelope"
+        }
+      ]
+    },
+    {
+      "number": "06",
+      "title": "41.6 Adjusting Values",
+      "shortcuts": [
+        {
+          "sourceId": "S06-01",
+          "action": "Decrement Value",
+          "inputKind": "Keyboard",
+          "liveMacos": "Down arrow",
+          "context": "Value control"
+        },
+        {
+          "sourceId": "S06-02",
+          "action": "Increment Value",
+          "inputKind": "Keyboard",
+          "liveMacos": "Up arrow",
+          "context": "Value control"
+        },
+        {
+          "sourceId": "S06-03",
+          "action": "Decrement/Increment Value in Octaves or Fine Adjustments",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Up / Shift+Down",
+          "context": "Value control"
+        },
+        {
+          "sourceId": "S06-04",
+          "action": "Finer Resolution When Dragging",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Shift",
+          "context": "Value control"
+        },
+        {
+          "sourceId": "S06-05",
+          "action": "Return to Default",
+          "inputKind": "Keyboard",
+          "liveMacos": "Delete",
+          "context": "Value control"
+        },
+        {
+          "sourceId": "S06-06",
+          "action": "Type In Value",
+          "inputKind": "Keyboard",
+          "liveMacos": "0 through 9",
+          "context": "Value control"
+        },
+        {
+          "sourceId": "S06-07",
+          "action": "Go to Next Field (Bar/Beat/16th)",
+          "inputKind": "Keyboard",
+          "liveMacos": "period / comma",
+          "context": "Value entry"
+        },
+        {
+          "sourceId": "S06-08",
+          "action": "Cancel Value Entry",
+          "inputKind": "Keyboard",
+          "liveMacos": "Escape",
+          "context": "Value entry"
+        },
+        {
+          "sourceId": "S06-09",
+          "action": "Confirm Value Entry",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter",
+          "context": "Value entry"
+        }
+      ]
+    },
+    {
+      "number": "07",
+      "title": "41.7 Commands for Breakpoint Envelopes",
+      "shortcuts": [
+        {
+          "sourceId": "S07-01",
+          "action": "Toggle Automation Mode",
+          "inputKind": "Keyboard",
+          "liveMacos": "A",
+          "context": "Breakpoint envelope"
+        },
+        {
+          "sourceId": "S07-02",
+          "action": "Finer Resolution When Dragging",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Shift",
+          "context": "Breakpoint envelope"
+        },
+        {
+          "sourceId": "S07-03",
+          "action": "Create Curved Automation Segment",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Option",
+          "context": "Breakpoint envelope segment"
+        },
+        {
+          "sourceId": "S07-04",
+          "action": "Momentarily Toggle Fade Controls",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F",
+          "context": "Breakpoint envelope"
+        },
+        {
+          "sourceId": "S07-05",
+          "action": "Delete Selected Breakpoint Envelope",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Delete",
+          "context": "Breakpoint envelope"
+        },
+        {
+          "sourceId": "S07-06",
+          "action": "Ignore Grid Quantization When Dragging",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+drag",
+          "context": "Breakpoint envelope"
+        }
+      ]
+    },
+    {
+      "number": "08",
+      "title": "41.8 Loop Brace and Start/End Markers",
+      "shortcuts": [
+        {
+          "sourceId": "S08-01",
+          "action": "Set Start Marker",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+F9",
+          "context": "Clip View"
+        },
+        {
+          "sourceId": "S08-02",
+          "action": "Set Loop Brace Start",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+F10",
+          "context": "Clip View"
+        },
+        {
+          "sourceId": "S08-03",
+          "action": "Set Loop Brace End",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+F11",
+          "context": "Clip View"
+        },
+        {
+          "sourceId": "S08-04",
+          "action": "Set End Marker",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+F12",
+          "context": "Clip View"
+        },
+        {
+          "sourceId": "S08-05",
+          "action": "Move Start Marker to Position",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+click",
+          "context": "Selected start marker"
+        },
+        {
+          "sourceId": "S08-06",
+          "action": "Move End Marker to Position",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+Shift+click",
+          "context": "Selected end marker"
+        },
+        {
+          "sourceId": "S08-07",
+          "action": "Nudge Loop Brace Left",
+          "inputKind": "Keyboard",
+          "liveMacos": "Left arrow",
+          "context": "Selected loop brace"
+        },
+        {
+          "sourceId": "S08-08",
+          "action": "Nudge Loop Brace Right",
+          "inputKind": "Keyboard",
+          "liveMacos": "Right arrow",
+          "context": "Selected loop brace"
+        },
+        {
+          "sourceId": "S08-09",
+          "action": "Move Loop by Loop Length",
+          "inputKind": "Keyboard",
+          "liveMacos": "Up / Down arrow",
+          "context": "Selected loop brace"
+        },
+        {
+          "sourceId": "S08-10",
+          "action": "Halve/Double Loop Length",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Up / Cmd+Down",
+          "context": "Selected loop brace"
+        },
+        {
+          "sourceId": "S08-11",
+          "action": "Shorten/Lengthen Loop",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Right / Cmd+Left",
+          "context": "Selected loop brace"
+        },
+        {
+          "sourceId": "S08-12",
+          "action": "Select Material in Loop",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+L",
+          "context": "Selected loop brace"
+        }
+      ]
+    },
+    {
+      "number": "09",
+      "title": "41.9 Zooming, Display and Selections",
+      "shortcuts": [
+        {
+          "sourceId": "S09-01",
+          "action": "Zoom In Window",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+plus",
+          "context": "Window"
+        },
+        {
+          "sourceId": "S09-02",
+          "action": "Zoom Out Window",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+minus",
+          "context": "Window"
+        },
+        {
+          "sourceId": "S09-03",
+          "action": "Zoom In Time Ruler",
+          "inputKind": "Keyboard",
+          "liveMacos": "plus",
+          "context": "Time ruler"
+        },
+        {
+          "sourceId": "S09-04",
+          "action": "Zoom Out Time Ruler",
+          "inputKind": "Keyboard",
+          "liveMacos": "minus",
+          "context": "Time ruler"
+        },
+        {
+          "sourceId": "S09-05",
+          "action": "Scroll Display to Follow Playback",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+F",
+          "context": "Display"
+        },
+        {
+          "sourceId": "S09-06",
+          "action": "Scroll Left/Right",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Shift+scroll",
+          "context": "Display"
+        },
+        {
+          "sourceId": "S09-07",
+          "action": "Pan Left/Right of Selection",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+Option+drag",
+          "context": "Selection"
+        },
+        {
+          "sourceId": "S09-08",
+          "action": "Add Items to a Selection",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Shift+click or drag",
+          "context": "Items"
+        },
+        {
+          "sourceId": "S09-09",
+          "action": "Add Adjacent Clips/Tracks/Scenes to Multi-Selection",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Shift+click",
+          "context": "Clips tracks or scenes"
+        },
+        {
+          "sourceId": "S09-10",
+          "action": "Add Nonadjacent Clips/Tracks/Scenes to Multi-Selection",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+click",
+          "context": "Clips tracks or scenes"
+        }
+      ]
+    },
+    {
+      "number": "10",
+      "title": "41.10 Clip View Editor View Modes",
+      "shortcuts": [
+        {
+          "sourceId": "S10-01",
+          "action": "Switch Between Sample/Envelopes Tabs",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Tab",
+          "context": "Audio Clip View"
+        },
+        {
+          "sourceId": "S10-02",
+          "action": "Switch Between Notes/Envelopes/MPE Tabs",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Tab",
+          "context": "MIDI Clip View"
+        },
+        {
+          "sourceId": "S10-03",
+          "action": "Switch to Sample/Notes Tab",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+1",
+          "context": "Clip View"
+        },
+        {
+          "sourceId": "S10-04",
+          "action": "Switch to Envelopes Tab",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+2",
+          "context": "Clip View"
+        },
+        {
+          "sourceId": "S10-05",
+          "action": "Switch to MPE Tab",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+3",
+          "context": "MIDI Clip View"
+        }
+      ]
+    },
+    {
+      "number": "11",
+      "title": "41.11 Clip View Sample Editor",
+      "shortcuts": [
+        {
+          "sourceId": "S11-01",
+          "action": "Quantize",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+U",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-02",
+          "action": "Quantize Settings",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+U",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-03",
+          "action": "Move Selected Warp Marker",
+          "inputKind": "Keyboard",
+          "liveMacos": "Left / Right arrow",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-04",
+          "action": "Select Warp Marker",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Left / Cmd+Right arrow",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-05",
+          "action": "Scroll Display to Follow Playback",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+F",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-06",
+          "action": "Move Clip Region with Start Marker",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Left / Shift+Right arrow",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-07",
+          "action": "Zoom to Clip Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Z",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-08",
+          "action": "Zoom Back from Clip Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "X",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-09",
+          "action": "Insert Warp Marker",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+I",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-10",
+          "action": "Delete Warp Marker",
+          "inputKind": "Keyboard",
+          "liveMacos": "Delete",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-11",
+          "action": "Insert Transient",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+I",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-12",
+          "action": "Delete Transient",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+Delete",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-13",
+          "action": "Fit Content to View Width",
+          "inputKind": "Keyboard",
+          "liveMacos": "W",
+          "context": "Sample Editor"
+        },
+        {
+          "sourceId": "S11-14",
+          "action": "Fit Content to View Height",
+          "inputKind": "Keyboard",
+          "liveMacos": "H",
+          "context": "Sample Editor"
+        }
+      ]
+    },
+    {
+      "number": "12",
+      "title": "41.12 Clip View MIDI Note Editor",
+      "shortcuts": [
+        {
+          "sourceId": "S12-01",
+          "action": "Select All Notes",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+A",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-02",
+          "action": "Copy Notes",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Option+drag",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-03",
+          "action": "Chop Selected Notes on Grid or Split Notes at Time Selection Start/End",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+E",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-04",
+          "action": "Chop Notes in Increments of 1",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+E drag up/down",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-05",
+          "action": "Chop Notes in Increments of 2",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+Shift+E drag up/down",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-06",
+          "action": "Split Notes at Exact Location",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Hold E then click",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-07",
+          "action": "Move Split Note",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Hold E then drag",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-08",
+          "action": "Join Notes",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+J",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-09",
+          "action": "Fit Notes to Time Range",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+J",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-10",
+          "action": "Fit Content to View Width",
+          "inputKind": "Keyboard",
+          "liveMacos": "W",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-11",
+          "action": "Fit Content to View Height",
+          "inputKind": "Keyboard",
+          "liveMacos": "H",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-12",
+          "action": "Quantize",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+U",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-13",
+          "action": "Quantize Settings",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+U",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-14",
+          "action": "Scroll Editor Vertically",
+          "inputKind": "Keyboard",
+          "liveMacos": "Page Up / Page Down",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-15",
+          "action": "Scroll Editor Vertically in Fine Increments",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Page Up / Shift+Page Down",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-16",
+          "action": "Scroll Editor Horizontally",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Page Up / Cmd+Page Down",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-17",
+          "action": "Change Velocity from MIDI Note Editor",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+drag",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-18",
+          "action": "Move Insert Marker to Beginning",
+          "inputKind": "Keyboard",
+          "liveMacos": "Home / Fn+Left arrow",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-19",
+          "action": "Move Insert Marker to End",
+          "inputKind": "Keyboard",
+          "liveMacos": "End / Fn+Right arrow",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-20",
+          "action": "Select Next/Previous Note",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Up / Option+Down arrow",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-21",
+          "action": "Select Next/Previous Note in Same Key Track",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Left / Option+Right arrow",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-22",
+          "action": "Scroll Display to Follow Playback",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+F",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-23",
+          "action": "Move Clip Region with Start Marker",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Left / Shift+Right arrow",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-24",
+          "action": "Zoom to Clip Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Z",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-25",
+          "action": "Zoom Back from Clip Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "X",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-26",
+          "action": "Zoom In/Out Horizontally",
+          "inputKind": "Keyboard",
+          "liveMacos": "plus / minus",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-27",
+          "action": "Set Note Selection Velocity",
+          "inputKind": "Keyboard",
+          "liveMacos": "0 through 127 then Enter",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-28",
+          "action": "Adjust Note Selection Velocity",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Up / Cmd+Down arrow",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-29",
+          "action": "Adjust Note Selection Velocity Deviation",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+Up / Cmd+Shift+Down arrow",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-30",
+          "action": "Adjust Note Selection Chance",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+Up / Cmd+Option+Down arrow",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-31",
+          "action": "Toggle Full-Size Clip View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+E",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-32",
+          "action": "Group Notes (Play All)",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+G",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-33",
+          "action": "Ungroup Notes",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+G",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-34",
+          "action": "Apply Current MIDI Tool Settings",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Enter",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-35",
+          "action": "Invert Note Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+A",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-36",
+          "action": "Highlight Scale",
+          "inputKind": "Keyboard",
+          "liveMacos": "K",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-37",
+          "action": "Split Arrangement Clip Based on Time Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+E",
+          "context": "MIDI Note Editor"
+        },
+        {
+          "sourceId": "S12-38",
+          "action": "Show/Hide MIDI Note Filters",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+F",
+          "context": "MIDI Note Editor"
+        }
+      ]
+    },
+    {
+      "number": "13",
+      "title": "41.13 Grid Snapping and Drawing",
+      "shortcuts": [
+        {
+          "sourceId": "S13-01",
+          "action": "Toggle Draw Mode (Pitch Lock Off)",
+          "inputKind": "Keyboard",
+          "liveMacos": "B",
+          "context": "Editor"
+        },
+        {
+          "sourceId": "S13-02",
+          "action": "Narrow Grid",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+1",
+          "context": "Editor"
+        },
+        {
+          "sourceId": "S13-03",
+          "action": "Widen Grid",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+2",
+          "context": "Editor"
+        },
+        {
+          "sourceId": "S13-04",
+          "action": "Triplet Grid",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+3",
+          "context": "Editor"
+        },
+        {
+          "sourceId": "S13-05",
+          "action": "Snap to Grid",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+4",
+          "context": "Editor"
+        },
+        {
+          "sourceId": "S13-06",
+          "action": "Fixed/Zoom-Adaptive Grid",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+5",
+          "context": "Editor"
+        },
+        {
+          "sourceId": "S13-07",
+          "action": "Bypass Snapping While Dragging",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+drag",
+          "context": "Editor"
+        }
+      ]
+    },
+    {
+      "number": "14",
+      "title": "41.14 Global Quantization",
+      "shortcuts": [
+        {
+          "sourceId": "S14-01",
+          "action": "Sixteenth-Note Quantization",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+6",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S14-02",
+          "action": "Eighth-Note Quantization",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+7",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S14-03",
+          "action": "Quarter-Note Quantization",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+8",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S14-04",
+          "action": "1-Bar Quantization",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+9",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S14-05",
+          "action": "Quantization Off",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+0",
+          "context": "Main window"
+        }
+      ]
+    },
+    {
+      "number": "15",
+      "title": "41.15 Session View",
+      "shortcuts": [
+        {
+          "sourceId": "S15-01",
+          "action": "Launch Selected Clip/Slot",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-02",
+          "action": "Select Neighboring Clip/Slot",
+          "inputKind": "Keyboard",
+          "liveMacos": "Arrow keys",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-03",
+          "action": "Select All Clips/Slots",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+A",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-04",
+          "action": "Copy Clips",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Option+drag",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-05",
+          "action": "Add/Remove Stop Button",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+E",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-06",
+          "action": "Stop Clips in Track with Slot Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Enter",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-07",
+          "action": "Insert MIDI Clip",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+M",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-08",
+          "action": "Insert Scene",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+I",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-09",
+          "action": "Insert Captured Scene",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+I",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-10",
+          "action": "Move Up/Down Between Scenes (One at a Time)",
+          "inputKind": "Keyboard",
+          "liveMacos": "Up / Down arrow",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-11",
+          "action": "Move Up/Down Between Scenes (Eight at a Time)",
+          "inputKind": "Keyboard",
+          "liveMacos": "Page Up / Page Down",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-12",
+          "action": "Record to Session View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+F9",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-13",
+          "action": "Toggle Follow Actions for Selected Clips",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Enter",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-14",
+          "action": "Create Follow Action Chain",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+Enter",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-15",
+          "action": "Move Selected Track Left/Right",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Left / Cmd+Right arrow",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-16",
+          "action": "Move Nonadjacent Scenes Without Collapsing",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Up / Cmd+Down arrow",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-17",
+          "action": "Drop Browser Clips as a Scene",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+drag",
+          "context": "Browser to Session View"
+        },
+        {
+          "sourceId": "S15-18",
+          "action": "Deactivate Selected Clip",
+          "inputKind": "Keyboard",
+          "liveMacos": "0",
+          "context": "Selected Session clip"
+        },
+        {
+          "sourceId": "S15-19",
+          "action": "Jump to Highlighted Track Title Bar",
+          "inputKind": "Keyboard",
+          "liveMacos": "Escape",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-20",
+          "action": "Jump to the First Track of the Current Scene",
+          "inputKind": "Keyboard",
+          "liveMacos": "Home / Fn+Left arrow",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-21",
+          "action": "Jump to the Last Track of the Current Scene",
+          "inputKind": "Keyboard",
+          "liveMacos": "End / Fn+Right arrow",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-22",
+          "action": "Jump to the Current Scene from the Last Track",
+          "inputKind": "Keyboard",
+          "liveMacos": "End / Fn+Right arrow",
+          "context": "Session View"
+        },
+        {
+          "sourceId": "S15-23",
+          "action": "Solo Selected Chain",
+          "inputKind": "Keyboard",
+          "liveMacos": "S",
+          "context": "Session View"
+        }
+      ]
+    },
+    {
+      "number": "16",
+      "title": "41.16 Arrangement View",
+      "shortcuts": [
+        {
+          "sourceId": "S16-01",
+          "action": "Split Clip at Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+E",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-02",
+          "action": "Consolidate Selection into Clip",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+J",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-03",
+          "action": "Crop Selected Clips",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+J",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-04",
+          "action": "Resize Clip When Insert Marker is at Clip Edge",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter then Left / Right arrow",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-05",
+          "action": "Slide Waveform",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Shift+Option+drag",
+          "context": "Arrangement clip"
+        },
+        {
+          "sourceId": "S16-06",
+          "action": "Stretch Warped Clip",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Shift+drag in clip title bar",
+          "context": "Arrangement clip"
+        },
+        {
+          "sourceId": "S16-07",
+          "action": "Select Time Within Clip",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Shift+Option+drag in clip title bar",
+          "context": "Arrangement clip"
+        },
+        {
+          "sourceId": "S16-08",
+          "action": "Create Fade/Crossfade",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+F",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-09",
+          "action": "Delete Fades/Crossfades in Selected Clip(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+Delete",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-10",
+          "action": "Momentarily Toggle Fade Handles",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-11",
+          "action": "Toggle Loop Brace",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+L",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-12",
+          "action": "Adjust Loop Brace Length",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Left / Cmd+Right arrow",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-13",
+          "action": "Select Loop Brace Contents",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+L",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-14",
+          "action": "Insert Silence",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+I",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-15",
+          "action": "Cut Time",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+X",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-16",
+          "action": "Copy Time",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+C",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-17",
+          "action": "Paste Time",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+V",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-18",
+          "action": "Duplicate Time",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+D",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-19",
+          "action": "Delete Time",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+Delete",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-20",
+          "action": "Fold/Unfold Selected Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "U / Left / Right arrow",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-21",
+          "action": "Unfold All Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+U",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-22",
+          "action": "Adjust Height of Selected Tracks/Clips",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+plus / Option+minus",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-23",
+          "action": "Scroll Display to Follow Playback",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+F",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-24",
+          "action": "Scroll Display Left/Right of Selection",
+          "inputKind": "Modifier gesture",
+          "liveMacos": "Cmd+Option+drag",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-25",
+          "action": "Optimize Arrangement Height",
+          "inputKind": "Keyboard",
+          "liveMacos": "H",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-26",
+          "action": "Optimize Arrangement Width",
+          "inputKind": "Keyboard",
+          "liveMacos": "W",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-27",
+          "action": "Deactivate Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "0",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-28",
+          "action": "Nudge Selection Left/Right",
+          "inputKind": "Keyboard",
+          "liveMacos": "Left / Right arrow",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-29",
+          "action": "Reverse Audio Clip Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "R",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-30",
+          "action": "Zoom to Arrangement Time Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Z",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-31",
+          "action": "Zoom Back from Arrangement Time Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "X",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-32",
+          "action": "Play from Insert Marker in Selected Clip",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Space",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-33",
+          "action": "Move Insert Marker to Playhead Position",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+Space",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-34",
+          "action": "Jump to Highlighted Track Title Bar",
+          "inputKind": "Keyboard",
+          "liveMacos": "Escape",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S16-35",
+          "action": "Move Focus to Mixer",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+M",
+          "context": "Arrangement View"
+        }
+      ]
+    },
+    {
+      "number": "17",
+      "title": "41.17 Comping",
+      "shortcuts": [
+        {
+          "sourceId": "S17-01",
+          "action": "Show Take Lanes",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+U",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S17-02",
+          "action": "Add Selected Take Lane Area to Main Track Lane",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter",
+          "context": "Comping"
+        },
+        {
+          "sourceId": "S17-03",
+          "action": "Audition Selected Take Lane",
+          "inputKind": "Keyboard",
+          "liveMacos": "T",
+          "context": "Comping"
+        },
+        {
+          "sourceId": "S17-04",
+          "action": "Add Take Lane",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Option+T",
+          "context": "Comping"
+        },
+        {
+          "sourceId": "S17-05",
+          "action": "Duplicate Selected Take Lane",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+D",
+          "context": "Comping"
+        },
+        {
+          "sourceId": "S17-06",
+          "action": "Replace Main Take Clip with Next/Previous Take",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Up / Cmd+Down arrow",
+          "context": "Comping"
+        }
+      ]
+    },
+    {
+      "number": "18",
+      "title": "41.18 Bounce to Audio",
+      "shortcuts": [
+        {
+          "sourceId": "S18-01",
+          "action": "Bounce to New Track",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+B",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S18-02",
+          "action": "Paste Bounced Audio",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+V",
+          "context": "Arrangement View"
+        }
+      ]
+    },
+    {
+      "number": "19",
+      "title": "41.19 Commands for Tracks",
+      "shortcuts": [
+        {
+          "sourceId": "S19-01",
+          "action": "Insert Audio Track",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+T",
+          "context": "Track area"
+        },
+        {
+          "sourceId": "S19-02",
+          "action": "Insert MIDI Track",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+T",
+          "context": "Track area"
+        },
+        {
+          "sourceId": "S19-03",
+          "action": "Insert Return Track",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+T",
+          "context": "Track area"
+        },
+        {
+          "sourceId": "S19-04",
+          "action": "Rename Selected Track",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+R",
+          "context": "Selected track"
+        },
+        {
+          "sourceId": "S19-05",
+          "action": "Go to Next Track When Renaming",
+          "inputKind": "Keyboard",
+          "liveMacos": "Tab",
+          "context": "Selected track"
+        },
+        {
+          "sourceId": "S19-06",
+          "action": "Group Selected Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+G",
+          "context": "Selected tracks"
+        },
+        {
+          "sourceId": "S19-07",
+          "action": "Ungroup Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+G",
+          "context": "Selected tracks"
+        },
+        {
+          "sourceId": "S19-08",
+          "action": "Show Grouped Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "plus",
+          "context": "Track group"
+        },
+        {
+          "sourceId": "S19-09",
+          "action": "Hide Grouped Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "minus",
+          "context": "Track group"
+        },
+        {
+          "sourceId": "S19-10",
+          "action": "Collapse/Expand Grouped Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "U",
+          "context": "Track group"
+        },
+        {
+          "sourceId": "S19-11",
+          "action": "Hide/Show Return Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+R",
+          "context": "Track area"
+        },
+        {
+          "sourceId": "S19-12",
+          "action": "Move Nonadjacent Tracks Without Collapsing",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Arrow keys",
+          "context": "Track area"
+        },
+        {
+          "sourceId": "S19-13",
+          "action": "Arm Selected Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "C",
+          "context": "Selected tracks"
+        },
+        {
+          "sourceId": "S19-14",
+          "action": "Solo Selected Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "S",
+          "context": "Selected tracks"
+        },
+        {
+          "sourceId": "S19-15",
+          "action": "Add Device from Browser",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S19-16",
+          "action": "Deactivate Selected Track",
+          "inputKind": "Keyboard",
+          "liveMacos": "0",
+          "context": "Selected track"
+        },
+        {
+          "sourceId": "S19-17",
+          "action": "Freeze/Unfreeze Tracks",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+Shift+F",
+          "context": "Selected tracks"
+        },
+        {
+          "sourceId": "S19-18",
+          "action": "Delete Track from Track Title Bar",
+          "inputKind": "Keyboard",
+          "liveMacos": "Delete",
+          "context": "Track title bar"
+        }
+      ]
+    },
+    {
+      "number": "20",
+      "title": "41.20 Transport",
+      "shortcuts": [
+        {
+          "sourceId": "S20-01",
+          "action": "Play from Start Marker/Stop",
+          "inputKind": "Keyboard",
+          "liveMacos": "Space",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-02",
+          "action": "Continue Play from Stop Point",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Space",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-03",
+          "action": "Stop Playback at End of Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Space",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-04",
+          "action": "Play Arrangement View Selection",
+          "inputKind": "Keyboard",
+          "liveMacos": "Space",
+          "context": "Arrangement View selection"
+        },
+        {
+          "sourceId": "S20-05",
+          "action": "Move Insert Marker to Beginning",
+          "inputKind": "Keyboard",
+          "liveMacos": "Home / Fn+Left arrow",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-06",
+          "action": "Record",
+          "inputKind": "Keyboard",
+          "liveMacos": "F9",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-07",
+          "action": "Arm Recording in Arrangement View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+F9",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-08",
+          "action": "Record to Session View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+F9",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-09",
+          "action": "Back to Arrangement",
+          "inputKind": "Keyboard",
+          "liveMacos": "F10",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-10",
+          "action": "Activate/Deactivate Track 1",
+          "inputKind": "Keyboard",
+          "liveMacos": "F1",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-11",
+          "action": "Activate/Deactivate Track 2",
+          "inputKind": "Keyboard",
+          "liveMacos": "F2",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-12",
+          "action": "Activate/Deactivate Track 3",
+          "inputKind": "Keyboard",
+          "liveMacos": "F3",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-13",
+          "action": "Activate/Deactivate Track 4",
+          "inputKind": "Keyboard",
+          "liveMacos": "F4",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-14",
+          "action": "Activate/Deactivate Track 5",
+          "inputKind": "Keyboard",
+          "liveMacos": "F5",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-15",
+          "action": "Activate/Deactivate Track 6",
+          "inputKind": "Keyboard",
+          "liveMacos": "F6",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-16",
+          "action": "Activate/Deactivate Track 7",
+          "inputKind": "Keyboard",
+          "liveMacos": "F7",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-17",
+          "action": "Activate/Deactivate Track 8",
+          "inputKind": "Keyboard",
+          "liveMacos": "F8",
+          "context": "Transport"
+        },
+        {
+          "sourceId": "S20-18",
+          "action": "Toggle Metronome",
+          "inputKind": "Keyboard",
+          "liveMacos": "O",
+          "context": "Transport"
+        }
+      ]
+    },
+    {
+      "number": "21",
+      "title": "41.21 Audio Engine",
+      "shortcuts": [
+        {
+          "sourceId": "S21-01",
+          "action": "Turn Audio Engine On/Off",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+Shift+E",
+          "context": "Main window"
+        }
+      ]
+    },
+    {
+      "number": "22",
+      "title": "41.22 Browser",
+      "shortcuts": [
+        {
+          "sourceId": "S22-01",
+          "action": "Scroll Down/Up",
+          "inputKind": "Keyboard",
+          "liveMacos": "Up / Down arrow",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-02",
+          "action": "Close/Open Folders",
+          "inputKind": "Keyboard",
+          "liveMacos": "Right / Left arrow",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-03",
+          "action": "Load Selected Item from Browser",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-04",
+          "action": "Preview Selected File",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Enter / Right arrow",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-05",
+          "action": "Search in Browser",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+F",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-06",
+          "action": "Jump to Search Results",
+          "inputKind": "Keyboard",
+          "liveMacos": "Down arrow / Enter",
+          "context": "Browser search"
+        },
+        {
+          "sourceId": "S22-07",
+          "action": "Assign Color 1 to Selected Browser Item(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "1",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-08",
+          "action": "Assign Color 2 to Selected Browser Item(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "2",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-09",
+          "action": "Assign Color 3 to Selected Browser Item(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "3",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-10",
+          "action": "Assign Color 4 to Selected Browser Item(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "4",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-11",
+          "action": "Assign Color 5 to Selected Browser Item(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "5",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-12",
+          "action": "Assign Color 6 to Selected Browser Item(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "6",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-13",
+          "action": "Assign Color 7 to Selected Browser Item(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "7",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-14",
+          "action": "Reset Assigned Color(s) for Selected Browser Item(s)",
+          "inputKind": "Keyboard",
+          "liveMacos": "0",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-15",
+          "action": "Show Similar Files Using Similarity Search",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+F",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-16",
+          "action": "Browser History Back",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+left bracket",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-17",
+          "action": "Browser History Forward",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+right bracket",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-18",
+          "action": "Hide/Show Filter View",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Option+G",
+          "context": "Browser"
+        },
+        {
+          "sourceId": "S22-19",
+          "action": "Hide/Show Tag Editor",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Shift+E",
+          "context": "Browser"
+        }
+      ]
+    },
+    {
+      "number": "23",
+      "title": "41.23 Similar Sample Swapping",
+      "shortcuts": [
+        {
+          "sourceId": "S23-01",
+          "action": "Swap to Next Similar Sample",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Right arrow",
+          "context": "Drum Rack Drum Rack pad or Simpler"
+        },
+        {
+          "sourceId": "S23-02",
+          "action": "Swap to Previous Similar Sample",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Left arrow",
+          "context": "Drum Rack Drum Rack pad or Simpler"
+        },
+        {
+          "sourceId": "S23-03",
+          "action": "Save as Similarity Reference",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Up arrow",
+          "context": "Drum Rack Drum Rack pad or Simpler"
+        },
+        {
+          "sourceId": "S23-04",
+          "action": "Return to Reference",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+Down arrow",
+          "context": "Drum Rack Drum Rack pad or Simpler"
+        },
+        {
+          "sourceId": "S23-05",
+          "action": "Temporarily Toggle Similar Sample Swap Controls in Drum Racks",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Option",
+          "context": "Drum Rack"
+        }
+      ]
+    },
+    {
+      "number": "24",
+      "title": "41.24 Key/MIDI Map Mode and the Computer MIDI Keyboard",
+      "shortcuts": [
+        {
+          "sourceId": "S24-01",
+          "action": "Toggle MIDI Map Mode",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+M",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S24-02",
+          "action": "Toggle Key Map Mode",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+K",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S24-03",
+          "action": "Computer MIDI Keyboard",
+          "inputKind": "Keyboard",
+          "liveMacos": "M",
+          "context": "Main window"
+        },
+        {
+          "sourceId": "S24-04",
+          "action": "Adjust Computer MIDI Keyboard Octave Range Up/Down",
+          "inputKind": "Keyboard",
+          "liveMacos": "X / Z",
+          "context": "Computer MIDI Keyboard"
+        },
+        {
+          "sourceId": "S24-05",
+          "action": "Adjust Computer MIDI Keyboard Incoming Note Velocity Up/Down",
+          "inputKind": "Keyboard",
+          "liveMacos": "C / V",
+          "context": "Computer MIDI Keyboard"
+        },
+        {
+          "sourceId": "S24-06",
+          "action": "Use Single-Letter Shortcut While Computer MIDI Keyboard Is Active",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift plus single-letter shortcut",
+          "context": "Computer MIDI Keyboard enabled"
+        }
+      ]
+    },
+    {
+      "number": "25",
+      "title": "41.25 Momentary Latching Shortcuts",
+      "shortcuts": [
+        {
+          "sourceId": "S25-01",
+          "action": "Momentarily Toggle Arrangement Automation Mode",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "A",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S25-02",
+          "action": "Momentarily Toggle Draw Mode",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "B",
+          "context": "Editor"
+        },
+        {
+          "sourceId": "S25-03",
+          "action": "Momentarily Toggle Soloing the Selected Track",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "S",
+          "context": "Selected track"
+        },
+        {
+          "sourceId": "S25-04",
+          "action": "Momentarily Toggle Zooming into the Arrangement Selection",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Z",
+          "context": "Arrangement View"
+        },
+        {
+          "sourceId": "S25-05",
+          "action": "Momentarily Toggle Track 1 Activator",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F1",
+          "context": "Track 1"
+        },
+        {
+          "sourceId": "S25-06",
+          "action": "Momentarily Toggle Track 2 Activator",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F2",
+          "context": "Track 2"
+        },
+        {
+          "sourceId": "S25-07",
+          "action": "Momentarily Toggle Track 3 Activator",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F3",
+          "context": "Track 3"
+        },
+        {
+          "sourceId": "S25-08",
+          "action": "Momentarily Toggle Track 4 Activator",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F4",
+          "context": "Track 4"
+        },
+        {
+          "sourceId": "S25-09",
+          "action": "Momentarily Toggle Track 5 Activator",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F5",
+          "context": "Track 5"
+        },
+        {
+          "sourceId": "S25-10",
+          "action": "Momentarily Toggle Track 6 Activator",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F6",
+          "context": "Track 6"
+        },
+        {
+          "sourceId": "S25-11",
+          "action": "Momentarily Toggle Track 7 Activator",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F7",
+          "context": "Track 7"
+        },
+        {
+          "sourceId": "S25-12",
+          "action": "Momentarily Toggle Track 8 Activator",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "F8",
+          "context": "Track 8"
+        },
+        {
+          "sourceId": "S25-13",
+          "action": "Momentarily Toggle Between Arrangement and Session View",
+          "inputKind": "Keyboard hold",
+          "liveMacos": "Tab",
+          "context": "Main window"
+        }
+      ]
+    },
+    {
+      "number": "26",
+      "title": "41.26.1 Using Tab for Navigation",
+      "shortcuts": [
+        {
+          "sourceId": "S26-01",
+          "action": "Move to Next Control",
+          "inputKind": "Keyboard",
+          "liveMacos": "Tab",
+          "context": "Use Tab to Move Focus enabled"
+        },
+        {
+          "sourceId": "S26-02",
+          "action": "Move to Previous Control",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Tab",
+          "context": "Use Tab to Move Focus enabled"
+        },
+        {
+          "sourceId": "S26-03",
+          "action": "Move to Next Control in Same Mixer Row",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Tab",
+          "context": "Session or Arrangement mixer"
+        },
+        {
+          "sourceId": "S26-04",
+          "action": "Move to Previous Control in Same Mixer Row",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Shift+Tab",
+          "context": "Session or Arrangement mixer"
+        },
+        {
+          "sourceId": "S26-05",
+          "action": "Collapse Arrangement Time Selection to Start Point",
+          "inputKind": "Keyboard",
+          "liveMacos": "Left arrow",
+          "context": "Arrangement View with Move Clips with Arrow Keys disabled"
+        },
+        {
+          "sourceId": "S26-06",
+          "action": "Collapse Arrangement Time Selection to End Point",
+          "inputKind": "Keyboard",
+          "liveMacos": "Right arrow",
+          "context": "Arrangement View with Move Clips with Arrow Keys disabled"
+        },
+        {
+          "sourceId": "S26-07",
+          "action": "Navigate Settings Tab Options",
+          "inputKind": "Keyboard",
+          "liveMacos": "Tab / Shift+Tab",
+          "context": "Settings tab"
+        },
+        {
+          "sourceId": "S26-08",
+          "action": "Change Focused Settings Command",
+          "inputKind": "Keyboard",
+          "liveMacos": "Up / Down arrow",
+          "context": "Settings tab"
+        },
+        {
+          "sourceId": "S26-09",
+          "action": "Switch Focused Settings Toggle State",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter",
+          "context": "Settings tab"
+        },
+        {
+          "sourceId": "S26-10",
+          "action": "Navigate Settings Page Chooser Tabs",
+          "inputKind": "Keyboard",
+          "liveMacos": "Option+Tab / Option+Shift+Tab",
+          "context": "Settings Page Chooser"
+        },
+        {
+          "sourceId": "S26-11",
+          "action": "Navigate Settings Page Chooser Tabs",
+          "inputKind": "Keyboard",
+          "liveMacos": "Up / Down arrow",
+          "context": "Settings Page Chooser"
+        },
+        {
+          "sourceId": "S26-12",
+          "action": "Return Focus to Settings Page Chooser",
+          "inputKind": "Keyboard",
+          "liveMacos": "Shift+Tab",
+          "context": "First control in Settings tab"
+        }
+      ]
+    },
+    {
+      "number": "28",
+      "title": "41.28 Accessing Menus",
+      "shortcuts": [
+        {
+          "sourceId": "S28-01",
+          "action": "Open Menu Search",
+          "inputKind": "Keyboard",
+          "liveMacos": "Cmd+?",
+          "context": "macOS menu bar"
+        },
+        {
+          "sourceId": "S28-02",
+          "action": "Navigate Suggested Menu Entries",
+          "inputKind": "Keyboard",
+          "liveMacos": "Up / Down arrow",
+          "context": "Menu search"
+        },
+        {
+          "sourceId": "S28-03",
+          "action": "Choose Suggested Menu Entry",
+          "inputKind": "Keyboard",
+          "liveMacos": "Enter",
+          "context": "Menu search"
+        }
+      ]
+    },
+    {
+      "number": "29",
+      "title": "41.29 Using Live's Context Menu",
+      "shortcuts": [
+        {
+          "sourceId": "S29-01",
+          "action": "Open Context Menu",
+          "inputKind": "Mouse gesture",
+          "liveMacos": "Ctrl+click",
+          "context": "Live interface"
+        },
+        {
+          "sourceId": "S29-02",
+          "action": "Open Context Menu",
+          "inputKind": "Accessibility command",
+          "liveMacos": "VO+Shift+M",
+          "context": "Live interface"
+        }
+      ]
+    }
+  ]
+}

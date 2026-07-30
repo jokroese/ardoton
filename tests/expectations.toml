@@ -2,95 +2,95 @@
 # Do not derive this file from ardour.keys.
 
 [[binding]]
-mapping_id = "M003"
+source_id = "S01-03"
 context = "Global"
 key = "Tab"
 action = "Common/next-tab"
 
 [[binding]]
-mapping_id = "M004"
+source_id = "S01-04"
 context = "Global"
 key = "Tertiary-ISO_Left_Tab"
 action = "Common/previous-tab"
 
 [[binding]]
-mapping_id = "M243"
+source_id = "S19-01"
 context = "Global"
 key = "Primary-t"
 action = "LuaAction/script-28"
 
 [[binding]]
-mapping_id = "M244"
+source_id = "S19-02"
 context = "Global"
 key = "Primary-Tertiary-t"
 action = "LuaAction/script-29"
 
 [[binding]]
-mapping_id = "M245"
+source_id = "S19-03"
 context = "Global"
 key = "Primary-Level4-t"
 action = "LuaAction/script-30"
 
 [[binding]]
-mapping_id = "M058"
+source_id = "S05-04"
 context = "Mixer"
 key = "Primary-d"
 action = "LuaAction/script-32"
 
 [[binding]]
-mapping_id = "M266"
+source_id = "S20-06"
 context = "Global"
 key = "F9"
 action = "Transport/record-roll"
 
 [[binding]]
-mapping_id = "M200"
+source_id = "S16-01"
 context = "Editor"
 key = "Primary-e"
 action = "Editor/split-region"
 
 [[binding]]
-mapping_id = "M201"
+source_id = "S16-02"
 context = "Editor"
 key = "Primary-j"
 action = "Editor/editor-consolidate"
 
 [[binding]]
-mapping_id = "M210"
+source_id = "S16-11"
 context = "Global"
 key = "Primary-l"
 action = "LuaAction/script-31"
 
 [[binding]]
-mapping_id = "M138"
+source_id = "S12-12"
 context = "Notes"
 key = "Primary-u"
 action = "Notes/quantize-selected-notes"
 
 [[binding]]
-mapping_id = "M255"
+source_id = "S19-13"
 context = "Editor"
 key = "c"
 action = "Editor/track-record-enable-toggle"
 
 [[binding]]
-mapping_id = "M256"
+source_id = "S19-14"
 context = "Editor"
 key = "s"
 action = "Editor/track-solo-toggle"
 
 [[binding]]
-mapping_id = "M235"
+source_id = "S17-01"
 context = "Editor"
 key = "Primary-Level4-u"
 action = "Editor/show-plist-selector"
 
 [[exclusive]]
-mapping_id = "M266"
+source_id = "S20-06"
 key = "F9"
 contexts = ["Global"]
 
 [[exclusive]]
-mapping_id = "M210"
+source_id = "S16-11"
 key = "Primary-l"
 contexts = ["Global"]

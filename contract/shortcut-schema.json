@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "shortcut-schema.json",
+  "$defs": {
+    "sourceId": {
+      "type": "string",
+      "pattern": "^S[0-9]{2}-[0-9]{2}$"
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "claim",
+        "reference",
+        "result"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "Action registration",
+            "Callback implementation",
+            "Lua API",
+            "Default binding",
+            "Profile binding",
+            "Ardour manual",
+            "Manual test",
+            "E2E test",
+            "Capability audit",
+            "Key conflict"
+          ]
+        },
+        "claim": {
+          "enum": [
+            "Target exists",
+            "Behavior candidate",
+            "Binding exists",
+            "Lua feasible",
+            "UI only",
+            "Capability missing",
+            "Key conflict",
+            "Behavior verified"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "enum": [
+            "Confirmed",
+            "Candidate",
+            "Conflict",
+            "Unverified"
+          ]
+        }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "status",
+        "evidence"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "Preferred",
+            "Current fallback",
+            "Alternative"
+          ]
+        },
+        "context": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposedMacos": {
+          "type": "string"
+        },
+        "keyToken": {
+          "type": "string"
+        },
+        "actionTarget": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementationType": {
+          "enum": [
+            "Profile keybinding",
+            "Profile Lua",
+            "None",
+            "Ardour action patch",
+            "Ardour input patch",
+            "Ardour UI patch",
+            "Ardour engine patch",
+            "Undetermined"
+          ]
+        },
+        "mappingClass": {
+          "enum": [
+            "Exact",
+            "Similar",
+            "No equivalent",
+            "Needs audit"
+          ]
+        },
+        "availability": {
+          "enum": [
+            "Profile bound",
+            "Native bound",
+            "Native unbound",
+            "Lua accessible",
+            "UI only",
+            "Missing",
+            "Unknown"
+          ]
+        },
+        "note": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "Proposed",
+            "Implemented",
+            "Blocked",
+            "Rejected"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      }
+    },
+    "shortcutRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "auditStatus",
+        "mappings"
+      ],
+      "properties": {
+        "sourceId": {
+          "$ref": "#/$defs/sourceId"
+        },
+        "auditStatus": {
+          "enum": [
+            "Needs audit",
+            "Partially assessed",
+            "Assessed"
+          ]
+        },
+        "mappings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mapping"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "auditStatus": {
+                "const": "Needs audit"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "mappings": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "auditStatus": {
+                "const": "Partially assessed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "mappings": {
+                "minItems": 1,
+                "not": {
+                  "contains": {
+                    "properties": {
+                      "role": {
+                        "const": "Preferred"
+                      }
+                    },
+                    "required": [
+                      "role"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "auditStatus": {
+                "const": "Assessed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "mappings": {
+                "minItems": 1,
+                "contains": {
+                  "properties": {
+                    "role": {
+                      "const": "Preferred"
+                    }
+                  },
+                  "required": [
+                    "role"
+                  ]
+                },
+                "minContains": 1,
+                "maxContains": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "$schema",
+        "documentType",
+        "product",
+        "urlReference",
+        "sections"
+      ],
+      "properties": {
+        "$schema": {
+          "const": "shortcut-schema.json"
+        },
+        "documentType": {
+          "const": "shortcut-sources"
+        },
+        "product": {
+          "const": "Ableton Live 12"
+        },
+        "urlReference": {
+          "const": "sources.csv"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "number",
+              "title",
+              "shortcuts"
+            ],
+            "properties": {
+              "number": {
+                "type": "string",
+                "pattern": "^[0-9]{2}$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "shortcuts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "sourceId",
+                    "action",
+                    "inputKind",
+                    "liveMacos",
+                    "context"
+                  ],
+                  "properties": {
+                    "sourceId": {
+                      "$ref": "#/$defs/sourceId"
+                    },
+                    "action": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "inputKind": {
+                      "enum": [
+                        "Keyboard",
+                        "Keyboard hold",
+                        "Mouse gesture",
+                        "Modifier gesture",
+                        "Accessibility command"
+                      ]
+                    },
+                    "liveMacos": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "context": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "$schema",
+        "documentType",
+        "section",
+        "shortcuts"
+      ],
+      "properties": {
+        "$schema": {
+          "const": "../shortcut-schema.json"
+        },
+        "documentType": {
+          "const": "shortcut-mappings"
+        },
+        "section": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "number",
+            "title"
+          ],
+          "properties": {
+            "number": {
+              "type": "string",
+              "pattern": "^[0-9]{2}$"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "shortcuts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/shortcutRecord"
+          }
+        }
+      }
+    }
+  ]
+}

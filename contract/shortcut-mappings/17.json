@@ -1,0 +1,61 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "17",
+    "title": "41.17 Comping"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S17-01",
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+U",
+          "keyToken": "Primary-Level4-u",
+          "actionTarget": "Editor/show-plist-selector",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Profile bound",
+          "note": "Static keymap evidence only; plist selector behavior is not a verified take-lane workflow.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-u -> Editor/show-plist-selector",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "S17-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S17-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S17-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S17-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S17-06",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

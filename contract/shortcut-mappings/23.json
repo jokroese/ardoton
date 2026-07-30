@@ -1,0 +1,35 @@
+{
+  "$schema": "../shortcut-schema.json",
+  "documentType": "shortcut-mappings",
+  "section": {
+    "number": "23",
+    "title": "41.23 Similar Sample Swapping"
+  },
+  "shortcuts": [
+    {
+      "sourceId": "S23-01",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S23-02",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S23-03",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S23-04",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    },
+    {
+      "sourceId": "S23-05",
+      "auditStatus": "Needs audit",
+      "mappings": []
+    }
+  ]
+}

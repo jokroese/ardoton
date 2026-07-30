@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-import csv
+import json
+import shutil
+import subprocess
+import sys
 
 from tools.validate_shortcuts import (
-    EVIDENCE_FIELDS,
-    MAPPING_FIELDS,
-    SOURCE_FIELDS,
+    report,
+    section_report,
     validate_contract,
     validate_expectations,
 )
@@ -13,241 +15,197 @@ from tools.validate_shortcuts import (
 from support import CONTRACT
 
 
-def write_csv(path, fields: tuple[str, ...], rows: list[dict[str, str]]) -> None:
-    with path.open("w", newline="", encoding="utf-8") as output:
-        writer = csv.DictWriter(output, fieldnames=fields)
-        writer.writeheader()
-        writer.writerows(rows)
+def copied_contract(tmp_path):
+    destination = tmp_path / "contract"
+    shutil.copytree(CONTRACT, destination)
+    return destination
 
 
-def source(source_id: str) -> dict[str, str]:
-    return {
-        "ID": source_id,
-        "Action": "Action",
-        "Input kind": "Keyboard",
-        "Live macOS": "Cmd+A",
-        "Context": "Main window",
-        "Live manual section": "1.1 Test",
-    }
-
-
-def mapping(mapping_id: str, source_id: str, **values: str) -> dict[str, str]:
-    row = {field: "" for field in MAPPING_FIELDS}
-    row.update(
-        {
-            "Mapping ID": mapping_id,
-            "Ableton shortcut ID": source_id,
-            "Mapping role": "Placeholder",
-            "Status": "Needs audit",
-        }
-    )
-    row.update(values)
-    return row
+def write(path, document) -> None:
+    path.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
 
 
 def test_real_shortcut_contract_is_valid() -> None:
+    assert validate_contract() == []
     assert (
-        validate_contract(
-            CONTRACT / "ableton-shortcuts.csv",
-            CONTRACT / "shortcuts-map.csv",
-            CONTRACT / "shortcut-evidence.csv",
+        validate_expectations(
+            CONTRACT.parent / "tests" / "expectations.toml", CONTRACT / "shortcut-mappings"
         )
         == []
     )
 
 
-def test_rejects_invalid_controlled_value(tmp_path) -> None:
-    sources = tmp_path / "sources.csv"
-    mappings = tmp_path / "mappings.csv"
-    write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
-    write_csv(mappings, MAPPING_FIELDS, [mapping("M001", "S01-01", Availability="Elsewhere")])
-
-    errors = validate_contract(sources, mappings)
-
-    assert "invalid Availability 'Elsewhere'" in errors[0]
-
-
-def test_rejects_invalid_evidence_reference(tmp_path) -> None:
-    sources = tmp_path / "sources.csv"
-    mappings = tmp_path / "mappings.csv"
-    write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
-    evidence = tmp_path / "evidence.csv"
-    write_csv(mappings, MAPPING_FIELDS, [mapping("M001", "S01-01")])
-    write_csv(
-        evidence,
-        EVIDENCE_FIELDS,
-        [
-            {
-                "Evidence ID": "E001",
-                "Mapping ID": "M999",
-                "Evidence kind": "Action registration",
-                "Claim": "Target exists",
-                "Reference": "test",
-                "Result": "Candidate",
-            }
-        ],
+def test_rejects_json_schema_failure(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    source = contract / "ableton-shortcuts.json"
+    document = json.loads(source.read_text(encoding="utf-8"))
+    document["unexpected"] = True
+    write(source, document)
+    assert (
+        "is not valid under any of the given schemas"
+        in validate_contract(source, contract / "shortcut-mappings")[0]
     )
 
-    assert "unknown Mapping ID 'M999'" in validate_contract(sources, mappings, evidence)[0]
+
+def test_rejects_duplicate_json_keys(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    source = contract / "ableton-shortcuts.json"
+    source.write_text(
+        '{"documentType":"shortcut-sources","documentType":"shortcut-sources"}', encoding="utf-8"
+    )
+    assert (
+        "duplicate JSON key 'documentType'"
+        in validate_contract(source, contract / "shortcut-mappings")[0]
+    )
 
 
-def test_rejects_source_without_mapping(tmp_path) -> None:
-    sources = tmp_path / "sources.csv"
-    mappings = tmp_path / "mappings.csv"
-    write_csv(sources, SOURCE_FIELDS, [source("S01-01"), source("S01-02")])
-    write_csv(mappings, MAPPING_FIELDS, [mapping("M001", "S01-01")])
+def test_rejects_missing_coverage(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    document["shortcuts"].pop()
+    write(mapping, document)
+    assert "has no mapping" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+    )
 
-    errors = validate_contract(sources, mappings)
 
-    assert "source ID 'S01-02': has no mapping" in errors
+def test_rejects_multiple_preferred_mappings(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    record = document["shortcuts"][1]
+    record["mappings"][1]["role"] = "Preferred"
+    write(mapping, document)
+    assert "requires one Preferred mapping" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+    )
+
+
+def test_audit_statuses_have_required_mapping_roles(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    needs_audit = document["shortcuts"][0]
+    assessed = document["shortcuts"][1]
+    partially_assessed = document["shortcuts"][2]
+    assert needs_audit["auditStatus"] == "Needs audit"
+    assert partially_assessed["auditStatus"] == "Partially assessed"
+    assert assessed["auditStatus"] == "Assessed"
+    write(mapping, document)
+    assert (
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+        == []
+    )
+
+
+def test_rejects_assessed_without_preferred_mapping(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    document["shortcuts"][2]["auditStatus"] = "Assessed"
+    write(mapping, document)
+    assert "assessed source requires one Preferred mapping" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+    )
+
+
+def test_rejects_partially_assessed_with_preferred_mapping(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    document["shortcuts"][2]["mappings"][0]["role"] = "Preferred"
+    write(mapping, document)
+    assert "partially assessed source requires mappings without a Preferred mapping" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+    )
+
+
+def test_mapping_tuples_are_unique_per_source(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    first, second = document["shortcuts"][2:4]
+    second["mappings"][0].update(first["mappings"][0])
+    write(mapping, document)
+    assert (
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+        == []
+    )
+    second["mappings"].append(first["mappings"][0].copy())
+    write(mapping, document)
+    assert "duplicate mapping tuple" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+    )
 
 
 def test_rejects_exact_without_behavior_evidence(tmp_path) -> None:
-    sources = tmp_path / "sources.csv"
-    mappings = tmp_path / "mappings.csv"
-    write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
-    write_csv(
-        mappings,
-        MAPPING_FIELDS,
-        [
-            mapping(
-                "M001",
-                "S01-01",
-                Status="Proposed",
-                **{"Mapping role": "Preferred"},
-                **{
-                    "Proposed macOS": "Cmd+A",
-                    "Ardour context": "Global",
-                    "Ardour key token": "Primary-a",
-                    "Ardour action target": "Action/test",
-                    "Implementation type": "Profile keybinding",
-                    "Mapping class": "Exact",
-                    "Availability": "Native bound",
-                },
-            )
-        ],
-    )
-
-    evidence = tmp_path / "evidence.csv"
-    write_csv(
-        evidence,
-        EVIDENCE_FIELDS,
-        [
-            {
-                "Evidence ID": "E001",
-                "Mapping ID": "M001",
-                "Evidence kind": "Action registration",
-                "Claim": "Target exists",
-                "Reference": "test",
-                "Result": "Candidate",
-            }
-        ],
-    )
-    assert "Exact requires behavior evidence" in validate_contract(sources, mappings, evidence)[0]
-
-
-def test_expectation_requires_profile_bound_keybinding_or_lua_mapping(tmp_path) -> None:
-    mappings = tmp_path / "mappings.csv"
-    expectations = tmp_path / "expectations.toml"
-    write_csv(mappings, MAPPING_FIELDS, [mapping("M001", "S01-01")])
-    expectations.write_text('[[binding]]\nmapping_id = "M001"\n', encoding="utf-8")
-
-    errors = validate_expectations(expectations, mappings)
-
-    assert "requires Implementation type Profile keybinding or Profile Lua" in errors[0]
-    assert "requires Availability 'Profile bound'" in errors[1]
-
-
-def test_rejects_missing_capability_audit(tmp_path) -> None:
-    sources = tmp_path / "sources.csv"
-    mappings = tmp_path / "mappings.csv"
-    evidence = tmp_path / "evidence.csv"
-    write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
-    write_csv(
-        mappings,
-        MAPPING_FIELDS,
-        [
-            mapping(
-                "M001",
-                "S01-01",
-                Status="Proposed",
-                **{
-                    "Mapping role": "Preferred",
-                    "Ardour context": "Global",
-                    "Ardour action target": "Action/test",
-                    "Implementation type": "Ardour UI patch",
-                    "Mapping class": "Similar",
-                    "Availability": "Missing",
-                },
-            )
-        ],
-    )
-    write_csv(
-        evidence,
-        EVIDENCE_FIELDS,
-        [
-            {
-                "Evidence ID": "E001",
-                "Mapping ID": "M001",
-                "Evidence kind": "Callback implementation",
-                "Claim": "UI only",
-                "Reference": "test",
-                "Result": "Candidate",
-            }
-        ],
-    )
-
-    assert (
-        "Missing requires capability audit evidence"
-        in validate_contract(sources, mappings, evidence)[0]
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    item = document["shortcuts"][1]["mappings"][1]
+    item["mappingClass"] = "Exact"
+    item["evidence"] = [item["evidence"][0]]
+    write(mapping, document)
+    assert "Exact requires behavior evidence" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
     )
 
 
 def test_rejects_profile_token_collision(tmp_path) -> None:
-    sources = tmp_path / "sources.csv"
-    mappings = tmp_path / "mappings.csv"
-    evidence = tmp_path / "evidence.csv"
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    item = document["shortcuts"][2]["mappings"][0]
+    item["role"] = "Preferred"
+    item["status"] = "Proposed"
+    write(mapping, document)
     keymap = tmp_path / "ardour.keys"
-    write_csv(sources, SOURCE_FIELDS, [source("S01-01")])
-    write_csv(
-        mappings,
-        MAPPING_FIELDS,
-        [
-            mapping(
-                "M001",
-                "S01-01",
-                Status="Proposed",
-                **{
-                    "Mapping role": "Preferred",
-                    "Ardour context": "Global",
-                    "Ardour key token": "Primary-a",
-                    "Ardour action target": "Action/test",
-                    "Implementation type": "Profile keybinding",
-                    "Mapping class": "Similar",
-                    "Availability": "Profile bound",
-                },
-            )
-        ],
-    )
-    write_csv(
-        evidence,
-        EVIDENCE_FIELDS,
-        [
-            {
-                "Evidence ID": "E001",
-                "Mapping ID": "M001",
-                "Evidence kind": "Profile binding",
-                "Claim": "Binding exists",
-                "Reference": "test",
-                "Result": "Confirmed",
-            }
-        ],
-    )
     keymap.write_text(
-        "<BindingSet><Bindings name=\"Global\"><Press>"
-        "<Binding key=\"Primary-a\" action=\"Action/other\" />"
+        '<BindingSet><Bindings name="Global"><Press>'
+        '<Binding key="Tab" action="Other" />'
         "</Press></Bindings></BindingSet>",
         encoding="utf-8",
     )
+    assert "key token collision" in "\n".join(
+        validate_contract(
+            contract / "ableton-shortcuts.json", contract / "shortcut-mappings", keymap
+        )
+    )
 
-    assert "key token collision" in validate_contract(sources, mappings, evidence, keymap)[0]
+
+def test_formatter_check_and_section_report() -> None:
+    result = subprocess.run(
+        [sys.executable, "tools/format_shortcuts.py", "--check"],
+        cwd=CONTRACT.parent,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    summary = report(CONTRACT / "ableton-shortcuts.json", CONTRACT / "shortcut-mappings", "01")
+    assert "Source input kinds:" in summary
+    assert "Mapping statuses:" in summary
+    output = section_report(
+        CONTRACT / "ableton-shortcuts.json", CONTRACT / "shortcut-mappings", "01"
+    )
+    assert (
+        "S01-03 | Toggle Session/Arrangement View | Keyboard | Main window | Partially assessed"
+        in output
+    )
+    assert (
+        "  Mapping | Current fallback | Profile keybinding | Similar | Implemented | "
+        "Common/next-tab"
+        in output
+    )
+    assert "    Evidence | Profile binding | Binding exists | Confirmed |" in output
+    result = subprocess.run(
+        [sys.executable, "tools/validate_shortcuts.py", "--report", "--section", "01"],
+        cwd=CONTRACT.parent,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "Source input kinds:" in result.stdout
+    assert "Section 01 joined report:" in result.stdout

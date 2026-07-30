@@ -29,7 +29,7 @@ REAL_CONFIG = Path.home() / "Library" / "Preferences" / "Ardour9"
 
 @dataclass(frozen=True)
 class BindingExpectation:
-    mapping_id: str
+    source_id: str
     context: str
     key: str
     action: str
@@ -37,7 +37,7 @@ class BindingExpectation:
 
 @dataclass(frozen=True)
 class ExclusiveExpectation:
-    mapping_id: str
+    source_id: str
     key: str
     contexts: tuple[str, ...]
 
@@ -60,7 +60,7 @@ def load_expectations() -> tuple[list[BindingExpectation], list[ExclusiveExpecta
     data = tomllib.loads(EXPECTATIONS_PATH.read_text(encoding="utf-8"))
     bindings = [
         BindingExpectation(
-            mapping_id=row["mapping_id"],
+            source_id=row["source_id"],
             context=row["context"],
             key=row["key"],
             action=row["action"],
@@ -69,7 +69,7 @@ def load_expectations() -> tuple[list[BindingExpectation], list[ExclusiveExpecta
     ]
     exclusives = [
         ExclusiveExpectation(
-            mapping_id=row["mapping_id"],
+            source_id=row["source_id"],
             key=row["key"],
             contexts=tuple(row["contexts"]),
         )
@@ -104,26 +104,18 @@ def keymap_duplicates() -> list[tuple[str, str]]:
     return dupes
 
 
-def contract_ids(filename: str, id_column: str = "ID") -> set[str]:
-    path = CONTRACT / filename
-    with path.open(newline="", encoding="utf-8") as source:
-        rows = list(csv.DictReader(source))
-    return {row[id_column] for row in rows if row.get(id_column)}
+def shortcut_sources() -> dict[str, dict]:
+    document = json.loads((CONTRACT / "ableton-shortcuts.json").read_text(encoding="utf-8"))
+    return {
+        shortcut["sourceId"]: shortcut
+        for section in document["sections"]
+        for shortcut in section["shortcuts"]
+    }
 
 
 def contract_row_count(filename: str) -> int:
     with (CONTRACT / filename).open(newline="", encoding="utf-8") as source:
-        rows = list(csv.reader(source))
-    return max(len(rows) - 1, 0)
-
-
-def mapping_source_ids() -> dict[str, str]:
-    with (CONTRACT / "shortcuts-map.csv").open(newline="", encoding="utf-8") as source:
-        return {
-            row["Mapping ID"]: row["Ableton shortcut ID"]
-            for row in csv.DictReader(source)
-            if row.get("Mapping ID") and row.get("Ableton shortcut ID")
-        }
+        return max(len(list(csv.reader(source))) - 1, 0)
 
 
 def profile_file_inventory() -> list[str]:
