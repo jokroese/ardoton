@@ -453,7 +453,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:322"
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:513"
             },
             {
               "kind": "Profile binding",
@@ -1164,7 +1164,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:809"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:803"
             },
             {
               "kind": "Profile binding",

@@ -26,13 +26,13 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:344"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:338"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:344-355"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:338-349"
             },
             {
               "kind": "Profile binding",
@@ -64,13 +64,13 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:350"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:344"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:350-352"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:344-346"
             },
             {
               "kind": "Profile binding",
@@ -102,13 +102,13 @@
               "kind": "Action registration",
               "claim": "Building block exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:360-362"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354-356"
             },
             {
               "kind": "Capability audit",
               "claim": "UI only",
               "result": "Candidate",
-              "reference": "Search scope: stop at selection end. Terms: PlaySelection, transport_play_selection, Level4-space. Subsystems: Transport actions. PlaySelection exists; no Option+Space stop-at-end action. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:360"
+              "reference": "Search scope: stop at selection end. Terms: PlaySelection, transport_play_selection, Level4-space. Subsystems: Transport actions. PlaySelection exists; no Option+Space stop-at-end action. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354"
             }
           ]
         }
@@ -134,13 +134,13 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:360"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:360-362"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354-356"
             },
             {
               "kind": "Profile binding",
@@ -166,7 +166,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:360"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354"
             },
             {
               "kind": "Profile binding",
@@ -198,13 +198,13 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:408"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:402"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:408-413"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:402-407"
             },
             {
               "kind": "Profile binding",
@@ -236,13 +236,13 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:379"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:373"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:379-386"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:373-380"
             },
             {
               "kind": "E2E test",
@@ -280,13 +280,13 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:376"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:370"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:376-378"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:370-372"
             },
             {
               "kind": "Profile binding",
@@ -338,7 +338,7 @@
               "kind": "Capability audit",
               "claim": "Capability missing",
               "result": "Candidate",
-              "reference": "Search scope: Session View / Cue slot record shortcut. Terms: record-to-session, trigger record, cue record. Subsystems: TriggerBox, Cues actions, Transport record-roll. No Cmd+Shift+F9 Session record action. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:376-386"
+              "reference": "Search scope: Session View / Cue slot record shortcut. Terms: record-to-session, trigger record, cue record. Subsystems: TriggerBox, Cues actions, Transport record-roll. No Cmd+Shift+F9 Session record action. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:370-380"
             }
           ]
         }
@@ -934,7 +934,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:506"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:500"
             },
             {
               "kind": "Callback implementation",
@@ -966,13 +966,13 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:506"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:500"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_options.cc:191;394;gtk2_ardour/ardour_ui_ed.cc:506"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_options.cc:191;394;gtk2_ardour/ardour_ui_ed.cc:500"
             },
             {
               "kind": "Profile binding",

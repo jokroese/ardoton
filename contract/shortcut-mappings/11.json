@@ -502,7 +502,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1501"
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1503"
             },
             {
               "kind": "Callback implementation",
@@ -592,7 +592,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1501"
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1503"
             },
             {
               "kind": "Callback implementation",
@@ -786,7 +786,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:322"
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:513"
             },
             {
               "kind": "Callback implementation",

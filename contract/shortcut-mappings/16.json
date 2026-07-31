@@ -177,7 +177,7 @@
             {
               "kind": "Action registration",
               "claim": "Building block exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1502-1503;gtk2_ardour/editor_ops.cc:3718-3754",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1504-1505;gtk2_ardour/editor_ops.cc:3718-3754",
               "result": "Confirmed"
             },
             {
@@ -209,7 +209,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1502-1503",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1504-1505",
               "result": "Confirmed"
             },
             {
@@ -497,7 +497,7 @@
             {
               "kind": "Action registration",
               "claim": "Building block exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1382-1388;1429-1432;editor_ops.cc:6497-6664",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1384-1390;1429-1432;editor_ops.cc:6497-6664",
               "result": "Confirmed"
             },
             {
@@ -523,7 +523,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1388",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1390",
               "result": "Confirmed"
             }
           ]
@@ -549,13 +549,13 @@
             {
               "kind": "Action registration",
               "claim": "Building block exists",
-              "reference": "../ardour@9.7:gtk2_ardour/audio_region_view.cc:1582-1648;gtk2_ardour/editor_actions.cc:1382-1388",
+              "reference": "../ardour@9.7:gtk2_ardour/audio_region_view.cc:1582-1648;gtk2_ardour/editor_actions.cc:1384-1390",
               "result": "Confirmed"
             },
             {
               "kind": "Capability audit",
               "claim": "Capability missing",
-              "reference": "Search scope: momentary fade-handle visibility while holding a key. Terms: momentary fade, hold F, fade_in_handle, show_region_fades. Subsystems: audio_region_view, region fade actions. Hover show/hide exists; hold-key momentary toggle does not. ../ardour@9.7:gtk2_ardour/audio_region_view.cc:1582-1648;gtk2_ardour/editor_actions.cc:1382-1388",
+              "reference": "Search scope: momentary fade-handle visibility while holding a key. Terms: momentary fade, hold F, fade_in_handle, show_region_fades. Subsystems: audio_region_view, region fade actions. Hover show/hide exists; hold-key momentary toggle does not. ../ardour@9.7:gtk2_ardour/audio_region_view.cc:1582-1648;gtk2_ardour/editor_actions.cc:1384-1390",
               "result": "Candidate"
             },
             {
@@ -1443,7 +1443,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1352",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1354",
               "result": "Confirmed"
             },
             {
@@ -1539,7 +1539,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1358",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1360",
               "result": "Confirmed"
             },
             {
@@ -1865,7 +1865,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:777",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:771",
               "result": "Confirmed"
             },
             {

@@ -206,7 +206,7 @@
               "kind": "Action registration",
               "claim": "Building block exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:557;1347-1356"
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:554;1347-1356"
             },
             {
               "kind": "Key conflict",
@@ -238,7 +238,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:557"
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:554"
             }
           ]
         }

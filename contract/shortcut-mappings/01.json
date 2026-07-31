@@ -665,7 +665,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:754-756",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:750",
               "result": "Confirmed"
             },
             {

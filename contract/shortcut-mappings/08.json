@@ -63,7 +63,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1502",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1504",
               "result": "Confirmed"
             },
             {
@@ -89,7 +89,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:683",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:677",
               "result": "Confirmed"
             },
             {
@@ -127,7 +127,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:732",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:726",
               "result": "Confirmed"
             },
             {
@@ -197,7 +197,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:734",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:728",
               "result": "Confirmed"
             },
             {
@@ -299,7 +299,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1503",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1505",
               "result": "Confirmed"
             },
             {
@@ -325,7 +325,7 @@
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:685",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:679",
               "result": "Confirmed"
             },
             {
