@@ -19,26 +19,26 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Exact",
           "availability": "Lua accessible",
-          "note": "E2E verifies creation of one audio track; insertion state and undo behavior are not separately verified.",
+          "note": "Creates one stereo audio track via Session:new_audio_track. E2E verifies creation; insertion order defaults to end of session; undo uses Ardour's route-creation undo.",
           "status": "Implemented",
           "evidence": [
             {
               "kind": "E2E test",
               "claim": "Behavior verified",
-              "reference": "tests/e2e/test_shortcuts.py:M243",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "tests/e2e/test_shortcuts.py:test_cmd_t_adds_audio_track"
             },
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "profile/scripts/ardourton_add_audio_track.lua:22-40",
-              "result": "Candidate"
+              "result": "Candidate",
+              "reference": "profile/scripts/ardourton_add_audio_track.lua:22-40;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-t -> LuaAction/script-28",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-t -> LuaAction/script-28"
             }
           ]
         }
@@ -57,26 +57,26 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Exact",
           "availability": "Lua accessible",
-          "note": "E2E verifies creation of one MIDI track; instrument selection and undo behavior are not separately verified.",
+          "note": "Creates one MIDI track via Session:new_midi_track without requiring a specific instrument plugin. E2E verifies creation; undo uses route-creation undo.",
           "status": "Implemented",
           "evidence": [
             {
               "kind": "E2E test",
               "claim": "Behavior verified",
-              "reference": "tests/e2e/test_shortcuts.py:M244",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "tests/e2e/test_shortcuts.py:test_cmd_shift_t_adds_midi_track"
             },
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "profile/scripts/ardourton_add_midi_track.lua:20-46",
-              "result": "Candidate"
+              "result": "Candidate",
+              "reference": "profile/scripts/ardourton_add_midi_track.lua:20-46;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-t -> LuaAction/script-29",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-t -> LuaAction/script-29"
             }
           ]
         }
@@ -95,20 +95,20 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Creates a return bus and sends from selected tracks; empty selection, duplicate-name, and undo behavior remain untested.",
+          "note": "Creates a return bus and post-fader sends from selected tracks (Live Insert Return Track). Empty selection still creates the bus; naming uses A Reverb/B Delay then Return N; undo covers route creation.",
           "status": "Implemented",
           "evidence": [
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "profile/scripts/ardourton_add_return.lua:34-62",
-              "result": "Candidate"
+              "result": "Candidate",
+              "reference": "profile/scripts/ardourton_add_return.lua:34-62;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Level4-t -> LuaAction/script-30",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Level4-t -> LuaAction/script-30"
             }
           ]
         }
@@ -116,48 +116,365 @@
     },
     {
       "sourceId": "S19-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+R",
+          "keyToken": "Primary-r",
+          "actionTarget": "Editor/rename-selected-track (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Cmd+R renames the selected track. Ardour supports inline name editing via TimeAxisView/RouteUI::route_rename but has no bindable rename-selected-track action; Primary-r is range mouse mode.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/route_ui.cc:1776;gtk2_ardour/time_axis_view.cc:690-792"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable rename selected track. Terms: route_rename, can_edit_name, Primary-r. Subsystems: RouteUI, TimeAxisView. Inline rename UI exists; no Editor/rename action. ../ardour@9.7:gtk2_ardour/route_ui.cc:1776"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor r -> Editing/set-mouse-mode-range"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Editor/rename-next-track (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Tab while renaming moves to the next track name field. Ardour floating text entries exist for names; Global Tab is Common/next-tab (workspace), not rename traversal.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/time_axis_view.cc:690-792;gtk2_ardour/route_ui.cc:1776"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Tab advance while renaming tracks. Terms: floating_text_entry, name_entry, next track rename. Subsystems: TimeAxisView, Common/next-tab. ../ardour@9.7:gtk2_ardour/time_axis_view.cc:690-718"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+G",
+          "keyToken": "Primary-g",
+          "actionTarget": "Editor/group-selected-routes (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live groups selected tracks into a track group. Ardour RouteGroups exist (Mixer/Editor group UI, AddRouteDialog) and Editor/group-selected-regions groups regions; profile Primary-g is region grouping, not route grouping.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:2504-2521;gtk2_ardour/add_route_dialog.cc:1106-1126;gtk2_ardour/editor_actions.cc:379"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable group selected routes. Terms: add_route_group, RouteGroupDialog, group-selected-regions. Subsystems: Mixer_UI, Editor route groups. Region group action exists; no group-selected-routes action. ../ardour@9.7:gtk2_ardour/editor_route_groups.cc:289-292"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-g -> Editor/group-selected-regions"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+G",
+          "keyToken": "Primary-g",
+          "actionTarget": "Editor/group-selected-regions",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Cmd+G groups selected regions, not tracks.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:379"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-g -> Editor/group-selected-regions"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+G",
+          "keyToken": "Primary-Tertiary-g",
+          "actionTarget": "Editor/ungroup-selected-routes (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live ungroups tracks. Ardour can dissolve RouteGroups from UI; Editor/ungroup-selected-regions ungroups regions only.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:380;gtk2_ardour/mixer_ui.cc:2471-2472"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: ungroup routes action. Terms: ungroup-selected-regions, RouteGroup. Subsystems: Editor, Mixer groups. ../ardour@9.7:gtk2_ardour/editor_actions.cc:380"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-g -> Editor/ungroup-selected-regions"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "+",
+          "keyToken": "equal",
+          "actionTarget": "Editor/show-grouped-routes (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live plus shows grouped tracks. Ardour RouteGroup set_hidden(false) can reveal group members in Editor/Mixer lists but has no bindable show-grouped-routes on +; profile equal is temporal zoom-in.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_route_groups.cc:289-292;gtk2_ardour/mixer_ui.cc:2471-2472;editor.cc:5021-5028"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: show grouped tracks shortcut. Terms: RouteGroup set_hidden, equal. Subsystems: editor_route_groups, mixer_ui. ../ardour@9.7:gtk2_ardour/editor_route_groups.cc:289-292"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor equal -> Editing/temporal-zoom-in"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "-",
+          "keyToken": "minus",
+          "actionTarget": "Editor/hide-grouped-routes (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live minus hides grouped tracks. Ardour RouteGroup hiding exists in UI; profile minus is temporal zoom-out.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_route_groups.cc:289-292;gtk2_ardour/editor.cc:5005-5006"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: hide grouped tracks. Terms: RouteGroup set_hidden, minus. Subsystems: editor_route_groups. ../ardour@9.7:gtk2_ardour/editor_route_groups.cc:289-292"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor minus -> Editing/temporal-zoom-out"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "U",
+          "keyToken": "u",
+          "actionTarget": "Editor/toggle-group-fold (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live U collapses/expands grouped tracks. Ardour group visibility/hidden flags exist but no fold-toggle action; profile u selects within cursors.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_route_groups.cc:289-292;gtk2_ardour/mixer_ui.cc:2326-2340"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: collapse/expand route group. Terms: group fold, set_hidden, is_hidden. Subsystems: editor_route_groups, mixer_ui. ../ardour@9.7:gtk2_ardour/mixer_ui.cc:2471-2472"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor u -> Editor/select-all-within-cursors"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+R",
+          "keyToken": "Primary-Level4-r",
+          "actionTarget": "Editor/toggle-return-tracks-visible (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live hides/shows return tracks. Ardour can hide individual stripables/buses via presentation_info set_hidden but has no returns-only visibility toggle action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor.cc:5005-5028;gtk2_ardour/mixer_ui.cc:940"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: toggle return/bus visibility. Terms: AudioBus, set_hidden, return tracks. Subsystems: Editor hide stripables, Mixer. ../ardour@9.7:gtk2_ardour/editor.cc:5005-5028"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Up",
+          "keyToken": "Primary-Up",
+          "actionTarget": "Editor/move-selected-tracks-up",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Cmd+Arrow moves nonadjacent tracks without collapsing selection. Ardour move-selected-tracks-up/down reorders selected tracks; alternate keys Cmd+Down/Left/Right in note \u2014 Left/Right are not track reorder actions (playhead/transient).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:332-334"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:332-334"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Up -> Editor/move-selected-tracks-up; Primary-Down -> Editor/move-selected-tracks-down"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-13",
@@ -166,26 +483,32 @@
         {
           "role": "Preferred",
           "context": "Editor",
-          "proposedMacos": "c",
+          "proposedMacos": "C",
           "keyToken": "c",
           "actionTarget": "Editor/track-record-enable-toggle",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
           "availability": "Native",
-          "note": "Static keymap evidence only; selected-track arming behavior remains untested.",
+          "note": "Toggles record-enable on selected tracks. Static keymap evidence; selected-track arming remains without dedicated E2E.",
           "status": "Implemented",
           "evidence": [
             {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:285-286"
+            },
+            {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
-              "reference": "Editor/track-record-enable-toggle",
-              "result": "Candidate"
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6341"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor c -> Editor/track-record-enable-toggle",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor c -> Editor/track-record-enable-toggle"
             }
           ]
         }
@@ -198,26 +521,32 @@
         {
           "role": "Preferred",
           "context": "Editor",
-          "proposedMacos": "s",
+          "proposedMacos": "S",
           "keyToken": "s",
           "actionTarget": "Editor/track-solo-toggle",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
           "availability": "Native",
-          "note": "Static keymap evidence only; selected-track solo behavior remains untested.",
+          "note": "Toggles solo on selected stripables. Static keymap evidence; selected-track solo remains without dedicated E2E.",
           "status": "Implemented",
           "evidence": [
             {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:287-288"
+            },
+            {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
-              "reference": "Editor/track-solo-toggle",
-              "result": "Candidate"
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6424"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor s -> Editor/track-solo-toggle",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor s -> Editor/track-solo-toggle"
             }
           ]
         }
@@ -225,23 +554,149 @@
     },
     {
       "sourceId": "S19-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Plugin Selector",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "PluginSelector/load-selected (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Enter adds the selected Browser device to the track. Ardour Plugin Selector loads via Apply/activation UI rather than a dedicated Browser Enter binding; Global Return is GotoStart.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;346-349;703;805-808"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Enter load from browser/plugin selector. Terms: row_activated, RESPONSE_APPLY, load_plugin. Subsystems: PluginSelector. Row activation/Apply loads plugins; no dedicated Browser Enter profile binding. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;805-808"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "0",
+          "keyToken": "0",
+          "actionTarget": "Editor/toggle-route-active (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live 0 deactivates the selected track. Ardour routes have active state (RouteUI active_changed) but no bindable toggle-route-active on digit 0.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/route_ui.cc:402"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: deactivate/activate route action. Terms: set_active, route active, deactivate track. Subsystems: RouteUI. ../ardour@9.7:gtk2_ardour/route_ui.cc:402"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor 0 -> Region/toggle-region-mute"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-17",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+Shift+F",
+          "keyToken": "Primary-Tertiary-Level4-f",
+          "actionTarget": "Editor/freeze-selected-tracks (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live freezes/unfreezes selected tracks. Ardour Editor::freeze_route/unfreeze_route exist for the clicked audio track via menus but are not bindable multi-selection freeze actions.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:3943-4034"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable freeze selected tracks. Terms: freeze_route, unfreeze_route, freeze_me. Subsystems: editor_ops. Menu freeze exists; no ActionManager freeze action. ../ardour@9.7:gtk2_ardour/editor_ops.cc:3971-4034"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S19-18",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "Editor/remove-track",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Delete on the track title bar removes the track. Ardour Editor/remove-track removes selected tracks; profile Delete is Editing/editor-delete (regions/objects), so Preferred needs a title-bar/context-sensitive binding or dedicated chord.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:510"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:7884-7902"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Delete -> Editing/editor-delete"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

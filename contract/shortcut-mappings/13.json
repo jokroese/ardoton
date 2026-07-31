@@ -8,38 +8,369 @@
   "shortcuts": [
     {
       "sourceId": "S13-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "B",
+          "keyToken": "b",
+          "actionTarget": "Editing/set-mouse-mode-draw",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Toggle Draw Mode (Pitch Lock Off) is free-pitch pencil. Ardour draw places notes at mouse pitch; there is no separate pitch-lock toggle. Factory default is d.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:510"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/midi_view.cc:621-664"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing b -> Editing/set-mouse-mode-draw"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editing",
+          "proposedMacos": "D",
+          "keyToken": "d",
+          "actionTarget": "Editing/set-mouse-mode-draw",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory binds draw mode to d; Ardourton profile uses b for Live parity.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:209",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S13-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+1",
+          "keyToken": "Primary-1",
+          "actionTarget": "Editing/next-grid-choice",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "next_grid_choice steps finer (Bar\u2192Beat\u2192\u2026\u21921/128\u2192None). Does nothing on triplets/n-tuplets/timecode. Live narrows adaptive/fixed grid continuously.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:538"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:825-868"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editing",
+          "proposedMacos": "6",
+          "keyToken": "6",
+          "actionTarget": "Editing/next-grid-choice",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile already binds unmodified 6 to next-grid-choice, not Live's Cmd+1.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:407"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing 6 -> Editing/next-grid-choice"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S13-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+2",
+          "keyToken": "Primary-2",
+          "actionTarget": "Editing/prev-grid-choice",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Coarser binary musical grid steps; same triplet/n-tuplet no-op as S13-02.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:539"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:872-916"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-2 -> Editor/cycle-edit-point-with-marker"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editing",
+          "proposedMacos": "5",
+          "keyToken": "5",
+          "actionTarget": "Editing/prev-grid-choice",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile binds unmodified 5 to prev-grid-choice; Primary-2 currently cycles edit point.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing 5 -> Editing/prev-grid-choice"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S13-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+3",
+          "keyToken": "Primary-3",
+          "actionTarget": "LuaAction/toggle-triplet-grid (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "No Live-style triplet toggle action. Building blocks: Snap/grid-type-thirds|sixths|twelfths|twentyfourths. Lua can read Editor:grid_type() and call Snap access_action to map binary\u2194triplet (e.g. BeatDiv4\u2194BeatDiv6). set_grid_type is not Lua-exported. StepEditing/toggle-triplet is step-entry only and must not be used.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:557;1347-1356"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-3 -> Transport/ToggleFollowEdits"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:968-970;1107 (grid_type + access_action Snap)"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+3",
+          "keyToken": "Primary-3",
+          "actionTarget": "Snap/grid-type-sixths",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Binds a fixed 1/8T-style grid choice rather than toggling triplet mode.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:557"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S13-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+4",
+          "keyToken": "Primary-4",
+          "actionTarget": "Editing/cycle-snap-mode",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Cycles Magnetic \u2194 Off (SnapNormal deprecated\u2192Magnetic). Not a hard absolute grid-only snap mode.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:537"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1118-1130"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editing",
+          "proposedMacos": "4",
+          "keyToken": "4",
+          "actionTarget": "Editing/cycle-snap-mode",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile already binds unmodified 4 to cycle-snap-mode, not Live's Cmd+4.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing 4 -> Editing/cycle-snap-mode"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S13-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+5",
+          "keyToken": "Primary-5",
+          "actionTarget": "Editing/zoom-adaptive-grid (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live toggles fixed vs zoom-dependent grid density. Ardour grid is an explicit GridType enum only. grid-follows-internal is an alternate grid for Internal Edit tools, not zoom-adaptive.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: fixed vs zoom-adaptive grid. Terms: adaptive grid, zoom-grid, fixed-grid, grid-follows-internal. Subsystems: editing_context, editor_tempodisplay, ui_config, enums. ../ardour@9.7:gtk2_ardour/editing_context.cc:825-916;gtk2_ardour/rc_option_editor.cc:3611-3615;libs/ardour/enums.cc:111-131"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S13-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+drag",
+          "actionTarget": "Editing/snap-bypass-drag",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same as S05-13: Ardour inverts snapping when the configured snap modifier is held. macOS defaults use Shift for snap bypass and Option for snap-delta. Live's Cmd+drag conflicts with Command as selection toggle and drag constraint.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1613-1638;gtk2_ardour/editor_drag.cc:458-469;4816-4837;gtk2_ardour/rc_option_editor.cc:914-932;1066-1075;gtk2_ardour/keyboard.cc:48-52;296-312;365-374"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+drag",
+          "actionTarget": "Editing/ignore-grid-drag-cmd (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Matching Live's Cmd+drag snap bypass would require preference and/or input changes that collide with Cmd selection toggle and drag constraint behavior.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1613-1638;gtk2_ardour/rc_option_editor.cc:1066-1075"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: snap modifier preferences and drag constraint. Terms: snap bypass, PrimaryModifier, drag constraint. Subsystems: EditingContext, Keyboard, editor_drag. ../ardour@9.7:gtk2_ardour/keyboard.cc:48-52;296-312;365-374"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:365-374 (Cmd = SelectionToggle); gtk2_ardour/keyboard.cc:48-52;296-312 (Cmd = drag constraint)"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -8,98 +8,539 @@
   "shortcuts": [
     {
       "sourceId": "S22-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Plugin Selector",
+          "proposedMacos": "Down",
+          "keyToken": "Down",
+          "actionTarget": "GTK/tree-navigate",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Browser Up/Down scrolls the browser list. Ardour Plugin Selector / SFDB GTK trees navigate with arrow keys when focused; not a dedicated Browser action. Alternate Up in note.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc:138"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc:168-253"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Plugin Selector",
+          "proposedMacos": "Right",
+          "keyToken": "Right",
+          "actionTarget": "GTK/tree-expand-collapse",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Left/Right close/open browser folders. GTK tree views expand/collapse when focused; Ardour has no Live Browser folder action. Alternate Left in note.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc:138"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc:138"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Plugin Selector",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "PluginSelector/load-selected (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Enter loads the selected Browser item. Ardour Plugin Selector loads via row activation / Insert Plugin(s) Apply; needs focus-scoped Enter dispatch vs Global GotoStart.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;703;805-808"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Enter load browser item. Terms: row_activated, RESPONSE_APPLY. Subsystems: PluginSelector, sfdb. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:805-808"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Sound File Browser",
+          "proposedMacos": "Shift+Enter",
+          "keyToken": "Tertiary-Return",
+          "actionTarget": "SFDB/preview-selected (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Shift+Enter/Right arrow previews the selected file. Ardour SFDB can audition files from UI controls but has no bindable preview-selected shortcut. Alternate Right in note.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/sfdb_ui.cc:253-254;515"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: SFDB preview shortcut. Terms: audition, preview, sfdb. Subsystems: sfdb_ui SoundFileBox. Play/stop audition buttons exist; no bindable preview-selected action. ../ardour@9.7:gtk2_ardour/sfdb_ui.cc:253-254;515"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Plugin Selector",
+          "proposedMacos": "Cmd+F",
+          "keyToken": "Primary-f",
+          "actionTarget": "PluginSelector/focus-search (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Cmd+F focuses Browser search. Ardour Plugin Selector/SFDB have search fields but no bindable focus-search action; Editor Primary-f toggles follow-playhead.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: focus plugin/SFDB search. Terms: search entry, Primary-f. Subsystems: PluginSelector, sfdb_ui. Search UI exists; no bindable focus-search action. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:171-198"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-f -> EditorEditing/toggle-follow-playhead"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "Down",
+          "keyToken": "Down",
+          "actionTarget": "Browser/jump-to-search-results (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live jumps from search field into results with Down/Enter. Ardour has no Live Browser search-results focus action; GTK focus traversal only.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'jump-to-search-results'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "1",
+          "keyToken": "1",
+          "actionTarget": "Browser/assign-color-1 (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live assigns Browser color 1 to selected items. Ardour has no Live Browser item color tagging model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'assign-color-1'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "2",
+          "keyToken": "2",
+          "actionTarget": "Browser/assign-color-2 (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live assigns Browser color 2 to selected items. Ardour has no Live Browser item color tagging model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'assign-color-2'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "3",
+          "keyToken": "3",
+          "actionTarget": "Browser/assign-color-3 (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live assigns Browser color 3 to selected items. Ardour has no Live Browser item color tagging model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'assign-color-3'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "4",
+          "keyToken": "4",
+          "actionTarget": "Browser/assign-color-4 (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live assigns Browser color 4 to selected items. Ardour has no Live Browser item color tagging model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'assign-color-4'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "5",
+          "keyToken": "5",
+          "actionTarget": "Browser/assign-color-5 (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live assigns Browser color 5 to selected items. Ardour has no Live Browser item color tagging model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'assign-color-5'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "6",
+          "keyToken": "6",
+          "actionTarget": "Browser/assign-color-6 (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live assigns Browser color 6 to selected items. Ardour has no Live Browser item color tagging model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'assign-color-6'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "7",
+          "keyToken": "7",
+          "actionTarget": "Browser/assign-color-7 (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live assigns Browser color 7 to selected items. Ardour has no Live Browser item color tagging model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'assign-color-7'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "0",
+          "keyToken": "0",
+          "actionTarget": "Browser/reset-browser-colors (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live resets Browser item colors. Ardour has no Browser color-tag model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'reset-browser-colors'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "Cmd+Shift+F",
+          "keyToken": "Primary-Tertiary-f",
+          "actionTarget": "Browser/similarity-search (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Similarity Search has no Ardour Browser equivalent.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'similarity-search'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "Cmd+[",
+          "keyToken": "Primary-bracketleft",
+          "actionTarget": "Browser/history-back (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Browser history back has no Ardour Browser history stack.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'history-back'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-17",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "Cmd+]",
+          "keyToken": "Primary-bracketright",
+          "actionTarget": "Browser/history-forward (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Browser history forward has no Ardour Browser history stack.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'history-forward'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-18",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "Cmd+Option+G",
+          "keyToken": "Primary-Level4-g",
+          "actionTarget": "Browser/toggle-filter-view (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Browser filter view has no Ardour equivalent pane.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'toggle-filter-view'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S22-19",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Browser",
+          "proposedMacos": "Cmd+Shift+E",
+          "keyToken": "Primary-Tertiary-e",
+          "actionTarget": "Browser/toggle-tag-editor (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Browser tag editor has no Ardour equivalent.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Browser 'toggle-tag-editor'. Terms: browser, sfdb, plugin_selector, similarity, tag editor. Subsystems: PluginSelector, SoundFileUI/sfdb. No Live-style Browser model for this shortcut. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:138;gtk2_ardour/sfdb_ui.cc"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

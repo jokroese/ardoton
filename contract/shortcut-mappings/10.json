@@ -8,28 +8,163 @@
   "shortcuts": [
     {
       "sourceId": "S10-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "AudioClipEditor",
+          "proposedMacos": "Option+Tab",
+          "keyToken": "Level4-Tab",
+          "actionTarget": "AudioClipEditor/cycle-sample-envelopes-tab (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live cycles Sample \u2194 Envelopes in Audio Clip View. Ardour AudioClipEditor is a single waveform/cue canvas with start/end boundaries; region gain/automation lives on timeline lanes, not Clip View tabs.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_page.cc:148-149;gtk2_ardour/route_time_axis.cc:1549-1558"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Clip View audio Sample/Envelopes tabs. Terms: Notebook, Envelope, Sample, tab. Subsystems: audio_clip_editor, cue_editor, selection_properties_box, trigger_page. ../ardour@9.7:gtk2_ardour/audio_clip_editor.cc:139-146;169-267;gtk2_ardour/cue_editor.cc:1679-1685;gtk2_ardour/trigger_page.cc:148-149"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab; Level4-Tab also preferred by S02-13 Common/focus-next-neighbor"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S10-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDICueEditor",
+          "proposedMacos": "Option+Tab",
+          "keyToken": "Level4-Tab",
+          "actionTarget": "MIDICueEditor/cycle-notes-envelopes-mpe-tab (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live cycles Notes \u2194 Envelopes \u2194 MPE. Ardour pianoroll shows notes plus optional velocity/CC/pressure lanes via menus (toggle_automation), not three Clip View tabs. No MPE tab.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/pianoroll.cc:308-338;gtk2_ardour/midi_time_axis.cc:828-846"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: MIDI Clip View Notes/Envelopes/MPE tabs. Terms: MPE, Notebook, Envelope, note expression. Subsystems: pianoroll, midi_time_axis, trigger_page. ../ardour@9.7:gtk2_ardour/pianoroll.cc:308-338;2950-2980;gtk2_ardour/midi_time_axis.cc:828-846;1325-1405;gtk2_ardour/trigger_page.cc:148"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab; Level4-Tab also preferred by S02-13 and S10-01"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S10-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Clip View",
+          "proposedMacos": "Option+Shift+1",
+          "keyToken": "Level4-Tertiary-1",
+          "actionTarget": "ClipView/show-sample-or-notes-tab (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Direct Sample/Notes tab select requires Live's Clip View notebook. Closest UI is selection-driven Cue audio/MIDI editor or Editor/show-editor-props (properties box), not a Sample/Notes tab action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201 (Editor/show-editor-props)"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Clip View Sample/Notes tab select. Terms: show tab, Sample, Notes, Notebook. Subsystems: audio_clip_editor, pianoroll, editor_actions. ../ardour@9.7:gtk2_ardour/audio_clip_editor.cc;gtk2_ardour/pianoroll.cc;gtk2_ardour/editor_actions.cc:201"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S10-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Clip View",
+          "proposedMacos": "Option+Shift+2",
+          "keyToken": "Level4-Tertiary-2",
+          "actionTarget": "ClipView/show-envelopes-tab (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No Envelopes tab. Timeline/pianoroll automation lanes are menu-toggled per parameter, not a Clip View envelope page.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Clip View Envelopes tab. Terms: Envelopes, Notebook, toggle_automation. Subsystems: pianoroll, midi_time_axis, route_time_axis. ../ardour@9.7:gtk2_ardour/pianoroll.cc:308-338;2950-2980;gtk2_ardour/midi_time_axis.cc:828-876;gtk2_ardour/route_time_axis.cc:1549-1558"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S10-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI Clip View",
+          "proposedMacos": "Option+Shift+3",
+          "keyToken": "Level4-Tertiary-3",
+          "actionTarget": "MIDICueEditor/show-mpe-tab (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No MPE Clip View tab or per-note expression editor. Channel pressure and pitch bend exist as automation types; polyphonic per-note MPE editing is not a Clip View mode.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: MPE Clip View tab / note expression. Terms: MPE, note expression, PolyKeyPressure, per-note. Subsystems: pianoroll, midi_time_axis, parameter_types. ../ardour@9.7:gtk2_ardour/pianoroll.cc:2950-2951;gtk2_ardour/midi_time_axis.cc:843-846;libs/ardour/ardour/types.h:177;libs/ardour/ardour/parameter_types.h:35-67"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

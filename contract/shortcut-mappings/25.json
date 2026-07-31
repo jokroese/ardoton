@@ -8,68 +8,497 @@
   "shortcuts": [
     {
       "sourceId": "S25-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "A",
+          "keyToken": "a",
+          "actionTarget": "Editor/momentary-automation-mode (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds A to momentarily enable Arrangement automation mode. Ardour automation visibility/modes are latching UI/actions without hold-to-engage.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:266 (toggle-all-existing-automation building block)"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-automation-mode (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:266 (toggle-all-existing-automation building block)"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global a -> Transport/solo-selection"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "B",
+          "keyToken": "b",
+          "actionTarget": "Editing/momentary-draw-mode (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds B for momentary Draw mode. Ardour Editing/set-mouse-mode-draw is latching; profile b selects draw mode permanently.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:510"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editing/momentary-draw-mode (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editing_context.cc:510"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing b -> Editing/set-mouse-mode-draw"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "S",
+          "keyToken": "s",
+          "actionTarget": "Editor/momentary-track-solo (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds S to momentarily solo the selected track. Ardour Editor/track-solo-toggle is latching; profile s solos permanently.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:287-288;gtk2_ardour/editor_ops.cc:6424"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-solo (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:287-288;gtk2_ardour/editor_ops.cc:6424"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor s -> Editor/track-solo-toggle"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Z",
+          "keyToken": "z",
+          "actionTarget": "Editor/momentary-zoom-to-selection (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds Z to momentarily zoom to Arrangement selection. Ardour zoom-to-selection exists as a latching/one-shot action, not hold-to-zoom-and-restore.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:308"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-zoom-to-selection (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:308"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor z -> Editor/zoom-to-selection"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F1",
+          "keyToken": "F1",
+          "actionTarget": "Editor/momentary-track-1-activator (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds F1 to momentarily toggle track 1 activator. Ardour lacks numbered track activators and hold-to-engage; F1 recalls visual states.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-1-activator (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F1 -> Editor/goto-visual-state-1"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F2",
+          "keyToken": "F2",
+          "actionTarget": "Editor/momentary-track-2-activator (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds F2 to momentarily toggle track 2 activator. Ardour lacks numbered track activators and hold-to-engage; F2 recalls visual states.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-2-activator (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F2 -> Editor/goto-visual-state-2"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F3",
+          "keyToken": "F3",
+          "actionTarget": "Editor/momentary-track-3-activator (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds F3 to momentarily toggle track 3 activator. Ardour lacks numbered track activators and hold-to-engage; F3 recalls visual states.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-3-activator (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F3 -> Editor/goto-visual-state-3"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F4",
+          "keyToken": "F4",
+          "actionTarget": "Editor/momentary-track-4-activator (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds F4 to momentarily toggle track 4 activator. Ardour lacks numbered track activators and hold-to-engage; F4 recalls visual states.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-4-activator (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F4 -> Editor/goto-visual-state-4"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F5",
+          "keyToken": "F5",
+          "actionTarget": "Editor/momentary-track-5-activator (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds F5 to momentarily toggle track 5 activator. Ardour lacks numbered track activators and hold-to-engage; F5 recalls visual states.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-5-activator (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F5 -> Editor/goto-visual-state-5"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F6",
+          "keyToken": "F6",
+          "actionTarget": "Editor/momentary-track-6-activator (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds F6 to momentarily toggle track 6 activator. Ardour lacks numbered track activators and hold-to-engage; F6 recalls visual states.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-6-activator (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F6 -> Editor/goto-visual-state-6"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F7",
+          "keyToken": "F7",
+          "actionTarget": "Editor/momentary-track-7-activator (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds F7 to momentarily toggle track 7 activator. Ardour lacks numbered track activators and hold-to-engage; F7 recalls visual states.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-7-activator (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F7 -> Editor/goto-visual-state-7"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F8",
+          "keyToken": "F8",
+          "actionTarget": "Editor/momentary-track-8-activator (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds F8 to momentarily toggle track 8 activator. Ardour lacks numbered track activators and hold-to-engage; F8 recalls visual states.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Editor/momentary-track-8-activator (new). Terms: key hold, press release momentary. Subsystems: ActionManager toggles are latching. Building-block toggle exists; hold-to-engage does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F8 -> Editor/goto-visual-state-8"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S25-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Common/momentary-editor-mixer-view (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live holds Tab to momentarily switch Arrangement/Session view. Ardour Common/next-tab cycles workspaces latching; no hold-to-flip Arrangement/Session.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:802-803"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: momentary hold for Common/momentary-editor-mixer-view (new). Terms: key hold, press release momentary, next-tab. Subsystems: ActionManager workspace tabs. Latching Common/next-tab exists; hold-to-flip Arrangement/Session does not. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:802-803"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

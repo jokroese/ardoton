@@ -8,58 +8,482 @@
   "shortcuts": [
     {
       "sourceId": "S12-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+A",
+          "keyToken": "Primary-a",
+          "actionTarget": "Notes/select-all",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:654"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/midi_view.cc (select_all_notes)"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Primary-a -> Notes/select-all"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Option+drag",
+          "actionTarget": "Notes/copy-notes-option-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live copies notes with Option+drag. Ardour CopyModifier defaults to Control (Secondary); remapping to Option (Level4) needs input/preference changes and may collide with other Option uses.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:300-310 (CopyModifier)"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: note copy-drag modifier. Terms: CopyModifier, Option+drag, duplicate notes. Subsystems: Keyboard, midi_view, editor_drag. Native copy-drag uses Ctrl."
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "MIDI",
+          "proposedMacos": "Ctrl+drag",
+          "actionTarget": "Notes/copy-notes-drag",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed copy-drag uses Control (CopyModifier), not Live's Option.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:300-310"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+E",
+          "keyToken": "Primary-e",
+          "actionTarget": "Notes/split-notes-grid",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Splits selected notes on grid boundaries. Live also documents split at time-selection start/end as a dual path; Ardour's discrete action is grid-only.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:701"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Primary-e -> Notes/split-notes-grid"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+E drag up/down",
+          "actionTarget": "Notes/split-notes-more",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live chops in increments of 1 via Cmd+E+drag. Ardour exposes discrete Notes/split-notes-more (profile s) and split-notes-less (Tertiary-s); there is no Cmd+E drag gesture.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc (split-notes-more/less)"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: chop notes by drag gesture. Terms: split-notes-more, Cmd+E drag. Subsystems: midi_view, editing_context. Discrete actions only."
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI s -> Notes/split-notes-more"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "MIDI",
+          "proposedMacos": "S",
+          "keyToken": "s",
+          "actionTarget": "Notes/split-notes-more",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Discrete split-more key, not Live's Cmd+E drag.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI s -> Notes/split-notes-more"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Shift+E drag up/down",
+          "actionTarget": "Notes/split-notes-less",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live chops in increments of 2 via Cmd+Shift+E+drag. Closest discrete action is Notes/split-notes-less (coarser splits); no matching drag gesture.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc (split-notes-less)"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: chop notes increments of 2 by drag. Terms: split-notes-less, Cmd+Shift+E drag. Subsystems: midi_view."
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "MIDI",
+          "proposedMacos": "Shift+S",
+          "keyToken": "Tertiary-s",
+          "actionTarget": "Notes/split-notes-less",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Discrete split-less key, not Live's Cmd+Shift+E drag.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Tertiary-s -> Notes/split-notes-less"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Hold E then click",
+          "keyToken": "e",
+          "actionTarget": "Notes/split-at-click (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live hold-E then click splits at the exact click location. Ardour has no hold-E split tool; split-notes-grid is a discrete action on selection.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:701 (split-notes-grid)"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: hold-E split tool. Terms: hold E, split at click, momentary split tool. Subsystems: midi_view, editing_context mouse modes."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Hold E then drag",
+          "keyToken": "e",
+          "actionTarget": "Notes/move-split-note (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live hold-E then drag moves the split point. No Ardour hold-E split-move tool.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: hold-E move split. Terms: move split note, hold E drag. Subsystems: midi_view, editor_drag."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+J",
+          "keyToken": "Primary-j",
+          "actionTarget": "Notes/join-notes",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Joins selected notes. Profile currently binds unmodified j; Live uses Cmd+J. Editor Primary-j is consolidate.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:704"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/midi_view.cc (join_notes)",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-j -> Editor/editor-consolidate"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "MIDI",
+          "proposedMacos": "J",
+          "keyToken": "j",
+          "actionTarget": "Notes/join-notes",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Profile binds join-notes to unmodified j, not Cmd+J.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/midi_view.cc (join_notes)",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI j -> Notes/join-notes"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Option+J",
+          "keyToken": "Primary-Level4-j",
+          "actionTarget": "Notes/fit-notes-to-time-range (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live fits selected notes into the time selection range. No Ardour note time-fit action found.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: fit notes to time range. Terms: fit notes, time range, stretch notes to selection. Subsystems: midi_view, editing_context."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "W",
+          "keyToken": "w",
+          "actionTarget": "Editor/zoom-to-selection-horiz",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live fits MIDI Note Editor content width. Closest native action is Editor/zoom-to-selection-horiz (or Cue full-zoom UI-only). Profile w jumps to mark.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:309"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global w -> Common/jump-forward-to-mark"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "W",
+          "keyToken": "w",
+          "actionTarget": "Common/jump-forward-to-mark",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile w jumps to next mark.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global w -> Common/jump-forward-to-mark"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "H",
+          "keyToken": "h",
+          "actionTarget": "Editor/fit-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Fits track/lane heights to selection \u2014 not MIDI pitch-range fit exclusively. Factory/profile use f for fit-selection.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:322"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Region/play-selected-regions; Editor f -> Editor/fit-selection"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F",
+          "keyToken": "f",
+          "actionTarget": "Editor/fit-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "fit-selection already on f.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor f -> Editor/fit-selection"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-12",
@@ -74,20 +498,26 @@
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
           "availability": "Native",
-          "note": "Static keymap evidence only; MIDI note quantization behavior remains untested.",
+          "note": "Quantizes selected MIDI notes. In Clip/Pianoroll context the inspector QuantizeWidget applies without a modal; the Editor MIDI path still presents QuantizeDialog then applies on OK.",
           "status": "Implemented",
           "evidence": [
             {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:712"
+            },
+            {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
-              "reference": "Notes/quantize-selected-notes",
-              "result": "Candidate"
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/pianoroll.cc:698-710;gtk2_ardour/editing_context.cc:1934-1957"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Notes Primary-u -> Notes/quantize-selected-notes",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Notes Primary-u -> Notes/quantize-selected-notes"
             }
           ]
         }
@@ -95,133 +525,876 @@
     },
     {
       "sourceId": "S12-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Shift+U",
+          "keyToken": "Primary-Tertiary-u",
+          "actionTarget": "Notes/quantize-settings (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live opens quantize settings without applying. Ardour QuantizeDialog is apply-on-OK; Pianoroll exposes QuantizeWidget settings in the inspector. No settings-only bindable action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1934-1957;gtk2_ardour/pianoroll.cc:698-710;gtk2_ardour/quantize_dialog.cc:190"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: quantize settings without apply. Terms: QuantizeDialog, QuantizeWidget, settings. Subsystems: editing_context, pianoroll."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Page Up / Page Down",
+          "keyToken": "Page_Up",
+          "actionTarget": "Editor/scroll-tracks-up",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Scrolls tracks/lanes vertically (also Page_Down -> scroll-tracks-down). Live MIDI Note Editor vertical scroll is pitch-lane oriented; Ardour action scrolls the track list/canvas.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc (scroll-tracks-up/down)"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Page_Up/Page_Down -> Editor/scroll-tracks-up / scroll-tracks-down"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+Page Up / Shift+Page Down",
+          "keyToken": "Tertiary-Page_Up",
+          "actionTarget": "Editor/scroll-tracks-up-fine (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live fine vertical scroll. Ardour has coarse scroll-tracks-up/down only; no fine page-scroll action found.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc (scroll-tracks-up/down)"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: fine vertical editor scroll. Terms: scroll-tracks fine, Page_Up Tertiary. Subsystems: editor_actions, editing_context."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Page Up / Cmd+Page Down",
+          "keyToken": "Primary-Page_Up",
+          "actionTarget": "Editor/scroll-left",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Horizontal canvas scroll if bound to scroll-left/right (also Primary-Page_Down). Verify profile; may need rebind. Live Cmd+Page scrolls MIDI editor horizontally.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc (scroll-left/right or equivalent)"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor.cc (canvas scroll)"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-17",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+drag",
+          "actionTarget": "Notes/velocity-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Cmd+drag changes velocity from the note editor. Ardour velocity editing uses the velocity lane / Notes/edit-velocities / velocity \u00b1 keys; Cmd on notes is typically a constraint/selection modifier, not velocity drag.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:710;gtk2_ardour/midi_view.h:308-310"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Cmd+drag note velocity. Terms: velocity drag, Cmd+drag notes. Subsystems: midi_view, note drag."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-18",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Home",
+          "keyToken": "Home",
+          "actionTarget": "Transport/GotoStart",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Moves playhead/session to start, not a Clip View insert marker to clip beginning.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Home -> Transport/GotoStart"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-19",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "End",
+          "keyToken": "End",
+          "actionTarget": "Transport/GotoEnd",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Moves playhead/session to end, not a Clip View insert marker to clip end.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global End -> Transport/GotoEnd"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-20",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Option+Up / Option+Down arrow",
+          "keyToken": "Level4-Up",
+          "actionTarget": "Notes/select-next",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Select next/previous note (also Level4-Down -> Notes/select-previous). Profile currently uses Tab/Primary-Tab. Live Option+arrows; Notes Up/Down currently transpose.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:656-657"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Notes Up/Down -> transpose; Tab -> Notes/select-next"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "MIDI",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Notes/select-next",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile select-next/previous on Tab / Primary-Tab.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Tab -> Notes/select-next"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-21",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Option+Left / Option+Right arrow",
+          "keyToken": "Level4-Left",
+          "actionTarget": "Notes/select-next-same-pitch (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live selects next/previous note in the same key track. Building blocks for note selection exist; no same-pitch neighbor action found. Also Level4-Right.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:656-661;gtk2_ardour/midi_view.cc (select_next_note)"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: select next note same pitch. Terms: same pitch, key track, select_matching. Subsystems: midi_view."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-22",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+Shift+F",
+          "keyToken": "Level4-Tertiary-f",
+          "actionTarget": "EditorEditing/toggle-follow-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same preferred as S09-05/S11-05.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:485-488"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+F",
+          "keyToken": "Primary-f",
+          "actionTarget": "EditorEditing/toggle-follow-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile Primary-f.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-f -> EditorEditing/toggle-follow-playhead"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-23",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Shift+Left / Shift+Right arrow",
+          "keyToken": "Tertiary-Left",
+          "actionTarget": "Region/slip-contents-nudge (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Same gap as S11-06: slip contents vs start marker exists as mouse drag only. Also Tertiary-Right.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/region_view.cc:1148-1151;gtk2_ardour/keyboard.cc:54-55"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: keyboard slip contents. Terms: slip-contents, move_contents. Subsystems: editor_drag, region_view."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-Left/Right -> Transport/Rewind / Forward"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-24",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Z",
+          "keyToken": "z",
+          "actionTarget": "Editor/zoom-to-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "status": "Implemented",
+          "note": "Editor selection zoom, not Clip View\u2013local only.",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:308-309"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor z -> Editor/zoom-to-selection"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-25",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "X",
+          "keyToken": "x",
+          "actionTarget": "Editor/toggle-zoom",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "status": "Implemented",
+          "note": "swap_visual_state zoom back.",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:310"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor x -> Editor/toggle-zoom"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-26",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "plus / minus",
+          "keyToken": "equal",
+          "actionTarget": "Editing/temporal-zoom-in",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Horizontal time zoom (also minus -> temporal-zoom-out). GTK binds equal for + key. Same family as S09-01/02.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:482-483"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing equal/minus -> Editing/temporal-zoom-in / temporal-zoom-out"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-27",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "0 through 127 then Enter",
+          "keyToken": "Return",
+          "actionTarget": "Notes/set-velocity-numeric (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live types 0\u2013127 then Enter to set velocity. Ardour has Notes/edit-velocities and list-editor numeric velocity edit; no bindable type-to-set velocity command.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:710;gtk2_ardour/midi_list_editor.cc:642-646"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: numeric velocity entry shortcut. Terms: set velocity, 0-127, edit-velocities. Subsystems: midi_view, midi_list_editor."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-28",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Up / Cmd+Down arrow",
+          "keyToken": "Primary-Up",
+          "actionTarget": "Notes/increase-velocity",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Also Primary-Down -> Notes/decrease-velocity.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:665;674"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/midi_view.h:414-424;midi_view.cc (change_velocities)",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Primary-Up -> Notes/increase-velocity"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-29",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Shift+Up / Cmd+Shift+Down arrow",
+          "keyToken": "Primary-Tertiary-Up",
+          "actionTarget": "Notes/increase-velocity-smush",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live adjusts velocity deviation. Ardour velocity-smush allows colliding velocities when adjusting (also Primary-Tertiary-Down decrease-velocity-smush) \u2014 related but not Live's deviation parameter.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:667;676"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/midi_view.h:308;416-425"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Primary-Tertiary-Up -> Notes/increase-velocity-smush"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-30",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Option+Up / Cmd+Option+Down arrow",
+          "keyToken": "Primary-Level4-Up",
+          "actionTarget": "Notes/adjust-chance (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live note chance/probability has no Ardour MIDI note chance model.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: MIDI note chance/probability. Terms: chance, probability, note chance. Subsystems: midi_view, MidiModel, pianoroll."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-31",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+E",
+          "keyToken": "Primary-Level4-e",
+          "actionTarget": "Common/ToggleMaximalEditor",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live toggles full-size Clip View. Closest is maximal editor; profile currently binds Primary-Secondary-f (Cmd+Ctrl+F).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:809"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Cmd+Ctrl+F",
+          "keyToken": "Primary-Secondary-f",
+          "actionTarget": "Common/ToggleMaximalEditor",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile maximal editor chord, not Live Cmd+Option+E.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Secondary-f -> Common/ToggleMaximalEditor"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-32",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+G",
+          "keyToken": "Primary-g",
+          "actionTarget": "Notes/group-notes (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live note groups (play all). No Ardour MIDI note-group model. Editor Primary-g may group regions \u2014 different domain.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: MIDI note groups. Terms: group notes, play all, note group. Subsystems: midi_view, MidiModel."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-g (region group if bound)"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-33",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Shift+G",
+          "keyToken": "Primary-Tertiary-g",
+          "actionTarget": "Notes/ungroup-notes (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No Ardour MIDI note-group model to ungroup.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: ungroup MIDI notes. Terms: ungroup notes, note group. Subsystems: midi_view, MidiModel."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-34",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Enter",
+          "keyToken": "Primary-Return",
+          "actionTarget": "Notes/apply-tool-settings (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live applies current MIDI tool settings. No matching bindable apply-tool-settings action found.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: apply MIDI tool settings. Terms: apply tool, MIDI tool settings, Cmd+Enter. Subsystems: pianoroll, midi_view, editing_context."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-35",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Shift+A",
+          "keyToken": "Primary-Tertiary-a",
+          "actionTarget": "Notes/invert-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Inverts note selection. Action exists; confirm profile binding (may be unbound or on another chord).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:618"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/midi_view.cc:2835"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-36",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "K",
+          "keyToken": "k",
+          "actionTarget": "Notes/highlight-scale (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live highlight-scale in the MIDI Note Editor. Ardour may show key/scale in other UIs; no Notes/highlight-scale action found.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: highlight scale in MIDI editor. Terms: highlight scale, scale, key highlight. Subsystems: pianoroll, midi_view, midi_time_axis."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-37",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+E",
+          "keyToken": "Primary-Tertiary-e",
+          "actionTarget": "Editor/split-region",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live splits Arrangement clip based on time selection from MIDI Note Editor context. Ardour Editor/split-region splits at edit point; Primary-e already bound in Editor. Preferred Live chord Primary-Tertiary-e is unbound for this action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:435"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6850-6899"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-e -> Editor/select-all-after-edit-cursor",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-e -> Editor/split-region"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S12-38",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+Shift+F",
+          "keyToken": "Primary-Tertiary-f",
+          "actionTarget": "Notes/toggle-note-filters (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live show/hide MIDI note filters. No matching Notes filter pane toggle found. Primary-Tertiary-f is maximal mixer.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: MIDI note filters pane. Terms: note filter, MIDI filter, show filters. Subsystems: pianoroll, midi_list_editor, midi_channel_selector. ../ardour@9.7:gtk2_ardour/pianoroll.cc;gtk2_ardour/midi_list_editor.cc"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-f -> Common/ToggleMaximalMixer"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

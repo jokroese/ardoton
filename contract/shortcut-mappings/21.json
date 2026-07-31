@@ -8,8 +8,61 @@
   "shortcuts": [
     {
       "sourceId": "S21-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+Shift+E",
+          "keyToken": "Primary-Tertiary-Level4-e",
+          "actionTarget": "Window/toggle-engine-running (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live toggles the audio engine on/off from one shortcut. Ardour EngineControl::start_engine/stop_engine exist inside Audio/MIDI Setup (Window/toggle-audio-midi-setup) but are not a single bindable engine power toggle.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/engine_dialog.cc:499-516;3326-3333;gtk2_ardour/ardour_ui.cc:315"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable engine on/off. Terms: start_engine, stop_engine, toggle-audio-midi-setup. Subsystems: EngineControl, Window audio-midi-setup. Dialog buttons exist; no Transport/Window engine-power action. ../ardour@9.7:gtk2_ardour/engine_dialog.cc:499-516"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+Shift+E",
+          "keyToken": "Primary-Tertiary-Level4-e",
+          "actionTarget": "Window/toggle-audio-midi-setup",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Opens Audio/MIDI Setup where the engine can be started/stopped; does not itself toggle engine power.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui.cc:315;gtk2_ardour/utils.cc:119"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/engine_dialog.cc:499-516"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

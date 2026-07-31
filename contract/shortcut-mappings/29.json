@@ -8,13 +8,59 @@
   "shortcuts": [
     {
       "sourceId": "S29-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Ctrl+click",
+          "actionTarget": "GTK/context-menu",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Ctrl+click opens the context menu. Ardour/GTK open context menus via right-click and platform secondary-click; Ctrl+click is not universally bound as context-menu on macOS (often Command-click for selection).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_canvas_events.cc:408-486;gtk2_ardour/editor.cc:1575-1616"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Ctrl+click context menu. Terms: button == 3, BUTTON3, context menu, Ctrl click. Subsystems: editor_canvas_events, editor popup_track_context_menu, mixer_strip. Right-click (button 3) context menus exist; Live Ctrl+click macOS mapping differs. ../ardour@9.7:gtk2_ardour/editor_canvas_events.cc:408-486;gtk2_ardour/editor.cc:1575-1616"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S29-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "VO+Shift+M",
+          "actionTarget": "macOS/VoiceOver-context-menu",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live documents VO+Shift+M for VoiceOver context menu. This is a macOS accessibility command outside Ardour ActionManager; Ardour does not implement a VO shortcut.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: VoiceOver context menu. Terms: VO+Shift+M, accessibility, VoiceOver. Subsystems: none in Ardour ActionManager; macOS VoiceOver handles the chord. macOS accessibility convention: VO+Shift+M is an OS command, not an Ardour action."
+            }
+          ]
+        }
+      ]
     }
   ]
 }

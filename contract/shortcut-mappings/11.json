@@ -8,73 +8,827 @@
   "shortcuts": [
     {
       "sourceId": "S11-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Sample Editor",
+          "proposedMacos": "Cmd+U",
+          "keyToken": "Primary-u",
+          "actionTarget": "Region/quantize-warp-markers (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Sample Editor Cmd+U quantizes Warp Markers. Ardour has no per-clip warp markers (whole-region TimeFX / Cue RubberBand stretch only). Do not map to MIDI Notes/quantize-selected-notes.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Warp Marker quantize in Sample Editor. Terms: warp, stretch marker, quantize warp. Subsystems: audio_clip_editor, editor_timefx, triggerbox RubberBand. ../ardour@9.7:gtk2_ardour/audio_clip_editor.cc:143-146;gtk2_ardour/editor_timefx.cc;libs/ardour/triggerbox.cc:1869-1889"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-u -> Editor/select-all-between-cursors; Notes Primary-u -> Notes/quantize-selected-notes"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+U",
+          "keyToken": "Primary-u",
+          "actionTarget": "Editor/select-all-between-cursors",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile/factory bind Primary-u to select regions between cursors \u2014 unrelated to Sample Editor warp quantize.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:252"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:182"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-u -> Editor/select-all-between-cursors"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Sample Editor",
+          "proposedMacos": "Cmd+Shift+U",
+          "keyToken": "Primary-Tertiary-u",
+          "actionTarget": "Region/warp-quantize-settings (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live opens warp-quantize settings without applying. Ardour has no warp-marker quantize dialog. MIDI QuantizeDialog always applies on OK.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1934-1957;gtk2_ardour/editor_actions.cc:683"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: warp quantize settings dialog. Terms: warp quantize, QuantizeDialog. Subsystems: editing_context, quantize_dialog, audio_clip_editor. ../ardour@9.7:gtk2_ardour/editing_context.cc:1934-1957;gtk2_ardour/quantize_dialog.cc:190"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Sample Editor",
+          "proposedMacos": "Left / Right arrow",
+          "keyToken": "Left",
+          "actionTarget": "Region/nudge-selected-warp-marker (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No warp-marker selection/nudge model. Also bind Right. Transient feature lines can be mouse-dragged; automation points use Left/Right in Automation \u2014 neither is Live warp-marker edit.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: move selected Warp Marker. Terms: warp marker, nudge stretch marker. Subsystems: audio_region_view, editor_timefx, audio_clip_editor."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Left/Right -> Common/playhead-backward-to-grid / playhead-forward-to-grid; Notes Left/Right nudge; Automation move-points"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Left / Right arrow",
+          "keyToken": "Left",
+          "actionTarget": "Common/playhead-backward-to-grid",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile arrows move playhead on grid (also Right -> playhead-forward-to-grid), not warp markers.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Left/Right -> Common/playhead-backward-to-grid / playhead-forward-to-grid"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Sample Editor",
+          "proposedMacos": "Cmd+Left / Cmd+Right arrow",
+          "keyToken": "Primary-Left",
+          "actionTarget": "Region/select-next-warp-marker (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No warp-marker selection. Also Primary-Right. Current Primary-Left/Right tab to region transients instead.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: select Warp Marker. Terms: warp marker selection. Subsystems: audio_region_view transients \u2260 warp."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/tab-to-transient-backwards / tab-to-transient-forwards"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Left / Cmd+Right arrow",
+          "keyToken": "Primary-Left",
+          "actionTarget": "Editor/tab-to-transient-backwards",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Moves playhead to previous/next region transient (also Primary-Right forwards). Does not select a Warp Marker.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:445-448"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:284-293"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/tab-to-transient-backwards / tab-to-transient-forwards"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+Shift+F",
+          "keyToken": "Level4-Tertiary-f",
+          "actionTarget": "EditorEditing/toggle-follow-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Follow Playhead autoscroll. Cue editors register AudioClipEditorEditing/toggle-follow-playhead via shared Editing bindings. Not Sample-Editor-scoped only. Overlaps S09-05.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:485-488"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:3738-3818;gtk2_ardour/cue_editor.cc:543;1510"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+F",
+          "keyToken": "Primary-f",
+          "actionTarget": "EditorEditing/toggle-follow-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory/profile Primary-f already toggles follow playhead, not Live's Option+Shift+F.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:214"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-f -> EditorEditing/toggle-follow-playhead"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Sample Editor",
+          "proposedMacos": "Shift+Left / Shift+Right arrow",
+          "keyToken": "Tertiary-Left",
+          "actionTarget": "Region/slip-contents-nudge (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live slips sample contents vs clip start marker. Ardour has RegionView::move_contents / RegionSlipContentsDrag (default Cmd+Shift+drag) but no keyboard slip-nudge action. Also Tertiary-Right. Differs from timeline region nudge.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/region_view.cc:1148-1151;gtk2_ardour/editor_mouse.cc:890-894;gtk2_ardour/keyboard.cc:54-55"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: keyboard slip / move clip with start marker. Terms: slip-contents, move_contents, Shift+Left. Subsystems: editor_drag, audio_clip_editor. Mouse slip only. ../ardour@9.7:gtk2_ardour/editor_drag.cc:765-816"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-Left/Right -> Transport/Rewind / Transport/Forward"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Shift+Left / Shift+Right arrow",
+          "keyToken": "Tertiary-Left",
+          "actionTarget": "Transport/Rewind",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile uses Shift+arrows for transport wind (also Tertiary-Right Forward), not content slip.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-Left/Right -> Transport/Rewind / Transport/Forward"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Z",
+          "keyToken": "z",
+          "actionTarget": "Editor/zoom-to-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Zooms Editor selection (H+V via temporal_zoom_selection(Both)), not a Sample Editor\u2013local zoom-to-clip-selection. Overlaps S09/S16 zoom family.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:308-309"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:9441-9487"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:235"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor z -> Editor/zoom-to-selection"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "X",
+          "keyToken": "x",
+          "actionTarget": "Editor/toggle-zoom",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Swaps last two visual zoom states (swap_visual_state), matching Live zoom-back intent on Arrangement/Editor. Profile remaps Live's X; factory used Tertiary-z.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:310"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor.cc:3883-3890"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor x -> Editor/toggle-zoom"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Shift+Z",
+          "keyToken": "Tertiary-z",
+          "actionTarget": "Editor/toggle-zoom",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory binds toggle-zoom to Tertiary-z; Ardourton profile overrides to x for Live parity.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:238",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Sample Editor",
+          "proposedMacos": "Cmd+I",
+          "keyToken": "Primary-i",
+          "actionTarget": "Region/insert-warp-marker (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No warp-marker insert. Whole-region TimeFX / Cue stretch is not inserting local warp points.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: insert Warp Marker. Terms: warp marker, elastic audio. Subsystems: audio_clip_editor, editor_timefx."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-i -> Common/addExistingAudioFiles"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Cmd+I",
+          "keyToken": "Primary-i",
+          "actionTarget": "Common/addExistingAudioFiles",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile Primary-i imports audio files, not warp markers.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-i -> Common/addExistingAudioFiles"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+I",
+          "keyToken": "Primary-i",
+          "actionTarget": "Region/place-transient",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Places an analysis transient at the edit point \u2014 not a Warp Marker and does not drive elastic time. Unbound by default.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1501"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:7505-7525;libs/ardour/audioregion.cc:2049"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Sample Editor",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "Region/delete-selected-warp-marker (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No warp markers to delete.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: delete Warp Marker. Terms: warp marker delete. Subsystems: audio_clip_editor, editor_timefx."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Delete -> Editing/editor-delete"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editing",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "Editing/editor-delete",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Deletes general selection, not a Warp Marker.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc:864-868 (transient remove is Shift+click on feature line only)"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Delete -> Editing/editor-delete"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+I",
+          "keyToken": "Primary-Tertiary-i",
+          "actionTarget": "Region/place-transient",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Places user transient at edit point on selected/edit-point regions. Not Sample-Editor-scoped; Rhythm Ferret (Region/show-rhythm-ferret) is analysis UI, not insert-one.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1501"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:7505-7525;libs/ardour/audioregion.cc:2049-2064"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-i -> Common/invert-selection"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Cmd+Shift+I",
+          "keyToken": "Primary-Tertiary-i",
+          "actionTarget": "Common/invert-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile binds Primary-Tertiary-i to invert-selection; place-transient is unbound.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-i -> Common/invert-selection"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+Delete",
+          "keyToken": "Primary-Tertiary-Delete",
+          "actionTarget": "Region/remove-transient-at-edit-point (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "AudioRegion::remove_transient and UI Shift+click on feature line exist; no bindable delete-transient-at-edit-point action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:libs/ardour/audioregion.cc:2108;gtk2_ardour/editor_ops.cc:7529-7539;gtk2_ardour/editor_mouse.cc:864-868"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: delete transient keyboard action. Terms: remove-transient, place-transient, FeatureLineItem. Subsystems: editor_mouse, audio_region_view. Mouse Tertiary+click only."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-Delete -> Editor/delete-section"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+Delete",
+          "keyToken": "Primary-Tertiary-Delete",
+          "actionTarget": "Editor/delete-section",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile binds Cmd+Shift+Delete to delete-section (time), not transient removal.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-Delete -> Editor/delete-section"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "AudioClipEditor",
+          "proposedMacos": "W",
+          "keyToken": "w",
+          "actionTarget": "CueEditor/full-zoom (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live fits Sample Editor content width. Cue full_zoom_clicked / toolbar Zoom to full clip does that for cue editors but is button-only (not ActionManager). Arrangement alternative: Editor/zoom-to-selection-horiz.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:258;gtk2_ardour/cue_editor.cc:455;547;1301-1309;gtk2_ardour/editor_actions.cc:309"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: fit content width keyboard / full-zoom action. Terms: full_zoom, fit width, W. Subsystems: cue_editor, editing_context. Button only."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global w -> Common/jump-forward-to-mark"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "W",
+          "keyToken": "w",
+          "actionTarget": "Common/jump-forward-to-mark",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile w jumps to next mark, not fit-width.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global w -> Common/jump-forward-to-mark"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "W",
+          "keyToken": "w",
+          "actionTarget": "Editor/zoom-to-selection-horiz",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Horizontal zoom to timeline selection, not Cue Sample Editor full-clip fit.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:309"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S11-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "H",
+          "keyToken": "h",
+          "actionTarget": "Editor/fit-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Fits track heights to selection vertically \u2014 not Sample Editor waveform amplitude fit. Cue editor set_wave_heights auto-fills canvas height on allocate (no key). Factory/profile already use f for fit-selection.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:322"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8423-8449"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Region/play-selected-regions; Editor f -> Editor/fit-selection"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F",
+          "keyToken": "f",
+          "actionTarget": "Editor/fit-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory and profile bind fit-selection to f, not Live's H. Profile h plays selected regions.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:213"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor f -> Editor/fit-selection"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

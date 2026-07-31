@@ -8,28 +8,157 @@
   "shortcuts": [
     {
       "sourceId": "S23-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Right",
+          "keyToken": "Primary-Right",
+          "actionTarget": "Editor/swap-next-similar-sample (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live swaps to the next similar sample on a Drum Rack pad/Simpler. Ardour has no similarity-based sample swap engine. Profile already binds these chords to playhead/track move actions.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: similar sample swapping (swap-next-similar-sample). Terms: similarity, similar sample, Drum Rack, Simpler. Subsystems: libs/ardour, gtk2_ardour trigger/plugin. No similarity sample engine. ../ardour@9.7:gtk2_ardour/trigger_ui.cc"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Right bound to playhead/track navigation"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S23-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Left",
+          "keyToken": "Primary-Left",
+          "actionTarget": "Editor/swap-prev-similar-sample (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live swaps to the previous similar sample. Ardour has no similarity sample swap. Profile already binds these chords to playhead/track move actions.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: similar sample swapping (swap-prev-similar-sample). Terms: similarity, similar sample, Drum Rack, Simpler. Subsystems: libs/ardour, gtk2_ardour trigger/plugin. No similarity sample engine. ../ardour@9.7:gtk2_ardour/trigger_ui.cc"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left bound to playhead/track navigation"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S23-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Up",
+          "keyToken": "Primary-Up",
+          "actionTarget": "Editor/save-similarity-reference (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live saves a similarity reference sample. Ardour has no similarity reference model. Profile already binds these chords to playhead/track move actions.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: similar sample swapping (save-similarity-reference). Terms: similarity, similar sample, Drum Rack, Simpler. Subsystems: libs/ardour, gtk2_ardour trigger/plugin. No similarity sample engine. ../ardour@9.7:gtk2_ardour/trigger_ui.cc"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Up bound to playhead/track navigation"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S23-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Down",
+          "keyToken": "Primary-Down",
+          "actionTarget": "Editor/return-similarity-reference (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live returns to the similarity reference. Ardour has no similarity reference model. Profile already binds these chords to playhead/track move actions.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: similar sample swapping (return-similarity-reference). Terms: similarity, similar sample, Drum Rack, Simpler. Subsystems: libs/ardour, gtk2_ardour trigger/plugin. No similarity sample engine. ../ardour@9.7:gtk2_ardour/trigger_ui.cc"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Down bound to playhead/track navigation"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S23-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option",
+          "keyToken": "Level4",
+          "actionTarget": "Editor/momentary-similar-sample-controls (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Option momentarily shows similar-sample swap controls on Drum Racks. Ardour has no similar-sample controls to momentary-toggle; Level4 alone is not a complete keyToken for a binding.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: momentary similar sample controls. Terms: Option hold, similar sample, Drum Rack. Subsystems: none found. ../ardour@9.7:gtk2_ardour"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

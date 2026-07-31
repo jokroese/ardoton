@@ -8,13 +8,93 @@
   "shortcuts": [
     {
       "sourceId": "S18-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+B",
+          "keyToken": "Primary-b",
+          "actionTarget": "Editor/bounce-range-to-new-track (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Bounce to New Track renders the selection onto a new track. Ardour bounce_range_selection supports ReplaceRange consolidate and NewTrigger targets, and Region bounce exists, but there is no bindable bounce-to-new-track action on Cmd+B; profile uses Primary-j for editor-consolidate.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:422-424;1447-1448;gtk2_ardour/editor_ops.cc:4047-4234"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bounce to new track action. Terms: bounce_range_selection, BounceTarget, NewTrack, consolidate. Subsystems: editor_ops bounce_range_selection, Region bounce. Consolidate/bounce-region actions exist; no bounce-to-new-track binding. ../ardour@9.7:gtk2_ardour/editor_ops.cc:4047-4269"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+J",
+          "keyToken": "Primary-j",
+          "actionTarget": "Editor/editor-consolidate",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed consolidate-range binding on Cmd+J (ReplaceRange in place), not Live bounce-to-new-track on Cmd+B.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:424"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:4047-4234"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-j -> Editor/editor-consolidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S18-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+V",
+          "keyToken": "Primary-Level4-v",
+          "actionTarget": "Editor/paste-bounced-audio (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Paste Bounced Audio pastes the special bounce clipboard. Ardour has generic Editor paste (Primary-v) with no bounce-specific clipboard or Cmd+Option+V binding.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: bounce clipboard paste. Terms: paste bounced, bounce clipboard, Level4-v. Subsystems: editor paste, bounce_range_selection. Only generic Editing/editor-paste. ../ardour@9.7:gtk2_ardour/editor_actions.cc:422-424"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

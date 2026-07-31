@@ -8,63 +8,409 @@
   "shortcuts": [
     {
       "sourceId": "S26-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Common/focus-next-control (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Tab moves to the next control when 'Use Tab to Move Focus' is enabled. Ardour Global Tab is Common/next-tab (workspace). Aligns with S02 focus-control Preferred; Current fallback is workspace tab.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Tab move focus between mixer/controls. Terms: focus-next-control, next-tab, Tab. Subsystems: ActionManager Common, GTK focus (keyboard.cc). Workspace next-tab exists; Live-style control focus Tab does not. Aligns with S02-11. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:796-803;libs/gtkmm2ext/keyboard.cc:364-496"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Common/next-tab",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Tab cycles workspace tabs, not mixer controls.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Shift+Tab",
+          "keyToken": "Tertiary-ISO_Left_Tab",
+          "actionTarget": "Common/focus-previous-control (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Shift+Tab moves to the previous control. Ardour Tertiary-ISO_Left_Tab is Common/previous-tab.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Shift+Tab previous control focus. Terms: previous-tab, focus-previous-control. Subsystems: ActionManager Common, GTK focus. Aligns with S02-12. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:796-803;libs/gtkmm2ext/keyboard.cc:364-496"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-ISO_Left_Tab -> Common/previous-tab"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Shift+Tab",
+          "keyToken": "Tertiary-ISO_Left_Tab",
+          "actionTarget": "Common/previous-tab",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Shift+Tab cycles workspace tabs backward.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-ISO_Left_Tab -> Common/previous-tab"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Mixer",
+          "proposedMacos": "Option+Tab",
+          "keyToken": "Level4-Tab",
+          "actionTarget": "Mixer/focus-next-in-row (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Option+Tab moves to the next control in the same mixer row. Ardour Mixer has no row-scoped Tab focus action; Level4-Tab also preferred by S02-13/S10.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mixer row Tab navigation. Terms: Level4-Tab, mixer focus, grab_focus. Subsystems: mixer_ui, GTK. Mixer can grab_focus on scroller; no row-scoped Tab action. Cross-ref S02-13. ../ardour@9.7:gtk2_ardour/mixer_ui.cc:559-560;2587-2589;libs/gtkmm2ext/keyboard.cc:364-496"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab; Level4-Tab also preferred by S02-13"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Mixer",
+          "proposedMacos": "Option+Shift+Tab",
+          "keyToken": "Level4-Tertiary-ISO_Left_Tab",
+          "actionTarget": "Mixer/focus-previous-in-row (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Option+Shift+Tab moves to the previous control in the same mixer row. No Ardour row-scoped binding.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mixer row reverse Tab. Terms: Level4 Tertiary Tab, mixer focus. Subsystems: mixer_ui, GTK. No row-scoped reverse-Tab action. ../ardour@9.7:gtk2_ardour/mixer_ui.cc:559-560;libs/gtkmm2ext/keyboard.cc:364-496"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Left",
+          "keyToken": "Left",
+          "actionTarget": "Editor/collapse-selection-to-start (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Left collapses Arrangement time selection to the start when Move Clips with Arrow Keys is disabled. Ardour Left is unbound or used by other contexts; selection collapse-to-edge is not a dedicated action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: collapse time selection to start. Terms: selection collapse, Left arrow, time selection. Subsystems: editing_context, editor selection. No dedicated collapse-to-edge action. ../ardour@9.7:gtk2_ardour/editing_context.cc:617;gtk2_ardour/editor_actions.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Right",
+          "keyToken": "Right",
+          "actionTarget": "Editor/collapse-selection-to-end (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Right collapses Arrangement time selection to the end. No dedicated Ardour collapse-to-end action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: collapse time selection to end. Terms: selection collapse, Right arrow. Subsystems: editing_context, editor selection. No dedicated collapse-to-end action. ../ardour@9.7:gtk2_ardour/editing_context.cc:617;gtk2_ardour/editor_actions.cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Preferences",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Window/prefs-next-control (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "UI only",
+          "note": "Live Tab navigates Settings tab options. Ardour Preferences/RC option editor uses GTK notebook focus, not Live Settings-tab actions; Global Tab is workspace next-tab.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Settings tab navigation (prefs-next-control). Terms: Preferences, rc_option_editor, notebook. Subsystems: RC option editor. GTK notebook exists; Live Settings chooser actions do not. ../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Preferences",
+          "proposedMacos": "Down",
+          "keyToken": "Down",
+          "actionTarget": "Window/prefs-change-command (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "UI only",
+          "note": "Live Up/Down change the focused Settings command. Ardour prefs widgets use native GTK; alternate Up in note.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Settings tab navigation (prefs-change-command). Terms: Preferences, rc_option_editor, notebook. Subsystems: RC option editor. GTK notebook exists; Live Settings chooser actions do not. ../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Preferences",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "Window/prefs-toggle-focused (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "UI only",
+          "note": "Live Enter toggles the focused Settings command. Ardour prefs use widget-native activation; Global Return is GotoStart.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Settings tab navigation (prefs-toggle-focused). Terms: Preferences, rc_option_editor, notebook. Subsystems: RC option editor. GTK notebook exists; Live Settings chooser actions do not. ../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Preferences",
+          "proposedMacos": "Option+Tab",
+          "keyToken": "Level4-Tab",
+          "actionTarget": "Window/prefs-next-page-tab (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "UI only",
+          "note": "Live Option+Tab navigates Settings Page Chooser tabs. Ardour Preferences notebook has no Live Page Chooser binding; alternate Option+Shift+Tab in note.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Settings tab navigation (prefs-next-page-tab). Terms: Preferences, rc_option_editor, notebook. Subsystems: RC option editor. GTK notebook exists; Live Settings chooser actions do not. ../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Preferences",
+          "proposedMacos": "Down",
+          "keyToken": "Down",
+          "actionTarget": "Window/prefs-page-chooser-vertical (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "UI only",
+          "note": "Live Up/Down also navigate Settings Page Chooser tabs. Ardour has no Page Chooser action map.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Settings tab navigation (prefs-page-chooser-vertical). Terms: Preferences, rc_option_editor, notebook. Subsystems: RC option editor. GTK notebook exists; Live Settings chooser actions do not. ../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S26-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Preferences",
+          "proposedMacos": "Shift+Tab",
+          "keyToken": "Tertiary-ISO_Left_Tab",
+          "actionTarget": "Window/prefs-return-to-chooser (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "UI only",
+          "note": "Live Shift+Tab from the first Settings control returns focus to the Page Chooser. No Ardour equivalent focus rule.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Settings tab navigation (prefs-return-to-chooser). Terms: Preferences, rc_option_editor, notebook. Subsystems: RC option editor. GTK notebook exists; Live Settings chooser actions do not. ../ardour@9.7:gtk2_ardour/rc_option_editor.cc:2480-2497;5393-5406"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

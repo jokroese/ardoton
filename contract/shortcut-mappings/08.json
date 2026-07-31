@@ -8,63 +8,783 @@
   "shortcuts": [
     {
       "sourceId": "S08-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "CueEditor",
+          "proposedMacos": "Cmd+F9",
+          "keyToken": "Primary-F9",
+          "actionTarget": "CueEditor/set-start-from-playhead (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Clip View start marker sets clip play-start. Ardour CueEditor (AudioClipEditor/Pianoroll) has start/end boundary UI and CueEditor::set_start (region trim_front) but no bindable set-start-from-playhead action; clip loop brace UI is commented out. Closest clip-semantic target.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/cue_editor.cc:2006-2025;gtk2_ardour/audio_clip_editor.cc:252-264;321-337",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_drag.cc:7778-7798;gtk2_ardour/audio_clip_editor.cc:434-438",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Clip View start marker set-from-playhead. Terms: set_start, ClipStart, trim_front, Primary-F9. Subsystems: cue_editor, audio_clip_editor, pianoroll, clip_editor.bindings. Method+drag exist; no ActionManager target. ../ardour@9.7:gtk2_ardour/clip_editor.bindings:1-5",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-F9 -> Editor/save-visual-state-9; Mixer Primary-F9 -> Mixer/store-mixer-scene-9",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+F9",
+          "keyToken": "Primary-F9",
+          "actionTarget": "Region/trim-front",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Trims selected/entered region start at edit point on the arrangement timeline (profile j), not Clip View start marker.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1502",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor j -> Region/trim-front",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Cmd+F9",
+          "keyToken": "Primary-F9",
+          "actionTarget": "Common/set-session-start-from-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Sets session range start from playhead, not clip start. Weaker semantic match than CueEditor bounds.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:683",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2020-2043",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-F9 -> Editor/save-visual-state-9",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+F10",
+          "keyToken": "Primary-F10",
+          "actionTarget": "Common/start-loop-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live sets clip-internal loop brace start. Ardour AudioClipEditor loop_line is commented out; Trigger has model loop_start/loop_end but no clip-brace UI. Closest: session auto-loop LoopStart from edit point (or audible sample while rolling).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:732",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:7102-7128;gtk2_ardour/editor.cc:4135-4166",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:328",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-F10 -> Editor/save-visual-state-10; Mixer Primary-F10 -> Mixer/store-mixer-scene-10; Global Secondary-comma already binds Common/start-loop-range",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Ctrl+,",
+          "keyToken": "Secondary-comma",
+          "actionTarget": "Common/start-loop-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory/profile binding for set loop start from edit point; not Live's Cmd+F10 and not clip-scoped.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:328",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Secondary-comma -> Common/start-loop-range",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+F11",
+          "keyToken": "Primary-F11",
+          "actionTarget": "Common/finish-loop-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Session auto-loop LoopEnd from edit point. Same clip-vs-session semantic gap as S08-02; clip loop brace UI absent.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:734",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:7133-7153",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:329",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-F11 -> Editor/save-visual-state-11; Mixer Primary-F11 -> Mixer/store-mixer-scene-11; Global Secondary-period already binds Common/finish-loop-range",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Ctrl+.",
+          "keyToken": "Secondary-period",
+          "actionTarget": "Common/finish-loop-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory/profile binding for set loop end from edit point; not Live's Cmd+F11.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:329",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Secondary-period -> Common/finish-loop-range",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "CueEditor",
+          "proposedMacos": "Cmd+F12",
+          "keyToken": "Primary-F12",
+          "actionTarget": "CueEditor/set-end-from-playhead (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Clip View end marker. Pair of S08-01: CueEditor::set_end / ClipEndDrag exist; no bindable set-end-from-playhead action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/cue_editor.cc:2028-2047;gtk2_ardour/audio_clip_editor.cc:256-264;330-337",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_drag.cc:7871-7880",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-F12 -> Editor/save-visual-state-12; Mixer Primary-F12 -> Mixer/store-mixer-scene-12",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+F12",
+          "keyToken": "Primary-F12",
+          "actionTarget": "Region/trim-back",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Trims region end at edit point on the arrangement (profile k), not Clip View end marker.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1503",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor k -> Region/trim-back",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Cmd+F12",
+          "keyToken": "Primary-F12",
+          "actionTarget": "Common/set-session-end-from-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Sets session range end from playhead, not clip end.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:685",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2046-2069",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-F12 -> Editor/save-visual-state-12",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "CueEditor",
+          "proposedMacos": "Cmd+click",
+          "actionTarget": "CueEditor/set-start-from-pointer (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live moves the selected clip start marker to the click. Ardour moves clip start only by dragging ClipStartItem (ClipStartDrag -> CueEditor::set_start). Cmd+click is SelectionToggle, not teleport-to-pointer. Arrangement alt: Editor/edit-to-playhead moves selected markers to playhead.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/cue_editor.cc:2006-2025;gtk2_ardour/editor_drag.cc:7778-7798;gtk2_ardour/editor_actions.cc:352",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:371-372;gtk2_ardour/audio_clip_editor.cc:321-337;gtk2_ardour/editor_ops.cc:1507-1521",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Cmd+click move selected start marker to pointer. Terms: SelectionToggle, ClipStartDrag, set_start, edit-to-playhead, MarkerDrag. Subsystems: keyboard, audio_clip_editor, editor_drag, editor_ops. Drag and mark-to-playhead exist; selected-marker-to-click does not. ../ardour@9.7:gtk2_ardour/editor_drag.cc:4349-4478;gtk2_ardour/editor_actions.cc:352;gtk2_ardour/editor_ops.cc:1507-1521",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "CueEditor",
+          "proposedMacos": "Cmd+Shift+click",
+          "actionTarget": "CueEditor/set-end-from-pointer (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Pair of S08-05 for clip end. ClipEndDrag -> CueEditor::set_end on drag only. On macOS Cmd+Shift is slip_contents_modifier (Primary+Tertiary), not an end-marker teleport. Arrangement Editor/edit-to-playhead can move a selected LoopEnd/session end to the playhead but is not this gesture.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/cue_editor.cc:2028-2047;gtk2_ardour/editor_drag.cc:7871-7880;gtk2_ardour/editor_actions.cc:352",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:55;gtk2_ardour/audio_clip_editor.cc:330-345;gtk2_ardour/editor_ops.cc:1507-1521",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Cmd+Shift+click move selected end marker to pointer. Terms: ClipEndDrag, set_end, slip_contents_modifier, SelectionExtend. Subsystems: keyboard, audio_clip_editor, editor_drag. ../ardour@9.7:gtk2_ardour/keyboard.cc:55;gtk2_ardour/editor_drag.cc:7826-7880",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Left arrow",
+          "keyToken": "Left",
+          "actionTarget": "LuaAction/ardourton-nudge-loop (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Live nudges the whole clip loop brace. Preferred Lua: Locations:auto_loop_location():move_to(start - get_nudge_distance). Native alt: select both LoopStart+LoopEnd then Editor/nudge-backward (moves both ends). Session auto-loop, not clip brace. Also Right for S08-08.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;gtk2_ardour/editor_ops.cc:512-560;639-688",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Left -> Common/playhead-backward-to-grid; Notes/Mixer/Automation also bind Left",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1275;1296;gtk2_ardour/luainstance.cc:962;libs/ardour/location.cc:493-514",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Left arrow",
+          "keyToken": "Left",
+          "actionTarget": "Editor/nudge-backward",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Nudges selected markers by nudge distance. Whole-brace move only if both LoopStart and LoopEnd are selected; otherwise resizes one end. Profile currently binds KP_Subtract.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:282",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:603-688",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Left -> Common/playhead-backward-to-grid",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor KP_Subtract -> Editor/nudge-backward",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Right arrow",
+          "keyToken": "Right",
+          "actionTarget": "LuaAction/ardourton-nudge-loop (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Same preferred target as S08-07 (forward). move_to(start + nudge). Cross-ref S08-07.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;gtk2_ardour/editor_ops.cc:512-560",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Right -> Common/playhead-forward-to-grid; Notes/Mixer/Automation also bind Right",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1275;1296;gtk2_ardour/luainstance.cc:962",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Right arrow",
+          "keyToken": "Right",
+          "actionTarget": "Editor/nudge-forward",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Pair of S08-07 alternative. Profile KP_Add.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Right -> Common/playhead-forward-to-grid",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor KP_Add -> Editor/nudge-forward",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Up / Down arrow",
+          "keyToken": "Up",
+          "actionTarget": "LuaAction/ardourton-move-loop-by-length (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Live shifts the loop brace by its own length. Lua: auto_loop_location():move_to(start \u00b1 length). Session auto-loop only; no clip-brace selection context. Also Down.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:1012;1129-1130;libs/ardour/location.cc:493-514",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Up/Down -> Editor/step-tracks-up/down; Notes/Mixer/Automation/StepEditing also bind Up/Down",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1267-1275;1296;libs/ardour/location.cc:493-514",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Up / Cmd+Down",
+          "keyToken": "Primary-Up",
+          "actionTarget": "LuaAction/ardourton-scale-loop-length (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Live halves/doubles clip loop length. Lua: Location:set_end(start + length/2 or length*2) on auto_loop_location (keep start fixed). No native scale-loop action; not grid-quantized unless scripted. Also Primary-Down. Conflict with track reorder.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1262-1298;gtk2_ardour/editor_actions.cc:280-283",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Up/Down -> Editor/move-selected-tracks-up/down; Notes Primary-Up/Down -> velocity; StepEditing Primary-Up/Down -> note length",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1267-1273;1296;gtk2_ardour/luainstance.cc:1012",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Left / Cmd+Right",
+          "keyToken": "Primary-Right",
+          "actionTarget": "LuaAction/ardourton-resize-loop-end (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Same preferred target as S16-12. Also Primary-Left to shorten. Adjust session auto-loop end by nudge distance (Live uses grid on clip brace). Selecting LoopEnd and calling Editor/nudge-forward/backward is a native alternative without a dedicated action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;gtk2_ardour/editor_ops.cc:512-560",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> tab-to-transient-backwards/forwards",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1271;gtk2_ardour/luainstance.cc:962",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Left / Cmd+Right",
+          "keyToken": "Primary-Right",
+          "actionTarget": "Editor/nudge-forward",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Requires LoopEnd (or both ends) selected; Primary-Left -> nudge-backward. Collides with tab-to-transient.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:512-560",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> tab-to-transient-backwards/forwards",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S08-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+L",
+          "keyToken": "Primary-Tertiary-l",
+          "actionTarget": "Editor/select-all-in-loop-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same preferred target as S16-13. Selects regions/objects overlapping the session auto-loop on selected (or all) tracks \u2014 not Clip View brace contents. Factory used Primary-l; Ardourton binds Primary-l to Lua loop set/toggle (S16-11).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:258",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_selection.cc:2135-2162",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:228",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-l -> Editor/find-and-display-stripable; Global Primary-l -> LuaAction/script-31",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+L",
+          "keyToken": "Primary-Tertiary-l",
+          "actionTarget": "Editor/select-loop-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Sets the time selection to the loop range rather than selecting objects inside the loop.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:240",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_selection.cc:2034-2041",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-l -> Editor/find-and-display-stripable",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
