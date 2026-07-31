@@ -128,7 +128,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live Space plays the Arrangement selection when a selection exists. Ardour binds PlaySelection to Ctrl+Space (Secondary-space); plain Space remains ToggleRoll. Preferred keeps Live's Space chord with PlaySelection semantics when a range is selected (needs selection-aware dispatch or rebinding).",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -143,10 +143,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:360-362"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global space -> Transport/ToggleRoll (S20-01)"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor space -> Transport/PlaySelection",
+              "result": "Confirmed"
             }
           ]
         },
@@ -274,7 +274,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live Shift+F9 arms Arrangement recording without necessarily rolling. Ardour Transport/Record enables record without forcing roll; profile currently binds Record to Tertiary-r, not Tertiary-F9.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -287,6 +287,12 @@
               "claim": "Behavior candidate",
               "result": "Candidate",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:376-378"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-F9 -> Transport/Record",
+              "result": "Confirmed"
             }
           ]
         },
@@ -922,7 +928,7 @@
           "mappingClass": "Exact",
           "availability": "Native",
           "note": "Live metronome toggle on O. Ardour ToggleClick is installed on grave (`); Preferred remaps to O.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -937,10 +943,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_options.cc:191;394"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global grave -> Transport/ToggleClick"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global o -> Transport/ToggleClick",
+              "result": "Confirmed"
             }
           ]
         },

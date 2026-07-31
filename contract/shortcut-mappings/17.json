@@ -20,7 +20,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live Show Take Lanes expands per-track take lanes for comping. Ardour toggle-layer-display switches selected tracks between stacked and overlaid playlist layer views; it does not open Live-style take-lane chrome.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -35,10 +35,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8831-8856;gtk2_ardour/route_time_axis.cc:2327"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-u -> Editor/show-plist-selector"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-u -> Editor/toggle-layer-display",
+              "result": "Confirmed"
             }
           ]
         },
@@ -52,7 +52,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Installed binding opens the Playlist Selector dialog for selected tracks (choose/copy/share playlists) rather than showing take lanes inline.",
-          "status": "Implemented",
+          "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
@@ -65,12 +65,6 @@
               "claim": "Behavior candidate",
               "result": "Candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8876;gtk2_ardour/playlist_selector.cc:150-184"
-            },
-            {
-              "kind": "Profile binding",
-              "claim": "Binding exists",
-              "result": "Confirmed",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-u -> Editor/show-plist-selector"
             }
           ]
         }
@@ -154,7 +148,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live Add Take Lane inserts a new take lane under the track. Ardour new-playlists-for-selected-tracks creates a new playlist for selected tracks (playlist-as-take model), not an inline take-lane row; Tertiary-Level4-t is unbound (Primary-Level4-t is Insert Return).",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -167,6 +161,12 @@
               "claim": "Behavior candidate",
               "result": "Candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:497-505"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Tertiary-Level4-t -> Editor/new-playlists-for-selected-tracks",
+              "result": "Confirmed"
             }
           ]
         }
@@ -185,7 +185,7 @@
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
           "availability": "Native",
-          "note": "Live duplicates the selected take lane. Ardour copy-playlists-for-selected-tracks duplicates the playlist; profile Primary-d is Editor/duplicate (regions/range), not playlist copy.",
+          "note": "Live duplicates the selected take lane. Ardour copy-playlists-for-selected-tracks duplicates the playlist; profile Primary-d is Editor/duplicate (regions/range), not playlist copy. Live-vs-Live occupancy: Arrangement Duplicate (S05-04) retains Editor Primary-d; take-lane/playlist copy stays Proposed until a distinct chord or finer Ardour context exists.",
           "status": "Proposed",
           "evidence": [
             {

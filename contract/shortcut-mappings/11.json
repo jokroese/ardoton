@@ -180,7 +180,7 @@
               "kind": "Key conflict",
               "claim": "Key conflict",
               "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/tab-to-transient-backwards / tab-to-transient-forwards"
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/move-selected-tracks-up/down (Live S15-15); tab-to-transient displaced"
             }
           ]
         },
@@ -194,7 +194,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Moves playhead to previous/next region transient (also Primary-Right forwards). Does not select a Warp Marker.",
-          "status": "Implemented",
+          "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
@@ -207,12 +207,6 @@
               "claim": "Binding exists",
               "result": "Confirmed",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:284-293"
-            },
-            {
-              "kind": "Profile binding",
-              "claim": "Binding exists",
-              "result": "Confirmed",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/tab-to-transient-backwards / tab-to-transient-forwards"
             }
           ]
         }
@@ -232,7 +226,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Follow Playhead autoscroll. Cue editors register AudioClipEditorEditing/toggle-follow-playhead via shared Editing bindings. Not Sample-Editor-scoped only. Overlaps S09-05.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -245,6 +239,12 @@
               "claim": "Behavior candidate",
               "result": "Candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:3738-3818;gtk2_ardour/cue_editor.cc:543;1510"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-Tertiary-f -> EditorEditing/toggle-follow-playhead",
+              "result": "Confirmed"
             }
           ]
         },
@@ -586,7 +586,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Places user transient at edit point on selected/edit-point regions. Not Sample-Editor-scoped; Rhythm Ferret (Region/show-rhythm-ferret) is analysis UI, not insert-one.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -601,10 +601,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:7505-7525;libs/ardour/audioregion.cc:2049-2064"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-i -> Common/invert-selection"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-i -> Region/place-transient",
+              "result": "Confirmed"
             }
           ]
         },
@@ -780,7 +780,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Fits track heights to selection vertically \u2014 not Sample Editor waveform amplitude fit. Cue editor set_wave_heights auto-fills canvas height on allocate (no key). Factory/profile already use f for fit-selection.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -795,10 +795,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8423-8449"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Region/play-selected-regions; Editor f -> Editor/fit-selection"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Editor/fit-selection",
+              "result": "Confirmed"
             }
           ]
         },

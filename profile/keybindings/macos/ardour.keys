@@ -21,6 +21,9 @@
       <Binding key="5" action="Editing/prev-grid-choice" group="Grid Settings + Editor Modes" />
       <Binding key="6" action="Editing/next-grid-choice" group="Grid Settings + Editor Modes" />
       <Binding key="b" action="Editing/set-mouse-mode-draw" group="Editing" />
+      <Binding key="Primary-1" action="Editing/next-grid-choice" group="Grid Settings + Editor Modes" />
+      <Binding key="Primary-2" action="Editing/prev-grid-choice" group="Grid Settings + Editor Modes" />
+      <Binding key="Primary-4" action="Editing/cycle-snap-mode" group="Grid Settings + Editor Modes" />
     </Press>
   </Bindings>
   <Bindings name="Editor">
@@ -30,7 +33,7 @@
       <Binding key="Primary-Tertiary-underscore" action="Editor/zoom-to-session" group="Changing What's Visible" />
       <Binding key="apostrophe" action="Editor/edit-cursor-to-previous-region-sync" group="Editing with Edit Point" />
       <Binding key="semicolon" action="Editor/edit-cursor-to-next-region-sync" group="Editing with Edit Point" />
-      <Binding key="Primary-Tertiary-space" action="Editor/play-from-edit-point-and-return" group="Basic Editing" />
+      <Binding key="Primary-Tertiary-space" action="Editor/edit-to-playhead" group="Basic Editing" />
       <Binding key="slash" action="Editor/editor-fade-range" group="Basic Editing" />
       <Binding key="Primary-slash" action="Region/set-fade-in-length" group="Region Operations" />
       <Binding key="Primary-backslash" action="Region/set-fade-out-length" group="Region Operations" />
@@ -46,7 +49,7 @@
       <Binding key="Secondary-8" action="Region/pitch-shift-region" group="Region Operations" />
       <Binding key="Secondary-0" action="Region/toggle-opaque-region" group="Region Operations" />
       <Binding key="Primary-Secondary-e" action="Region/export-region" group="Region Operations" />
-      <Binding key="Primary-Tertiary-e" action="Editor/select-all-after-edit-cursor" group="Selecting" />
+      <Binding key="Primary-Tertiary-e" action="Editor/split-region" group="Editing" />
       <Binding key="Tertiary-e" action="Editor/show-editor-mixer" group="Changing What's Visible" />
       <Binding key="Primary-Tertiary-r" action="Editor/select-from-regions" group="Basic Editing" />
       <Binding key="Secondary-Tertiary-r" action="Editor/add-range-marker-from-selection" group="Basic Editing" />
@@ -69,11 +72,11 @@
       <Binding key="Primary-f" action="EditorEditing/toggle-follow-playhead" group="Basic Editing" />
       <Binding key="Tertiary-f" action="EditorEditing/toggle-stationary-playhead" group="Basic Editing" />
       <Binding key="Secondary-f" action="Region/show-rhythm-ferret" group="Region Operations" />
-      <Binding key="h" action="Region/play-selected-regions" group="Basic Editing" />
+      <Binding key="h" action="Editor/fit-selection" group="Changing What's Visible" />
       <Binding key="j" action="Region/trim-front" group="Editing with Edit Point" />
       <Binding key="k" action="Region/trim-back" group="Editing with Edit Point" />
       <Binding key="Tertiary-l" action="Editor/show-editor-list" group="Basic Editing" />
-      <Binding key="Primary-Tertiary-l" action="Editor/find-and-display-stripable" group="Basic Editing" />
+      <Binding key="Primary-Tertiary-l" action="Editor/select-all-in-loop-range" group="Selecting" />
       <Binding key="Primary-Tertiary-x" action="Editor/cut-paste-section" group="Basic Editing" />
       <Binding key="Primary-Secondary-c" action="Editor/editor-crop" group="Basic Editing" />
       <Binding key="Primary-Tertiary-c" action="Editor/copy-paste-section" group="Basic Editing" />
@@ -92,11 +95,11 @@
       <Binding key="Primary-Down" action="Editor/move-selected-tracks-down" group="Changing What's Visible" />
       <Binding key="Secondary-Tertiary-Left" action="Editor/playhead-to-previous-region-boundary" group="Moving the Playhead in the Editor" />
       <Binding key="Primary-Secondary-Left" action="Editor/playhead-to-previous-region-sync" group="Moving the Playhead in the Editor" />
-      <Binding key="Primary-Left" action="Editor/tab-to-transient-backwards" group="Moving the Playhead in the Editor" />
+      <Binding key="Primary-Left" action="Editor/move-selected-tracks-up" group="Changing What's Visible" />
       <Binding key="Primary-Tertiary-Left" action="Editor/selected-marker-to-previous-region-boundary" group="Markers &amp; Locations" />
       <Binding key="Secondary-Tertiary-Right" action="Editor/playhead-to-next-region-boundary" group="Moving the Playhead in the Editor" />
       <Binding key="Primary-Secondary-Right" action="Editor/playhead-to-next-region-sync" group="Moving the Playhead in the Editor" />
-      <Binding key="Primary-Right" action="Editor/tab-to-transient-forwards" group="Moving the Playhead in the Editor" />
+      <Binding key="Primary-Right" action="Editor/move-selected-tracks-down" group="Changing What's Visible" />
       <Binding key="Primary-Tertiary-Right" action="Editor/selected-marker-to-next-region-boundary" group="Markers &amp; Locations" />
       <Binding key="Page_Down" action="Editor/scroll-tracks-down" group="Changing What's Visible" />
       <Binding key="Page_Up" action="Editor/scroll-tracks-up" group="Changing What's Visible" />
@@ -120,8 +123,8 @@
       <Binding key="Primary-F7" action="Editor/save-visual-state-7" group="Editor Views" />
       <Binding key="Primary-F8" action="Editor/save-visual-state-8" group="Editor Views" />
       <Binding key="Primary-F9" action="Editor/save-visual-state-9" group="Editor Views" />
-      <Binding key="Primary-F10" action="Editor/save-visual-state-10" group="Editor Views" />
-      <Binding key="Primary-F11" action="Editor/save-visual-state-11" group="Editor Views" />
+      <Binding key="Primary-F10" action="Common/start-loop-range" group="Defining Loop, Punch Range and Tempo Changes" />
+      <Binding key="Primary-F11" action="Common/finish-loop-range" group="Defining Loop, Punch Range and Tempo Changes" />
       <Binding key="Primary-F12" action="Editor/save-visual-state-12" group="Editor Views" />
       <Binding key="F1" action="Editor/goto-visual-state-1" group="Editor Views" />
       <Binding key="F2" action="Editor/goto-visual-state-2" group="Editor Views" />
@@ -150,7 +153,32 @@
       <Binding key="x" action="Editor/toggle-zoom" group="Navigation" />
       <Binding key="c" action="Editor/track-record-enable-toggle" group="Tracks" />
       <Binding key="s" action="Editor/track-solo-toggle" group="Tracks" />
-      <Binding key="Primary-Level4-u" action="Editor/show-plist-selector" group="Comping" />
+      <Binding key="Primary-Level4-u" action="Editor/toggle-layer-display" group="Comping" />
+      <Binding key="Delete" action="Editor/remove-track" group="Tracks" />
+      <Binding key="Left" action="Editor/nudge-backward" group="Selecting" />
+      <Binding key="Level4-Tertiary-f" action="EditorEditing/toggle-follow-playhead" group="Basic Editing" />
+      <Binding key="Level4-equal" action="Editor/expand-tracks" group="Changing What's Visible" />
+      <Binding key="Level4-minus" action="Editor/shrink-tracks" group="Changing What's Visible" />
+      <Binding key="Level4-space" action="Editor/play-from-edit-point" group="Basic Editing" />
+      <Binding key="Primary-Level4-3" action="Editor/show-editor-props" group="Changing What's Visible" />
+      <Binding key="Primary-Level4-4" action="Editor/show-editor-mixer" group="Changing What's Visible" />
+      <Binding key="Primary-Level4-f" action="Editor/editor-fade-range" group="Basic Editing" />
+      <Binding key="Primary-Level4-o" action="Editor/ToggleSummary" group="Basic Editing" />
+      <Binding key="Primary-Level4-v" action="Editor/ToggleJadeo" group="Basic Editing" />
+      <Binding key="Primary-Page_Down" action="Editor/scroll-right" group="Changing What's Visible" />
+      <Binding key="Primary-Page_Up" action="Editor/scroll-left" group="Changing What's Visible" />
+      <Binding key="Primary-Tertiary-i" action="Region/place-transient" group="Region Operations" />
+      <Binding key="Primary-Tertiary-j" action="Editor/editor-crop" group="Basic Editing" />
+      <Binding key="Primary-equal" action="Editing/temporal-zoom-in" group="Changing What's Visible" />
+      <Binding key="Primary-i" action="Editor/insert-time" group="Basic Editing" />
+      <Binding key="Primary-minus" action="Editing/temporal-zoom-out" group="Changing What's Visible" />
+      <Binding key="Right" action="Editor/nudge-forward" group="Selecting" />
+      <Binding key="Tertiary-Level4-t" action="Editor/new-playlists-for-selected-tracks" group="Basic Editing" />
+      <Binding key="Tertiary-question" action="Editor/toggle-log-window" group="Changing What's Visible" />
+      <Binding key="a" action="Editor/toggle-all-existing-automation" group="Tracks" />
+      <Binding key="r" action="Region/reverse-region" group="Region Operations" />
+      <Binding key="space" action="Transport/PlaySelection" group="Global Transport &amp; Recording Control" />
+      <Binding key="w" action="Editor/zoom-to-session" group="Changing What's Visible" />
     </Press>
   </Bindings>
   <Bindings name="Global">
@@ -246,6 +274,13 @@
       <Binding key="Primary-Level4-t" action="LuaAction/script-30" group="Track creation" />
       <Binding key="Primary-l" action="LuaAction/script-31" group="Looping" />
       <Binding key="m" action="Window/toggle-virtual-keyboard" group="MIDI" />
+      <Binding key="Level4-0" action="Transport/focus-on-clock" group="Global Transport &amp; Recording Control" />
+      <Binding key="Level4-Tertiary-m" action="Common/show-mixer" group="Global Window Visibility" />
+      <Binding key="Primary-Level4-e" action="Common/ToggleMaximalEditor" group="Global Window Visibility" />
+      <Binding key="Primary-Level4-m" action="Common/key-change-mixer-visibility" group="Global Window Visibility" />
+      <Binding key="Primary-Tertiary-r" action="Main/ExportAudio" group="Global Session &amp; File Handling" />
+      <Binding key="Tertiary-F9" action="Transport/Record" group="Global Transport &amp; Recording Control" />
+      <Binding key="o" action="Transport/ToggleClick" group="Global Transport &amp; Recording Control" />
     </Press>
   </Bindings>
   <Bindings name="MIDI">
@@ -306,6 +341,11 @@
       <Binding key="Tertiary-i" action="Notes/invert-selection" group="Note Editing" />
       <Binding key="Tertiary-d" action="Notes/duplicate-selection" group="Note Editing" />
       <Binding key="Escape" action="Notes/clear-selection" group="Note Editing" />
+      <Binding key="Level4-Down" action="Notes/select-previous" group="MIDI" />
+      <Binding key="Level4-Up" action="Notes/select-next" group="MIDI" />
+      <Binding key="Primary-Tertiary-a" action="Notes/invert-selection" group="MIDI" />
+      <Binding key="Primary-j" action="Notes/join-notes" group="MIDI" />
+      <Binding key="w" action="Editor/zoom-to-selection-horiz" group="MIDI" />
     </Press>
   </Bindings>
   <Bindings name="Recorder">
@@ -446,6 +486,7 @@
     <Press>
       <Binding key="Delete" action="ProcessorMenu/delete" />
       <Binding key="BackSpace" action="ProcessorMenu/backspace" />
+      <Binding key="p" action="ProcessorMenu/ab_plugins" group="Processor Box" />
     </Press>
   </Bindings>
   <Bindings name="Cues">

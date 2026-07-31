@@ -226,7 +226,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Ardour exports audio files; this action does not export video.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -238,6 +238,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:168",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-r -> Main/ExportAudio",
               "result": "Confirmed"
             }
           ]

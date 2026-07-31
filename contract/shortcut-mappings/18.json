@@ -91,6 +91,12 @@
               "claim": "Capability missing",
               "result": "Candidate",
               "reference": "Search scope: bounce clipboard paste. Terms: paste bounced, bounce clipboard, Level4-v. Subsystems: editor paste, bounce_range_selection. Only generic Editing/editor-paste. ../ardour@9.7:gtk2_ardour/editor_actions.cc:422-424"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-v -> Editor/ToggleJadeo"
             }
           ]
         }

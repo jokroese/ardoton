@@ -20,7 +20,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live Cmd+plus is Zoom In Window. Ardour has no distinct window-zoom action separate from time zoom: temporal-zoom-in changes samples-per-pixel only. Track height is Editor/expand-tracks (Secondary-equal; see S16-22). Arrangement docs treat Cmd+scroll as progressive horizontal zoom with +/-. Primary-equal is unbound. GTK binds the + key as equal. Same action family as S09-03/S12-26.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -38,6 +38,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:111-112 (equal/minus -> temporal-zoom; no Primary-equal)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-equal -> Editing/temporal-zoom-in",
               "result": "Confirmed"
             }
           ]
@@ -110,7 +116,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Mirror of S09-01. No distinct window-zoom-out; temporal-zoom-out only. Track height shrink is Editor/shrink-tracks (Secondary-minus). Primary-minus unbound.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -128,6 +134,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:111-112 (equal/minus -> temporal-zoom; no Primary-minus)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-minus -> Editing/temporal-zoom-out",
               "result": "Confirmed"
             }
           ]
@@ -294,7 +306,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Same preferred as S11-05/S12-22/S16-23. Toggles autoscroll that keeps the playhead visible. Level4-Tertiary-f unbound in profile and factory. Tertiary-f is stationary-playhead (different mode).",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -312,6 +324,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:214 (EditorEditing/toggle-follow-playhead -> Primary-f)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-Tertiary-f -> EditorEditing/toggle-follow-playhead",
               "result": "Confirmed"
             }
           ]

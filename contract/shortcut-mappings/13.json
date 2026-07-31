@@ -78,7 +78,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "next_grid_choice steps finer (Bar\u2192Beat\u2192\u2026\u21921/128\u2192None). Does nothing on triplets/n-tuplets/timecode. Live narrows adaptive/fixed grid continuously.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -91,6 +91,12 @@
               "claim": "Behavior candidate",
               "result": "Candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:825-868"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-1 -> Editing/next-grid-choice",
+              "result": "Confirmed"
             }
           ]
         },
@@ -136,7 +142,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Coarser binary musical grid steps; same triplet/n-tuplet no-op as S13-02.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -151,10 +157,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:872-916"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-2 -> Editor/cycle-edit-point-with-marker"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-2 -> Editing/prev-grid-choice",
+              "result": "Confirmed"
             }
           ]
         },
@@ -252,7 +258,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Cycles Magnetic \u2194 Off (SnapNormal deprecated\u2192Magnetic). Not a hard absolute grid-only snap mode.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -265,6 +271,12 @@
               "claim": "Behavior candidate",
               "result": "Candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1118-1130"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-4 -> Editing/cycle-snap-mode",
+              "result": "Confirmed"
             }
           ]
         },

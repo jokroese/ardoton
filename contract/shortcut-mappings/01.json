@@ -277,7 +277,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Ardour's log window exposes diagnostics rather than Live's contextual Info View.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -290,6 +290,12 @@
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:442-443",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Tertiary-question -> Editor/toggle-log-window",
+              "result": "Confirmed"
             }
           ]
         }
@@ -308,7 +314,7 @@
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
           "availability": "Native",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -321,6 +327,12 @@
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1010-1017",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-v -> Editor/ToggleJadeo",
+              "result": "Confirmed"
             }
           ]
         }
@@ -366,7 +378,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Ardour Summary is an Editor navigation strip, while Live Overview is a global arrangement navigator with different view semantics.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -379,6 +391,12 @@
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:952-956",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-o -> Editor/ToggleSummary",
+              "result": "Confirmed"
             }
           ]
         }
@@ -450,7 +468,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Shows or presents the Mixer workspace rather than toggling an inline mixer section.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -463,6 +481,12 @@
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_dialogs.cc:498-511",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Level4-m -> Common/key-change-mixer-visibility",
+              "result": "Confirmed"
             }
           ]
         }
@@ -482,7 +506,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "The Editor Properties Box is a toggleable bottom panel, but it does not provide Live's selected-clip detail view.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -495,6 +519,12 @@
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-3 -> Editor/show-editor-props",
+              "result": "Confirmed"
             }
           ]
         }
@@ -514,7 +544,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "The Editor Mixer is a toggleable left panel, not Live's selected-device chain view.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -527,6 +557,12 @@
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-4 -> Editor/show-editor-mixer",
+              "result": "Confirmed"
             }
           ]
         }

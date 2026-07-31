@@ -674,7 +674,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live Delete on the track title bar removes the track. Ardour Editor/remove-track removes selected tracks; profile Delete is Editing/editor-delete (regions/objects), so Preferred needs a title-bar/context-sensitive binding or dedicated chord.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -689,10 +689,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:7884-7902"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Delete -> Editing/editor-delete"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Delete -> Editor/remove-track",
+              "result": "Confirmed"
             }
           ]
         }

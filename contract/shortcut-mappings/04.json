@@ -499,7 +499,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Route::ab_plugins disables every visible non-internal non-channelstrip plug-in insert on the route and later restores only the saved enabled state. It does not capture or switch plug-in parameter snapshots, so it is not Live device-state A/B. ProcessorMenu/ab_plugins still operates route-wide but uses Processor Box focus semantics. Proposed p also overlaps Editor set-playhead and Solo PFL in other contexts.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -514,10 +514,10 @@
               "result": "Candidate"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor p -> Editor/set-playhead; Solo p -> Solo/solo-use-pfl; Current fallback Mixer slash -> Mixer/ab-plugins",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Processor Box p -> ProcessorMenu/ab_plugins",
+              "result": "Confirmed"
             }
           ]
         },

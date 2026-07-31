@@ -37,6 +37,11 @@ action target does not exist; evidence for it must use `Building block exists`, 
 - `Profile Lua` mappings must identify the public Lua API or native actions involved and address
   selection, state, and undo behavior.
 - Do not infer a missing capability only from a missing default binding.
+- Key occupancy: Live Preferred bindings displace leftover Ardour factory or convenience chords
+  that are not themselves Preferred for a Live source. Do not preserve factory defaults for their
+  own sake. When two Live Preferred mappings compete for the same Ardour context and key token,
+  choose by Live context priority or rehome the lower-priority Live action; keep `Key conflict`
+  evidence until resolved.
 
 ## Workflow
 

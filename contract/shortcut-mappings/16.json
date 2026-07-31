@@ -96,7 +96,7 @@
           "mappingClass": "Exact",
           "availability": "Native",
           "note": "Crops regions on selected (or all) tracks to the edit-range selection. Primary-Tertiary-j is unbound in the Ardourton profile.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -114,6 +114,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:245 (Editor/editor-crop -> Primary-Secondary-c)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-j -> Editor/editor-crop",
               "result": "Confirmed"
             }
           ]
@@ -183,7 +189,7 @@
             {
               "kind": "Key conflict",
               "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart; Editor Left/Right -> Common/playhead-*-to-grid",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart; Editor Left/Right -> Editor/nudge-backward/forward",
               "result": "Conflict"
             }
           ]
@@ -422,7 +428,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Applies fade in/out on regions intersecting the time selection (fade_range). Live creates fade/crossfade on selection; Ardour fades selected time on tracks rather than a dedicated crossfade object. Primary-Level4-f is unbound in the profile.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -440,6 +446,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:132 (Editor/editor-fade-range -> slash)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-f -> Editor/editor-fade-range",
               "result": "Confirmed"
             }
           ]
@@ -619,7 +631,7 @@
             {
               "kind": "Key conflict",
               "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> tab-to-transient-backwards/forwards",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/move-selected-tracks-up/down",
               "result": "Conflict"
             },
             {
@@ -646,7 +658,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Same preferred target as S08-12. Selects regions/objects overlapping the session auto-loop on selected (or all) tracks \u2014 not Clip View brace contents. Factory used Primary-l; Ardourton binds Primary-l to Lua loop set/toggle (S16-11).",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -667,10 +679,10 @@
               "result": "Confirmed"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-l -> Editor/find-and-display-stripable; Global Primary-l -> LuaAction/script-31",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-l -> Editor/select-all-in-loop-range",
+              "result": "Confirmed"
             }
           ]
         },
@@ -701,7 +713,7 @@
             {
               "kind": "Key conflict",
               "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-l -> Editor/find-and-display-stripable",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-l -> Editor/select-all-in-loop-range",
               "result": "Conflict"
             }
           ]
@@ -722,7 +734,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Opens Insert Time dialog prefilled from the time selection start/length when a range exists. Live Insert Silence is non-dialog and inserts at the selection. Editor/insert-section inserts a selection-length gap at the edit point without a dialog (closer mechanically, wrong default paste target unless edit point equals selection start).",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -737,10 +749,10 @@
               "result": "Candidate"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-i -> Common/addExistingAudioFiles",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-i -> Editor/insert-time",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1033,7 +1045,7 @@
             {
               "kind": "Key conflict",
               "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor u -> Editor/select-all-within-cursors; Global Left/Right -> Common/playhead-*-to-grid",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor u -> Editor/select-all-within-cursors; Editor Left/Right -> Editor/nudge-backward/forward",
               "result": "Conflict"
             }
           ]
@@ -1106,7 +1118,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Also Level4-minus -> Editor/shrink-tracks. Steps height of selected tracks (or all if none selected). Live also adjusts clip lane height when unfolded; Ardour has no clip-lane height. Factory uses Secondary-equal/minus (Control). Level4-equal/minus unbound. Same physical =/+ key as S09.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1124,6 +1136,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:114-115 (Secondary-equal/minus)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-equal -> Editor/expand-tracks",
               "result": "Confirmed"
             }
           ]
@@ -1164,7 +1182,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Same preferred mapping as S09-05. Toggles autoscroll that keeps the playhead visible. No Level4-Tertiary-f profile binding yet. Stationary playhead (Tertiary-f) is a related but different mode.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1182,6 +1200,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:214 (EditorEditing/toggle-follow-playhead -> Primary-f)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-Tertiary-f -> EditorEditing/toggle-follow-playhead",
               "result": "Confirmed"
             }
           ]
@@ -1278,7 +1302,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Fits selected tracks (or tracks of selected regions) into the visible canvas height. Live H optimizes all Arrangement track heights. When nothing is selected Ardour does not auto-fit all tracks. Profile binds h to Region/play-selected-regions; fit-selection is on f.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1299,10 +1323,10 @@
               "result": "Confirmed"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Region/play-selected-regions; Editor f -> Editor/fit-selection",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Editor/fit-selection",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1342,7 +1366,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Zooms horizontally to the session extent (whole song fit). Live W optimizes Arrangement width similarly. Profile binds w to Common/jump-forward-to-mark; zoom-to-session is Primary-Tertiary-underscore.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1351,10 +1375,10 @@
               "result": "Confirmed"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global w -> Common/jump-forward-to-mark; Editor Primary-Tertiary-underscore -> Editor/zoom-to-session",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor w -> Editor/zoom-to-session",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1452,7 +1476,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Also Right -> Editor/nudge-forward. Nudges selected regions/markers by the nudge clock. Live arrows nudge the Arrangement selection; Ardour Left/Right currently move the playhead to the grid. Unconditional rebind collides with playhead-to-grid and with S08/S16-20 selection-gated uses.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1467,10 +1491,10 @@
               "result": "Confirmed"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global Left/Right -> Common/playhead-*-to-grid; Editor KP_Add/Subtract -> Editor/nudge-forward/backward",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Left -> Editor/nudge-backward",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1510,7 +1534,7 @@
           "mappingClass": "Exact",
           "availability": "Native",
           "note": "Reverses selected/entered audio regions. Profile currently binds Editor r to Editing/set-mouse-mode-range; factory reverse is Secondary-4.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1531,10 +1555,10 @@
               "result": "Confirmed"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor r -> Editing/set-mouse-mode-range; Editor Secondary-4 -> Region/reverse-region",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor r -> Region/reverse-region",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1656,7 +1680,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Locates to the preferred edit position and rolls. Live plays from the clip insert marker; Ardour uses the session edit point (playhead/mouse/marker). Level4-space is unbound; Secondary-space is Transport/PlaySelection.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1669,6 +1693,12 @@
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2557-2560",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-space -> Editor/play-from-edit-point",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1682,19 +1712,13 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Plays from edit point and returns afterward. Already bound to Primary-Tertiary-space, which Live uses for S16-33.",
-          "status": "Implemented",
+          "status": "Proposed",
           "evidence": [
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2563-2583",
               "result": "Candidate"
-            },
-            {
-              "kind": "Profile binding",
-              "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-space -> Editor/play-from-edit-point-and-return",
-              "result": "Confirmed"
             }
           ]
         }
@@ -1714,7 +1738,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Moves the active marker(s) to the playhead (Active Mark to Playhead). Live moves the clip insert marker to the playhead; Ardour has no per-clip insert marker \u2014 edit-to-playhead is the closest session-level analog. Profile currently binds Primary-Tertiary-space to play-from-edit-point-and-return (S16-32 alternative).",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1729,10 +1753,10 @@
               "result": "Candidate"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-space -> Editor/play-from-edit-point-and-return",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-space -> Editor/edit-to-playhead",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1746,13 +1770,13 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Factory/profile chord plays from edit point and returns; it does not move an insert marker to the playhead.",
-          "status": "Implemented",
+          "status": "Proposed",
           "evidence": [
             {
-              "kind": "Profile binding",
-              "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-space -> Editor/play-from-edit-point-and-return",
-              "result": "Confirmed"
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-space -> Editor/edit-to-playhead (Preferred S16-33)"
             }
           ]
         }
@@ -1836,7 +1860,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Shows the Mixer window/tab. Live moves focus to the mixer from Arrangement; Ardour show-mixer raises the mixer tabbable. Level4-Tertiary-m is unbound. Editor/show-editor-mixer (Tertiary-e) toggles the editor-side mixer strip instead.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1848,6 +1872,12 @@
               "kind": "Default binding",
               "claim": "Binding exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:260 (Common/show-mixer -> Secondary-m)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Level4-Tertiary-m -> Common/show-mixer",
               "result": "Confirmed"
             }
           ]

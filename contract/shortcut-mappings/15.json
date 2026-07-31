@@ -491,7 +491,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live Session L/R track move \u2261 Ardour presentation-order up/down. Prefer Primary-Left -> move-selected-tracks-up and Primary-Right -> move-selected-tracks-down. Profile already uses Primary-Up/Down for these; Primary-Left/Right are tab-to-transient.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -506,10 +506,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editor_selection.cc:2407"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/tab-to-transient-*; Primary-Up/Down -> move-selected-tracks"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left -> Editor/move-selected-tracks-up",
+              "result": "Confirmed"
             }
           ]
         },

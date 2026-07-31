@@ -305,7 +305,7 @@
           "mappingClass": "Exact",
           "availability": "Native",
           "note": "Joins selected notes. Profile currently binds unmodified j; Live uses Cmd+J. Editor Primary-j is consolidate.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -320,10 +320,10 @@
               "result": "Candidate"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-j -> Editor/editor-consolidate"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Primary-j -> Notes/join-notes",
+              "result": "Confirmed"
             }
           ]
         },
@@ -395,7 +395,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live fits MIDI Note Editor content width. Closest native action is Editor/zoom-to-selection-horiz (or Cue full-zoom UI-only). Profile w jumps to mark.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -404,10 +404,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:309"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global w -> Common/jump-forward-to-mark"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI w -> Editor/zoom-to-selection-horiz",
+              "result": "Confirmed"
             }
           ]
         },
@@ -447,7 +447,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Fits track/lane heights to selection \u2014 not MIDI pitch-range fit exclusively. Factory/profile use f for fit-selection.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -456,10 +456,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:322"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Region/play-selected-regions; Editor f -> Editor/fit-selection"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Editor/fit-selection",
+              "result": "Confirmed"
             }
           ]
         },
@@ -633,7 +633,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Horizontal canvas scroll if bound to scroll-left/right (also Primary-Page_Down). Verify profile; may need rebind. Live Cmd+Page scrolls MIDI editor horizontally.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -646,6 +646,12 @@
               "claim": "Behavior candidate",
               "result": "Candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor.cc (canvas scroll)"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Page_Up -> Editor/scroll-left",
+              "result": "Confirmed"
             }
           ]
         }
@@ -748,7 +754,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Select next/previous note (also Level4-Down -> Notes/select-previous). Profile currently uses Tab/Primary-Tab. Live Option+arrows; Notes Up/Down currently transpose.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -757,10 +763,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:656-657"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "result": "Conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Notes Up/Down -> transpose; Tab -> Notes/select-next"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Level4-Up -> Notes/select-next",
+              "result": "Confirmed"
             }
           ]
         },
@@ -832,13 +838,19 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Same preferred as S09-05/S11-05.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
               "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:485-488"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-Tertiary-f -> EditorEditing/toggle-follow-playhead",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1146,13 +1158,19 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live toggles full-size Clip View. Closest is maximal editor; profile currently binds Primary-Secondary-f (Cmd+Ctrl+F).",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "result": "Confirmed",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:809"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Level4-e -> Common/ToggleMaximalEditor",
+              "result": "Confirmed"
             }
           ]
         },
@@ -1276,7 +1294,7 @@
           "mappingClass": "Exact",
           "availability": "Native",
           "note": "Inverts note selection. Action exists; confirm profile binding (may be unbound or on another chord).",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1289,6 +1307,12 @@
               "claim": "Behavior candidate",
               "result": "Candidate",
               "reference": "../ardour@9.7:gtk2_ardour/midi_view.cc:2835"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Primary-Tertiary-a -> Notes/invert-selection",
+              "result": "Confirmed"
             }
           ]
         }
@@ -1334,7 +1358,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live splits Arrangement clip based on time selection from MIDI Note Editor context. Ardour Editor/split-region splits at edit point; Primary-e already bound in Editor. Preferred Live chord Primary-Tertiary-e is unbound for this action.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -1349,16 +1373,10 @@
               "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6850-6899"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-e -> Editor/select-all-after-edit-cursor",
-              "result": "Conflict"
-            },
-            {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "result": "Confirmed",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-e -> Editor/split-region"
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-e -> Editor/split-region",
+              "result": "Confirmed"
             }
           ]
         }

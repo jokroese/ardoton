@@ -20,7 +20,7 @@
           "mappingClass": "Similar",
           "availability": "Native",
           "note": "Live A toggles Arrangement Automation Mode (show/hide envelopes). Ardour toggles show/hide of existing automation lanes on selected tracks (or all tracks if none selected); it is not Live's overlay device/control chooser mode. Cross-ref S25-01 for hold-A momentary latching.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -35,10 +35,10 @@
               "result": "Candidate"
             },
             {
-              "kind": "Key conflict",
-              "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Global a -> Transport/solo-selection; StepEditing a -> insert-c; Solo a -> solo-use-afl",
-              "result": "Conflict"
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor a -> Editor/toggle-all-existing-automation",
+              "result": "Confirmed"
             }
           ]
         },

@@ -189,6 +189,12 @@
               "claim": "UI only",
               "result": "Candidate",
               "reference": "Search scope: collapse time selection to start. Terms: selection collapse, Left arrow, time selection. Subsystems: editing_context, editor selection. No dedicated collapse-to-edge action. ../ardour@9.7:gtk2_ardour/editing_context.cc:617;gtk2_ardour/editor_actions.cc"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Left -> Editor/nudge-backward"
             }
           ]
         }
@@ -215,6 +221,12 @@
               "claim": "UI only",
               "result": "Candidate",
               "reference": "Search scope: collapse time selection to end. Terms: selection collapse, Right arrow. Subsystems: editing_context, editor selection. No dedicated collapse-to-end action. ../ardour@9.7:gtk2_ardour/editing_context.cc:617;gtk2_ardour/editor_actions.cc"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Right -> Editor/nudge-forward"
             }
           ]
         }
