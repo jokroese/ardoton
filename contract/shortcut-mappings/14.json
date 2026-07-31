@@ -8,28 +8,169 @@
   "shortcuts": [
     {
       "sourceId": "S14-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+6",
+          "keyToken": "Primary-6",
+          "actionTarget": "Cues/set-launch-quant-sixteenth (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Global Quantization is Session View clip-launch quantization. Ardour CueMaster/TriggerBox set_all_quantization writes per-trigger launch quant across boxes (menus only); not note quantize, not Arrangement grid, and TRIGGER_PAGE_GLOBAL_QUANTIZATION session property is not compiled in. Preferred maps to 1/16 BBT (0,0,ticks/4).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_master.cc:778-784;686-704;libs/ardour/triggerbox.cc:4689-4694;gtk2_ardour/trigger_ui.cc:497-561"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable Cue launch quantization actions. Terms: set_all_quantization, global quant, TRIGGER_PAGE_GLOBAL_QUANTIZATION, launch quant. Subsystems: CueMaster, TriggerBox, TriggerUI, Cues actions (trigger_page.cc:971-1004 has cue trigger/stop only). Menus exist; no Cues/* bindable actions; not in Lua. ../ardour@9.7:gtk2_ardour/trigger_page.cc:971-1004"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S14-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+7",
+          "keyToken": "Primary-7",
+          "actionTarget": "Cues/set-launch-quant-eighth (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Global Quantization is Session View clip-launch quantization. Ardour CueMaster/TriggerBox set_all_quantization writes per-trigger launch quant across boxes (menus only); not note quantize, not Arrangement grid, and TRIGGER_PAGE_GLOBAL_QUANTIZATION session property is not compiled in. Preferred maps to 1/8 BBT (0,0,ticks/2).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_master.cc:778-784;686-704;libs/ardour/triggerbox.cc:4689-4694;gtk2_ardour/trigger_ui.cc:497-561"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable Cue launch quantization actions. Terms: set_all_quantization, global quant, TRIGGER_PAGE_GLOBAL_QUANTIZATION, launch quant. Subsystems: CueMaster, TriggerBox, TriggerUI, Cues actions (trigger_page.cc:971-1004 has cue trigger/stop only). Menus exist; no Cues/* bindable actions; not in Lua. ../ardour@9.7:gtk2_ardour/trigger_page.cc:971-1004"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-7 -> Transport/ToggleAutoPlay"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S14-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+8",
+          "keyToken": "Primary-8",
+          "actionTarget": "Cues/set-launch-quant-quarter (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Global Quantization is Session View clip-launch quantization. Ardour CueMaster/TriggerBox set_all_quantization writes per-trigger launch quant across boxes (menus only); not note quantize, not Arrangement grid, and TRIGGER_PAGE_GLOBAL_QUANTIZATION session property is not compiled in. Preferred maps to 1/4 BBT (0,1,0).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_master.cc:778-784;686-704;libs/ardour/triggerbox.cc:4689-4694;gtk2_ardour/trigger_ui.cc:497-561"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable Cue launch quantization actions. Terms: set_all_quantization, global quant, TRIGGER_PAGE_GLOBAL_QUANTIZATION, launch quant. Subsystems: CueMaster, TriggerBox, TriggerUI, Cues actions (trigger_page.cc:971-1004 has cue trigger/stop only). Menus exist; no Cues/* bindable actions; not in Lua. ../ardour@9.7:gtk2_ardour/trigger_page.cc:971-1004"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S14-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+9",
+          "keyToken": "Primary-9",
+          "actionTarget": "Cues/set-launch-quant-bar (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Global Quantization is Session View clip-launch quantization. Ardour CueMaster/TriggerBox set_all_quantization writes per-trigger launch quant across boxes (menus only); not note quantize, not Arrangement grid, and TRIGGER_PAGE_GLOBAL_QUANTIZATION session property is not compiled in. Preferred maps to 1 Bar BBT (1,0,0).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_master.cc:778-784;686-704;libs/ardour/triggerbox.cc:4689-4694;gtk2_ardour/trigger_ui.cc:497-561"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable Cue launch quantization actions. Terms: set_all_quantization, global quant, TRIGGER_PAGE_GLOBAL_QUANTIZATION, launch quant. Subsystems: CueMaster, TriggerBox, TriggerUI, Cues actions (trigger_page.cc:971-1004 has cue trigger/stop only). Menus exist; no Cues/* bindable actions; not in Lua. ../ardour@9.7:gtk2_ardour/trigger_page.cc:971-1004"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S14-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+0",
+          "keyToken": "Primary-0",
+          "actionTarget": "Cues/set-launch-quant-off (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Global Quantization is Session View clip-launch quantization. Ardour CueMaster/TriggerBox set_all_quantization writes per-trigger launch quant across boxes (menus only); not note quantize, not Arrangement grid, and TRIGGER_PAGE_GLOBAL_QUANTIZATION session property is not compiled in. Preferred maps to Off BBT (-1,0,0).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_master.cc:778-784;686-704;libs/ardour/triggerbox.cc:4689-4694;gtk2_ardour/trigger_ui.cc:497-561"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: bindable Cue launch quantization actions. Terms: set_all_quantization, global quant, TRIGGER_PAGE_GLOBAL_QUANTIZATION, launch quant. Subsystems: CueMaster, TriggerBox, TriggerUI, Cues actions (trigger_page.cc:971-1004 has cue trigger/stop only). Menus exist; no Cues/* bindable actions; not in Lua. ../ardour@9.7:gtk2_ardour/trigger_page.cc:971-1004"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

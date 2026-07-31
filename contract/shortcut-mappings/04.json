@@ -8,63 +8,558 @@
   "shortcuts": [
     {
       "sourceId": "S04-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Cmd+G",
+          "keyToken": "Primary-g",
+          "actionTarget": "ProcessorBox/group-processors (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no nested processor-group or rack membership model. Processor Boxes can also appear inside the Editor mixer strip, so Cmd+G overlaps the Editor region-group binding even though the XML contexts differ.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: libs/ardour route/processor model and gtk2_ardour ProcessorBox/Mixer UI. Terms: group, rack, nested processor, device group. Subsystems: Route, ProcessorBox, Mixer_UI. No group membership model found. ../ardour@9.7:libs/ardour/route.cc;gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc;gtk2_ardour/editor_mixer.cc:190;gtk2_ardour/mixer_strip.cc:112-145",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-g -> Editor/group-selected-regions (overlaps when a Processor Box lives in the Editor mixer strip)",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Cmd+Shift+G",
+          "keyToken": "Primary-Tertiary-g",
+          "actionTarget": "ProcessorBox/ungroup-processors (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no nested processor-group or rack membership model to ungroup. Processor Boxes can also appear inside the Editor mixer strip, so Cmd+Shift+G overlaps the Editor region-ungroup binding.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: libs/ardour route/processor model and gtk2_ardour ProcessorBox/Mixer UI. Terms: ungroup, rack, nested processor, device group. Subsystems: Route, ProcessorBox, Mixer_UI. No group membership model found. ../ardour@9.7:libs/ardour/route.cc;gtk2_ardour/processor_box.cc;gtk2_ardour/mixer_ui.cc;gtk2_ardour/editor_mixer.cc:190;gtk2_ardour/mixer_strip.cc:112-145",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-g -> Editor/ungroup-selected-regions (overlaps when a Processor Box lives in the Editor mixer strip)",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Option+click device activator",
+          "actionTarget": "ProcessorBox/toggle-group-processors (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Exact Live group activate/deactivate requires a processor-group membership model that Ardour does not have; an input patch alone cannot know group boundaries.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: libs/ardour route/processor model and gtk2_ardour ProcessorBox activator handling. Terms: group, rack, toggle-group, device group. Subsystems: Route, ProcessorBox. No group membership model found. ../ardour@9.7:libs/ardour/route.cc;gtk2_ardour/processor_box.cc:471-505",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Mixer",
+          "proposedMacos": "toggle selected processors",
+          "actionTarget": "Mixer/toggle-processors",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Mixer/toggle-processors toggles selected plug-ins on selected strips rather than all devices in a Live group.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3954-3957",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:4182-4191;gtk2_ardour/processor_box.cc:2686-2706",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Processor Box",
+          "proposedMacos": "Cmd+Shift+click activator",
+          "actionTarget": "ProcessorBox/toggle-all-visible-processors",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Cmd+Shift-click on an activator toggles all visible processors on the route, not a Live device group. There is no group boundary.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:471-505;libs/gtkmm2ext/keyboard.cc:65-96",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Shift+click",
+          "actionTarget": "ProcessorBox/multi-select",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Processor Box already supports Shift-click contiguous range selection and Cmd-click toggle via DnDVBox; this is native multi-selection, not a new action. Shift selects a contiguous range rather than an arbitrary Live multi-select set.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.h:518;gtk2_ardour/processor_box.cc:1956-2004;libs/gtkmm2ext/gtkmm2ext/dndvbox.h:540-596;gtk2_ardour/processor_box.cc:2626-2711;3913-3927",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "right-click Device View selector",
+          "actionTarget": "ProcessorBox/processor-context-menu",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour has no Live Device View selector. The closest native behavior is the Processor Box itself as the processor list, with right-click opening the processor operation menu rather than a track-device chooser.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:2417-2586;2764-2767",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "ProcessorBox/reset-parameter (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Delete in the Processor Box deletes selected processors via ProcessorMenu/delete; it does not reset a focused device parameter. Parameter reset exists elsewhere as Current fallback behaviors.",
+          "status": "Blocked",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:4239-4251",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Processor Box key actions and plug-in/parameter reset UI. Terms: reset-parameter, Delete, reset plugin. Subsystems: ProcessorBox, PluginUI, control widgets. No Processor Box Delete-to-reset-parameter action. ../ardour@9.7:gtk2_ardour/processor_box.cc:4239-4251;gtk2_ardour/plugin_ui.cc:526-595;libs/widgets/ardour_ctrl_base.cc:241-253",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Processor Box Delete -> ProcessorMenu/delete; factory ../ardour@9.7:gtk2_ardour/processor_box.bindings:1-5",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Processor Box",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "ProcessorMenu/delete",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Processor Box Delete removes selected processors. Native parameter-reset fallbacks exist separately: plug-in UI Reset (whole plug-in), Processor Box Reset Plugin menu, and Shift-click on Ardour-owned controls to normal/default (../ardour@9.7:gtk2_ardour/plugin_ui.cc:526-595;856-866;gtk2_ardour/processor_box.cc:843-850;892-935;libs/widgets/ardour_ctrl_base.cc:241-253).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:4239-4251",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_ui.cc:526-595;856-866;gtk2_ardour/processor_box.cc:843-850;892-935;libs/widgets/ardour_ctrl_base.cc:241-253",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Processor Box Delete -> ProcessorMenu/delete",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value control",
+          "proposedMacos": "double-click",
+          "actionTarget": "ValueControl/reset-parameter (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Double-click reset is plausible for Ardour-owned controls only. Generic bar double-click currently enters numeric editing rather than reset; FaderWidget reset requires DoubleClickReset; vendor custom plug-in UIs cannot be generically patched. Shift-click already resets many Ardour controls to normal/default.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:libs/widgets/ardour_ctrl_base.cc:241-253;libs/widgets/fader_widget.cc:26-36;66-72",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/widgets/barcontroller.cc:78-103;gtk2_ardour/processor_box.cc:1051-1076;gtk2_ardour/plugin_ui.cc:526-595",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Ardour-owned value widgets and plug-in UIs. Terms: DoubleClickReset, reset, double-click. Subsystems: ardour_ctrl_base, fader_widget, barcontroller, plugin_ui, processor_box inline controls. ../ardour@9.7:libs/widgets/fader_widget.cc:66-72;libs/widgets/barcontroller.cc:78-103",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Plugin Selector",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "PluginSelector/load-selected-plugin (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Browser Enter loads the selected device. Ardour's Plugin Selector queues on row activation and loads on Apply (default response); one-step Enter loading is not established. Return also collides with Global/Mixer GotoStart bindings when those contexts are active.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc:346-350;713-734;791-825",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/plugin_selector.cc:137-139;365-369;713-734;791-825",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Plugin Selector dialog key/activation path. Terms: btn_add_clicked, RESPONSE_APPLY, Return, Enter. Subsystems: PluginSelector. Row activation queues; Apply inserts. ../ardour@9.7:gtk2_ardour/plugin_selector.cc:137-139;365-369;791-825",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart; Mixer Return -> Transport/GotoStart; factory ../ardour@9.7:gtk2_ardour/mixer.bindings:25",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Q",
+          "keyToken": "q",
+          "actionTarget": "ProcessorBox/toggle-hot-swap (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live's persistent Browser hot-swap mode, compatible-result focus, and audition state machine are not present. Existing Lua/UI replacement primitives are building blocks only. Global q is already bound to jump-backward-to-mark and overlaps when Processor Box has focus.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:397-405;813-820;libs/ardour/luabindings.cc:1506-1514;3320-3324",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/ardour/route.cc:1606-1701;libs/ardour/lua_api.cc:218-251;share/scripts/s_replaceplugin.lua:1-9",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Processor Box, Plugin Selector, Lua replacement APIs. Terms: hot-swap, replace plugin, browser audition. Subsystems: ProcessorBox, PluginSelector, LuaInstance, Route::replace_processor. No persistent hot-swap mode. ../ardour@9.7:gtk2_ardour/processor_box.cc;gtk2_ardour/plugin_selector.cc;share/scripts/s_replaceplugin.lua:1-9",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global q -> Common/jump-backward-to-mark",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Processor Box",
+          "proposedMacos": "Q",
+          "keyToken": "q",
+          "actionTarget": "LuaAction/replace-selected-plugin (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "A one-shot Lua replacement dialog can use selected Processor Box processors, plug-in enumeration/creation, and Route::replace_processor. It does not provide Live's persistent hot-swap Browser mode; selection, compatibility errors, and undo must be documented in the script.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:libs/ardour/route.cc:1606-1701",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global q -> Common/jump-backward-to-mark",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:397-405;813-820;libs/ardour/lua_api.cc:218-251;libs/ardour/luabindings.cc:1506-1514;3320-3324;share/scripts/s_replaceplugin.lua:1-9",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+P",
+          "keyToken": "Primary-Level4-p",
+          "actionTarget": "Common/toggle-plugin-windows (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live's shortcut runs from a plug-in window context. A Processor Box binding cannot serve that focus. Individual window proxies already hide/toggle; what is missing is an aggregate bindable action that remembers or enumerates currently open plug-in windows.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:4794-4818;4855-4873;4942-4960",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:4794-4818;4855-4873;4942-4960",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: processor window proxies and window manager. Terms: toggle plugin windows, hide all, plugin UI visibility. Subsystems: ProcessorBox window proxies, PluginUI, window_manager. Aggregate toggle action absent. ../ardour@9.7:gtk2_ardour/processor_box.cc:4794-4960",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "Cmd+click Show/Hide Plug-In Window button",
+          "actionTarget": "ProcessorMenu/edit",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour already allows unlimited visible plug-in windows by default and ProcessorMenu/edit opens/toggles windows for every selected processor. There is no Live-style Show/Hide Plug-In Window button; the enable LED and double-click-to-edit are the existing controls. Only the exact Cmd-click-on-button gesture is absent.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:4284-4291;gtk2_ardour/ui_config_vars.inc.h:153;gtk2_ardour/rc_option_editor.cc:4297-4305",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:3922-3927;4510-4517;4537-4560;4942-4960;161-235;2727-2780",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S04-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Processor Box",
+          "proposedMacos": "P",
+          "keyToken": "p",
+          "actionTarget": "ProcessorMenu/ab_plugins",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Route::ab_plugins disables every visible non-internal non-channelstrip plug-in insert on the route and later restores only the saved enabled state. It does not capture or switch plug-in parameter snapshots, so it is not Live device-state A/B. ProcessorMenu/ab_plugins still operates route-wide but uses Processor Box focus semantics. Proposed p also overlaps Editor set-playhead and Solo PFL in other contexts.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:4262-4269;4305-4313",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/processor_box.cc:3937-3941;libs/ardour/route.cc:1351-1401",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Processor Box p -> ProcessorMenu/ab_plugins",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Mixer",
+          "proposedMacos": "/",
+          "keyToken": "slash",
+          "actionTarget": "Mixer/ab-plugins",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Mixer binding runs the same route-wide plug-in bypass/restore on selected mixer strips, not Live device-state A/B and not on selected processors alone.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3949-3957",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3088-3099;4194-4203;gtk2_ardour/mixer_strip.cc:2015-2019;gtk2_ardour/processor_box.cc:3937-3941;libs/ardour/route.cc:1351-1401",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer.bindings:20",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer slash -> Mixer/ab-plugins; factory ../ardour@9.7:gtk2_ardour/mixer.bindings:20",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

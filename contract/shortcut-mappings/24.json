@@ -8,33 +8,201 @@
   "shortcuts": [
     {
       "sourceId": "S24-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+M",
+          "keyToken": "Primary-m",
+          "actionTarget": "Common/toggle-midi-map-mode (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Cmd+M enters global MIDI Map Mode. Ardour uses per-control MIDI learn (BindingProxy / TriggerBox begin_midi_learn) without a session-wide MIDI map mode; profile Primary-m cuts monitor section.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: global MIDI map mode. Terms: MIDI Map, midi learn mode, BindingProxy, begin_midi_learn. Subsystems: BindingProxy, TriggerBox MIDI learn, Controllable. Per-control learn only; no global map mode action. ../ardour@9.7:gtk2_ardour/trigger_ui.cc:431-447;libs/ardour/triggerbox.cc:4870-4878"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-m -> Monitor Section/monitor-cut-all"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S24-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+K",
+          "keyToken": "Primary-k",
+          "actionTarget": "Common/toggle-key-map-mode (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Cmd+K enters Key Map Mode for assigning computer-keyboard shortcuts to controls. Ardour has no Live-style key-map mode; profile Primary-k trims region to next.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: key map mode. Terms: key map, MIDI map keyboard, learn keybinding UI. Subsystems: ActionManager bindings, BindingProxy. No global key-map mode. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-k -> Region/trim-to-next-region"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S24-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "M",
+          "keyToken": "m",
+          "actionTarget": "Window/toggle-virtual-keyboard",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live M toggles the Computer MIDI Keyboard overlay. Ardour toggles the Virtual Keyboard window; keys play MIDI when that window handles input, not as a global Live-style keyboard layer over the whole UI.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui.cc:329;527"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/virtual_keyboard_window.cc:46-225;gtk2_ardour/ardour_ui_keys.cc:63-64"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global m -> Window/toggle-virtual-keyboard"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S24-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Virtual Keyboard",
+          "proposedMacos": "X",
+          "keyToken": "x",
+          "actionTarget": "Window/virtual-keyboard-octave-up (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live X/Z shift computer-MIDI octave. Ardour Virtual Keyboard adjusts octave via UI controls and arrow keys (tooltip), not bindable X/Z actions. Alternate Z in note.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/virtual_keyboard_window.cc:116-117;213-225"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: virtual keyboard octave shortcuts X/Z. Terms: piano_octave_key, SwitchOctave. Subsystems: VirtualKeyboardWindow. UI octave controls exist; no X/Z actions. ../ardour@9.7:gtk2_ardour/virtual_keyboard_window.cc:213-225"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S24-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Virtual Keyboard",
+          "proposedMacos": "C",
+          "keyToken": "c",
+          "actionTarget": "Window/virtual-keyboard-velocity-up (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live C/V adjust computer-MIDI velocity. Ardour exposes velocity via Virtual Keyboard UI/scroll, not C/V actions. Alternate V in note.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/virtual_keyboard_window.cc:118;212;219"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: virtual keyboard velocity C/V. Terms: piano_velocity. Subsystems: VirtualKeyboardWindow. ../ardour@9.7:gtk2_ardour/virtual_keyboard_window.cc:212-219"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor c -> Editor/track-record-enable-toggle; Editor v -> Region/set-region-sync-position"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S24-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Shift+letter",
+          "keyToken": "Tertiary-a",
+          "actionTarget": "Common/shift-bypass-computer-midi (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Shift+letter runs single-letter shortcuts while Computer MIDI Keyboard is active. Ardour virtual keyboard either propagates keys to the window or to ActionManager without a Shift-bypass computer-MIDI layer; representative token Tertiary-a, other letters in note.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Shift bypass virtual MIDI keyboard for letter shortcuts. Terms: virtual_keyboard propagate_key_event, Tertiary letter. Subsystems: ardour_ui_keys virtual keyboard path. ../ardour@9.7:gtk2_ardour/ardour_ui_keys.cc:63-64"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

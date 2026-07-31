@@ -37,10 +37,13 @@ against a live Ardour session.
 
 ```bash
 uv run python tools/format_shortcuts.py --check
+uv run python tools/generate_shortcut_vocabulary.py --check
 uv run python tools/validate_shortcuts.py --report
 ```
 
 Use `uv run python tools/format_shortcuts.py --write` to canonicalize contract JSON.
+Use `uv run python tools/generate_shortcut_vocabulary.py --write` after changing the contract
+schema vocabulary.
 
 ## Dependency updates
 

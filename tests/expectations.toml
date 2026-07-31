@@ -83,7 +83,7 @@ action = "Editor/track-solo-toggle"
 source_id = "S17-01"
 context = "Editor"
 key = "Primary-Level4-u"
-action = "Editor/show-plist-selector"
+action = "Editor/toggle-layer-display"
 
 [[exclusive]]
 source_id = "S20-06"

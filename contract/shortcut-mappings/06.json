@@ -8,48 +8,393 @@
   "shortcuts": [
     {
       "sourceId": "S06-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Mixer",
+          "proposedMacos": "Down",
+          "keyToken": "Down",
+          "actionTarget": "Mixer/decrement-gain",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Adjusts selected mixer strip/bus gain by a fixed -0.1 dB only. It does not decrement a focused generic value control, plug-in parameter, pan, tempo, automation value, or spinner. Stock GtkSpinButton Up/Down step adjustment when a spin is focused is a closer control-local behavior but still not universal.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3944-3946",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:4076-4093;4095-4115;libs/tk/ytk/gtkspinbutton.c:369-378;1295-1388",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Down -> Mixer/decrement-gain",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Mixer",
+          "proposedMacos": "Up",
+          "keyToken": "Up",
+          "actionTarget": "Mixer/increment-gain",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Adjusts selected mixer strip/bus gain by a fixed +0.1 dB only. It does not increment a focused generic value control, plug-in parameter, pan, tempo, automation value, or spinner.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3944-3946",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:4076-4093;4095-4115;libs/tk/ytk/gtkspinbutton.c:369-378;1295-1388",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Up -> Mixer/increment-gain",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value control",
+          "proposedMacos": "Shift+Up",
+          "keyToken": "Tertiary-Up",
+          "actionTarget": "ValueControl/fine-adjust (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Also Tertiary-Down for decrement. One target cannot encode Live's increment vs decrement or parameter-dependent octave behavior. Stock GTK binds only unmodified Up/Down for spin steps; macOS fine pointer/scroll scaling uses Command, not Shift. Shift+Up/Down collide with Global transport transitions and MIDI transpose-smush.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:libs/tk/ytk/gtkspinbutton.c:369-378;libs/gtkmm2ext/keyboard.cc:65-70;252-253;libs/widgets/ardour_ctrl_base.cc:127-149",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: value-control keyboard fine adjust and spinbutton bindings. Terms: Tertiary-Up, fine adjust, octave. Subsystems: GtkSpinButton, ardour_ctrl_base, keyboard modifiers. No Shift+Up/Down fine/octave step binding. ../ardour@9.7:libs/tk/ytk/gtkspinbutton.c:369-378;gtk2_ardour/gain_meter.cc",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-Up/Down -> TransitionToRoll/TransitionToReverse; MIDI Tertiary-Up/Down -> transpose octave-smush",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value control",
+          "proposedMacos": "Shift+drag",
+          "keyToken": "Shift_L",
+          "actionTarget": "ValueControl/fine-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live's finer resolution while dragging is a modifier-plus-pointer gesture. Shift_L documents the held modifier for this Keyboard-hold source; Tertiary alone is not a valid installable accelerator. Matching Shift-drag would collide with Shift-click parameter reset and gain-group override. Native fine drag already uses Command on macOS (Current fallback).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:65-70;252-253;libs/widgets/ardour_fader.cc:426-445;libs/widgets/ardour_ctrl_base.cc:127-149",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: fader/knob drag fine modifiers and Shift reset/group override. Terms: fine drag, TertiaryModifier, Shift-click reset. Subsystems: ardour_fader, ardour_ctrl_base, gain_meter. ../ardour@9.7:libs/widgets/ardour_ctrl_base.cc:240-253;gtk2_ardour/gain_meter.cc:592-615",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "../ardour@9.7:libs/widgets/ardour_ctrl_base.cc:240-253 (Shift-click reset); gtk2_ardour/gain_meter.cc:592-615 (Shift gain-group override)",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Value control",
+          "proposedMacos": "Cmd+drag",
+          "keyToken": "Meta_L",
+          "actionTarget": "ArdourCtrlBase/fine-drag",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "On macOS PrimaryModifier is Command; fine and extra-fine modifiers already scale fader and general control dragging. This is Command-drag, not Live's Shift-drag.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:65-70;252-253;libs/widgets/ardour_fader.cc:426-445;libs/widgets/ardour_ctrl_base.cc:127-149",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value control",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "ValueControl/reset-default (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Delete-to-default needs focus/dispatch rules: inside GtkEntry Delete is text deletion; profile Delete also deletes Editor objects or Mixer processors. Native Shift-click reset already exists as Current fallback.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:libs/widgets/ardour_ctrl_base.cc:240-253;libs/widgets/fader_widget.cc:172-184;gtk2_ardour/gain_meter.cc:328-354",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: value-control Delete-to-default vs existing reset and Delete meanings. Terms: reset default, Delete, Shift-click. Subsystems: ardour_ctrl_base, fader_widget, gain_meter, GtkEntry. ../ardour@9.7:libs/tk/ytk/gtkentry.c:1678-1687;gtk2_ardour/utils.cc:627-635",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Delete -> Editing/editor-delete; Mixer Delete -> Mixer/delete-processors; GtkEntry Delete deletes text (../ardour@9.7:libs/tk/ytk/gtkentry.c:1678-1687)",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Value control",
+          "proposedMacos": "Shift+click",
+          "keyToken": "Delete",
+          "actionTarget": "ArdourCtrlBase/reset-to-default",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shift-click resets Ardour-owned controls to normal/default (gain fader default is unity). It is not Delete and does not cover vendor custom UIs. keyToken Delete is retained only because the Keyboard source requires a token on every mapping; the installed fallback gesture is Shift-click.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/widgets/ardour_ctrl_base.cc:240-253;libs/widgets/fader_widget.cc:172-184;gtk2_ardour/gain_meter.cc:328-354",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value entry",
+          "proposedMacos": "0",
+          "keyToken": "0",
+          "actionTarget": "GTK/value-entry-digits",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Also digits 1-9. Live's source context is Value control; typing digits applies once an entry/edit mode is active (AudioClock accepts digits; bar controls require double-click before a spinner). Digits also collide with Editor/Global/Mixer/StepEditing bindings when those contexts have focus.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/audio_clock.cc:1434-1474;libs/widgets/barcontroller.cc:78-101;129-147",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing/Editor/Global/Mixer/StepEditing digit bindings (e.g. Editor 1/2/3/9/0, Global 7/8, Mixer 0, Editing 4/5/6)",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value entry",
+          "proposedMacos": "period",
+          "keyToken": "period",
+          "actionTarget": "AudioClock/next-field (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Also comma. Live moves among Bar/Beat/16th fields. In ordinary numeric entries period/comma are locale decimal separators. AudioClock BBT fields are Bars/Beats/Ticks and do not handle period/comma as field navigation; they fall into the default branch and are consumed. period/comma also collide with Global range and MIDI note-length bindings.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/audio_clock.cc:1653-1660",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: value-entry field navigation and AudioClock key handling. Terms: period, comma, next field, Bar/Beat. Subsystems: AudioClock, utils numeric entry, GtkEntry. No next-field behavior found. ../ardour@9.7:gtk2_ardour/audio_clock.cc:1423-1519;1621-1632;1653-1660;gtk2_ardour/utils.cc:562-600",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global period/comma range actions; MIDI period/comma note-editing; StepEditing period/comma",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value entry",
+          "proposedMacos": "Escape",
+          "keyToken": "Escape",
+          "actionTarget": "AudioClock/cancel-edit",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "AudioClock cancels numeric edit on Escape. Stock GtkEntry does not bind Escape to generic value-entry cancellation; Escape resets IM state then continues parent dispatch. Mixer gain entry rejects Escape as an illegal key without restoring old text or ending edit. Not a universal GTK cancel.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/audio_clock.cc:1494-1503;libs/tk/ytk/gtkentry.c:4067-4110;gtk2_ardour/gain_meter.cc:436-445;gtk2_ardour/utils.cc:583-641",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Escape -> Main/Escape; MIDI Escape -> clear selection; Automation Escape -> end-edit",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Escape",
+          "keyToken": "Escape",
+          "actionTarget": "Main/Escape",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Global Escape deselects rather than cancelling an in-progress value entry.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:162-167",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Escape -> Main/Escape",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S06-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Value entry",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "GTK/value-entry-confirm",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "GtkEntry binds Return/Enter to activate; mixer gain entry connects activate and commits the parsed value. Return also collides with Global/Mixer GotoStart and Automation create-point when those contexts are active.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/tk/ytk/gtkentry.c:1294-1315;1669-1676;gtk2_ardour/gain_meter.cc:148-152;530-566",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart; Mixer Return -> Transport/GotoStart; Automation Return -> create point",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

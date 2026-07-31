@@ -8,118 +8,857 @@
   "shortcuts": [
     {
       "sourceId": "S15-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "Cues/launch-selected-slot (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Bang the selected TriggerEntry. Mouse play-button launch exists; registered actions are cue-row F-keys and fixed trigger-slot-C-R, not launch-selected.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:703-715;gtk2_ardour/selection.cc:1676-1679;gtk2_ardour/trigger_page.cc:981-1004"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No launch-selected action."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Arrow keys",
+          "keyToken": "Left",
+          "actionTarget": "Cues/select-neighbor-slot (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Slot selection is click-only (Selection::set). Also Up/Down/Right for grid neighbors. Editor/global arrows move playhead/scroll when focus is not on Cues.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:637-657;gtk2_ardour/selection.cc:1676-1679"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No arrow-key cue grid navigation."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global/Editor arrows used for playhead/scroll/nav"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+A",
+          "keyToken": "Primary-a",
+          "actionTarget": "Cues/select-all-slots (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Editor/select-all-objects selects arrangement regions, not cue slots. Cue slot click ignores multi-select modifiers.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/selection.cc:1676-1679"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. ../ardour@9.7:gtk2_ardour/editor_selection.cc:1827-1862;gtk2_ardour/triggerbox_ui.cc:654-656"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-a -> Editor/select-all-objects"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Option+drag",
+          "actionTarget": "Cues/slot-drag-copy",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Cue slot drag always ACTION_COPY (no Option gate; no move-drag). Closest to Live Option+copy without requiring Option.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:845;1089-1121"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+E",
+          "keyToken": "Primary-e",
+          "actionTarget": "Cues/toggle-stop-button (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Empty cue slots always behave as stop; there is no toggleable stop-clip button like Live.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Terms: stop button, playable(). ../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:672-695"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-e -> Editor/split-region"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+Enter",
+          "keyToken": "Primary-Return",
+          "actionTarget": "Cues/stop-selected-track-clips (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Empty-slot click and TriggerBox::stop_all_* exist; column stop-cues-N-* actions are index-based, not selection-based.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:691-695;libs/ardour/ardour/triggerbox.h:935-936;gtk2_ardour/trigger_page.cc:999-1004"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No stop-selected-track action."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Automation Primary-Return -> begin-edit; Global Return -> GotoStart"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+Shift+M",
+          "keyToken": "Primary-Tertiary-m",
+          "actionTarget": "Cues/insert-empty-midi-clip (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Load/drop MIDI into a slot exists; no insert-empty-MIDI-clip-in-selected-slot action. Building blocks: RegionFactory + Trigger::set_region.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_ui.cc:410;gtk2_ardour/triggerbox_ui.cc:1125-1133"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Terms: empty midi, Insert MIDI."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Primary-Tertiary-m -> Monitor Section/monitor-dim-all"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+I",
+          "keyToken": "Primary-i",
+          "actionTarget": "Cues/insert-scene (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Cue rows are fixed at default_triggers_per_box=16; clear_cue clears a row only. Mixer store-mixer-scene is unrelated.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Terms: insert scene. ../ardour@9.7:libs/ardour/ardour/triggerbox.h:872;libs/ardour/triggerbox.cc:4655-4658"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-i -> Common/addExistingAudioFiles"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+Shift+I",
+          "keyToken": "Primary-Tertiary-i",
+          "actionTarget": "Cues/insert-captured-scene (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No capture-playing-clips-into-new-scene. RegionCaptured opens an editor; cue-track record and timeline Rec Cues differ.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Terms: captured scene. ../ardour@9.7:gtk2_ardour/trigger_page.cc:482-525"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-i -> Common/invert-selection"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Up / Down arrow",
+          "keyToken": "Up",
+          "actionTarget": "Cues/select-neighbor-cue-row (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Cue rows launch via click/trigger-cue-N (F1\u2013F8); no keyboard scene-selection cursor. Also Down.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/cuebox_ui.cc:440-442;gtk2_ardour/trigger_page.cc:981-1004"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No cue-row selection cursor."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Page Up / Page Down",
+          "keyToken": "Page_Up",
+          "actionTarget": "Cues/select-cue-row-page (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Page step (~8) within fixed 16 cue rows. Also Page_Down. Editor Page_Up/Down scroll tracks.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Terms: Page_Up cue row."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Page_Up/Page_Down -> Editor/scroll-tracks-*"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+Shift+F9",
+          "keyToken": "Primary-Tertiary-F9",
+          "actionTarget": "Cues/toggle-cue-track-record (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Per-track TriggerBox::set_record_enabled (strip Rec). Global app-bar Rec Cues writes timeline cue markers, not Session View clips. Primary-Tertiary-F9 unbound.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_strip.cc:235-247;gtk2_ardour/application_bar.cc:1030-1038;gtk2_ardour/trigger_page.cc:380"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No bindable toggle-cue-track-record."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Shift+Enter",
+          "keyToken": "Tertiary-Return",
+          "actionTarget": "Cues/toggle-follow-actions (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Toggle via FollowAction::None / will_not_follow(); menus and slot properties only, no action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:libs/ardour/triggerbox.cc:523-527;gtk2_ardour/trigger_ui.cc:575-609;gtk2_ardour/slot_properties_box.cc:140"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No toggle-follow-actions action."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+Shift+Enter",
+          "keyToken": "Primary-Tertiary-Return",
+          "actionTarget": "Cues/create-follow-action-chain (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Compose ForwardTrigger (etc.) across selection; set_all_follow_action exists; no chain-selected action; weak multi-slot select.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:libs/ardour/triggerbox.cc:4669-4677;gtk2_ardour/trigger_ui.cc:593;gtk2_ardour/trigger_master.cc:758-763"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No create-follow-action-chain action."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Left / Cmd+Right arrow",
+          "keyToken": "Primary-Left",
+          "actionTarget": "Editor/move-selected-tracks-up",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Session L/R track move \u2261 Ardour presentation-order up/down. Prefer Primary-Left -> move-selected-tracks-up and Primary-Right -> move-selected-tracks-down. Profile already uses Primary-Up/Down for these; Primary-Left/Right are tab-to-transient.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:332-334"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_selection.cc:2407"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left -> Editor/move-selected-tracks-up",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Up / Cmd+Down arrow",
+          "keyToken": "Primary-Up",
+          "actionTarget": "Editor/move-selected-tracks-up",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile already moves tracks with Primary-Up/Down (also Primary-Down).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Up/Down -> Editor/move-selected-tracks-up / move-selected-tracks-down"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+Up / Cmd+Down arrow",
+          "keyToken": "Primary-Up",
+          "actionTarget": "Cues/reorder-scenes (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Fixed cue rows; no reorder scenes with gaps. Also Primary-Down.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Terms: reorder cue, move scene. ../ardour@9.7:libs/ardour/ardour/triggerbox.h:872"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Up/Down -> Editor/move-selected-tracks-*"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-17",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Cmd+drag",
+          "actionTarget": "Cues/drop-clips-as-cue-row (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Browser/clip-picker drop fills consecutive vertical slots on one track (++n), not one cue row across tracks; no Cmd modifier for as-scene.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. ../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:1125-1134;gtk2_ardour/trigger_clip_picker.cc:203-219"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc (Cmd often SelectionToggle)"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-18",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "0",
+          "keyToken": "0",
+          "actionTarget": "Cues/deactivate-selected-clip (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "No slot deactivate/mute. cue_isolated (Cue Isolate) only ignores cue-row launches; clip can still bang individually \u2014 not Live deactivate. Arrangement Region/toggle-region-mute on 0 is wrong domain.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Terms: deactivate clip, mute slot. ../ardour@9.7:gtk2_ardour/trigger_ui.cc:566-641"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor 0 -> Region/toggle-region-mute"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Cues",
+          "proposedMacos": "0",
+          "keyToken": "0",
+          "actionTarget": "Cues/toggle-cue-isolate (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "cue_isolated ignores cue-row launches only; not Live clip deactivate.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_ui.cc:566-641"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. cue_isolated menu/UI only."
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-19",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Escape",
+          "keyToken": "Escape",
+          "actionTarget": "Main/Escape",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Clears selection including triggers; does not focus Cue strip title bar. TriggerPage has no Escape handler (Mixer does).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:162"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/selection.cc:115-126;gtk2_ardour/editor_mouse.cc:2297-2318"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Escape -> Main/Escape"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-20",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Home",
+          "keyToken": "Home",
+          "actionTarget": "Cues/jump-first-track-of-cue (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "No Home grid jump to first track of current cue row.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_page.cc:793"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No jump-first-track-of-cue."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Home -> Transport/GotoStart"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-21",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "End",
+          "keyToken": "End",
+          "actionTarget": "Cues/jump-last-track-of-cue (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "No End jump to last track of current cue row.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. No jump-last-track-of-cue."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global End -> Transport/GotoEnd"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-22",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "End",
+          "keyToken": "End",
+          "actionTarget": "Cues/jump-cue-row-from-last-track (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live shares End with S15-21; needs selection-position-aware dispatch from last track back to cue row.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Context-shared End with S15-21."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global End -> Transport/GotoEnd; also conflicts with S15-21 preferred"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S15-23",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "S",
+          "keyToken": "s",
+          "actionTarget": "Cues/solo-selected-slot-track (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "No Drum/Instrument Rack chain solo. Editor/track-solo-toggle ignores trigger selection; Transport/solo-selection solos parent strip and bangs.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:287;gtk2_ardour/editor_ops.cc:6402-6446"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: Live Session View \u2192 Ardour Cues/TriggerBox. Terms: cue, trigger, clip launcher, scene, follow action, slot, bang, stop button, cue_isolated, TriggerBox, CueBox, FollowAction. Subsystems: gtk2_ardour/trigger_*.cc, cuebox_ui.cc, triggerbox_ui.cc, slot_properties_box.cc, libs/ardour/triggerbox.*, luabindings.cc, profile Cues group. Trigger branch only in play_solo_selection."
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor/Mixer/Notes s bindings"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "S",
+          "keyToken": "s",
+          "actionTarget": "Editor/track-solo-toggle",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Solos selected tracks only; ignores cue slot selection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:287"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor s -> Editor/track-solo-toggle"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

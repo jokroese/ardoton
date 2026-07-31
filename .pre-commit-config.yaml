@@ -27,6 +27,20 @@ repos:
         language: system
         pass_filenames: false
 
+      - id: generate-shortcut-vocabulary
+        name: generate shortcut vocabulary (uv)
+        files: ^(contract/shortcut-schema\.json|tools/generate_shortcut_vocabulary\.py)$
+        entry: uv run python tools/generate_shortcut_vocabulary.py --write
+        language: system
+        pass_filenames: false
+
+      - id: validate-shortcut-contract
+        name: validate shortcut contract (uv)
+        files: ^(contract/|profile/keybindings/macos/ardour\.keys|tests/expectations\.toml|tools/validate_shortcuts\.py)$
+        entry: uv run python tools/validate_shortcuts.py
+        language: system
+        pass_filenames: false
+
       - id: pyright
         name: pyright (uv)
         entry: uv run pyright

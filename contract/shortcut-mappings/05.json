@@ -8,18 +8,213 @@
   "shortcuts": [
     {
       "sourceId": "S05-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+X",
+          "keyToken": "Primary-x",
+          "actionTarget": "Editing/editor-cut",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shared Editing cut operates on the Editor selection (regions, automation points, MIDI notes, or time/track ranges), not a generic application clipboard for every focused editable. Mixer Cmd+X cuts selected processors instead.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:476-500",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:4290-4314;4332-4448",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-x -> Editing/editor-cut",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Mixer",
+          "proposedMacos": "Cmd+X",
+          "keyToken": "Primary-x",
+          "actionTarget": "Mixer/cut-processors",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Mixer context cuts selected processors on selected strips rather than the Editor editable selection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3937-3954",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:4134-4178",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Primary-x -> Mixer/cut-processors",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+C",
+          "keyToken": "Primary-c",
+          "actionTarget": "Editing/editor-copy",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shared Editing copy operates on the Editor selection (regions, automation points, MIDI notes, or time/track ranges). Mixer Cmd+C copies selected processors instead.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:476-500",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:4290-4314;4332-4448",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-c -> Editing/editor-copy",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Mixer",
+          "proposedMacos": "Cmd+C",
+          "keyToken": "Primary-c",
+          "actionTarget": "Mixer/copy-processors",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Mixer context copies selected processors on selected strips rather than the Editor editable selection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3937-3954",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:4134-4178",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Primary-c -> Mixer/copy-processors",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+V",
+          "keyToken": "Primary-v",
+          "actionTarget": "Editing/editor-paste",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shared Editing paste inserts into the Editor selection/context. Mixer Cmd+V pastes processors onto selected strips instead.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:476-500",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:4290-4314;4332-4448",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-v -> Editing/editor-paste",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Mixer",
+          "proposedMacos": "Cmd+V",
+          "keyToken": "Primary-v",
+          "actionTarget": "Mixer/paste-processors",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Mixer context pastes processors onto selected strips rather than the Editor editable selection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3937-3954",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:4134-4178",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Primary-v -> Mixer/paste-processors",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-04",
@@ -27,20 +222,84 @@
       "mappings": [
         {
           "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+D",
+          "keyToken": "Primary-d",
+          "actionTarget": "Editor/duplicate",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Duplicates the current Editor selection (regions/objects), not an arbitrary focused editable across all Ardour surfaces. Mixer and MIDI contexts bind the same chord to different duplicate actions.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:391-395",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:5285-5327",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-d -> Editor/duplicate",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
           "context": "Mixer",
           "proposedMacos": "Cmd+D",
           "keyToken": "Primary-d",
           "actionTarget": "LuaAction/script-32",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
-          "note": "Static keymap evidence only; duplicate behavior has not been exercised.",
+          "availability": "Lua accessible",
+          "note": "Installed Mixer binding opens the duplicate-routes dialog for Editor track selection; it does not duplicate arbitrary editable content and uses a modal dialog.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:209-213;gtk2_ardour/ardour_ui.cc:2765-2775;gtk2_ardour/duplicate_routes_dialog.cc:78-96",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:1107;profile/scripts/ardourton_duplicate_tracks.lua:9-12",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Primary-d -> LuaAction/script-32",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+D",
+          "keyToken": "Primary-d",
+          "actionTarget": "Notes/duplicate-notes",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "MIDI note editor duplicates selected notes rather than Editor regions or Mixer routes.",
           "status": "Implemented",
           "evidence": [
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Mixer Primary-d -> LuaAction/script-32",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Primary-d -> Notes/duplicate-notes",
               "result": "Confirmed"
             }
           ]
@@ -49,63 +308,596 @@
     },
     {
       "sourceId": "S05-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "Editing/editor-delete",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shared Editing delete removes the Editor selection. The same key deletes Mixer processors, Processor Box processors, Region FX, or Cue slots depending on focus.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:476-500",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:4290-4314;4332-4448",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Delete -> Editing/editor-delete",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Cues",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "Cues/clear-trigger-slot",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Cue Delete clears the selected trigger slot rather than Editor objects; clear_selected_slot edits selection.triggers.front().",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_page.cc:470-479;981-982",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Cues Delete -> Cues/clear-trigger-slot",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Mixer",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "Mixer/delete-processors",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Mixer Delete removes selected processors on selected strips.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3937-3954",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Delete -> Mixer/delete-processors",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Processor Box",
+          "proposedMacos": "Delete",
+          "keyToken": "Delete",
+          "actionTarget": "ProcessorMenu/delete",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Processor Box Delete removes selected processors in the focused chain.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Processor Box Delete -> ProcessorMenu/delete",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+Z",
+          "keyToken": "Primary-z",
+          "actionTarget": "Editing/undo",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Undo is session-wide rather than scoped only to the current editable selection surface.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-z -> Editing/undo",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "Cmd+Shift+Z",
+          "keyToken": "Primary-Tertiary-z",
+          "actionTarget": "Editing/alternate-alternate-redo",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Redo is session-wide. The same Cmd+Shift chord family also binds section cut/copy/delete elsewhere in the Editor profile.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-x/c/Delete bind section cut/copy/delete (same Cmd+Shift family as redo)",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing Primary-Tertiary-z -> Editing/alternate-alternate-redo",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+R",
+          "keyToken": "Primary-r",
+          "actionTarget": "Region/rename-region",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Opens a modal rename dialog for the first selected/entered region; it is not generic rename and not inline rename for tracks, cues, or other editables.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1325",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2809-2854",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-r -> Region/rename-region",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+A",
+          "keyToken": "Primary-a",
+          "actionTarget": "Editor/select-all-objects",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "In the Editor this selects notes during internal editing, otherwise selectable objects on selected/all visible tracks. Mixer Cmd+A selects visible processors; MIDI Cmd+A selects notes.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_selection.cc:1802-1848",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-a -> Editor/select-all-objects",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "MIDI",
+          "proposedMacos": "Cmd+A",
+          "keyToken": "Primary-a",
+          "actionTarget": "Notes/select-all",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "MIDI note editor selects all notes rather than Editor timeline objects.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: MIDI Primary-a -> Notes/select-all",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Mixer",
+          "proposedMacos": "Cmd+A",
+          "keyToken": "Primary-a",
+          "actionTarget": "Mixer/select-all-processors",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Mixer Cmd+A selects visible processors on selected strips, not Editor objects.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/mixer_ui.cc:3954;4170-4178",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Mixer Primary-a -> Mixer/select-all-processors",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+click",
+          "actionTarget": "Editor/toggle-item-selection",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "On macOS Command maps to SelectionToggle: Cmd-click toggles the clicked region and preserves the rest of the selection, so clicking an already selected item removes it. Cue strips also support Cmd-toggle; Cue slots still replace selection and ignore modifiers.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:65-75;gtk2_ardour/keyboard.cc:365-374;gtk2_ardour/editor_mouse.cc:383-438;gtk2_ardour/editor_selection.cc:640-713;gtk2_ardour/trigger_page.cc:763-840;gtk2_ardour/triggerbox_ui.cc:624-657",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Cues",
+          "proposedMacos": "Cmd+click slot",
+          "actionTarget": "Cues/toggle-slot-selection (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "TriggerEntry::name_button_event unconditionally replaces Cue slot selection and ignores Cmd/Shift; a slot-level toggle patch would be needed for Live-like multi-slot selection.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_page.cc:763-840",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Cue/trigger selection. Terms: SelectionToggle, name_button_event, modifiers. Subsystems: TriggerPage, TriggerBox UI. ../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:624-657",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+click",
+          "actionTarget": "Editor/extend-item-selection",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shift maps to SelectionExtend. Region extension uses timeline bounds and track ordering, including intervening tracks/regions when the second item is on another track, rather than an abstract flat item list. Cue strips support Shift-range; Cue slots still replace selection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:65-75;gtk2_ardour/keyboard.cc:365-374;gtk2_ardour/editor_selection.cc:749-839;841-959;gtk2_ardour/trigger_page.cc:763-840;gtk2_ardour/triggerbox_ui.cc:624-657",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Inline rename",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "TimeAxisView/rename-next-track",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "FloatingTextEntry Tab/Shift+Tab already advances rename across visible tracks (skipping record-enabled), recorder tracks, and region/route list rows. This is focus-widget behavior, not an Editor action. Global Tab remains Common/next-tab when rename is not focused. Cue/scene rename Tab traversal is still TODO.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/floating_text_entry.cc:124-159;gtk2_ardour/time_axis_view.cc:688-713;716-781;gtk2_ardour/track_record_axis.cc:614-644;gtk2_ardour/recorder_ui.cc:1117-1127;gtk2_ardour/region_list_base.cc:711-737;gtk2_ardour/route_list_base.cc:947-972",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab (focused rename widget captures Tab first)",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Cues",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Cues/rename-next-item (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Trigger UI consumes Tab but next-name calls are explicitly TODO, so Cue/scene-like rename traversal still needs a UI patch.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/floating_text_entry.cc:124-159;gtk2_ardour/time_axis_view.cc:688-713",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Cue/trigger rename traversal. Terms: next-name, Tab, TODO. Subsystems: TriggerUI. ../ardour@9.7:gtk2_ardour/trigger_ui.cc:348-379",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+drag",
+          "actionTarget": "Editing/snap-bypass-drag",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour already inverts snapping when the configured snap modifier is held. macOS reset defaults use Shift for snap bypass and Option for snap-delta. Live's Cmd+drag conflicts with Command as selection toggle and drag constraint modifier; remapping snap bypass to Command is not a simple new Editing/ignore-grid-drag action.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1613-1638;gtk2_ardour/editor_drag.cc:458-469;4816-4837;gtk2_ardour/rc_option_editor.cc:914-932;1066-1075;gtk2_ardour/keyboard.cc:48-52;296-312;365-374",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+drag",
+          "actionTarget": "Editing/ignore-grid-drag-cmd (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Matching Live's Cmd+drag snap bypass would require preference and/or input changes that collide with Cmd selection toggle and drag constraint behavior.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1613-1638;gtk2_ardour/rc_option_editor.cc:1066-1075",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: snap modifier preferences and drag constraint. Terms: snap bypass, PrimaryModifier, drag constraint. Subsystems: EditingContext, Keyboard, editor_drag. ../ardour@9.7:gtk2_ardour/keyboard.cc:48-52;296-312;365-374",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:365-374 (Cmd = SelectionToggle); gtk2_ardour/keyboard.cc:48-52;296-312 (Cmd = drag constraint)",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Cues",
+          "proposedMacos": "Shift",
+          "keyToken": "Primary-Tertiary-x",
+          "actionTarget": "Cues/apply-edit-across-tracks (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live holds Shift while using an editing command to apply it across all tracks' clips/slots. Tertiary alone is not a valid Ardour XML accelerator; representative compound keys such as Primary-Tertiary-x/c/Delete must be proposed per underlying command (also Primary-Tertiary-c, Primary-Tertiary-Delete). Cue slots replace selection and ignore modifiers; clear_selected_slot edits only selection.triggers.front(). Profile already binds Cmd+Shift+X/C/Delete to Editor section ops and Cmd+Shift+Z to redo.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:476-500;gtk2_ardour/trigger_page.cc:470-479",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: Cue slot selection and edit scope. Terms: apply across tracks, SelectionToggle, clear_selected_slot, modifiers. Subsystems: TriggerBox UI, TriggerPage. ../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:624-657;gtk2_ardour/trigger_page.cc:470-479",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Primary-Tertiary-z -> redo; Primary-Tertiary-x/c/Delete -> cut/copy/delete section (~14, ~77-81)",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift",
+          "keyToken": "Primary-Tertiary-x",
+          "actionTarget": "Editing/apply-time-across-tracks (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live holds Shift with an editing command to force time edits across all tracks. Ardour has no demonstrated hold-Shift-with-arbitrary-edit-command all-tracks override. Time-range edits already operate on currently selected tracks; range selection can span tracks via drag rectangle; Ripple-All can select all track views as an edit-mode side effect, not via Shift. Shift already means selection extend, group override, or snap inversion while dragging. Tertiary alone is invalid XML; alternate compound keys (Primary-Tertiary-c/Delete/\u2026) belong in per-command proposals. Profile Cmd+Shift section ops collide.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:4422-4429;4953-4974;gtk2_ardour/editor_drag.cc:5568-5661",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: Editor time-range edit scope and Shift modifier roles. Terms: all tracks, Shift, range edit, Ripple-All. Subsystems: editor_ops, editor_drag, keyboard. Existing selected-track range editing is not Live's hold-Shift scope override. ../ardour@9.7:gtk2_ardour/editor_ops.cc:4422-4429;4953-4974;gtk2_ardour/editor_drag.cc:5568-5661;5582-5587;gtk2_ardour/keyboard.cc:365-374;libs/gtkmm2ext/keyboard.cc:213-218;712-714;gtk2_ardour/rc_option_editor.cc:1066-1075",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Primary-Tertiary-z -> redo; Primary-Tertiary-x/c/Delete -> cut/copy/delete section (~14, ~77-81)",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S05-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Automation",
+          "proposedMacos": "Option",
+          "keyToken": "Primary-Level4-x",
+          "actionTarget": "Automation/option-scope-edit (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Envelope edit capability is Native: selected automation points and automation-lane time selections already participate in Cut/Copy/Delete, and line-segment/range dragging exists without Option. What is missing is Live's Option-held scope override for editing commands. Level4 alone is not a valid XML accelerator; representative compound keys such as Primary-Level4-x (also Primary-Level4-c/Delete/\u2026) would be needed per command. Option/Level4 already acts as snap-delta while dragging; fine adjustment uses Control/Secondary and Cmd+Option pushes points.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:4393-4412;4461-4558;gtk2_ardour/automation_time_axis.cc:1130-1176",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_drag.cc:4981-5067;6380-6464;6484-6524;4868-4918;5028-5055;gtk2_ardour/rc_option_editor.cc:1059;1081-1082",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: automation edit command scoping vs drag. Terms: Option, Level4, envelope segment, selected part. Subsystems: editor_ops, automation_time_axis, editor_drag. Native envelope editing exists; Option-held command scope override does not. ../ardour@9.7:gtk2_ardour/editor_ops.cc:4393-4412;gtk2_ardour/editor_drag.cc:4981-5067",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -8,73 +8,581 @@
   "shortcuts": [
     {
       "sourceId": "S02-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+0",
+          "keyToken": "Level4-0",
+          "actionTarget": "Transport/focus-on-clock",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Focuses Ardour's clock control rather than the complete Live Control Bar.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:455-457",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:350",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Level4-0 -> Transport/focus-on-clock",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+1",
+          "keyToken": "Level4-1",
+          "actionTarget": "Cues/focus-grid (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Common/show-trigger makes the Cues page visible but does not focus a cue-grid control.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:770-774",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:774",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Option+1",
+          "keyToken": "Level4-1",
+          "actionTarget": "Common/show-trigger",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Cues page but does not focus its grid.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:774",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+2",
+          "keyToken": "Level4-2",
+          "actionTarget": "Editor/focus-arrangement (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Common/show-editor makes the Editor visible but does not focus an arrangement control.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:770-771",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:770",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Option+2",
+          "keyToken": "Level4-2",
+          "actionTarget": "Common/show-editor",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Editor but does not focus an arrangement control.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:770",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+3",
+          "keyToken": "Level4-3",
+          "actionTarget": "Editor/focus-clip-view (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Editor/show-editor-props shows the bottom panel but neither represents Live Clip View nor focuses a control within it.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:193",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Option+3",
+          "keyToken": "Level4-3",
+          "actionTarget": "Editor/show-editor-props",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Editor Properties Box but does not focus a Clip View control.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+4",
+          "keyToken": "Level4-4",
+          "actionTarget": "Editor/focus-device-view (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Editor/show-editor-mixer shows the left panel but neither represents a selected-device chain nor focuses it.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:171",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Option+4",
+          "keyToken": "Level4-4",
+          "actionTarget": "Editor/show-editor-mixer",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Editor Mixer but does not focus a device chain.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+5",
+          "keyToken": "Level4-5",
+          "actionTarget": "Editor/focus-browser (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Editor/show-editor-list shows the source-list panel but neither matches Live's Browser nor focuses it.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:191-194",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:230",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Option+5",
+          "keyToken": "Level4-5",
+          "actionTarget": "Editor/show-editor-list",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the source-list panel but does not focus a Live-style Browser.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:191-194",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+6",
+          "keyToken": "Level4-6",
+          "actionTarget": "Editor/focus-groove-pool (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no session-level groove-pool model or view to focus.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour, libs/ardour, and share/scripts for 'Groove Pool' and 'groove-pool'; no session-level groove model or action was found.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+7",
+          "keyToken": "Level4-7",
+          "actionTarget": "Common/focus-learn-view (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no embedded Learn View to focus.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour and share for Learn View and embedded tutorial panes; only the external tutorial launcher was found.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+8",
+          "keyToken": "Level4-8",
+          "actionTarget": "Editor/focus-selected-clip-panel (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Editor/show-editor-props only shows a generic bottom panel; it does not focus selected-clip controls.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Option+8",
+          "keyToken": "Level4-8",
+          "actionTarget": "Editor/show-editor-props",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows a generic Editor Properties Box but does not focus selected-clip controls.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+Shift+P",
+          "keyToken": "Level4-Tertiary-p",
+          "actionTarget": "Editor/focus-editor-props (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "The existing toggle can show the Editor Properties Box but does not focus controls within it.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Common/focus-next-control (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Requires an opt-in focus-traversal mode because Tab is currently consumed for workspace-tab cycling.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:796-797;libs/gtkmm2ext/keyboard.cc:364-496",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Tab",
+          "keyToken": "Tab",
+          "actionTarget": "Common/next-tab",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Cycles Ardour workspace tabs instead of focusable controls.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tab -> Common/next-tab",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Shift+Tab",
+          "keyToken": "Tertiary-ISO_Left_Tab",
+          "actionTarget": "Common/focus-previous-control (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Requires an opt-in focus-traversal mode because Shift+Tab is currently consumed for workspace-tab cycling.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:796-797;libs/gtkmm2ext/keyboard.cc:364-496",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-ISO_Left_Tab -> Common/previous-tab",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Shift+Tab",
+          "keyToken": "Tertiary-ISO_Left_Tab",
+          "actionTarget": "Common/previous-tab",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Cycles Ardour workspace tabs instead of focusable controls.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-ISO_Left_Tab -> Common/previous-tab",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+Tab",
+          "keyToken": "Level4-Tab",
+          "actionTarget": "Common/focus-next-neighbor (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "Missing",
+          "note": "Ardour has no focus-navigation mode or semantic neighbor graph for controls.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour and libs/gtkmm2ext for focus-neighbor actions and navigation graphs; only workspace-tab bindings were found.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S02-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+Shift+Tab",
+          "keyToken": "Level4-Tertiary-ISO_Left_Tab",
+          "actionTarget": "Common/focus-previous-neighbor (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "Missing",
+          "note": "Ardour has no focus-navigation mode or semantic neighbor graph for controls.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour and libs/gtkmm2ext for focus-neighbor actions and navigation graphs; only workspace-tab bindings were found.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

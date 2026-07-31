@@ -8,18 +8,87 @@
   "shortcuts": [
     {
       "sourceId": "S28-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+?",
+          "keyToken": "Primary-question",
+          "actionTarget": "macOS/menu-search",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live documents Cmd+? for macOS menu search. On macOS this is provided by the system Help menu search / menu bar, not an Ardour ActionManager target; Ardour does not register a Menu Search action.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: in-app menu search. Terms: menu search, Primary-question, Help. Subsystems: macOS app menu (ardour_ui_ed app menu). OS menu search exists; no Ardour MenuSearch action. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:965-972"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S28-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Down",
+          "keyToken": "Down",
+          "actionTarget": "macOS/menu-search-navigate",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Up/Down navigate macOS menu-search suggestions when the system menu search UI is open. Not an Ardour action. Alternate Up in note.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: menu search suggestion navigation. OS-handled when menu search is focused. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:965-972"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S28-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "macOS/menu-search-choose",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Enter chooses a macOS menu-search suggestion in the system UI. Conflicts with Ardour Global Return GotoStart when menu search is not focused.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: choose menu search entry. OS-handled. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:965-972"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

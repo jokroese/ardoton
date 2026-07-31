@@ -8,28 +8,213 @@
   "shortcuts": [
     {
       "sourceId": "S20-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Space",
+          "keyToken": "space",
+          "actionTarget": "Transport/ToggleRoll",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Space plays from the start marker or stops. Ardour ToggleRoll starts/stops transport; with Auto Return it returns to the last playback start rather than always the session start marker.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:338"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:338-349"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global space -> Transport/ToggleRoll"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Shift+Space",
+          "keyToken": "Tertiary-space",
+          "actionTarget": "Transport/ToggleRollMaybe",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Shift+Space continues from the stop point. Ardour ToggleRollMaybe starts/continues/stops without destroying capture and can preserve loop/range play intent; not an exact continue-from-stop-point twin.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:344"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:344-346"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-space -> Transport/ToggleRollMaybe"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+Space",
+          "keyToken": "Level4-space",
+          "actionTarget": "Transport/play-selection-and-stop (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Option+Space stops at the end of the selection. Ardour PlaySelection plays the edit range but does not expose a dedicated stop-at-selection-end Option+Space binding.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354-356"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: stop at selection end. Terms: PlaySelection, transport_play_selection, Level4-space. Subsystems: Transport actions. PlaySelection exists; no Option+Space stop-at-end action. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Space",
+          "keyToken": "space",
+          "actionTarget": "Transport/PlaySelection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Space plays the Arrangement selection when a selection exists. Ardour binds PlaySelection to Ctrl+Space (Secondary-space); plain Space remains ToggleRoll. Preferred keeps Live's Space chord with PlaySelection semantics when a range is selected (needs selection-aware dispatch or rebinding).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354-356"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor space -> Transport/PlaySelection",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Ctrl+Space",
+          "keyToken": "Secondary-space",
+          "actionTarget": "Transport/PlaySelection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Play Selection on Ctrl+Space rather than context-sensitive Space.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:354"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Secondary-space -> Transport/PlaySelection"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Home",
+          "keyToken": "Home",
+          "actionTarget": "Transport/GotoStart",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Live also accepts Fn+Left arrow; map that alternate in note until the contract supports multiple tokens.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:402"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:402-407"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Home -> Transport/GotoStart"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-06",
@@ -43,21 +228,33 @@
           "actionTarget": "Transport/record-roll",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
-          "note": "E2E verifies a record-roll request; this differs from Ableton Record behavior.",
+          "availability": "Native",
+          "note": "Live Record arms/engages recording per Live's transport model. Ardour record-roll enables record and starts the transport immediately; E2E verifies the record-roll request.",
           "status": "Implemented",
           "evidence": [
             {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:373"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:373-380"
+            },
+            {
               "kind": "E2E test",
               "claim": "Behavior verified",
-              "reference": "tests/e2e/test_shortcuts.py:M266",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "tests/e2e/test_shortcuts.py:test_f9_starts_record_roll"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Global F9 -> Transport/record-roll",
-              "result": "Confirmed"
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global F9 -> Transport/record-roll"
             }
           ]
         }
@@ -65,63 +262,727 @@
     },
     {
       "sourceId": "S20-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Shift+F9",
+          "keyToken": "Tertiary-F9",
+          "actionTarget": "Transport/Record",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Shift+F9 arms Arrangement recording without necessarily rolling. Ardour Transport/Record enables record without forcing roll; profile currently binds Record to Tertiary-r, not Tertiary-F9.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:370"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:370-372"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-F9 -> Transport/Record",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Shift+R",
+          "keyToken": "Tertiary-r",
+          "actionTarget": "Transport/Record",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed enable-record binding on Shift+R.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Tertiary-r -> Transport/Record"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Shift+F9",
+          "keyToken": "Primary-Tertiary-F9",
+          "actionTarget": "Cues/record-to-session (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live records into Session View clip slots. Ardour Cue/Trigger recording exists in the Cue UI but has no Session-View record-to-slot action bound to Cmd+Shift+F9; Primary-F9 stores editor visual state / mixer scenes.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: Session View / Cue slot record shortcut. Terms: record-to-session, trigger record, cue record. Subsystems: TriggerBox, Cues actions, Transport record-roll. No Cmd+Shift+F9 Session record action. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:370-380"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F10",
+          "keyToken": "F10",
+          "actionTarget": "Transport/back-to-arrangement (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Back to Arrangement re-enables Arrangement playback after Session clips took over. Ardour has no Arrangement-vs-Session takeover model; profile F10 recalls editor visual state / mixer scene 10.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: back to arrangement. Terms: back to arrangement, arrangement follow, session takeover. Subsystems: Transport, TriggerBox/Cues. No equivalent session/arrangement follow action. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:340-420"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F10 -> Editor/goto-visual-state-10; Mixer F10 -> Mixer/recall-mixer-scene-10"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F10",
+          "keyToken": "F10",
+          "actionTarget": "Editor/goto-visual-state-10",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F10 recalls saved editor view 10, unrelated to Live Back to Arrangement.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F10 -> Editor/goto-visual-state-10"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F1",
+          "keyToken": "F1",
+          "actionTarget": "Editor/toggle-track-1-mute (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live F1 activates/deactivates track 1. Ardour can mute selected strips (Editor/track-mute-toggle) and has Cue F1 triggers / view recalls, but no bindable mute-track-by-index-1 action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290;gtk2_ardour/editor_ops.cc:6449"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mute/activate track by index 1. Terms: track-mute-toggle, F1, activator. Subsystems: Editor track mute, Mixer scenes, Cues trigger-cue. Selected-track mute exists; numbered track activator actions do not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F1 -> Editor/goto-visual-state-1; Mixer F1 -> Mixer/recall-mixer-scene-1; Cues F1 -> Cues/trigger-cue-0 (F1 family)"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F1",
+          "keyToken": "F1",
+          "actionTarget": "Editor/goto-visual-state-1",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F1 recalls editor visual state 1, not track 1 activator.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F1 -> Editor/goto-visual-state-1"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-11",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F2",
+          "keyToken": "F2",
+          "actionTarget": "Editor/toggle-track-2-mute (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live F2 activates/deactivates track 2. Ardour can mute selected strips (Editor/track-mute-toggle) and has Cue F2 triggers / view recalls, but no bindable mute-track-by-index-2 action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290;gtk2_ardour/editor_ops.cc:6449"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mute/activate track by index 2. Terms: track-mute-toggle, F2, activator. Subsystems: Editor track mute, Mixer scenes, Cues trigger-cue. Selected-track mute exists; numbered track activator actions do not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F2 -> Editor/goto-visual-state-2; Mixer F2 -> Mixer/recall-mixer-scene-2; Cues F1 -> Cues/trigger-cue-0 (F1 family)"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F2",
+          "keyToken": "F2",
+          "actionTarget": "Editor/goto-visual-state-2",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F2 recalls editor visual state 2, not track 2 activator.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F2 -> Editor/goto-visual-state-2"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F3",
+          "keyToken": "F3",
+          "actionTarget": "Editor/toggle-track-3-mute (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live F3 activates/deactivates track 3. Ardour can mute selected strips (Editor/track-mute-toggle) and has Cue F3 triggers / view recalls, but no bindable mute-track-by-index-3 action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290;gtk2_ardour/editor_ops.cc:6449"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mute/activate track by index 3. Terms: track-mute-toggle, F3, activator. Subsystems: Editor track mute, Mixer scenes, Cues trigger-cue. Selected-track mute exists; numbered track activator actions do not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F3 -> Editor/goto-visual-state-3; Mixer F3 -> Mixer/recall-mixer-scene-3; Cues F1 -> Cues/trigger-cue-0 (F1 family)"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F3",
+          "keyToken": "F3",
+          "actionTarget": "Editor/goto-visual-state-3",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F3 recalls editor visual state 3, not track 3 activator.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F3 -> Editor/goto-visual-state-3"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F4",
+          "keyToken": "F4",
+          "actionTarget": "Editor/toggle-track-4-mute (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live F4 activates/deactivates track 4. Ardour can mute selected strips (Editor/track-mute-toggle) and has Cue F4 triggers / view recalls, but no bindable mute-track-by-index-4 action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290;gtk2_ardour/editor_ops.cc:6449"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mute/activate track by index 4. Terms: track-mute-toggle, F4, activator. Subsystems: Editor track mute, Mixer scenes, Cues trigger-cue. Selected-track mute exists; numbered track activator actions do not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F4 -> Editor/goto-visual-state-4; Mixer F4 -> Mixer/recall-mixer-scene-4; Cues F1 -> Cues/trigger-cue-0 (F1 family)"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F4",
+          "keyToken": "F4",
+          "actionTarget": "Editor/goto-visual-state-4",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F4 recalls editor visual state 4, not track 4 activator.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F4 -> Editor/goto-visual-state-4"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F5",
+          "keyToken": "F5",
+          "actionTarget": "Editor/toggle-track-5-mute (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live F5 activates/deactivates track 5. Ardour can mute selected strips (Editor/track-mute-toggle) and has Cue F5 triggers / view recalls, but no bindable mute-track-by-index-5 action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290;gtk2_ardour/editor_ops.cc:6449"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mute/activate track by index 5. Terms: track-mute-toggle, F5, activator. Subsystems: Editor track mute, Mixer scenes, Cues trigger-cue. Selected-track mute exists; numbered track activator actions do not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F5 -> Editor/goto-visual-state-5; Mixer F5 -> Mixer/recall-mixer-scene-5; Cues F1 -> Cues/trigger-cue-0 (F1 family)"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F5",
+          "keyToken": "F5",
+          "actionTarget": "Editor/goto-visual-state-5",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F5 recalls editor visual state 5, not track 5 activator.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F5 -> Editor/goto-visual-state-5"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F6",
+          "keyToken": "F6",
+          "actionTarget": "Editor/toggle-track-6-mute (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live F6 activates/deactivates track 6. Ardour can mute selected strips (Editor/track-mute-toggle) and has Cue F6 triggers / view recalls, but no bindable mute-track-by-index-6 action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290;gtk2_ardour/editor_ops.cc:6449"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mute/activate track by index 6. Terms: track-mute-toggle, F6, activator. Subsystems: Editor track mute, Mixer scenes, Cues trigger-cue. Selected-track mute exists; numbered track activator actions do not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F6 -> Editor/goto-visual-state-6; Mixer F6 -> Mixer/recall-mixer-scene-6; Cues F1 -> Cues/trigger-cue-0 (F1 family)"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F6",
+          "keyToken": "F6",
+          "actionTarget": "Editor/goto-visual-state-6",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F6 recalls editor visual state 6, not track 6 activator.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F6 -> Editor/goto-visual-state-6"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F7",
+          "keyToken": "F7",
+          "actionTarget": "Editor/toggle-track-7-mute (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live F7 activates/deactivates track 7. Ardour can mute selected strips (Editor/track-mute-toggle) and has Cue F7 triggers / view recalls, but no bindable mute-track-by-index-7 action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290;gtk2_ardour/editor_ops.cc:6449"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mute/activate track by index 7. Terms: track-mute-toggle, F7, activator. Subsystems: Editor track mute, Mixer scenes, Cues trigger-cue. Selected-track mute exists; numbered track activator actions do not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F7 -> Editor/goto-visual-state-7; Mixer F7 -> Mixer/recall-mixer-scene-7; Cues F1 -> Cues/trigger-cue-0 (F1 family)"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F7",
+          "keyToken": "F7",
+          "actionTarget": "Editor/goto-visual-state-7",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F7 recalls editor visual state 7, not track 7 activator.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F7 -> Editor/goto-visual-state-7"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-17",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "F8",
+          "keyToken": "F8",
+          "actionTarget": "Editor/toggle-track-8-mute (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live F8 activates/deactivates track 8. Ardour can mute selected strips (Editor/track-mute-toggle) and has Cue F8 triggers / view recalls, but no bindable mute-track-by-index-8 action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:289-290;gtk2_ardour/editor_ops.cc:6449"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: mute/activate track by index 8. Terms: track-mute-toggle, F8, activator. Subsystems: Editor track mute, Mixer scenes, Cues trigger-cue. Selected-track mute exists; numbered track activator actions do not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:289"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F8 -> Editor/goto-visual-state-8; Mixer F8 -> Mixer/recall-mixer-scene-8; Cues F1 -> Cues/trigger-cue-0 (F1 family)"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F8",
+          "keyToken": "F8",
+          "actionTarget": "Editor/goto-visual-state-8",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed F8 recalls editor visual state 8, not track 8 activator.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:300-304"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor F8 -> Editor/goto-visual-state-8"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S20-18",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "O",
+          "keyToken": "o",
+          "actionTarget": "Transport/ToggleClick",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Live metronome toggle on O. Ardour ToggleClick is installed on grave (`); Preferred remaps to O.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:500"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_options.cc:191;394"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global o -> Transport/ToggleClick",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "`",
+          "keyToken": "grave",
+          "actionTarget": "Transport/ToggleClick",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Installed metronome/click toggle on grave accent.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:500"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_options.cc:191;394;gtk2_ardour/ardour_ui_ed.cc:500"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Global grave -> Transport/ToggleClick"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

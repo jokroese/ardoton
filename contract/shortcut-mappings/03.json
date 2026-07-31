@@ -8,43 +8,279 @@
   "shortcuts": [
     {
       "sourceId": "S03-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+N",
+          "keyToken": "Primary-n",
+          "actionTarget": "Main/New",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:197",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:197",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-n -> Main/New",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S03-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+O",
+          "keyToken": "Primary-o",
+          "actionTarget": "Main/Open",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:199",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:199",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-o -> Main/Open",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S03-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+S",
+          "keyToken": "Primary-s",
+          "actionTarget": "Common/Save",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:310",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:310",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-s -> Common/Save",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S03-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Shift+S",
+          "keyToken": "Primary-Tertiary-s",
+          "actionTarget": "Main/SnapshotStay",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour snapshots the session and continues editing the current version rather than changing the active session path.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:232",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-s -> Main/SnapshotStay",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S03-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Q",
+          "keyToken": "Primary-q",
+          "actionTarget": "Common/Quit",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:289",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:289",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-q -> Common/Quit",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S03-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+H",
+          "keyToken": "Primary-h",
+          "actionTarget": "macOS/hide-application",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "macOS hides the complete application through its standard menu instead of an Ardour action.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "macOS application convention: Cmd+H is handled by the application menu rather than an Ardour ActionManager action.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S03-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Shift+R",
+          "keyToken": "Primary-Tertiary-r",
+          "actionTarget": "Main/ExportAudio",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour exports audio files; this action does not export video.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:653",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:168",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Tertiary-r -> Main/ExportAudio",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S03-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+E",
+          "keyToken": "Primary-Tertiary-e",
+          "actionTarget": "Editor/export-selected-midi-region (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour can export a selected MIDI region through its dialog, but it has no bindable session-wide MIDI export action and the Live key conflicts with the current Editor selection binding.",
+          "status": "Blocked",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_export_audio.cc:217-270",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-e -> Editor/select-all-after-edit-cursor",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

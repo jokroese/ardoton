@@ -8,8 +8,61 @@
   "shortcuts": [
     {
       "sourceId": "S01-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Ctrl+Cmd+F",
+          "keyToken": "Primary-Secondary-f",
+          "actionTarget": "Common/toggle-fullscreen (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Ardour has fullscreen support for individual editor and mixer windows, but no application-wide bindable fullscreen action.",
+          "status": "Blocked",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "../ardour@9.7:gtk2_ardour/editor.cc:3653-3668;gtk2_ardour/mixer_ui.cc:3158-3173;gtk2_ardour/ardour_ui_ed.cc:803-804",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Secondary-f -> Common/ToggleMaximalEditor",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Ctrl+Cmd+F",
+          "keyToken": "Primary-Secondary-f",
+          "actionTarget": "Common/ToggleMaximalEditor",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "The installed binding maximizes the Editor space rather than toggling fullscreen for the active Ardour workspace.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:803-804",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Secondary-f -> Common/ToggleMaximalEditor",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-02",
@@ -29,9 +82,9 @@
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Target exists",
+              "claim": "Building block exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:764-774;792-800",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -49,15 +102,15 @@
           "actionTarget": "Common/key-change-mixer-visibility",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "For a detached visible mixer the existing key action presents the main window; it is not a second-window toggle.",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Target exists",
+              "claim": "Building block exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:796-800",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -81,7 +134,7 @@
           "actionTarget": "Common/next-tab",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Workspace tab cycling does not implement Live Session/Arrangement view toggling.",
           "status": "Implemented",
           "evidence": [
@@ -107,7 +160,7 @@
           "actionTarget": "Common/previous-tab",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Workspace tab cycling does not implement Live Device/Clip view toggling.",
           "status": "Implemented",
           "evidence": [
@@ -123,8 +176,34 @@
     },
     {
       "sourceId": "S01-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor attachment controls",
+          "proposedMacos": "Option+click view toggle",
+          "actionTarget": "Editor/toggle-editor-attachments (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "The existing attachment actions toggle independent left and bottom panels; matching Live's modified click requires pointer-event handling and a defined combined-panel state.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-204",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-204",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-06",
@@ -132,13 +211,14 @@
       "mappings": [
         {
           "role": "Preferred",
-          "context": "Processor editor",
+          "context": "Processor Box",
           "proposedMacos": "Q",
+          "keyToken": "q",
           "actionTarget": "ProcessorBox/toggle-hot-swap (new)",
           "implementationType": "Ardour UI patch",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Plugin selection adds a processor; Lua can replace one, but no selected-processor hot-swap browser workflow exists.",
+          "note": "Plugin selection adds a processor; Lua replacement must preserve selected-processor position and state, define undo behavior, and cannot provide Live's hot-swap browser workflow.",
           "status": "Proposed",
           "evidence": [
             {
@@ -159,13 +239,67 @@
     },
     {
       "sourceId": "S01-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Drum instrument",
+          "proposedMacos": "D",
+          "keyToken": "d",
+          "actionTarget": "Instrument/toggle-drum-pad-view (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour's MIDI editor has no drum-rack or selected-pad model to switch to, so a bindable view requires an instrument-pad data model as well as UI work.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour and libs/ardour for 'drum rack', 'drum pad', 'selected pad', and 'last pad'; no drum-rack or selected-pad view model was found.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+?",
+          "keyToken": "Tertiary-question",
+          "actionTarget": "Editor/toggle-log-window",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ardour's log window exposes diagnostics rather than Live's contextual Info View.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:442-443;gtk2_ardour/ardour.menus.in:770",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:442-443",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Tertiary-question -> Editor/toggle-log-window",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-09",
@@ -179,20 +313,26 @@
           "actionTarget": "Editor/ToggleJadeo",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Native unbound",
-          "status": "Proposed",
+          "availability": "Native",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:601-605",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1010-1017",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-v -> Editor/ToggleJadeo",
+              "result": "Confirmed"
             }
           ]
         }
@@ -206,18 +346,19 @@
           "role": "Preferred",
           "context": "Editor",
           "proposedMacos": "Cmd+Option+B",
+          "keyToken": "Primary-Level4-b",
           "actionTarget": "Editor/toggle-media-browser (new)",
           "implementationType": "Ardour UI patch",
           "mappingClass": "Similar",
           "availability": "UI only",
-          "note": "Editor/show-editor-list toggles the right source-list panel, not a persistent unified media browser.",
+          "note": "Editor/show-editor-list toggles the right source-list panel, not a persistent unified media browser; Live also accepts Cmd+Option+5.",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Target exists",
+              "claim": "Building block exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:189-194",
-              "result": "Candidate"
+              "result": "Confirmed"
             }
           ]
         }
@@ -235,21 +376,27 @@
           "actionTarget": "Editor/ToggleSummary",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
-          "note": "Summary visibility is not evidenced as Live Overview-equivalent.",
-          "status": "Proposed",
+          "availability": "Native",
+          "note": "Ardour Summary is an Editor navigation strip, while Live Overview is a global arrangement navigator with different view semantics.",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:672-674",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:952-956",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-o -> Editor/ToggleSummary",
+              "result": "Confirmed"
             }
           ]
         }
@@ -263,15 +410,16 @@
           "role": "Preferred",
           "context": "Editor",
           "proposedMacos": "Cmd+Option+I",
+          "keyToken": "Primary-Level4-i",
           "actionTarget": "Editor/toggle-route-io (new)",
           "implementationType": "Ardour action patch",
           "mappingClass": "Similar",
           "availability": "UI only",
-          "note": "Existing input/output selectors need ActionManager exposure only.",
+          "note": "Route Properties contains input/output selectors, but a new action must define selected-route behavior and differs from Live's global In/Out section visibility.",
           "status": "Proposed",
           "evidence": [
             {
-              "kind": "Callback implementation",
+              "kind": "Capability audit",
               "claim": "UI only",
               "reference": "../ardour@9.7:gtk2_ardour/route_params_ui.cc:265-280",
               "result": "Candidate"
@@ -288,15 +436,16 @@
           "role": "Preferred",
           "context": "Mixer",
           "proposedMacos": "Cmd+Option+S",
+          "keyToken": "Primary-Level4-s",
           "actionTarget": "Mixer/toggle-selected-bus-sends (new)",
           "implementationType": "Ardour action patch",
           "mappingClass": "Similar",
           "availability": "UI only",
-          "note": "Existing bus send display handler needs ActionManager exposure only.",
+          "note": "Ardour spills sends for a selected bus or route, while Live toggles Sends controls for the active Session or Arrangement view.",
           "status": "Proposed",
           "evidence": [
             {
-              "kind": "Callback implementation",
+              "kind": "Capability audit",
               "claim": "UI only",
               "reference": "../ardour@9.7:gtk2_ardour/route_ui.cc:1166-1203",
               "result": "Candidate"
@@ -317,21 +466,27 @@
           "actionTarget": "Common/key-change-mixer-visibility",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Native unbound",
+          "availability": "Native",
           "note": "Shows or presents the Mixer workspace rather than toggling an inline mixer section.",
-          "status": "Proposed",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:792-800",
-              "result": "Candidate"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:791",
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_dialogs.cc:498-511",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-Level4-m -> Common/key-change-mixer-visibility",
+              "result": "Confirmed"
             }
           ]
         }
@@ -339,23 +494,157 @@
     },
     {
       "sourceId": "S01-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+3",
+          "keyToken": "Primary-Level4-3",
+          "actionTarget": "Editor/show-editor-props",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "The Editor Properties Box is a toggleable bottom panel, but it does not provide Live's selected-clip detail view.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204;gtk2_ardour/ardour.keys.in:193",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:201-204",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-3 -> Editor/show-editor-props",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+4",
+          "keyToken": "Primary-Level4-4",
+          "actionTarget": "Editor/show-editor-mixer",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "The Editor Mixer is a toggleable left panel, not Live's selected-device chain view.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199;gtk2_ardour/ardour.keys.in:171",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196-199",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-4 -> Editor/show-editor-mixer",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-17",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+6",
+          "keyToken": "Primary-Level4-6",
+          "actionTarget": "Editor/toggle-groove-pool (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no session-level groove-pool model to display or apply, so this requires persisted groove data and an editor UI.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour, libs/ardour, and share/scripts for 'Groove Pool' and 'groove-pool'; no session-level groove model or action was found.",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-18",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+7",
+          "keyToken": "Primary-Level4-7",
+          "actionTarget": "Common/focus-learn-view (new)",
+          "implementationType": "Ardour UI patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Ardour has no embedded Learn View to focus or hide.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "../ardour@9.7 (1ad6e3c): searched gtk2_ardour and share for Learn View and embedded tutorial panes; only the external tutorial launcher was found.",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Global",
+          "proposedMacos": "Cmd+Option+7",
+          "keyToken": "Primary-Level4-7",
+          "actionTarget": "Common/tutorial",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Launches Ardour's external tutorial URL instead of showing or focusing an embedded Learn View.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:301-305",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_access_web.cc:69-72",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S01-19",
@@ -368,16 +657,16 @@
           "keyToken": "Primary-comma",
           "actionTarget": "Common/menu-show-preferences",
           "implementationType": "Profile keybinding",
-          "mappingClass": "Similar",
-          "availability": "Native unbound",
-          "note": "Conflicts with Global Common/start-punch-range.",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Matches Ardour's Preferences command but is blocked by the existing punch-range binding.",
           "status": "Blocked",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
-              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:754-756",
-              "result": "Candidate"
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:750",
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",
@@ -397,8 +686,40 @@
     },
     {
       "sourceId": "S01-20",
-      "auditStatus": "Partially assessed",
+      "auditStatus": "Assessed",
       "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Escape",
+          "keyToken": "Escape",
+          "actionTarget": "Main/close-current-dialog",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Closes Ardour's tracked current dialog, not every arbitrary window, and conflicts with the profile deselect binding.",
+          "status": "Blocked",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:162-167",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:479-496",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Escape -> Main/Escape",
+              "result": "Conflict"
+            }
+          ]
+        },
         {
           "role": "Current fallback",
           "context": "Global",
@@ -407,7 +728,7 @@
           "actionTarget": "Main/Escape",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
+          "availability": "Native",
           "note": "Main/Escape emits the deselect signal; dialog closing is separately provided by Main/close-current-dialog.",
           "status": "Implemented",
           "evidence": [
@@ -415,7 +736,7 @@
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:162-167",
-              "result": "Candidate"
+              "result": "Confirmed"
             },
             {
               "kind": "Callback implementation",

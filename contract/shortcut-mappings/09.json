@@ -8,53 +8,564 @@
   "shortcuts": [
     {
       "sourceId": "S09-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+plus",
+          "keyToken": "Primary-equal",
+          "actionTarget": "Editing/temporal-zoom-in",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Cmd+plus is Zoom In Window. Ardour has no distinct window-zoom action separate from time zoom: temporal-zoom-in changes samples-per-pixel only. Track height is Editor/expand-tracks (Secondary-equal; see S16-22). Arrangement docs treat Cmd+scroll as progressive horizontal zoom with +/-. Primary-equal is unbound. GTK binds the + key as equal. Same action family as S09-03/S12-26.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:482-483",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:3173-3209",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:111-112 (equal/minus -> temporal-zoom; no Primary-equal)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-equal -> Editing/temporal-zoom-in",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editing",
+          "proposedMacos": "plus",
+          "keyToken": "equal",
+          "actionTarget": "Editing/temporal-zoom-in",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile and factory bind bare equal (not Cmd+plus) to temporal-zoom-in. Same horizontal zoom as S09-03.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing equal -> Editing/temporal-zoom-in",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+plus",
+          "keyToken": "Primary-equal",
+          "actionTarget": "Editor/expand-tracks",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Only if interpreting Window zoom as vertical track height. Live Adjust Height is Option+plus (S16-22); factory/profile use Secondary-equal for expand-tracks.",
+          "status": "Rejected",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:312-313",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:1809-1824;time_axis_view.cc:607-630",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Secondary-equal -> Editor/expand-tracks",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+minus",
+          "keyToken": "Primary-minus",
+          "actionTarget": "Editing/temporal-zoom-out",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Mirror of S09-01. No distinct window-zoom-out; temporal-zoom-out only. Track height shrink is Editor/shrink-tracks (Secondary-minus). Primary-minus unbound.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:482-483",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:3173-3209",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:111-112 (equal/minus -> temporal-zoom; no Primary-minus)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-minus -> Editing/temporal-zoom-out",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editing",
+          "proposedMacos": "minus",
+          "keyToken": "minus",
+          "actionTarget": "Editing/temporal-zoom-out",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile and factory bind bare minus (not Cmd+minus) to temporal-zoom-out. Same horizontal zoom as S09-04.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing minus -> Editing/temporal-zoom-out",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+minus",
+          "keyToken": "Primary-minus",
+          "actionTarget": "Editor/shrink-tracks",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Vertical-only interpretation; Live track height uses Option+minus (S16-22).",
+          "status": "Rejected",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:312-313",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Secondary-minus -> Editor/shrink-tracks",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "plus",
+          "keyToken": "equal",
+          "actionTarget": "Editing/temporal-zoom-in",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Zoom In Time Ruler. Ardour temporal-zoom-in doubles horizontal resolution (samples-per-pixel). GTK key token is equal for the + key. Cross-ref S12-26. Conflicts with S19-08 preferred (show-grouped-routes on equal).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:483",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:3173-3209",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:111",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "contract/shortcut-mappings/19.json S19-08 Preferred also proposes equal (Editor/show-grouped-routes)",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing equal -> Editing/temporal-zoom-in",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editing",
+          "proposedMacos": "minus",
+          "keyToken": "minus",
+          "actionTarget": "Editing/temporal-zoom-out",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Zoom Out Time Ruler. Ardour temporal-zoom-out halves horizontal resolution. Cross-ref S12-26. Conflicts with S19-09 preferred (hide-grouped-routes on minus).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:482",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:3173-3209",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:112",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "contract/shortcut-mappings/19.json S19-09 Preferred also proposes minus (Editor/hide-grouped-routes)",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing minus -> Editing/temporal-zoom-out",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+Shift+F",
+          "keyToken": "Level4-Tertiary-f",
+          "actionTarget": "EditorEditing/toggle-follow-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same preferred as S11-05/S12-22/S16-23. Toggles autoscroll that keeps the playhead visible. Level4-Tertiary-f unbound in profile and factory. Tertiary-f is stationary-playhead (different mode).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:485-488",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1529-1570;3738-3818",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:214 (EditorEditing/toggle-follow-playhead -> Primary-f)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-Tertiary-f -> EditorEditing/toggle-follow-playhead",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+F",
+          "keyToken": "Primary-f",
+          "actionTarget": "EditorEditing/toggle-follow-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory and profile bind Follow Playhead to Primary-f, not Live Option+Shift+F.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-f -> EditorEditing/toggle-follow-playhead",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+scroll",
+          "actionTarget": "Editor/canvas-horizontal-scroll",
+          "implementationType": "None",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:255-257;gtk2_ardour/editor_canvas_events.cc:88-120;1029-1062;gtk2_ardour/editing_context.cc:4143-4168",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+drag",
+          "actionTarget": "Editor/pan-display-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Same preferred as S16-24. Live pans Arrangement with Cmd+Option+drag. Ardour has no Primary+Level4 canvas pan drag; Primary|Level4 is push_points_mod. Viewport pan building blocks exist (set_horizontal_position, scroll steps, summary drag). Middle-click / Secondary|Level4 is button2, not pan.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:2416;2766;4150-4193;gtk2_ardour/editor_actions.cc:343-344;gtk2_ardour/keyboard.cc:67",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: editor canvas/ruler/summary pointer pan with Primary+Level4 or Cmd+Option. Terms: pan, ScrollHorizontal, button2_modifiers, set_horizontal_position, push_points. Subsystems: editor_mouse, editor_canvas_events, editor_summary, editor_drag, keyboard. No Cmd+Option display-pan drag; button2_modifiers is Secondary|Level4; Primary|Level4 is push_points. ../ardour@9.7:libs/gtkmm2ext/keyboard.cc:74;699-700;gtk2_ardour/keyboard.cc:67;gtk2_ardour/editor_mouse.cc:1179-1241;gtk2_ardour/editor_summary.cc:502-569",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:67;editor_drag.cc:4511;4861 (Primary|Level4 = push_points while dragging automation points/markers)",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Shift+scroll",
+          "actionTarget": "Editor/canvas-horizontal-scroll",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Shift+scroll pans horizontally by steps (S09-06); it is not a Cmd+Option click-drag pan of the display around the selection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:255-257;gtk2_ardour/editor_canvas_events.cc:88-120",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+click or drag",
+          "actionTarget": "Editor/add-items-to-selection",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shift maps to SelectionExtend (RangeSelectModifier). Shift+click extends region/track/marker selection. Shift+object rubberband maps to SelectionExtend but Editor::select_all_within ignores SelectionExtend (default return), so object rubberband-add is a no-op; Cmd+rubberband toggles. Range mode: Shift extends existing time selection; Control (CopyModifier) adds a new range. Cue slots ignore modifiers (S05-10/11). Cross-ref S09-09.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:73;gtk2_ardour/keyboard.cc:364-375;gtk2_ardour/editor_mouse.cc:383-411;gtk2_ardour/editor_selection.cc:640-839;1938-1984;gtk2_ardour/editor_drag.cc:5295-5333;5489-5503",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Shift+drag add-to-selection (Live S09-08 drag). Terms: SelectionExtend, SelectionAdd, select_all_within, RubberbandSelectDrag. Subsystems: keyboard selection_type, editor_drag rubberband, editor_selection. selection_type has no Add modifier; select_all_within handles Add/Toggle/Set only, not Extend. ../ardour@9.7:gtk2_ardour/keyboard.cc:364-375;editor_selection.cc:1970-1984;editor_drag.cc:5329-5333",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Shift+drag",
+          "actionTarget": "Editor/rubberband-add-selection (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Would make Shift+object rubberband add (SelectionAdd or Extend-as-add) to match Live Shift+drag add-items. Building blocks: RubberbandSelectDrag + selection->add.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_drag.cc:5295-5333;gtk2_ardour/editor_selection.cc:1970-1974",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: bindable or working Shift+rubberband add. Terms: SelectionExtend default in select_all_within. Subsystems: editor_selection, editor_drag. ../ardour@9.7:gtk2_ardour/editor_selection.cc:1970-1984",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+click",
+          "actionTarget": "Editor/extend-item-selection",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same preferred as S05-11. Shift maps to SelectionExtend. Region extension uses timeline bounds and track ordering, including intervening tracks/regions when the second item is on another track. Cue strips support Shift-range; Cue slots still replace selection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:65-75;gtk2_ardour/keyboard.cc:364-375;gtk2_ardour/editor_selection.cc:251-285;749-839;gtk2_ardour/time_axis_view.cc:597-600;gtk2_ardour/trigger_page.cc:763-840;gtk2_ardour/triggerbox_ui.cc:624-657",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S09-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+click",
+          "actionTarget": "Editor/toggle-item-selection",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same preferred as S05-10. On macOS Command is PrimaryModifier / SelectionToggle: Cmd-click toggles the clicked region/track and preserves the rest. Cue strips support Cmd-toggle; Cue slots still replace selection and ignore modifiers.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:65-75;gtk2_ardour/keyboard.cc:364-375;gtk2_ardour/editor_mouse.cc:383-411;gtk2_ardour/editor_selection.cc:216-230;640-713;gtk2_ardour/trigger_page.cc:763-840;gtk2_ardour/triggerbox_ui.cc:624-657",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Cues",
+          "proposedMacos": "Cmd+click slot",
+          "actionTarget": "Cues/toggle-slot-selection (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "TriggerEntry::name_button_event unconditionally replaces Cue slot selection and ignores Cmd/Shift; needed for Live-like multi-slot / scene selection. Same gap as S05-10 Alternative.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/trigger_page.cc:763-840",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Cue/trigger selection. Terms: SelectionToggle, name_button_event, modifiers. Subsystems: TriggerPage, TriggerBox UI. ../ardour@9.7:gtk2_ardour/triggerbox_ui.cc:624-657",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

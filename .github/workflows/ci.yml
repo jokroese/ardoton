@@ -38,5 +38,9 @@ jobs:
         run: uv run pyright
       - name: Validate shortcut contract formatting
         run: uv run python tools/format_shortcuts.py --check
+      - name: Validate shortcut vocabulary
+        run: uv run python tools/generate_shortcut_vocabulary.py --check
+      - name: Validate shortcut contract
+        run: uv run python tools/validate_shortcuts.py --report
       - name: Test non-GUI validation
         run: uv run pytest -m "not e2e and not requires_ardour"

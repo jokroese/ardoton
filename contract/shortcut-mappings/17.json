@@ -15,18 +15,56 @@
           "context": "Editor",
           "proposedMacos": "Cmd+Option+U",
           "keyToken": "Primary-Level4-u",
-          "actionTarget": "Editor/show-plist-selector",
+          "actionTarget": "Editor/toggle-layer-display",
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
-          "note": "Static keymap evidence only; plist selector behavior is not a verified take-lane workflow.",
+          "availability": "Native",
+          "note": "Live Show Take Lanes expands per-track take lanes for comping. Ardour toggle-layer-display switches selected tracks between stacked and overlaid playlist layer views; it does not open Live-style take-lane chrome.",
           "status": "Implemented",
           "evidence": [
             {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:267"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8831-8856;gtk2_ardour/route_time_axis.cc:2327"
+            },
+            {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-u -> Editor/show-plist-selector",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-u -> Editor/toggle-layer-display",
               "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+U",
+          "keyToken": "Primary-Level4-u",
+          "actionTarget": "Editor/show-plist-selector",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed binding opens the Playlist Selector dialog for selected tracks (choose/copy/share playlists) rather than showing take lanes inline.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:272-273"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8876;gtk2_ardour/playlist_selector.cc:150-184"
             }
           ]
         }
@@ -34,28 +72,207 @@
     },
     {
       "sourceId": "S17-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Enter",
+          "keyToken": "Return",
+          "actionTarget": "Editor/promote-take-to-main (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Enter commits the selected take-lane area onto the main track lane. Ardour has playlist/layer display and Playlist Selector but no bindable promote-selected-take-range-to-main action; Return is GotoStart in the profile.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: take-lane promote / main-lane commit. Terms: take lane, promote, comping, layer.display, playlist selector. Subsystems: editor_ops layer display, playlist_selector, route_time_axis. No Enter-to-promote take action. ../ardour@9.7:gtk2_ardour/editor_ops.cc:8831-8876;gtk2_ardour/playlist_selector.cc:371-444"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart; Mixer Return -> Transport/GotoStart"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S17-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "T",
+          "keyToken": "t",
+          "actionTarget": "Editor/audition-selected-take (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live T solos/auditions the selected take lane. Ardour can solo tracks and play regions but has no take-lane audition action; profile t is TimeFX mouse mode.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "result": "Candidate",
+              "reference": "Search scope: take-lane audition. Terms: audition take, layer solo, playlist audition. Subsystems: editor_ops, route_time_axis, playlist. No take-lane audition action. ../ardour@9.7:gtk2_ardour/editor_actions.cc:267-272"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor t -> Editing/set-mouse-mode-timefx"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S17-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+Option+T",
+          "keyToken": "Tertiary-Level4-t",
+          "actionTarget": "Editor/new-playlists-for-selected-tracks",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live Add Take Lane inserts a new take lane under the track. Ardour new-playlists-for-selected-tracks creates a new playlist for selected tracks (playlist-as-take model), not an inline take-lane row; Tertiary-Level4-t is unbound (Primary-Level4-t is Insert Return).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:500"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:497-505"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Tertiary-Level4-t -> Editor/new-playlists-for-selected-tracks",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S17-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+D",
+          "keyToken": "Primary-d",
+          "actionTarget": "Editor/copy-playlists-for-selected-tracks",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live duplicates the selected take lane. Ardour copy-playlists-for-selected-tracks duplicates the playlist; profile Primary-d is Editor/duplicate (regions/range), not playlist copy. Live-vs-Live occupancy: Arrangement Duplicate (S05-04) retains Editor Primary-d; take-lane/playlist copy stays Proposed until a distinct chord or finer Ardour context exists.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:505"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "result": "Candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:503-505"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-d -> Editor/duplicate"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+D",
+          "keyToken": "Primary-d",
+          "actionTarget": "Editor/duplicate",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Cmd+D duplicates the selected range/regions, not a take lane/playlist.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:391"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "result": "Confirmed",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-d -> Editor/duplicate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S17-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Up",
+          "keyToken": "Primary-Up",
+          "actionTarget": "Editor/cycle-main-take (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "UI only",
+          "note": "Live Cmd+Up/Down replaces the main take clip with next/previous take. Ardour Playlist Selector and layered playlists can switch playlists via UI, but there is no bindable next/previous-take cycle; profile Primary-Up/Down move selected tracks. Alternate key Cmd+Down in note.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "result": "Confirmed",
+              "reference": "../ardour@9.7:gtk2_ardour/playlist_selector.cc:371-444;gtk2_ardour/editor_actions.cc:272;497-505"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "result": "Candidate",
+              "reference": "Search scope: cycle take / next playlist as main. Terms: take, playlist switch, next take. Subsystems: PlaylistSelector, new/copy playlists. Menus/dialogs exist; no cycle-main-take action. ../ardour@9.7:gtk2_ardour/playlist_selector.cc:150-184"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Up -> Editor/move-selected-tracks-up; Primary-Down -> Editor/move-selected-tracks-down"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

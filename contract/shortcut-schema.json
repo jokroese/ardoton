@@ -6,6 +6,274 @@
       "type": "string",
       "pattern": "^S[0-9]{2}-[0-9]{2}$"
     },
+    "inputKind": {
+      "title": "Source input kind",
+      "description": "The physical input Live documents for the source shortcut.",
+      "oneOf": [
+        {
+          "const": "Keyboard",
+          "description": "A discrete keyboard shortcut."
+        },
+        {
+          "const": "Keyboard hold",
+          "description": "A keyboard shortcut whose hold duration matters."
+        },
+        {
+          "const": "Mouse gesture",
+          "description": "A mouse-only gesture."
+        },
+        {
+          "const": "Modifier gesture",
+          "description": "A modifier combined with a pointer gesture."
+        },
+        {
+          "const": "Accessibility command",
+          "description": "An accessibility-oriented command."
+        }
+      ]
+    },
+    "auditStatus": {
+      "title": "Audit status",
+      "description": "Completeness of the audit, independent of implementation or verification.",
+      "oneOf": [
+        {
+          "const": "Needs audit",
+          "description": "No mapping candidates have been recorded."
+        },
+        {
+          "const": "Partially assessed",
+          "description": "Candidates or a current fallback exist, but no preferred mapping is selected."
+        },
+        {
+          "const": "Assessed",
+          "description": "Exactly one preferred mapping has been selected."
+        }
+      ]
+    },
+    "mappingRole": {
+      "title": "Mapping role",
+      "description": "Relationship of a mapping candidate to the intended behavior.",
+      "oneOf": [
+        {
+          "const": "Preferred",
+          "description": "The recommended implementation after audit."
+        },
+        {
+          "const": "Current fallback",
+          "description": "Behavior currently installed but not the preferred solution."
+        },
+        {
+          "const": "Alternative",
+          "description": "A viable but non-preferred candidate."
+        }
+      ]
+    },
+    "implementationType": {
+      "title": "Implementation type",
+      "description": "Technical mechanism required to provide the mapping.",
+      "oneOf": [
+        {
+          "const": "Profile keybinding",
+          "description": "An existing native Ardour action only needs a profile binding."
+        },
+        {
+          "const": "Profile Lua",
+          "description": "Public Ardour Lua APIs or actions can compose the behavior."
+        },
+        {
+          "const": "None",
+          "description": "Existing Ardour behavior already matches without profile work."
+        },
+        {
+          "const": "Ardour action patch",
+          "description": "Existing behavior needs a bindable Ardour action."
+        },
+        {
+          "const": "Ardour input patch",
+          "description": "Input routing, key state, or focus dispatch must change."
+        },
+        {
+          "const": "Ardour UI patch",
+          "description": "A view, control, or UI focus behavior must change."
+        },
+        {
+          "const": "Ardour engine patch",
+          "description": "An underlying model or engine capability is absent."
+        }
+      ]
+    },
+    "mappingClass": {
+      "title": "Mapping class",
+      "description": "Semantic fidelity between the Live source behavior and the Ardour mapping.",
+      "oneOf": [
+        {
+          "const": "Exact",
+          "description": "The documented behavior matches materially."
+        },
+        {
+          "const": "Similar",
+          "description": "A related behavior exists with a documented semantic difference."
+        },
+        {
+          "const": "No equivalent",
+          "description": "No matching Ardour capability exists."
+        }
+      ]
+    },
+    "availability": {
+      "title": "Capability availability",
+      "description": "Availability of the underlying capability, not whether a key is bound or installed.",
+      "oneOf": [
+        {
+          "const": "Native",
+          "description": "A native Ardour capability exists."
+        },
+        {
+          "const": "Lua accessible",
+          "description": "The capability is available through public Lua APIs."
+        },
+        {
+          "const": "UI only",
+          "description": "Related UI behavior exists but lacks the required action or focus behavior."
+        },
+        {
+          "const": "Missing",
+          "description": "The required capability is absent after a documented capability audit."
+        },
+        {
+          "const": "Unknown",
+          "description": "Availability has not yet been established."
+        }
+      ]
+    },
+    "mappingStatus": {
+      "title": "Mapping status",
+      "description": "Implementation lifecycle state, independent of audit completion.",
+      "oneOf": [
+        {
+          "const": "Proposed",
+          "description": "Audited but not implemented."
+        },
+        {
+          "const": "Implemented",
+          "description": "Installed in the profile or delivered in Ardour."
+        },
+        {
+          "const": "Blocked",
+          "description": "Cannot proceed without resolving a concrete blocker."
+        },
+        {
+          "const": "Rejected",
+          "description": "Candidate considered and not selected for implementation."
+        }
+      ]
+    },
+    "evidenceKind": {
+      "title": "Evidence kind",
+      "description": "Authoritative artifact used to support an evidence claim.",
+      "oneOf": [
+        {
+          "const": "Action registration",
+          "description": "Registered Ardour action definition."
+        },
+        {
+          "const": "Callback implementation",
+          "description": "Implementation behind an existing action or UI behavior."
+        },
+        {
+          "const": "Lua API",
+          "description": "Public Lua API exposed by Ardour."
+        },
+        {
+          "const": "Default binding",
+          "description": "Factory Ardour key binding."
+        },
+        {
+          "const": "Profile binding",
+          "description": "Ardourton profile key binding."
+        },
+        {
+          "const": "Ardour manual",
+          "description": "Official Ardour user documentation."
+        },
+        {
+          "const": "Manual test",
+          "description": "Observed behavior in the installed Ardour build."
+        },
+        {
+          "const": "E2E test",
+          "description": "Automated behavior verification."
+        },
+        {
+          "const": "Capability audit",
+          "description": "Documented source search for a missing or UI-only capability."
+        },
+        {
+          "const": "Key conflict",
+          "description": "Occupied proposed key in an overlapping context."
+        }
+      ]
+    },
+    "evidenceClaim": {
+      "title": "Evidence claim",
+      "description": "Narrow fact supported by one evidence artifact.",
+      "oneOf": [
+        {
+          "const": "Target exists",
+          "description": "An existing registered action target was located."
+        },
+        {
+          "const": "Building block exists",
+          "description": "Related native behavior exists, but the proposed target itself is new."
+        },
+        {
+          "const": "Behavior candidate",
+          "description": "Source inspection supports a behavioral conclusion not yet exercised."
+        },
+        {
+          "const": "Binding exists",
+          "description": "A factory or profile key binding exists."
+        },
+        {
+          "const": "Lua feasible",
+          "description": "Public Lua APIs expose the required primitive."
+        },
+        {
+          "const": "UI only",
+          "description": "Related UI behavior exists but no required bindable behavior was found."
+        },
+        {
+          "const": "Capability missing",
+          "description": "A documented capability audit found no required model or behavior."
+        },
+        {
+          "const": "Key conflict",
+          "description": "A proposed key is already occupied in an overlapping context."
+        },
+        {
+          "const": "Behavior verified",
+          "description": "Manual or automated execution verified the behavior."
+        }
+      ]
+    },
+    "evidenceResult": {
+      "title": "Evidence result",
+      "description": "Confidence assigned to the individual evidence claim.",
+      "oneOf": [
+        {
+          "const": "Confirmed",
+          "description": "The narrow claim is directly established."
+        },
+        {
+          "const": "Candidate",
+          "description": "The claim is source-based and not behaviorally exercised."
+        },
+        {
+          "const": "Conflict",
+          "description": "The key is occupied by a different action."
+        }
+      ]
+    },
     "evidence": {
       "type": "object",
       "additionalProperties": false,
@@ -17,116 +285,234 @@
       ],
       "properties": {
         "kind": {
-          "enum": [
-            "Action registration",
-            "Callback implementation",
-            "Lua API",
-            "Default binding",
-            "Profile binding",
-            "Ardour manual",
-            "Manual test",
-            "E2E test",
-            "Capability audit",
-            "Key conflict"
-          ]
+          "$ref": "#/$defs/evidenceKind"
         },
         "claim": {
-          "enum": [
-            "Target exists",
-            "Behavior candidate",
-            "Binding exists",
-            "Lua feasible",
-            "UI only",
-            "Capability missing",
-            "Key conflict",
-            "Behavior verified"
-          ]
+          "$ref": "#/$defs/evidenceClaim"
         },
         "reference": {
           "type": "string",
           "minLength": 1
         },
         "result": {
-          "enum": [
-            "Confirmed",
-            "Candidate",
-            "Conflict",
-            "Unverified"
-          ]
+          "$ref": "#/$defs/evidenceResult"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "Action registration"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim": {
+                "enum": [
+                  "Target exists",
+                  "Building block exists"
+                ]
+              },
+              "result": {
+                "const": "Confirmed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "Callback implementation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim": {
+                "const": "Behavior candidate"
+              },
+              "result": {
+                "const": "Candidate"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "Lua API"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim": {
+                "const": "Lua feasible"
+              },
+              "result": {
+                "const": "Candidate"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "Default binding",
+                  "Profile binding"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim": {
+                "const": "Binding exists"
+              },
+              "result": {
+                "const": "Confirmed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "Ardour manual"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim": {
+                "const": "Behavior candidate"
+              },
+              "result": {
+                "const": "Candidate"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "Manual test",
+                  "E2E test"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim": {
+                "const": "Behavior verified"
+              },
+              "result": {
+                "const": "Confirmed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "Capability audit"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim": {
+                "enum": [
+                  "UI only",
+                  "Capability missing"
+                ]
+              },
+              "result": {
+                "const": "Candidate"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "Key conflict"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "claim": {
+                "const": "Key conflict"
+              },
+              "result": {
+                "const": "Conflict"
+              }
+            }
+          }
+        }
+      ]
     },
     "mapping": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "role",
+        "context",
+        "proposedMacos",
+        "actionTarget",
+        "implementationType",
+        "mappingClass",
+        "availability",
         "status",
         "evidence"
       ],
       "properties": {
         "role": {
-          "enum": [
-            "Preferred",
-            "Current fallback",
-            "Alternative"
-          ]
+          "$ref": "#/$defs/mappingRole"
         },
         "context": {
           "type": "string",
           "minLength": 1
         },
         "proposedMacos": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "keyToken": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "actionTarget": {
           "type": "string",
           "minLength": 1
         },
         "implementationType": {
-          "enum": [
-            "Profile keybinding",
-            "Profile Lua",
-            "None",
-            "Ardour action patch",
-            "Ardour input patch",
-            "Ardour UI patch",
-            "Ardour engine patch",
-            "Undetermined"
-          ]
+          "$ref": "#/$defs/implementationType"
         },
         "mappingClass": {
-          "enum": [
-            "Exact",
-            "Similar",
-            "No equivalent",
-            "Needs audit"
-          ]
+          "$ref": "#/$defs/mappingClass"
         },
         "availability": {
-          "enum": [
-            "Profile bound",
-            "Native bound",
-            "Native unbound",
-            "Lua accessible",
-            "UI only",
-            "Missing",
-            "Unknown"
-          ]
+          "$ref": "#/$defs/availability"
         },
         "note": {
           "type": "string"
         },
         "status": {
-          "enum": [
-            "Proposed",
-            "Implemented",
-            "Blocked",
-            "Rejected"
-          ]
+          "$ref": "#/$defs/mappingStatus"
         },
         "evidence": {
           "type": "array",
@@ -135,7 +521,31 @@
             "$ref": "#/$defs/evidence"
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mappingClass": {
+                "enum": [
+                  "Similar",
+                  "No equivalent"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "note"
+            ],
+            "properties": {
+              "note": {
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
     },
     "shortcutRecord": {
       "type": "object",
@@ -150,11 +560,7 @@
           "$ref": "#/$defs/sourceId"
         },
         "auditStatus": {
-          "enum": [
-            "Needs audit",
-            "Partially assessed",
-            "Assessed"
-          ]
+          "$ref": "#/$defs/auditStatus"
         },
         "mappings": {
           "type": "array",
@@ -303,13 +709,7 @@
                       "minLength": 1
                     },
                     "inputKind": {
-                      "enum": [
-                        "Keyboard",
-                        "Keyboard hold",
-                        "Mouse gesture",
-                        "Modifier gesture",
-                        "Accessibility command"
-                      ]
+                      "$ref": "#/$defs/inputKind"
                     },
                     "liveMacos": {
                       "type": "string",

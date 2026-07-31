@@ -8,33 +8,335 @@
   "shortcuts": [
     {
       "sourceId": "S07-01",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "A",
+          "keyToken": "a",
+          "actionTarget": "Editor/toggle-all-existing-automation",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Live A toggles Arrangement Automation Mode (show/hide envelopes). Ardour toggles show/hide of existing automation lanes on selected tracks (or all tracks if none selected); it is not Live's overlay device/control chooser mode. Cross-ref S25-01 for hold-A momentary latching.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:266",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8804-8836",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor a -> Editor/toggle-all-existing-automation",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "A",
+          "keyToken": "a",
+          "actionTarget": "Transport/solo-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "No equivalent",
+          "availability": "Native",
+          "note": "Installed Global a solos the selection; it does not toggle automation visibility.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global a -> Transport/solo-selection",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S07-02",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Automation",
+          "proposedMacos": "Shift+drag",
+          "keyToken": "Shift_L",
+          "actionTarget": "Automation/fine-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Shift fine-scales vertical breakpoint/segment drag. Ardour ControlPointDrag/LineDrag already scale dy by 0.1 when fine_adjust_modifier matches exactly. macOS reset default is Control (Secondary). Remapping fine_adjust to Shift (Tertiary) would match Live but collide with snap bypass (Tertiary; S07-06) and RangeSelect. Shift_L documents the held Keyboard-hold modifier; Tertiary alone is not a valid XML accelerator. Cross-ref S06-04.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:63-64;344-347;gtk2_ardour/editor_drag.cc:4871-4873;5025-5027;gtk2_ardour/rc_option_editor.cc:1081-1082",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: automation fine-drag modifier vs Live Shift. Terms: fine_adjust, TertiaryModifier, ControlPointDrag, LineDrag. Subsystems: editor_drag, keyboard, rc_option_editor. Native fine scale exists on Secondary, not Shift. ../ardour@9.7:gtk2_ardour/editor_drag.cc:4871-4873;5025-5027;gtk2_ardour/keyboard.cc:63-64;rc_option_editor.cc:1081-1082",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/rc_option_editor.cc:1066-1075 (macOS snap bypass = Tertiary/Shift); libs/gtkmm2ext/keyboard.cc:73 (RangeSelectModifier = Shift)",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Automation",
+          "proposedMacos": "Ctrl+drag",
+          "keyToken": "Control_L",
+          "actionTarget": "ControlPointDrag/fine-adjust",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "After keyboard reset defaults, fine_adjust_modifier is Secondary (Control); ControlPointDrag and LineDrag multiply dy by 0.1 when that modifier alone matches. This is Control-drag, not Live's Shift-drag. Push-points remains Cmd+Option (Primary|Level4).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_drag.cc:4861;4871-4873;5025-5027;gtk2_ardour/keyboard.cc:63-67;rc_option_editor.cc:1081-1082",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S07-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Automation",
+          "proposedMacos": "Option+drag",
+          "keyToken": "Alt_L",
+          "actionTarget": "Automation/curve-segment (new)",
+          "implementationType": "Ardour engine patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Option-drags a line segment to create a curved segment (Option+double-click restores linear). Ardour automation allows only lane-level Discrete/Linear/Logarithmic/Exponential interpolation; ControlList::Curved is documented for x-fades only and is invalid for automation lines. Option/Level4 while dragging is snap-delta, not curve creation. Alt_L documents the held Keyboard-hold modifier.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:libs/evoral/evoral/ControlList.h:331-337;gtk2_ardour/automation_time_axis.cc:514-525;714-777",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: per-segment curved automation / Bezier bend while Option-dragging. Terms: Curved, bezier, curve segment, Level4, Option drag segment. Subsystems: automation_line, automation_time_axis, editor_drag LineDrag, ControlList InterpolationStyle. Lane-level Linear/Log/Exp menus exist; no per-segment curve drag. ../ardour@9.7:libs/evoral/evoral/ControlList.h:331-337;gtk2_ardour/automation_line.cc:1586-1589;1627-1630;gtk2_ardour/automation_time_axis.cc:714-777;gtk2_ardour/editor_drag.cc:4951-5067;rc_option_editor.cc:1072-1075",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/rc_option_editor.cc:1072-1075 (macOS snap_delta = Level4/Option while dragging)",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Automation",
+          "proposedMacos": "Option+drag",
+          "keyToken": "Alt_L",
+          "actionTarget": "AutomationTimeAxisView/set-interpolation",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Context-menu Mode/Interpolation sets lane-wide Discrete/Linear/Log/Exp. It is not a gestural per-segment curve and has no default keybinding.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/automation_time_axis.cc:512-525;714-777",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: bindable per-segment curve vs lane interpolation menu. Terms: set_interpolation, Mode menu. Subsystems: automation_time_axis. Menu-only lane interpolation; no Option-drag segment curve. ../ardour@9.7:gtk2_ardour/automation_time_axis.cc:714-777",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S07-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F",
+          "keyToken": "f",
+          "actionTarget": "Region/momentary-fade-handles (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Same gap as S16-10: Live holds F to momentarily show fade handles. Ardour shows handles on hover in MouseObject when show_region_fades is on; Region/toggle-region-fades toggles fade active state, not temporary visibility. Editor f is already Editor/fit-selection.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/audio_region_view.cc:1582-1648;gtk2_ardour/editor_actions.cc:1382-1388",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: momentary fade-handle visibility while holding a key. Terms: momentary fade, hold F, fade_in_handle, show_region_fades. Subsystems: audio_region_view, region fade actions. Hover show/hide exists; hold-key momentary toggle does not. ../ardour@9.7:gtk2_ardour/audio_region_view.cc:1582-1648;gtk2_ardour/editor_actions.cc:1382-1388;editor_ops.cc:6713-6770",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor f -> Editor/fit-selection; StepEditing f -> insert-f",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S07-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Delete",
+          "keyToken": "Primary-Delete",
+          "actionTarget": "Editor/clear-selected-automation (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Live Cmd+Delete deletes all automation for the selected control (clears the envelope). Ardour has AutomationTimeAxisView::clear_clicked (lane context-menu Clear) which clears the list and turns non-MIDI automation Off, but no bindable action. Primary-Delete is unbound (Primary-Tertiary-Delete is delete-section). Plain Delete is Editing/editor-delete (points/objects), not clear-envelope.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/automation_time_axis.cc:529-545;674",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: bindable clear/delete selected automation envelope. Terms: clear_clicked, clear-automation, clear_list, Primary-Delete. Subsystems: automation_time_axis, editor_actions, profile keys. Menu Clear exists; no registered action for Cmd+Delete. ../ardour@9.7:gtk2_ardour/automation_time_axis.cc:529-545;674;editor_actions.cc:266",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Delete",
+          "keyToken": "Primary-Delete",
+          "actionTarget": "LuaAction/clear-selected-automation (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Evoral::ControlList::clear_list and AutomationControl::alist are Lua-bound. A script would still need a reliable way to resolve the Live-selected envelope (automation lane / touched control); Editor get_selection does not expose AutomationTimeAxisView clear directly. Undo/Off-state parity with clear_clicked remains open.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/automation_time_axis.cc:529-545",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:970-974;2147-2158;gtk2_ardour/luainstance.cc:950",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S07-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Automation",
+          "proposedMacos": "Shift+drag",
+          "actionTarget": "Editing/snap-bypass-drag",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same as S05-13/S13-07: ControlPointDrag uses snap_to_with_modifier; holding the snap modifier inverts grid snap. macOS reset default snap bypass is Shift (Tertiary); snap-delta is Option (Level4). Live's Cmd+drag conflicts with Command as SelectionToggle and drag constraint (Primary). Cross-ref S07-02: Shift is also Live's fine-drag modifier.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1613-1638;gtk2_ardour/editor_drag.cc:458-469;4809-4830;gtk2_ardour/keyboard.cc:277-294;rc_option_editor.cc:1066-1075",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Automation",
+          "proposedMacos": "Cmd+drag",
+          "actionTarget": "Editing/ignore-grid-drag-cmd (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Matching Live's Cmd+drag snap bypass for breakpoints would require remapping snap_modifier to Primary and collides with SelectionToggle and constraint_modifier (both Primary on macOS). Also overlaps push_points when combined with Option.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1613-1638;gtk2_ardour/rc_option_editor.cc:1066-1075;editor_drag.cc:4809-4830",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: Cmd as automation snap bypass. Terms: snap bypass, PrimaryModifier, ControlPointDrag. Subsystems: EditingContext, Keyboard, editor_drag. Snap invert exists; Cmd is not the macOS snap modifier. ../ardour@9.7:gtk2_ardour/keyboard.cc:48-52;277-294;364-375",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:371-372 (Cmd = SelectionToggle); keyboard.cc:48-52;296-312 (Cmd = constraint); keyboard.cc:67 (Primary|Level4 = push_points)",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

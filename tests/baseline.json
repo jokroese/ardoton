@@ -3,7 +3,7 @@
   "ardour_version": "9.7.0",
   "ardour_lua_version": "ardour-lua version 9.7.0",
   "manifest_version": "0.2.2",
-  "macos_keymap_sha256": "19e94985fa715497195d6c679efee00876eccfdfa07769158eec8bb7f3b1e7c0",
+  "macos_keymap_sha256": "b4742605b595e494e51a425b4b13ab039bef5a993b7a608bae72b4a030c7661f",
   "lua_action_state_sha256": "4f7394f666b000a057d4f8fd2c84b53ef9d0d8d3948d4081d9f724ceca424611",
   "lua_action_slots": {
     "28": "Ardourton: Add Stereo Audio Track",

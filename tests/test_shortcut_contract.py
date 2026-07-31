@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import sys
 
+from tools.generate_shortcut_vocabulary import OUTPUT, SCHEMA, render
 from tools.validate_shortcuts import (
     report,
     section_report,
@@ -47,6 +48,27 @@ def test_rejects_json_schema_failure(tmp_path) -> None:
     )
 
 
+def test_documented_vocabularies_render() -> None:
+    schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
+    output = render(schema)
+    assert OUTPUT.read_text(encoding="utf-8") == output
+    for name in (
+        "inputKind",
+        "auditStatus",
+        "mappingRole",
+        "implementationType",
+        "mappingClass",
+        "availability",
+        "mappingStatus",
+        "evidenceKind",
+        "evidenceClaim",
+        "evidenceResult",
+    ):
+        vocabulary = schema["$defs"][name]
+        assert vocabulary["description"]
+        assert all(option["description"] for option in vocabulary["oneOf"])
+
+
 def test_rejects_duplicate_json_keys(tmp_path) -> None:
     contract = copied_contract(tmp_path)
     source = contract / "ableton-shortcuts.json"
@@ -86,12 +108,10 @@ def test_audit_statuses_have_required_mapping_roles(tmp_path) -> None:
     contract = copied_contract(tmp_path)
     mapping = contract / "shortcut-mappings" / "01.json"
     document = json.loads(mapping.read_text(encoding="utf-8"))
-    needs_audit = document["shortcuts"][0]
-    assessed = document["shortcuts"][1]
-    partially_assessed = document["shortcuts"][2]
-    assert needs_audit["auditStatus"] == "Needs audit"
-    assert partially_assessed["auditStatus"] == "Partially assessed"
-    assert assessed["auditStatus"] == "Assessed"
+    statuses = {record["auditStatus"] for record in document["shortcuts"]}
+    assert "Needs audit" not in statuses
+    assert "Partially assessed" in statuses
+    assert "Assessed" in statuses
     write(mapping, document)
     assert (
         validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings") == []
@@ -146,6 +166,42 @@ def test_rejects_exact_without_behavior_evidence(tmp_path) -> None:
     item["evidence"] = [item["evidence"][0]]
     write(mapping, document)
     assert "Exact requires behavior evidence" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+    )
+
+
+def test_rejects_new_target_existence_claim(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    item = next(record for record in document["shortcuts"] if record["sourceId"] == "S01-02")
+    item["mappings"][0]["evidence"][0]["claim"] = "Target exists"
+    write(mapping, document)
+    assert "new target requires Building block exists evidence" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+    )
+
+
+def test_rejects_keyboard_mapping_without_key_token(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "01.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    item = next(record for record in document["shortcuts"] if record["sourceId"] == "S01-01")
+    item["mappings"][0].pop("keyToken")
+    write(mapping, document)
+    assert "keyboard mapping requires keyToken" in "\n".join(
+        validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
+    )
+
+
+def test_rejects_profile_lua_without_api_evidence(tmp_path) -> None:
+    contract = copied_contract(tmp_path)
+    mapping = contract / "shortcut-mappings" / "19.json"
+    document = json.loads(mapping.read_text(encoding="utf-8"))
+    item = next(record for record in document["shortcuts"] if record["sourceId"] == "S19-01")
+    item["mappings"][0]["evidence"] = [item["mappings"][0]["evidence"][-1]]
+    write(mapping, document)
+    assert "Profile Lua requires Lua API or action evidence" in "\n".join(
         validate_contract(contract / "ableton-shortcuts.json", contract / "shortcut-mappings")
     )
 

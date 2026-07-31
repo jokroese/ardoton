@@ -18,14 +18,20 @@
           "actionTarget": "Editor/split-region",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
-          "note": "Static keymap evidence only; split behavior at the arrangement selection remains untested.",
+          "availability": "Native",
+          "note": "Splits selected/entered regions at the edit point. Static keymap evidence only; arrangement selection behavior remains untested.",
           "status": "Implemented",
           "evidence": [
             {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:435",
+              "result": "Confirmed"
+            },
+            {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
-              "reference": "Editor/split-region",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6850-6899;269-334",
               "result": "Candidate"
             },
             {
@@ -50,14 +56,20 @@
           "actionTarget": "Editor/editor-consolidate",
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
-          "availability": "Profile bound",
-          "note": "Static keymap evidence only; consolidation behavior for the arrangement selection remains untested.",
+          "availability": "Native",
+          "note": "Bounces the edit-range selection into a consolidated region (ReplaceRange, no processing). Static keymap evidence only; arrangement selection behavior remains untested.",
           "status": "Implemented",
           "evidence": [
             {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:424",
+              "result": "Confirmed"
+            },
+            {
               "kind": "Callback implementation",
               "claim": "Behavior candidate",
-              "reference": "Editor/editor-consolidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:4047-4234",
               "result": "Candidate"
             },
             {
@@ -72,43 +84,489 @@
     },
     {
       "sourceId": "S16-03",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+J",
+          "keyToken": "Primary-Tertiary-j",
+          "actionTarget": "Editor/editor-crop",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Crops regions on selected (or all) tracks to the edit-range selection. Primary-Tertiary-j is unbound in the Ardourton profile.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:410;450",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:3340-3384",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:245 (Editor/editor-crop -> Primary-Secondary-c)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-j -> Editor/editor-crop",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Control+C",
+          "keyToken": "Primary-Secondary-c",
+          "actionTarget": "Editor/editor-crop",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Factory and profile bind crop to Primary-Secondary-c, not Live's Cmd+Shift+J.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:3340-3384",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:245",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Secondary-c -> Editor/editor-crop",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-04",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Enter then Left / Right",
+          "keyToken": "Return",
+          "actionTarget": "Region/edge-resize-from-edit-point (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live resizes a clip when the insert marker sits on its edge, after Enter arms arrow keys. Also Left/Right after arming. Ardour has Region/trim-front and Region/trim-back at the edit point (j/k) but no Enter-gated edge-resize mode. Return is bound to Transport/alternate-GotoStart.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1504-1505;gtk2_ardour/editor_ops.cc:3718-3754",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: Enter-then-arrow clip edge resize when insert/edit point is at region edge. Terms: trim-front, trim-back, Return, KP_Enter, edge resize. Subsystems: editor_actions Region trim, ardour.keys Return bindings. Trim-at-edit-point exists; Enter-gated arrow resize does not. ../ardour@9.7:gtk2_ardour/editor_ops.cc:3718-3754;gtk2_ardour/ardour.keys.in:130;223-224",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Return -> Transport/alternate-GotoStart; Editor Left/Right -> Editor/nudge-backward/forward",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "J / K",
+          "keyToken": "j",
+          "actionTarget": "Region/trim-front",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Also k -> Region/trim-back. Trims region start/end to the edit point without Live's Enter-then-arrows edge gate. Already bound in the profile.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1504-1505",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:3718-3754",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor j -> Region/trim-front",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-05",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+Option+drag",
+          "actionTarget": "Editor/region-slip-contents",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "RegionSlipContentsDrag slips waveform/MIDI contents inside fixed region bounds. Default slip_contents_modifier is Primary|Tertiary (Cmd+Shift). Prefer remapping Keyboard Options slip-contents-modifier to Tertiary|Level4 (Shift+Option) to match Live; that is an RC option, not a keymap token.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:54-55;323-325;rc_option_editor.cc:573-583;1062",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc:890-894;editor_drag.cc:765-816",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+drag",
+          "actionTarget": "Editor/region-slip-contents",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory slip_contents_modifier is Primary|Tertiary (Cmd+Shift on macOS), not Live's Shift+Option.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:55;editor_mouse.cc:890-894",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-06",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+drag in clip title bar",
+          "actionTarget": "Editor/titlebar-timefx-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Shift-drags the clip title bar to stretch a warped clip. Ardour RegionViewNameHighlight starts TrimDrag; TimeFXDrag requires MouseTimeFX mode (Editing/set-mouse-mode-timefx, factory t) and stretches from the region body, not Shift+title-bar.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:511;gtk2_ardour/editor_mouse.cc:907-912;1155-1166",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_drag.cc:5356-5406;editor_mouse.cc:907-912;1155-1166",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: Shift+drag on region title/name highlight for time-stretch. Terms: RegionViewNameHighlight, TimeFXDrag, MouseTimeFX, Tertiary drag title. Subsystems: editor_mouse, editor_drag. Title bar is TrimDrag; stretch is MouseTimeFX-only. ../ardour@9.7:gtk2_ardour/editor_mouse.cc:907-912;1155-1166;editing_context.cc:511",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "T then drag region",
+          "actionTarget": "Editing/set-mouse-mode-timefx",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Enter Time FX tool (factory Editing t) then drag a region to stretch/shrink with pitch preserved. Not Live's Shift+title-bar gesture.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:511",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc:1155-1166;editor_drag.cc:5356-5406",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:178 (Editing/set-mouse-mode-timefx -> t)",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-07",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Shift+Option+drag in clip title bar",
+          "actionTarget": "Editor/titlebar-internal-time-select (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live selects time inside an unfolded clip via Shift+Option-drag on the title bar. Ardour title-bar (RegionViewNameHighlight) is TrimDrag; internal range selection uses MouseRange / smart-mode range on the region body, not this modifier+title gesture. Same modifiers as slip_contents preferred remap (S16-05).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc:251;701;907-912;1232;editor_canvas_events.cc:699-766",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc:701-733;907-912",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: Shift+Option title-bar drag for intra-clip time selection. Terms: RegionViewNameHighlight, MouseRange, SelectionRect, Tertiary Level4. Subsystems: editor_mouse, editor_canvas_events. Title bar trims; range select is a mouse mode on the body. ../ardour@9.7:gtk2_ardour/editor_mouse.cc:907-912;701-733",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:55 (default slip_contents is Primary|Tertiary; remapping to Tertiary|Level4 would collide with this Live gesture)",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "R then drag",
+          "actionTarget": "Editing/set-mouse-mode-range",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Range mode selects time on the canvas/region body. Profile binds Editing r -> Editing/set-mouse-mode-range (conflicts with S16-29 Reverse preferred key).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_mouse.cc:701-733;1232",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editing r -> Editing/set-mouse-mode-range",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-08",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+F",
+          "keyToken": "Primary-Level4-f",
+          "actionTarget": "Editor/editor-fade-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Applies fade in/out on regions intersecting the time selection (fade_range). Live creates fade/crossfade on selection; Ardour fades selected time on tracks rather than a dedicated crossfade object. Primary-Level4-f is unbound in the profile.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:437",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6482-6492;route_time_axis.cc:1360-1377",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:132 (Editor/editor-fade-range -> slash)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-f -> Editor/editor-fade-range",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "/",
+          "keyToken": "slash",
+          "actionTarget": "Editor/editor-fade-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory and profile bind fade-range to slash, not Live's Cmd+Option+F.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor slash -> Editor/editor-fade-range",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-09",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+Delete",
+          "keyToken": "Primary-Level4-Delete",
+          "actionTarget": "Region/clear-region-fades (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Live deletes fades/crossfades on selected clips. Native Region/toggle-region-fades only toggles fade active state; set_fade_in/out_length(0) plus deactivate is closer. Lua can call AudioRegion fade setters via existing region APIs; Primary-Level4-Delete is unbound.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1384-1390;1429-1432;editor_ops.cc:6497-6664",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6497-6664;libs/ardour/luabindings.cc",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+Delete",
+          "keyToken": "Primary-Level4-Delete",
+          "actionTarget": "Region/toggle-region-fades",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Toggles fade in/out active state rather than deleting fade lengths. May re-enable fades on a second press.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1390",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-10",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "F",
+          "keyToken": "f",
+          "actionTarget": "Region/momentary-fade-handles (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Same gap as S07-04: Live holds F to momentarily show fade handles. Ardour shows handles on hover when show_region_fades is on; Region/toggle-region-fades toggles active state, not temporary visibility. Editor f is already Editor/fit-selection.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/audio_region_view.cc:1582-1648;gtk2_ardour/editor_actions.cc:1384-1390",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: momentary fade-handle visibility while holding a key. Terms: momentary fade, hold F, fade_in_handle, show_region_fades. Subsystems: audio_region_view, region fade actions. Hover show/hide exists; hold-key momentary toggle does not. ../ardour@9.7:gtk2_ardour/audio_region_view.cc:1582-1648;gtk2_ardour/editor_actions.cc:1384-1390",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor f -> Editor/fit-selection; StepEditing f -> insert-f",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-11",
@@ -122,10 +580,22 @@
           "actionTarget": "LuaAction/script-31",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
-          "availability": "Profile bound",
-          "note": "Static keymap evidence only; loop-brace behavior requires an Editor selection and remains untested.",
+          "availability": "Lua accessible",
+          "note": "Calls Editor/set-loop-from-edit-range then Transport/Loop. Uses the current Editor range selection to set and toggle loop playback; empty selections and undo behavior remain untested. Cross-ref S08 loop brace.",
           "status": "Implemented",
           "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:356",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "profile/scripts/ardourton_set_loop.lua:9-14",
+              "result": "Candidate"
+            },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
@@ -138,123 +608,1327 @@
     },
     {
       "sourceId": "S16-12",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Left / Cmd+Right",
+          "keyToken": "Primary-Right",
+          "actionTarget": "LuaAction/ardourton-resize-loop-end (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Same preferred target as S08-11. Also Primary-Left to shorten. Adjust auto-loop end by nudge distance (Live uses grid). Selecting LoopEnd and calling Editor/nudge-forward/backward is a native alternative without a dedicated action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;gtk2_ardour/editor_ops.cc:512-560",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/move-selected-tracks-up/down",
+              "result": "Conflict"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1271;gtk2_ardour/luainstance.cc:962",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-13",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+L",
+          "keyToken": "Primary-Tertiary-l",
+          "actionTarget": "Editor/select-all-in-loop-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same preferred target as S08-12. Selects regions/objects overlapping the session auto-loop on selected (or all) tracks \u2014 not Clip View brace contents. Factory used Primary-l; Ardourton binds Primary-l to Lua loop set/toggle (S16-11).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:258",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_selection.cc:2135-2162",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:228",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-l -> Editor/select-all-in-loop-range",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+L",
+          "keyToken": "Primary-Tertiary-l",
+          "actionTarget": "Editor/select-loop-range",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Sets the time selection to the loop range rather than selecting objects inside the loop.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:240",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_selection.cc:2034-2041",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-l -> Editor/select-all-in-loop-range",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-14",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+I",
+          "keyToken": "Primary-i",
+          "actionTarget": "Editor/insert-time",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Opens Insert Time dialog prefilled from the time selection start/length when a range exists. Live Insert Silence is non-dialog and inserts at the selection. Editor/insert-section inserts a selection-length gap at the edit point without a dialog (closer mechanically, wrong default paste target unless edit point equals selection start).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:487",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8073-8108;insert_remove_time_dialog.cc:76-83",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-i -> Editor/insert-time",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+I",
+          "keyToken": "Primary-i",
+          "actionTarget": "Editor/insert-section",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Ripples open empty time of selection length at the playhead/edit point (InsertSection). No dialog; not exactly Live's insert-at-selection-start.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:365;369",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2457-2481;libs/ardour/session.cc:7741-7811",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Primary-i -> Common/addExistingAudioFiles",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-15",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+X",
+          "keyToken": "Primary-Tertiary-x",
+          "actionTarget": "Editor/cut-paste-section",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Cuts the time selection and immediately pastes at playhead/edit point (Move Section). Live Cut Time places the range on a time clipboard for a later Paste Time \u2014 Ardour has no separate section clipboard.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:364;368",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2457-2504;libs/ardour/session.cc:7741-7811",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-x -> Editor/cut-paste-section",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-16",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+C",
+          "keyToken": "Primary-Tertiary-c",
+          "actionTarget": "Editor/copy-paste-section",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Copies the time selection and immediately pastes at playhead/edit point. Live Copy Time only stores to the time clipboard; Ardour has no copy-without-paste section action.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:363;367",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2457-2504;libs/ardour/session.cc:7741-7811",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-c -> Editor/copy-paste-section",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-17",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+V",
+          "keyToken": "Primary-Tertiary-v",
+          "actionTarget": "Editor/paste-section (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Paste Time pastes a previously cut/copied time clipboard. Ardour section ops are atomic cut-paste/copy-paste with no retained section clipboard or paste-only action. Primary-Tertiary-v is unbound.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:363-373;libs/ardour/ardour/types.h:277-280;session.cc:7741-7811",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: paste-only time/section from clipboard. Terms: paste-section, CopyPasteSection, section clipboard, Paste Time. Subsystems: editor_actions section ops, Session::cut_copy_section. Only combined cut/copy-paste and insert/delete exist. ../ardour@9.7:gtk2_ardour/editor_actions.cc:363-373;libs/ardour/session.cc:7741-7811",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+V",
+          "keyToken": "Primary-Tertiary-v",
+          "actionTarget": "Editor/insert-section",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Inserts empty time of current selection length at edit point \u2014 not a paste of previously copied material.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:365;369",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-18",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+D",
+          "keyToken": "Primary-Tertiary-d",
+          "actionTarget": "LuaAction/ardourton-duplicate-time (new)",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "Live duplicates the time selection in place (insert copy immediately after). Call Session:cut_copy_section(start, end, end, CopyPaste). Native copy-paste-section pastes at edit point/playhead instead. Primary-Tertiary-d is unbound; Editor/duplicate is region duplicate on Primary-d.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2457-2481;libs/ardour/session.cc:7741-7811;libs/ardour/luabindings.cc:2540-2544",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:2540-2544;libs/ardour/ardour/session.h:1199",
+              "result": "Candidate"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+D",
+          "keyToken": "Primary-Tertiary-d",
+          "actionTarget": "Editor/copy-paste-section",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Duplicates only if the edit point/playhead is at the selection end; otherwise pastes elsewhere. Already bound to Primary-Tertiary-c.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:363;367",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-c -> Editor/copy-paste-section",
+              "result": "Conflict"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-19",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+Delete",
+          "keyToken": "Primary-Tertiary-Delete",
+          "actionTarget": "Editor/delete-section",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Deletes the selected time range and ripples subsequent material (DeleteSection). Already bound in the profile.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:372-373",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2457-2485;libs/ardour/session.cc:7755-7792",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-Delete -> Editor/delete-section",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-20",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "U / Left / Right",
+          "keyToken": "u",
+          "actionTarget": "Editor/toggle-track-fold (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live fold/unfold reveals or hides intra-clip detail for selecting time within clips. Ardour always draws region waveforms at current track height; there is no fold state. Height step (expand/shrink-tracks) and layer-display stacked/overlaid are not fold. Editor u is select-all-within-cursors; Left/Right move playhead to grid.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:312-313;267-270;time_axis_view.cc:614-639",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: Live-style Arrangement track fold/unfold for intra-clip editing. Terms: fold, unfold, toggle-track-fold, HeightSmall. Subsystems: time_axis_view height, editor_actions expand/shrink/layer-display. No fold state; height and layer display only. ../ardour@9.7:gtk2_ardour/editor_actions.cc:267-313;time_axis_view.cc:614-639",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor u -> Editor/select-all-within-cursors; Editor Left/Right -> Editor/nudge-backward/forward",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Control+plus / Control+minus",
+          "keyToken": "Secondary-equal",
+          "actionTarget": "Editor/expand-tracks",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Also Secondary-minus -> shrink-tracks. Steps selected (or all) track heights; not Live fold/unfold. Overlaps S16-22 / S09 vertical zoom.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Secondary-equal/minus -> Editor/expand-tracks/shrink-tracks",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-21",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+U",
+          "keyToken": "Level4-u",
+          "actionTarget": "Editor/unfold-all-tracks (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Option+U cycles unfold-all / fold-all / restore. Ardour has no track fold state. Closest native is setting all tracks to a height enum or fit-selection. Level4-u is unbound; Primary-Level4-u is show-plist-selector (S17-01).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:516-529;editor_ops.cc:1809-1824;time_axis_view.cc:634-639",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: unfold/fold all Arrangement tracks. Terms: unfold-all, fold-all, Option+U, Level4-u. Subsystems: editor_actions track height, time_axis_view. Height presets exist; fold-all cycle does not. ../ardour@9.7:gtk2_ardour/editor_actions.cc:516-529;time_axis_view.cc:634-639",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-22",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+plus / Option+minus",
+          "keyToken": "Level4-equal",
+          "actionTarget": "Editor/expand-tracks",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Also Level4-minus -> Editor/shrink-tracks. Steps height of selected tracks (or all if none selected). Live also adjusts clip lane height when unfolded; Ardour has no clip-lane height. Factory uses Secondary-equal/minus (Control). Level4-equal/minus unbound. Same physical =/+ key as S09.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:312-313",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:1809-1824;time_axis_view.cc:614-627",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:114-115 (Secondary-equal/minus)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-equal -> Editor/expand-tracks",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Control+plus / Control+minus",
+          "keyToken": "Secondary-equal",
+          "actionTarget": "Editor/expand-tracks",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory and profile bind expand/shrink to Secondary-equal/minus, not Live's Option+plus/minus.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Secondary-equal/minus -> Editor/expand-tracks/shrink-tracks",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-23",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+Shift+F",
+          "keyToken": "Level4-Tertiary-f",
+          "actionTarget": "EditorEditing/toggle-follow-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Same preferred mapping as S09-05. Toggles autoscroll that keeps the playhead visible. No Level4-Tertiary-f profile binding yet. Stationary playhead (Tertiary-f) is a related but different mode.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:485-488",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:1529-1570;3738-3818",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:214 (EditorEditing/toggle-follow-playhead -> Primary-f)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-Tertiary-f -> EditorEditing/toggle-follow-playhead",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+F",
+          "keyToken": "Primary-f",
+          "actionTarget": "EditorEditing/toggle-follow-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory and profile bind Follow Playhead to Primary-f (Cmd+F), not Live's Option+Shift+F.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-f -> EditorEditing/toggle-follow-playhead",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-24",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+drag",
+          "actionTarget": "Editor/pan-display-drag (new)",
+          "implementationType": "Ardour input patch",
+          "mappingClass": "Similar",
+          "availability": "UI only",
+          "note": "Same preferred mapping as S09-07. Live pans the Arrangement with Cmd+Option+drag. Ardour has no Primary+Level4 canvas pan drag; Primary|Level4 is push_points_mod. Viewport pan building blocks exist (set_horizontal_position, scroll steps, summary drag).",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:2416;2766;4150-4193;gtk2_ardour/editor_actions.cc:343-344;gtk2_ardour/keyboard.cc:67",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "UI only",
+              "reference": "Search scope: editor canvas/ruler/summary pointer pan with Primary+Level4 or Cmd+Option. Terms: pan, ScrollHorizontal, button2_modifiers, set_horizontal_position, push_points. Subsystems: editor_mouse, editor_canvas_events, editor_summary, editor_drag, keyboard. No Cmd+Option display-pan drag; button2_modifiers is Secondary|Level4; Primary|Level4 is push_points. ../ardour@9.7:libs/gtkmm2ext/keyboard.cc:74;699-700;gtk2_ardour/keyboard.cc:67;gtk2_ardour/editor_mouse.cc:1179-1241;gtk2_ardour/editor_summary.cc:502-569",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "../ardour@9.7:gtk2_ardour/keyboard.cc:67;editor_drag.cc:4511;4861 (Primary|Level4 = push_points while dragging automation points/markers)",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Shift+scroll",
+          "actionTarget": "Editor/canvas-horizontal-scroll",
+          "implementationType": "None",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Installed Shift+scroll pans horizontally by steps; it is not a Cmd+Option click-drag pan of the display around the selection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:libs/gtkmm2ext/keyboard.cc:255-257;gtk2_ardour/editor_canvas_events.cc:88-120",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-25",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "H",
+          "keyToken": "h",
+          "actionTarget": "Editor/fit-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Fits selected tracks (or tracks of selected regions) into the visible canvas height. Live H optimizes all Arrangement track heights. When nothing is selected Ardour does not auto-fit all tracks. Profile binds h to Region/play-selected-regions; fit-selection is on f.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:513;322",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8423-8469",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:213 (Editor/fit-selection -> f)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor h -> Editor/fit-selection",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "F",
+          "keyToken": "f",
+          "actionTarget": "Editor/fit-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory and profile bind vertical fit to f, not Live's H.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor f -> Editor/fit-selection",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-26",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "W",
+          "keyToken": "w",
+          "actionTarget": "Editor/zoom-to-session",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Zooms horizontally to the session extent (whole song fit). Live W optimizes Arrangement width similarly. Profile binds w to Common/jump-forward-to-mark; zoom-to-session is Primary-Tertiary-underscore.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:306",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor w -> Editor/zoom-to-session",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+_",
+          "keyToken": "Primary-Tertiary-underscore",
+          "actionTarget": "Editor/zoom-to-session",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Profile already binds zoom-to-session away from Live's W.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-underscore -> Editor/zoom-to-session",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "W",
+          "keyToken": "w",
+          "actionTarget": "Editor/zoom-to-selection-horiz",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Horizontal zoom to the current time/region selection rather than the whole session.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:309",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-27",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "0",
+          "keyToken": "0",
+          "actionTarget": "Region/toggle-region-mute",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Toggles mute on selected/entered regions. Live Deactivate Selection also covers tracks/devices/notes contextually; Ardour region mute is the Arrangement-clip case. Already bound in the profile. Track mute remains Mixer/mute (m).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1354",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:8598",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor 0 -> Region/toggle-region-mute",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-28",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Left / Right",
+          "keyToken": "Left",
+          "actionTarget": "Editor/nudge-backward",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Also Right -> Editor/nudge-forward. Nudges selected regions/markers by the nudge clock. Live arrows nudge the Arrangement selection; Ardour Left/Right currently move the playhead to the grid. Unconditional rebind collides with playhead-to-grid and with S08/S16-20 selection-gated uses.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;1473-1476",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:313;319 (KP_Subtract/Add)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Left -> Editor/nudge-backward",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Keypad + / -",
+          "keyToken": "KP_Add",
+          "actionTarget": "Editor/nudge-forward",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory and profile bind nudge to keypad Add/Subtract, not plain arrows.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor KP_Add/Subtract -> Editor/nudge-forward/backward",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-29",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "R",
+          "keyToken": "r",
+          "actionTarget": "Region/reverse-region",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Reverses selected/entered audio regions. Profile currently binds Editor r to Editing/set-mouse-mode-range; factory reverse is Secondary-4.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1360",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:5761",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:149 (Region/reverse-region -> Secondary-4)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor r -> Region/reverse-region",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Control+4",
+          "keyToken": "Secondary-4",
+          "actionTarget": "Region/reverse-region",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Factory and profile bind reverse to Secondary-4, not Live's R.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:5761-5767",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Secondary-4 -> Region/reverse-region",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-30",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Z",
+          "keyToken": "z",
+          "actionTarget": "Editor/zoom-to-selection",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Zooms to the time/region selection (Both axes). Already bound to z in the profile. Saves visual state for toggle-zoom (S16-31).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:308",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:9441-9472",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor z -> Editor/zoom-to-selection",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-31",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "X",
+          "keyToken": "x",
+          "actionTarget": "Editor/toggle-zoom",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Exact",
+          "availability": "Native",
+          "note": "Swaps the last two visual zoom states (swap_visual_state). Profile already maps x to toggle-zoom; factory used Tertiary-z.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:310",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor.cc:3847-3890",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor x -> Editor/toggle-zoom",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-32",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Option+Space",
+          "keyToken": "Level4-space",
+          "actionTarget": "Editor/play-from-edit-point",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Locates to the preferred edit position and rolls. Live plays from the clip insert marker; Ardour uses the session edit point (playhead/mouse/marker). Level4-space is unbound; Secondary-space is Transport/PlaySelection.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:382",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2557-2560",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Level4-space -> Editor/play-from-edit-point",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+Space",
+          "keyToken": "Primary-Tertiary-space",
+          "actionTarget": "Editor/play-from-edit-point-and-return",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Plays from edit point and returns afterward. Already bound to Primary-Tertiary-space, which Live uses for S16-33.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2563-2583",
+              "result": "Candidate"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-33",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+Space",
+          "keyToken": "Primary-Tertiary-space",
+          "actionTarget": "Editor/edit-to-playhead",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Moves the active marker(s) to the playhead (Active Mark to Playhead). Live moves the clip insert marker to the playhead; Ardour has no per-clip insert marker \u2014 edit-to-playhead is the closest session-level analog. Profile currently binds Primary-Tertiary-space to play-from-edit-point-and-return (S16-32 alternative).",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:352",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:1493-1522",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-space -> Editor/edit-to-playhead",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Shift+Space",
+          "keyToken": "Primary-Tertiary-space",
+          "actionTarget": "Editor/play-from-edit-point-and-return",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory/profile chord plays from edit point and returns; it does not move an insert marker to the playhead.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "result": "Conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-space -> Editor/edit-to-playhead (Preferred S16-33)"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-34",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Editor",
+          "proposedMacos": "Escape",
+          "keyToken": "Escape",
+          "actionTarget": "Editor/focus-track-name (new)",
+          "implementationType": "Ardour action patch",
+          "mappingClass": "No equivalent",
+          "availability": "Missing",
+          "note": "Live Escape jumps focus to the highlighted track title bar. Ardour Main/Escape deselects all (Escape signal). TimeAxisView::begin_name_edit exists for renaming but is not bound to Escape or a focus-title action.",
+          "status": "Proposed",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Building block exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:144-162;time_axis_view.cc:688-780",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Capability audit",
+              "claim": "Capability missing",
+              "reference": "Search scope: Escape focuses Arrangement track title bar. Terms: Escape, begin_name_edit, track title, Jump to Highlighted Track. Subsystems: Main/Escape, time_axis_view name edit. Escape deselects; begin_name_edit is UI-driven rename, not Escape focus. ../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:144-162;time_axis_view.cc:688",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Key conflict",
+              "claim": "Key conflict",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Escape -> Main/Escape; Notes Escape -> Notes/clear-selection; Automation Escape -> Automation/end-edit",
+              "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Escape",
+          "keyToken": "Escape",
+          "actionTarget": "Main/Escape",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Deselects all / emits Escape; does not focus the track title bar.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Callback implementation",
+              "claim": "Behavior candidate",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:144-162",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Escape -> Main/Escape",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     },
     {
       "sourceId": "S16-35",
-      "auditStatus": "Needs audit",
-      "mappings": []
+      "auditStatus": "Assessed",
+      "mappings": [
+        {
+          "role": "Preferred",
+          "context": "Global",
+          "proposedMacos": "Option+Shift+M",
+          "keyToken": "Level4-Tertiary-m",
+          "actionTarget": "Common/show-mixer",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Shows the Mixer window/tab. Live moves focus to the mixer from Arrangement; Ardour show-mixer raises the mixer tabbable. Level4-Tertiary-m is unbound. Editor/show-editor-mixer (Tertiary-e) toggles the editor-side mixer strip instead.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour_ui_ed.cc:771",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Default binding",
+              "claim": "Binding exists",
+              "reference": "../ardour@9.7:gtk2_ardour/ardour.keys.in:260 (Common/show-mixer -> Secondary-m)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Level4-Tertiary-m -> Common/show-mixer",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Current fallback",
+          "context": "Global",
+          "proposedMacos": "Control+M",
+          "keyToken": "Secondary-m",
+          "actionTarget": "Common/show-mixer",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Factory and profile bind show-mixer to Secondary-m, not Live's Option+Shift+M.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Global Secondary-m -> Common/show-mixer",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Shift+E",
+          "keyToken": "Tertiary-e",
+          "actionTarget": "Editor/show-editor-mixer",
+          "implementationType": "Profile keybinding",
+          "mappingClass": "Similar",
+          "availability": "Native",
+          "note": "Toggles the editor-window mixer strip rather than focusing the Mixer window.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "Action registration",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:196",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Tertiary-e -> Editor/show-editor-mixer",
+              "result": "Confirmed"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

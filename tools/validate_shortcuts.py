@@ -8,7 +8,7 @@ import json
 import sys
 import tomllib
 import xml.etree.ElementTree as ET
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -47,6 +47,7 @@ def validate_contract(
     errors: list[str] = []
     try:
         schema = load_json(source_path.parent / "shortcut-schema.json")
+        Draft202012Validator.check_schema(schema)
         sources, mapping_docs = documents(source_path, mapping_dir)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         return [str(exc)]
@@ -109,6 +110,17 @@ def validate_contract(
                     errors.append(f"duplicate mapping tuple {tuple_value!r}")
                 tuples.add(tuple_value)
                 evidence = mapping.get("evidence", [])
+                if mapping.get("actionTarget", "").endswith(" (new)") and any(
+                    item.get("claim") == "Target exists" for item in evidence
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: new target requires "
+                        "Building block exists evidence"
+                    )
+                if source.get("inputKind") in {"Keyboard", "Keyboard hold"} and not mapping.get(
+                    "keyToken"
+                ):
+                    errors.append(f"source ID {source_id!r}: keyboard mapping requires keyToken")
                 if mapping.get("mappingClass") == "Exact" and not any(
                     item.get("kind") in {"Callback implementation", "Manual test", "E2E test"}
                     and item.get("claim") in {"Behavior verified", "Behavior candidate"}
@@ -124,6 +136,21 @@ def validate_contract(
                         f"source ID {source_id!r}: Missing requires capability audit evidence"
                     )
                 if (
+                    mapping.get("implementationType") == "Profile Lua"
+                    and mapping.get("availability") != "Lua accessible"
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: Profile Lua requires Lua accessible availability"
+                    )
+                if (
+                    mapping.get("implementationType") == "Ardour engine patch"
+                    and mapping.get("availability") != "Missing"
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: Ardour engine patch requires "
+                        "Missing availability"
+                    )
+                if (
                     mapping.get("implementationType") in {"Profile keybinding", "Profile Lua"}
                     and mapping.get("status") == "Implemented"
                     and not any(
@@ -137,6 +164,17 @@ def validate_contract(
                         f"source ID {source_id!r}: implemented profile mapping requires "
                         "profile binding evidence"
                     )
+                if mapping.get("implementationType") == "Profile Lua" and not any(
+                    (item.get("kind") == "Lua API" and item.get("claim") == "Lua feasible")
+                    or (
+                        item.get("kind") == "Action registration"
+                        and item.get("claim") == "Building block exists"
+                    )
+                    for item in evidence
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: Profile Lua requires Lua API or action evidence"
+                    )
                 if mapping.get("implementationType") == "Profile keybinding" and source.get(
                     "inputKind"
                 ) not in {"Keyboard", "Keyboard hold"}:
@@ -147,25 +185,37 @@ def validate_contract(
         errors.append(f"source ID {source_id!r}: has no mapping")
 
     if keymap_path is not None:
-        keymap = {
-            (group.get("name") or "", binding.get("key") or ""): binding.get("action") or ""
-            for group in ET.parse(keymap_path).getroot().findall("Bindings")
-            for binding in group.findall("./Press/Binding")
-        }
+        keymap: dict[tuple[str, str], list[str]] = defaultdict(list)
+        for group in ET.parse(keymap_path).getroot().findall("Bindings"):
+            for binding in group.findall("./Press/Binding"):
+                keymap[(group.get("name") or "", binding.get("key") or "")].append(
+                    binding.get("action") or ""
+                )
         for source_id, mappings in mappings_by_source.items():
             for mapping in mappings:
                 pair = (mapping.get("context", ""), mapping.get("keyToken", ""))
                 if (
                     mapping.get("role") == "Preferred"
-                    and mapping.get("implementationType") == "Profile keybinding"
                     and pair[1]
-                    and keymap.get(pair) not in {None, mapping.get("actionTarget", "")}
+                    and any(
+                        action != mapping.get("actionTarget", "") for action in keymap.get(pair, [])
+                    )
                     and not any(
                         item.get("kind") == "Key conflict" and item.get("result") == "Conflict"
                         for item in mapping.get("evidence", [])
                     )
                 ):
                     errors.append(f"source ID {source_id!r}: key token collision for {pair!r}")
+                if (
+                    mapping.get("implementationType") in {"Profile keybinding", "Profile Lua"}
+                    and mapping.get("status") == "Implemented"
+                    and mapping.get("keyToken")
+                    and mapping.get("actionTarget") not in keymap.get(pair, [])
+                ):
+                    errors.append(
+                        f"source ID {source_id!r}: implemented profile mapping is absent "
+                        "from keymap"
+                    )
     return errors
 
 
@@ -190,7 +240,6 @@ def validate_expectations(expectations_path: Path, mapping_dir: Path) -> list[st
                 item
                 for item in candidates
                 if item.get("implementationType") in {"Profile keybinding", "Profile Lua"}
-                and item.get("availability") == "Profile bound"
                 and item.get("status") == "Implemented"
             ]
             if not profile_candidates:
@@ -211,32 +260,94 @@ def validate_expectations(expectations_path: Path, mapping_dir: Path) -> list[st
     return errors
 
 
-def report(source_path: Path, mapping_dir: Path, section_number: str | None = None) -> str:
+def section_numbers(section_number: str | list[str] | None) -> set[str] | None:
+    if section_number is None:
+        return None
+    return {section_number} if isinstance(section_number, str) else set(section_number)
+
+
+def report(
+    source_path: Path, mapping_dir: Path, section_number: str | list[str] | None = None
+) -> str:
     sources, mapping_docs = documents(source_path, mapping_dir)
+    selected_sections = section_numbers(section_number)
     source_records = [
         (section, shortcut)
         for section in sources["sections"]
         for shortcut in section["shortcuts"]
-        if section_number is None or section["number"] == section_number
+        if selected_sections is None or section["number"] in selected_sections
     ]
     mapping_records = [
         record
         for _, document in mapping_docs
-        if section_number is None or document["section"]["number"] == section_number
+        if selected_sections is None or document["section"]["number"] in selected_sections
         for record in document["shortcuts"]
     ]
-    status_counts = Counter(
+    mapping_status_counts = Counter(
         mapping["status"] for record in mapping_records for mapping in record["mappings"]
     )
-    lines = ["Source input kinds:"]
+    audit_status_counts = Counter(record["auditStatus"] for record in mapping_records)
+    implementation_counts = Counter(
+        mapping["implementationType"]
+        for record in mapping_records
+        for mapping in record["mappings"]
+    )
+    role_counts = Counter(
+        mapping["role"] for record in mapping_records for mapping in record["mappings"]
+    )
+    class_counts = Counter(
+        mapping["mappingClass"] for record in mapping_records for mapping in record["mappings"]
+    )
+    availability_counts = Counter(
+        mapping["availability"] for record in mapping_records for mapping in record["mappings"]
+    )
+    evidence_result_counts = Counter(
+        evidence["result"]
+        for record in mapping_records
+        for mapping in record["mappings"]
+        for evidence in mapping["evidence"]
+    )
+    lines = ["Audit status:"]
+    lines.extend(
+        f"  {status}: {audit_status_counts[status]}" for status in sorted(audit_status_counts)
+    )
+    lines.append("Source input kinds:")
     lines.extend(
         f"  {kind}: {count}"
         for kind, count in sorted(
             Counter(source["inputKind"] for _, source in source_records).items()
         )
     )
+    lines.append("Implementation types:")
+    lines.extend(
+        f"  {implementation_type}: {count}"
+        for implementation_type, count in sorted(implementation_counts.items())
+    )
+    for title, counts in (
+        ("Mapping roles", role_counts),
+        ("Mapping classes", class_counts),
+        ("Availability", availability_counts),
+        ("Evidence results", evidence_result_counts),
+    ):
+        lines.append(f"{title}:")
+        lines.extend(f"  {value}: {count}" for value, count in sorted(counts.items()))
     lines.append("Mapping statuses:")
-    lines.extend(f"  {status}: {count}" for status, count in sorted(status_counts.items()))
+    lines.extend(f"  {status}: {count}" for status, count in sorted(mapping_status_counts.items()))
+    lines.append("Section progress:")
+    lines.append("  Section | Sources | Needs audit | Partial | Assessed | Mappings")
+    source_by_section = Counter(section["number"] for section, _ in source_records)
+    records_by_section: dict[str, list[dict]] = defaultdict(list)
+    for record in mapping_records:
+        records_by_section[record["sourceId"][1:3]].append(record)
+    for number in sorted(source_by_section):
+        records = records_by_section[number]
+        statuses = Counter(record["auditStatus"] for record in records)
+        mapping_count = sum(len(record["mappings"]) for record in records)
+        lines.append(
+            "  "
+            f"{number} | {source_by_section[number]} | {statuses['Needs audit']} | "
+            f"{statuses['Partially assessed']} | {statuses['Assessed']} | {mapping_count}"
+        )
     return "\n".join(lines)
 
 
@@ -313,7 +424,7 @@ def section_report(source_path: Path, mapping_dir: Path, section_number: str) ->
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", action="store_true")
-    parser.add_argument("--section", metavar="NN")
+    parser.add_argument("--section", metavar="NN", action="append")
     args = parser.parse_args()
     source_path = CONTRACT / "ableton-shortcuts.json"
     mapping_dir = CONTRACT / "shortcut-mappings"
@@ -325,11 +436,16 @@ def main() -> int:
         print("\n".join(f"error: {error}" for error in errors), file=sys.stderr)
         return 1
     sources, _ = documents(source_path, mapping_dir)
+    known_sections = {section["number"] for section in sources["sections"]}
+    unknown_sections = set(args.section or []) - known_sections
+    if unknown_sections:
+        parser.error(f"unknown section(s): {', '.join(sorted(unknown_sections))}")
     print(f"Validated {sum(len(section['shortcuts']) for section in sources['sections'])} sources.")
     if args.report:
         print(report(source_path, mapping_dir, args.section))
     if args.section:
-        print(section_report(source_path, mapping_dir, args.section))
+        for section in args.section:
+            print(section_report(source_path, mapping_dir, section))
     return 0
 
 
