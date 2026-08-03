@@ -315,14 +315,14 @@
           "implementationType": "Ardour engine patch",
           "mappingClass": "No equivalent",
           "availability": "Missing",
-          "note": "Live toggles fixed vs zoom-dependent grid density. Ardour grid is an explicit GridType enum only. grid-follows-internal is an alternate grid for Internal Edit tools, not zoom-adaptive.",
+          "note": "Live toggles fixed vs zoom-dependent grid density. Ardour has no dedicated toggle action (Editing/zoom-adaptive-grid does not exist). The profile seeds adaptive-as-default via GridTypeBeatDiv32 + SnapMagnetic + ruler-granularity/snap-threshold so users rarely need a toggle; most drag sites already use SnapToGrid_Scaled. The fixed/adaptive toggle itself remains Missing.",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Capability audit",
               "claim": "Capability missing",
               "result": "Candidate",
-              "reference": "Search scope: fixed vs zoom-adaptive grid. Terms: adaptive grid, zoom-grid, fixed-grid, grid-follows-internal. Subsystems: editing_context, editor_tempodisplay, ui_config, enums. ../ardour@9.7:gtk2_ardour/editing_context.cc:825-916;gtk2_ardour/rc_option_editor.cc:3611-3615;libs/ardour/enums.cc:111-131"
+              "reference": "Search scope: fixed vs zoom-adaptive grid. Terms: adaptive grid, zoom-grid, fixed-grid, grid-follows-internal. Subsystems: editing_context, editor_tempodisplay, ui_config, enums. ../ardour@9.7:gtk2_ardour/editing_context.cc:825-916;gtk2_ardour/rc_option_editor.cc:3611-3615;libs/ardour/enums.cc:111-131. Profile seeding: docs/concepts/adaptive-grid-and-snap.md"
             }
           ]
         }

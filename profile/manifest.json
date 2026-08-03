@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "Ardourton",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "license": "GPL-2.0-or-later",
   "ardour": {
     "supported": ["9.7"],
@@ -22,5 +22,23 @@
     "30": "Ardourton: Add Return",
     "31": "Ardourton: Set and Toggle Loop",
     "32": "Ardourton: Duplicate Tracks"
+  },
+  "grid_snap_defaults": {
+    "ui_config": {
+      "snap-threshold": "10",
+      "ruler-granularity": "250",
+      "snap-target": "SnapTargetBoth",
+      "rulers-follow-grid": "1"
+    },
+    "instant_xml": {
+      "Editor": {
+        "grid-type": "GridTypeBeatDiv32",
+        "snap-mode": "SnapMagnetic"
+      },
+      "MIDICueEditor": {
+        "grid-type": "GridTypeBeatDiv32",
+        "snap-mode": "SnapMagnetic"
+      }
+    }
   }
 }

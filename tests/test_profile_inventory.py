@@ -38,6 +38,30 @@ def test_theme_and_preferences() -> None:
     assert options["color-file"] == "ardourton"
     assert options["show-toolbar-cuectrl"] == "1"
     assert len(options["stripable-color-palette"].split(":")) == 12
+    assert options["snap-threshold"] == "10"
+    assert options["ruler-granularity"] == "250"
+    assert options["snap-target"] == "SnapTargetBoth"
+    assert options["rulers-follow-grid"] == "1"
+
+
+def test_grid_snap_defaults_match_manifest() -> None:
+    manifest = load_manifest()
+    defaults = manifest["grid_snap_defaults"]
+    options: dict[str, str] = {}
+    with (PROFILE / "preferences" / "ui-options.tsv").open(encoding="utf-8") as source:
+        for line in source:
+            name, value = line.rstrip("\n").split("\t", 1)
+            options[name] = value
+    for name, value in defaults["ui_config"].items():
+        assert options[name] == value, name
+    assert defaults["instant_xml"]["Editor"] == {
+        "grid-type": "GridTypeBeatDiv32",
+        "snap-mode": "SnapMagnetic",
+    }
+    assert defaults["instant_xml"]["MIDICueEditor"] == {
+        "grid-type": "GridTypeBeatDiv32",
+        "snap-mode": "SnapMagnetic",
+    }
 
 
 def test_lua_action_slots_match_baseline() -> None:

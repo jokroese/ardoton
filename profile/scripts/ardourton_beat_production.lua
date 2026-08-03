@@ -88,6 +88,17 @@ function factory ()
 		add_return ("A Reverb", colors.violet, routes)
 		add_return ("B Delay", colors.teal, routes)
 
+		-- New sessions default to the Audio Time domain, so
+		-- Editor::restore_ruler_visibility() (editor_rulers.cc) falls back to
+		-- showing Timecode/Mins:Secs and hiding Bars:Beats/Tempo/Time Signature.
+		-- Force the musical rulers on directly: set_toggleaction() sets an
+		-- absolute state via ActionManager::set_toggleaction_state(), which has
+		-- no loading-session guard (unlike the grid-type-driven auto-show path,
+		-- which is suppressed while a session is being built).
+		Editor:set_toggleaction ("Rulers", "toggle-bbt-ruler", true)
+		Editor:set_toggleaction ("Rulers", "toggle-meter-ruler", true)
+		Editor:set_toggleaction ("Rulers", "toggle-tempo-ruler", true)
+
 		Session:save_state ("")
 	end
 end
