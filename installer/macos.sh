@@ -24,6 +24,7 @@ targets=(
   ardour.keys
   ui_config
   ui_scripts
+  instant.xml
   themes/ardourton-ardour.colors
 )
 
@@ -149,6 +150,63 @@ install_ui_options () {
   done < "${profile_dir}/preferences/ui-options.tsv"
 }
 
+merge_instant_attr () {
+  local file="$1"
+  local element="$2"
+  local attr_name="$3"
+  local attr_value="$4"
+  local temporary
+  temporary="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ardourton-instant.XXXXXX")"
+
+  /usr/bin/awk -v element="${element}" -v attr="${attr_name}" -v value="${attr_value}" '
+    BEGIN {
+      open_tag = "<" element " "
+    }
+    {
+      if (index($0, open_tag) > 0) {
+        # Require a boundary before the attribute name so we never rewrite
+        # pre-internal-grid-type / internal-grid-type when merging grid-type.
+        pattern = "(^|[ \\t])" attr "=\"[^\"]*\""
+        if (match($0, pattern)) {
+          matched = substr($0, RSTART, RLENGTH)
+          prefix = matched
+          sub(attr "=\"[^\"]*\"$", attr "=\"" value "\"", prefix)
+          $0 = substr($0, 1, RSTART - 1) prefix substr($0, RSTART + RLENGTH)
+        } else {
+          sub(/\/?>/, " " attr "=\"" value "\"&")
+        }
+      }
+      print
+    }
+  ' "${file}" > "${temporary}" || {
+    /bin/rm -f "${temporary}"
+    fail "Could not merge '${attr_name}' into ${element} in instant.xml."
+  }
+
+  /bin/mv "${temporary}" "${file}"
+}
+
+install_instant_xml () {
+  local instant_xml="${config_dir}/instant.xml"
+  if [[ ! -f "${instant_xml}" ]]; then
+    {
+      print -r -- '<?xml version="1.0" encoding="UTF-8"?>'
+      print -r -- '<instant>'
+      print -r -- '  <Editor grid-type="GridTypeBeatDiv32" snap-mode="SnapMagnetic"/>'
+      print -r -- '</instant>'
+    } > "${instant_xml}"
+    return
+  fi
+
+  local element
+  for element in Editor MIDICueEditor; do
+    if /usr/bin/grep -q "<${element} " "${instant_xml}"; then
+      merge_instant_attr "${instant_xml}" "${element}" "grid-type" "GridTypeBeatDiv32"
+      merge_instant_attr "${instant_xml}" "${element}" "snap-mode" "SnapMagnetic"
+    fi
+  done
+}
+
 install_ui_scripts () {
   local ui_scripts="${config_dir}/ui_scripts"
   local fragment="${profile_dir}/ui-scripts/ardourton-actions.lua-state"
@@ -220,10 +278,11 @@ install_profile () {
   done
 
   install_ui_options
+  install_instant_xml
   install_ui_scripts
 
   {
-    print -r -- "version=0.2.2"
+    print -r -- "version=0.2.3"
     print -r -- "backup=${backup_dir}"
   } > "${receipt_file}"
 

@@ -15,6 +15,8 @@ The installer creates a dated backup inside Ardour's configuration directory bef
 - Live-style macOS keybindings
 - The Ardourton theme and track-color palette
 - Toolbar and panel preferences
+- Adaptive grid and magnetic snap defaults (`GridTypeBeatDiv32`, `SnapMagnetic`, tighter
+  snap threshold / ruler granularity — see [adaptive grid and snap](concepts/adaptive-grid-and-snap.md))
 - The Beat Production session template
 - Stereo audio and MIDI track templates
 - Lua actions in slots 28–32

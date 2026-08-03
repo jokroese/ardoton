@@ -6,9 +6,9 @@ import json
 from support import CONTRACT, contract_row_count, load_expectations, shortcut_sources
 
 EXPECTED_ROWS = {
-    "workflows.csv": 50,
+    "workflows.csv": 51,
     "terminology.csv": 25,
-    "acceptance-tests.csv": 15,
+    "acceptance-tests.csv": 16,
     "sources.csv": 24,
 }
 

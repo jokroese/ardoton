@@ -22,3 +22,7 @@ use-palette-for-new-bus	1
 use-palette-for-new-vca	1
 show-on-cue-page	1
 name-new-markers	1
+snap-threshold	10
+ruler-granularity	250
+snap-target	SnapTargetBoth
+rulers-follow-grid	1

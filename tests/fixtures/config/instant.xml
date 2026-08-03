@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<instant>
+  <Main x="0" y="66" w="1703" h="1051" current-tab="editor"/>
+  <Editor id="48" edit-vertical-pane-size="25" mixer-width="Wide" zoom-focus="ZoomFocusLeft" edit-point="EditAtMouse" visible-track-count="-1" zoom="2091" grid-type="GridTypeBeat" snap-mode="SnapOff" internal-grid-type="GridTypeBeat" internal-snap-mode="SnapOff" pre-internal-grid-type="GridTypeBeat" pre-internal-snap-mode="SnapOff" left-frame="0" playhead="319216" y-origin="0" maximised="0" follow-playhead="0" mouse-mode="MouseObject">
+    <Window name="Editor" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1" tabbed="1"/>
+  </Editor>
+  <TriggerPage show-trigger-list="1" show-trigger-properties="1">
+    <Window name="Cues" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1" tabbed="1"/>
+    <MIDICueEditor zoom="2048" grid-type="GridTypeBeat" snap-mode="SnapMagnetic" internal-grid-type="GridTypeBeat" internal-snap-mode="SnapMagnetic" pre-internal-grid-type="GridTypeBeat" pre-internal-snap-mode="SnapOff" left-frame="0" draw-velocity="-1" draw-channel="-1"/>
+    <AudioClipEditor zoom="2048" grid-type="GridTypeMinSec" snap-mode="SnapMagnetic" internal-grid-type="GridTypeBeat" internal-snap-mode="SnapOff" pre-internal-grid-type="GridTypeBeat" pre-internal-snap-mode="SnapOff" left-frame="0" draw-velocity="64" draw-channel="0"/>
+  </TriggerPage>
+</instant>
