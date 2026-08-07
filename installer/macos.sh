@@ -18,6 +18,13 @@ script_names=(
   ardourton_set_loop.lua
   ardourton_duplicate_tracks.lua
   ardourton_beat_production.lua
+  ardourton_clear_region_fades.lua
+  ardourton_duplicate_time.lua
+  ardourton_move_loop_by_length.lua
+  ardourton_nudge_loop.lua
+  ardourton_resize_loop_end.lua
+  ardourton_scale_loop_length.lua
+  ardourton_toggle_triplet_grid.lua
 )
 
 targets=(

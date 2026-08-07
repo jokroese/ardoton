@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import re
 import xml.etree.ElementTree as ET
 
-from support import ACTION_STATE_PATH, PROFILE, load_baseline, load_manifest
+from support import ACTION_STATE_PATH, PROFILE, ROOT, load_baseline, load_manifest
 
 SCRIPTS = [
     "ardourton_add_audio_track.lua",
@@ -12,6 +13,16 @@ SCRIPTS = [
     "ardourton_duplicate_tracks.lua",
     "ardourton_beat_production.lua",
 ]
+
+
+def test_installer_installs_every_profile_script() -> None:
+    """The installer's script list is hand-maintained; a new script must be added to it."""
+    installer = (ROOT / "installer" / "macos.sh").read_text(encoding="utf-8")
+    block = re.search(r"^script_names=\(\n(.*?)\n\)$", installer, re.MULTILINE | re.DOTALL)
+    assert block is not None
+    listed = set(block.group(1).split())
+    on_disk = {path.name for path in (PROFILE / "scripts").glob("*.lua")}
+    assert listed == on_disk
 
 
 def test_manifest_supported_platform_and_ardour() -> None:

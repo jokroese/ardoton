@@ -26,13 +26,19 @@ def test_release_versions_are_consistent() -> None:
     baseline = load_baseline()
     installer = (ROOT / "installer" / "macos.sh").read_text(encoding="utf-8")
     receipt_version = re.search(r'print -r -- "version=([^\"]+)"', installer)
+    # The macOS round-trip script asserts the receipt version literally, and only runs on
+    # macOS. Pin it here too so a version bump cannot leave it behind on other platforms.
+    installer_test = (ROOT / "tests" / "test_installer_macos.sh").read_text(encoding="utf-8")
+    asserted_version = re.search(r"\^version=([0-9\\.]+)\$", installer_test)
 
     assert receipt_version is not None
+    assert asserted_version is not None
     assert {
         project["project"]["version"],
         manifest["version"],
         baseline["manifest_version"],
         receipt_version.group(1),
+        asserted_version.group(1).replace("\\", ""),
     } == {manifest["version"]}
 
 
