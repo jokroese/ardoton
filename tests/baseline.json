@@ -22,6 +22,7 @@
     "profile/scripts/ardourton_beat_production.lua",
     "profile/scripts/ardourton_duplicate_tracks.lua",
     "profile/scripts/ardourton_set_loop.lua",
+    "profile/scripts/manifest.json",
     "profile/theme/ardourton-ardour.colors",
     "profile/ui-scripts/ardourton-actions.lua-state"
   ]
