@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 import pytest
 
-from e2e.driver import FLAG_COMMAND, FLAG_SHIFT, KEY_C, KEY_F9, KEY_T
+from e2e.driver import FLAG_COMMAND, FLAG_SHIFT, KEY_C, KEY_F9, KEY_T, poll_until
 
 pytestmark = [pytest.mark.e2e, pytest.mark.requires_ardour]
 
@@ -76,10 +76,12 @@ def test_f9_starts_record_roll(ardour_session, coverage_tracker) -> None:
         time.sleep(1.5)
         ardour_session.send_hotkey(KEY_C)
         time.sleep(0.5)
+        mcp = ardour_session.mcp()
         ardour_session.send_hotkey(KEY_F9)
-        state = ardour_session.mcp().transport_state()
-        # The Dummy backend does not process transport cycles, but Ardour
-        # reports the requested record-roll speed immediately.
+        # The Dummy backend does not process transport cycles, but Ardour reports the
+        # requested record-roll speed once the key has been dispatched on the GUI thread.
+        # This used to read the state immediately, which raced that dispatch.
+        state = poll_until(mcp.transport_state, lambda value: value.get("speed") == 1)
         assert state["speed"] == 1, state
         coverage_tracker["S20-06"]["e2e"] = "passed"
     except Exception:

@@ -7,18 +7,59 @@ import json
 import os
 import shutil
 import signal
+import socket
 import subprocess
 import time
 import urllib.request
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from collections.abc import Callable
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from support import ARDOUR_BIN, REAL_CONFIG, ROOT, TESTS
 
 WINDOW_WIDTH = 1440
 WINDOW_HEIGHT = 900
-MCP_PORT = 4820
+
+
+def free_localhost_port() -> int:
+    """A localhost TCP port that is free right now.
+
+    Ardour's MCP surface defaults to 4820 for everyone, so two E2E runs sharing this machine
+    would answer each other's requests. Binding port 0 lets the OS pick from the ephemeral
+    range, which it does not hand out again immediately, so the gap between closing this
+    socket and Ardour binding the port is not a practical collision risk.
+    """
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+        probe.bind(("127.0.0.1", 0))
+        return int(probe.getsockname()[1])
+
+
+def mcp_url(port: int) -> str:
+    """The endpoint MCPHttp serves (../ardour@9.7:libs/surfaces/mcp_http/mcp_http.cc:180)."""
+    return f"http://127.0.0.1:{port}/mcp"
+
+
+def poll_until[T](
+    read: Callable[[], T],
+    predicate: Callable[[T], bool],
+    timeout: float = 10.0,
+    interval: float = 0.25,
+) -> T:
+    """Read repeatedly until the predicate holds, and return the last value either way.
+
+    Ardour applies most of these edits on its own GUI thread, so the state a test wants is
+    usually there within a few milliseconds but occasionally is not. Callers keep their own
+    assertion on the returned value; this only decides how long to wait, and it replaces
+    both the immediate read that assumed the edit had landed and the fixed sleeps that
+    assumed it would within a second.
+    """
+    deadline = time.monotonic() + timeout
+    value = read()
+    while not predicate(value) and time.monotonic() < deadline:
+        time.sleep(interval)
+        value = read()
+    return value
 
 
 class DriverError(RuntimeError):
@@ -30,7 +71,9 @@ class AccessibilityPermissionError(DriverError):
 
 
 class McpClient:
-    def __init__(self) -> None:
+    def __init__(self, port: int, pid: int | None = None) -> None:
+        self.port = port
+        self.pid = pid
         self.request_id = 0
         self._request(
             "initialize",
@@ -116,18 +159,27 @@ class McpClient:
         )
         return track_id, created.get("created", created)
 
+    @property
+    def url(self) -> str:
+        return mcp_url(self.port)
+
     def _request(self, method: str, params: dict) -> dict:
         self.request_id += 1
         payload = json.dumps(
             {"jsonrpc": "2.0", "id": self.request_id, "method": method, "params": params}
         ).encode()
         request = urllib.request.Request(
-            f"http://127.0.0.1:{MCP_PORT}/mcp",
+            self.url,
             payload,
             {"Content-Type": "application/json", "Accept": "application/json"},
         )
-        with urllib.request.urlopen(request, timeout=5) as response:
-            body = json.load(response)
+        try:
+            with urllib.request.urlopen(request, timeout=5) as response:
+                body = json.load(response)
+        except OSError as exc:
+            raise DriverError(
+                f"MCP request {method!r} to {self.url} (Ardour pid {self.pid}) failed: {exc}"
+            ) from exc
         if "error" in body:
             raise DriverError(str(body["error"]))
         return body["result"]
@@ -171,29 +223,41 @@ class ArdourSession:
     session_file: Path
     process: subprocess.Popen | None = None
     real_config_before: dict[str, str] | None = None
+    mcp_port: int = field(default_factory=free_localhost_port)
+
+    @property
+    def mcp_url(self) -> str:
+        return mcp_url(self.mcp_port)
 
     def enable_mcp(self) -> None:
         config_path = self.config_dir / "config"
         config = ET.parse(config_path)
         protocols = ET.SubElement(config.getroot(), "ControlProtocols")
+        # MCPHttp::set_state reads "port" off the Protocol node and falls back to the 4820
+        # default (../ardour@9.7:libs/surfaces/mcp_http/mcp_http.cc:75;104-110).
         ET.SubElement(
             protocols,
             "Protocol",
             name="MCP HTTP Server (Experimental)",
             active="1",
             config="",
+            port=str(self.mcp_port),
         )
         config.write(config_path, encoding="utf-8", xml_declaration=True)
 
     def mcp(self) -> McpClient:
+        pid = self.process.pid if self.process is not None else None
         last_error: Exception | None = None
         for _ in range(10):
             try:
-                return McpClient()
+                return McpClient(self.mcp_port, pid)
             except Exception as exc:
                 last_error = exc
                 time.sleep(0.25)
-        raise DriverError(f"MCP HTTP server did not start: {last_error}")
+        raise DriverError(
+            f"MCP HTTP server did not start on 127.0.0.1:{self.mcp_port} "
+            f"(Ardour pid {pid}): {last_error}"
+        )
 
     def ensure_safe_config_dir(self) -> None:
         resolved = self.config_dir.resolve()
