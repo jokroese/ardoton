@@ -2,7 +2,7 @@
   "git_commit": "164379df5527e12cdbbd43ccdac6b3f3edca3bc1",
   "ardour_version": "9.7.0",
   "ardour_lua_version": "ardour-lua version 9.7.0",
-  "manifest_version": "0.2.3",
+  "manifest_version": "0.2.4",
   "macos_keymap_sha256": "cf7ed784db161d1fbfe831396896f8fe1c33e79f7ba45d6e4871478a5a234c3d",
   "lua_action_state_sha256": "79fbf874be76c0defc9949cdbf4575d1ce5bcdaece3ed6984540860b6a8a133c",
   "lua_action_slots": {

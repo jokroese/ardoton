@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "Ardourton",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "GPL-2.0-or-later",
   "ardour": {
     "supported": ["9.7"],
