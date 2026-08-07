@@ -85,7 +85,7 @@ class McpClient:
             {
                 "protocolVersion": "2025-03-26",
                 "capabilities": {},
-                "clientInfo": {"name": "ardourton-e2e", "version": "1"},
+                "clientInfo": {"name": "ardoton-e2e", "version": "1"},
             },
         )
 
@@ -322,9 +322,9 @@ class ArdourSession:
     def install_profile(self) -> None:
         self.ensure_safe_config_dir()
         env = os.environ.copy()
-        env["ARDOURTON_CONFIG_DIR"] = str(self.config_dir)
-        env["ARDOURTON_SKIP_PROCESS_CHECK"] = "1"
-        env["ARDOURTON_SKIP_VERSION_CHECK"] = "1"
+        env["ARDOTON_CONFIG_DIR"] = str(self.config_dir)
+        env["ARDOTON_SKIP_PROCESS_CHECK"] = "1"
+        env["ARDOTON_SKIP_VERSION_CHECK"] = "1"
         result = subprocess.run(
             ["/bin/zsh", str(ROOT / "installer" / "macos.sh"), "install"],
             check=False,
@@ -596,7 +596,7 @@ def create_isolated_session(tmp_path: Path, fixture: str = "baseline") -> Ardour
     if len(session_files) != 1:
         raise DriverError(f"fixture {fixture!r} must contain exactly one .ardour file")
 
-    root = tmp_path / "ardourton-e2e"
+    root = tmp_path / "ardoton-e2e"
     home = root / "home"
     config_dir = home / "Library" / "Preferences" / "Ardour9"
     session_dir = root / "sessions" / fixture
@@ -617,9 +617,9 @@ def create_isolated_session(tmp_path: Path, fixture: str = "baseline") -> Ardour
     session.enable_mcp()
 
     # Theme must be active via color-file preference after install.
-    theme_path = config_dir / "themes" / "ardourton-ardour.colors"
+    theme_path = config_dir / "themes" / "ardoton-ardour.colors"
     if not theme_path.is_file():
-        raise DriverError("Profile install did not copy the Ardourton theme.")
+        raise DriverError("Profile install did not copy the Ardoton theme.")
     return session
 
 

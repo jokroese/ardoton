@@ -273,7 +273,7 @@
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:1107;profile/scripts/ardourton_duplicate_tracks.lua:9-12",
+              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:1107;profile/scripts/ardoton_duplicate_tracks.lua:9-12",
               "result": "Candidate"
             },
             {

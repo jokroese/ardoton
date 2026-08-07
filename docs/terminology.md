@@ -1,6 +1,6 @@
 # Ableton Live → Ardour
 
-| Ableton Live | Ardour | Ardourton wording |
+| Ableton Live | Ardour | Ardoton wording |
 |---|---|---|
 | Live Set | Session | Session |
 | Arrangement View | Editor | Arrangement · Editor |

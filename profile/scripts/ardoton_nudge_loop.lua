@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Nudge Loop",
-	author = "Ardourton",
+	name = "Ardoton: Nudge Loop",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Nudge the session loop range earlier or later by the current nudge-clock distance, keeping loop length fixed.
 

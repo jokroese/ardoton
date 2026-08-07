@@ -21,13 +21,13 @@ def test_tab_and_shift_tab_cycle_without_crash(ardour_session) -> None:
 
 
 def test_theme_file_installed_in_isolated_config(isolated_home_ready) -> None:
-    theme = isolated_home_ready.config_dir / "themes" / "ardourton-ardour.colors"
+    theme = isolated_home_ready.config_dir / "themes" / "ardoton-ardour.colors"
     assert theme.is_file()
     text = theme.read_text(encoding="utf-8")
-    assert 'theme-name="Ardourton"' in text
+    assert 'theme-name="Ardoton"' in text
 
 
-def test_keymap_installed_as_ardourton_macos(isolated_home_ready) -> None:
+def test_keymap_installed_as_ardoton_macos(isolated_home_ready) -> None:
     keys = isolated_home_ready.config_dir / "ardour.keys"
     assert keys.is_file()
-    assert 'BindingSet name="Ardourton macOS"' in keys.read_text(encoding="utf-8")
+    assert 'BindingSet name="Ardoton macOS"' in keys.read_text(encoding="utf-8")

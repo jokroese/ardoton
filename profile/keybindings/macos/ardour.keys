@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<BindingSet name="Ardourton macOS">
+<BindingSet name="Ardoton macOS">
   <Bindings name="Editing">
     <Press>
       <Binding key="equal" action="Editing/temporal-zoom-in" group="Shared Editing" />

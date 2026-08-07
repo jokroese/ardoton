@@ -1,12 +1,12 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Resize Loop End",
-	author = "Ardourton",
+	name = "Ardoton: Resize Loop End",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Shorten or lengthen the session loop range by moving its end point one bar
 (the "bars" param) earlier or later, keeping the start fixed.
 
-Deliberately a bar rather than the editor grid. Ardourton seeds grid-type to
+Deliberately a bar rather than the editor grid. Ardoton seeds grid-type to
 GridTypeBeatDiv32 as an *adaptive ceiling* (docs/concepts/adaptive-grid-and-snap.md), so
 Editor:get_grid_type_as_beats would report a 1/128 note here -- ~16ms at 120bpm. The
 zoom-scaled resolution that makes that ceiling usable (bbt_ruler_scale, chosen in
@@ -71,7 +71,7 @@ function factory (params)
 		-- than failing silently.
 		local result = loop:set_end (new_end, false)
 		if result ~= 0 then
-			print ("Ardourton: loop end change rejected (new end at or before the loop start, or below the minimum range length)")
+			print ("Ardoton: loop end change rejected (new end at or before the loop start, or below the minimum range length)")
 		end
 	end
 end

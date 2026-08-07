@@ -6,25 +6,25 @@ command_name="${1:-status}"
 installer_dir="${0:A:h}"
 repo_dir="${installer_dir:h}"
 profile_dir="${repo_dir}/profile"
-config_dir="${ARDOURTON_CONFIG_DIR:-${HOME}/Library/Preferences/Ardour9}"
-state_dir="${config_dir}/ardourton"
+config_dir="${ARDOTON_CONFIG_DIR:-${HOME}/Library/Preferences/Ardour9}"
+state_dir="${config_dir}/ardoton"
 receipt_file="${state_dir}/receipt"
 backup_root="${state_dir}/backups"
 
 script_names=(
-  ardourton_add_audio_track.lua
-  ardourton_add_midi_track.lua
-  ardourton_add_return.lua
-  ardourton_set_loop.lua
-  ardourton_duplicate_tracks.lua
-  ardourton_beat_production.lua
-  ardourton_clear_region_fades.lua
-  ardourton_duplicate_time.lua
-  ardourton_move_loop_by_length.lua
-  ardourton_nudge_loop.lua
-  ardourton_resize_loop_end.lua
-  ardourton_scale_loop_length.lua
-  ardourton_toggle_triplet_grid.lua
+  ardoton_add_audio_track.lua
+  ardoton_add_midi_track.lua
+  ardoton_add_return.lua
+  ardoton_set_loop.lua
+  ardoton_duplicate_tracks.lua
+  ardoton_beat_production.lua
+  ardoton_clear_region_fades.lua
+  ardoton_duplicate_time.lua
+  ardoton_move_loop_by_length.lua
+  ardoton_nudge_loop.lua
+  ardoton_resize_loop_end.lua
+  ardoton_scale_loop_length.lua
+  ardoton_toggle_triplet_grid.lua
 )
 
 targets=(
@@ -32,7 +32,7 @@ targets=(
   ui_config
   ui_scripts
   instant.xml
-  themes/ardourton-ardour.colors
+  themes/ardoton-ardour.colors
 )
 
 for script_name in "${script_names[@]}"; do
@@ -40,7 +40,7 @@ for script_name in "${script_names[@]}"; do
 done
 
 fail () {
-  print -u2 -- "Ardourton: $*"
+  print -u2 -- "Ardoton: $*"
   exit 1
 }
 
@@ -59,14 +59,14 @@ remove_temporary_files () {
 # rather than on stdout: a command substitution would register it in a subshell's array,
 # where the trap in this shell would never see it.
 temporary_file () {
-  temporary_path="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ardourton-$1.XXXXXX")"
+  temporary_path="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ardoton-$1.XXXXXX")"
   temporary_files+=("${temporary_path}")
 }
 
 trap remove_temporary_files EXIT INT TERM
 
 check_ardour_closed () {
-  if [[ "${ARDOURTON_SKIP_PROCESS_CHECK:-0}" == "1" ]]; then
+  if [[ "${ARDOTON_SKIP_PROCESS_CHECK:-0}" == "1" ]]; then
     return
   fi
   if /usr/bin/pgrep -x Ardour9 >/dev/null 2>&1; then
@@ -75,7 +75,7 @@ check_ardour_closed () {
 }
 
 check_version () {
-  if [[ "${ARDOURTON_SKIP_VERSION_CHECK:-0}" == "1" ]]; then
+  if [[ "${ARDOTON_SKIP_VERSION_CHECK:-0}" == "1" ]]; then
     return
   fi
 
@@ -238,7 +238,7 @@ install_instant_xml () {
 }
 
 action_state_fragment () {
-  print -r -- "${profile_dir}/ui-scripts/ardourton-actions.lua-state"
+  print -r -- "${profile_dir}/ui-scripts/ardoton-actions.lua-state"
 }
 
 # Decode the existing <ActionScript> payload of $1 into the file $2. A configuration with no
@@ -260,13 +260,13 @@ decode_action_script () {
   return 0
 }
 
-# The slot range Ardourton claims, read off the checked-in fragment rather than hardcoded,
+# The slot range Ardoton claims, read off the checked-in fragment rather than hardcoded,
 # so the reserved range and the payload can never disagree.
 reserved_slot_range () {
   local -a slots
   slots=(${(f)"$(/usr/bin/grep -o -E 'scripts\[[0-9]+\]' "$(action_state_fragment)" |
     /usr/bin/sed -E 's/[^0-9]//g' | /usr/bin/sort -n -u)"})
-  (( ${#slots} > 0 )) || fail "The Ardourton action-state fragment declares no slots."
+  (( ${#slots} > 0 )) || fail "The Ardoton action-state fragment declares no slots."
   print -r -- "${slots[1]} ${slots[-1]}"
 }
 
@@ -282,7 +282,7 @@ occupied_reserved_slots () {
     /usr/bin/awk -v low="${low}" -v high="${high}" '$1 >= low && $1 <= high' || true
 }
 
-# Runs before anything is created, copied or merged: Ardourton owns the reserved slots while
+# Runs before anything is created, copied or merged: Ardoton owns the reserved slots while
 # installed and will not silently replace whatever is already in them.
 preflight_ui_scripts () {
   local ui_scripts="${config_dir}/ui_scripts"
@@ -299,10 +299,10 @@ preflight_ui_scripts () {
   [[ -n "${occupied}" ]] || return 0
 
   read -r low high <<< "$(reserved_slot_range)"
-  print -u2 -- "Ardourton: Lua action slots ${low}-${high} are reserved for Ardourton, but these are already in use: ${occupied}"
-  print -u2 -- "Ardourton: Nothing has been changed."
-  print -u2 -- "Ardourton: If a previous Ardourton version is installed, restore it first with restore.command, then install this version."
-  print -u2 -- "Ardourton: Otherwise remove or reassign those actions in Ardour (Menu > Window > Scripting), then install again."
+  print -u2 -- "Ardoton: Lua action slots ${low}-${high} are reserved for Ardoton, but these are already in use: ${occupied}"
+  print -u2 -- "Ardoton: Nothing has been changed."
+  print -u2 -- "Ardoton: If a previous Ardoton version is installed, restore it first with restore.command, then install this version."
+  print -u2 -- "Ardoton: Otherwise remove or reassign those actions in Ardour (Menu > Window > Scripting), then install again."
   exit 1
 }
 
@@ -352,7 +352,7 @@ install_ui_scripts () {
 install_profile () {
   check_ardour_closed
   check_version
-  [[ ! -f "${receipt_file}" ]] || fail "Ardourton is already installed. Restore it first."
+  [[ ! -f "${receipt_file}" ]] || fail "Ardoton is already installed. Restore it first."
   preflight_ui_scripts
 
   /bin/mkdir -p "${config_dir}" "${state_dir}" "${backup_root}"
@@ -365,8 +365,8 @@ install_profile () {
     "${profile_dir}/keybindings/macos/ardour.keys" \
     "${config_dir}/ardour.keys"
   /bin/cp -p \
-    "${profile_dir}/theme/ardourton-ardour.colors" \
-    "${config_dir}/themes/ardourton-ardour.colors"
+    "${profile_dir}/theme/ardoton-ardour.colors" \
+    "${config_dir}/themes/ardoton-ardour.colors"
 
   local script_name
   for script_name in "${script_names[@]}"; do
@@ -384,14 +384,14 @@ install_profile () {
     print -r -- "backup=${backup_dir}"
   } > "${receipt_file}"
 
-  print -- "Ardourton installed."
+  print -- "Ardoton installed."
   print -- "Backup: ${backup_dir}"
   print -- "Restart Ardour to load the profile."
 }
 
 restore_profile () {
   check_ardour_closed
-  [[ -f "${receipt_file}" ]] || fail "No Ardourton installation receipt was found."
+  [[ -f "${receipt_file}" ]] || fail "No Ardoton installation receipt was found."
 
   local backup_dir
   backup_dir="$(/usr/bin/sed -n 's/^backup=//p' "${receipt_file}")"
@@ -412,15 +412,15 @@ restore_profile () {
   /bin/rm -f "${receipt_file}"
   /usr/bin/rmdir "${config_dir}/themes" "${config_dir}/scripts" 2>/dev/null || true
 
-  print -- "Ardourton restored the pre-install configuration."
+  print -- "Ardoton restored the pre-install configuration."
   print -- "Backup retained at: ${backup_dir}"
 }
 
 show_status () {
   if [[ -f "${receipt_file}" ]]; then
-    print -- "Ardourton is installed in ${config_dir}."
+    print -- "Ardoton is installed in ${config_dir}."
   else
-    print -- "Ardourton is not installed in ${config_dir}."
+    print -- "Ardoton is not installed in ${config_dir}."
   fi
 }
 

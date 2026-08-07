@@ -1,6 +1,6 @@
 # Adaptive grid and snap
 
-Ardourton does not implement a new snap engine. Stock Ardour 9.7 already scales most
+Ardoton does not implement a new snap engine. Stock Ardour 9.7 already scales most
 drag/edit snaps with zoom (`SnapToGrid_Scaled`). The shipped profile only seeds defaults
 so that mechanism is active and feels closer to Ableton Live.
 
@@ -75,7 +75,7 @@ musical grid there.
 ## Session caveat
 
 Global `instant.xml` applies when no session is loaded and for **new** sessions. Once a session
-exists, Ardour prefers that session’s own saved Editor state. Installing Ardourton does not
+exists, Ardour prefers that session’s own saved Editor state. Installing Ardoton does not
 rewrite existing session files; open an old project and you may still see the previous
 `grid-type` / `snap-mode` until you change them in-app.
 
@@ -111,7 +111,7 @@ Two Lua-level candidates were checked and ruled out before landing on the actual
   `PBD::Unwinder uw (_loading_session, true)`. A hook on `SetSession` would run while
   `_loading_session` is still `true` — same guard, same no-op.
 
-**Fix, in `profile/scripts/ardourton_beat_production.lua`'s `factory()`:**
+**Fix, in `profile/scripts/ardoton_beat_production.lua`'s `factory()`:**
 
 ```lua
 Editor:set_toggleaction ("Rulers", "toggle-bbt-ruler", true)
@@ -127,7 +127,7 @@ flag, which `restore_ruler_visibility()` has already cleared by this point in se
 restored, *then* `set_state()` applies grid-type). So this runs safely and takes effect
 immediately, right before the template calls `Session:save_state("")`.
 
-**Scope:** this only fixes sessions created via the "Ardourton: Beat Production" template, since
+**Scope:** this only fixes sessions created via the "Ardoton: Beat Production" template, since
 that's the only place the fix is wired in. A session started from a blank New Session or a
 different template will still start with these rulers off. There is no confirmed
 template-independent hook in Ardour 9.7 to fix this globally — see the `SessionLoad`/`SetSession`

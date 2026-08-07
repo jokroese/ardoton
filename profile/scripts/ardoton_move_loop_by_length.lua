@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Move Loop by Loop Length",
-	author = "Ardourton",
+	name = "Ardoton: Move Loop by Loop Length",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Shift the session loop range earlier or later by its own length, so the
 adjacent repeat becomes the active loop.

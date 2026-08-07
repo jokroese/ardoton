@@ -3,7 +3,7 @@
 set -euo pipefail
 
 repo_dir="${0:A:h:h}"
-test_root="$(/usr/bin/mktemp -d "${TMPDIR:-/tmp}/ardourton-test.XXXXXX")"
+test_root="$(/usr/bin/mktemp -d "${TMPDIR:-/tmp}/ardoton-test.XXXXXX")"
 config_dir="${test_root}/Ardour9"
 original_dir="${test_root}/original"
 custom_dir="${test_root}/customized"
@@ -92,11 +92,11 @@ assert_install_refused () {
     print -u2 -- "after:  ${after}"
     return 1
   fi
-  [[ ! -e "${dest}/themes/ardourton-ardour.colors" ]]
-  [[ ! -e "${dest}/scripts/ardourton_beat_production.lua" ]]
-  [[ ! -e "${dest}/scripts/ardourton_duplicate_time.lua" ]]
-  [[ ! -e "${dest}/ardourton/receipt" ]]
-  [[ ! -e "${dest}/ardourton/backups" ]]
+  [[ ! -e "${dest}/themes/ardoton-ardour.colors" ]]
+  [[ ! -e "${dest}/scripts/ardoton_beat_production.lua" ]]
+  [[ ! -e "${dest}/scripts/ardoton_duplicate_time.lua" ]]
+  [[ ! -e "${dest}/ardoton/receipt" ]]
+  [[ ! -e "${dest}/ardoton/backups" ]]
 }
 
 install_must_fail () {
@@ -123,9 +123,9 @@ install_must_fail () {
 
 # Every slot/name pair the shipped fragment declares must survive into the installed
 # payload -- not just the one display name the installer used to look for.
-assert_all_ardourton_slots_installed () {
+assert_all_ardoton_slots_installed () {
   local dest="$1"
-  local fragment="${repo_dir}/profile/ui-scripts/ardourton-actions.lua-state"
+  local fragment="${repo_dir}/profile/ui-scripts/ardoton-actions.lua-state"
   local decoded pair
   decoded="$(decode_ui_scripts "${dest}/ui_scripts")"
 
@@ -153,16 +153,16 @@ assert_all_ardourton_slots_installed () {
 
 assert_expected_files_installed () {
   local dest="$1"
-  [[ -f "${dest}/themes/ardourton-ardour.colors" ]]
-  [[ -f "${dest}/scripts/ardourton_beat_production.lua" ]]
-  [[ -f "${dest}/scripts/ardourton_add_audio_track.lua" ]]
-  [[ -f "${dest}/scripts/ardourton_add_midi_track.lua" ]]
-  [[ -f "${dest}/scripts/ardourton_add_return.lua" ]]
-  [[ -f "${dest}/scripts/ardourton_set_loop.lua" ]]
-  [[ -f "${dest}/scripts/ardourton_duplicate_tracks.lua" ]]
+  [[ -f "${dest}/themes/ardoton-ardour.colors" ]]
+  [[ -f "${dest}/scripts/ardoton_beat_production.lua" ]]
+  [[ -f "${dest}/scripts/ardoton_add_audio_track.lua" ]]
+  [[ -f "${dest}/scripts/ardoton_add_midi_track.lua" ]]
+  [[ -f "${dest}/scripts/ardoton_add_return.lua" ]]
+  [[ -f "${dest}/scripts/ardoton_set_loop.lua" ]]
+  [[ -f "${dest}/scripts/ardoton_duplicate_tracks.lua" ]]
   [[ -f "${dest}/ardour.keys" ]]
   [[ -f "${dest}/instant.xml" ]]
-  [[ -f "${dest}/ardourton/receipt" ]]
+  [[ -f "${dest}/ardoton/receipt" ]]
 }
 
 assert_grid_snap_defaults () {
@@ -183,16 +183,16 @@ assert_grid_snap_defaults () {
 
 run_install () {
   local dest="$1"
-  ARDOURTON_CONFIG_DIR="${dest}" \
-  ARDOURTON_SKIP_PROCESS_CHECK=1 \
-  ARDOURTON_SKIP_VERSION_CHECK=1 \
+  ARDOTON_CONFIG_DIR="${dest}" \
+  ARDOTON_SKIP_PROCESS_CHECK=1 \
+  ARDOTON_SKIP_VERSION_CHECK=1 \
     "${repo_dir}/installer/macos.sh" install
 }
 
 run_restore () {
   local dest="$1"
-  ARDOURTON_CONFIG_DIR="${dest}" \
-  ARDOURTON_SKIP_PROCESS_CHECK=1 \
+  ARDOTON_CONFIG_DIR="${dest}" \
+  ARDOTON_SKIP_PROCESS_CHECK=1 \
     "${repo_dir}/installer/macos.sh" restore
 }
 
@@ -211,22 +211,22 @@ assert_expected_files_installed "${config_dir}"
 /usr/bin/xmllint --noout "${config_dir}/ui_config" "${config_dir}/ui_scripts" "${config_dir}/instant.xml"
 /usr/bin/grep -q 'name="sentinel" value="preserve-me"' "${config_dir}/ui_config"
 /usr/bin/grep -q 'name="unrelated-ui-option" value="keep-me"' "${config_dir}/ui_config"
-/usr/bin/grep -q 'name="color-file" value="ardourton"' "${config_dir}/ui_config"
-/usr/bin/grep -q 'BindingSet name="Ardourton macOS"' "${config_dir}/ardour.keys"
+/usr/bin/grep -q 'name="color-file" value="ardoton"' "${config_dir}/ui_config"
+/usr/bin/grep -q 'BindingSet name="Ardoton macOS"' "${config_dir}/ardour.keys"
 [[ ! -e "${config_dir}/ardour-9.7.bindings" ]]
 assert_grid_snap_defaults "${config_dir}"
 
 # Receipt version matches the profile manifest.
-/usr/bin/grep -q '^version=0\.2\.5$' "${config_dir}/ardourton/receipt"
-/usr/bin/grep -q '^backup=' "${config_dir}/ardourton/receipt"
-backup_path="$(/usr/bin/awk -F= '/^backup=/{print $2}' "${config_dir}/ardourton/receipt")"
+/usr/bin/grep -q '^version=0\.2\.5$' "${config_dir}/ardoton/receipt"
+/usr/bin/grep -q '^backup=' "${config_dir}/ardoton/receipt"
+backup_path="$(/usr/bin/awk -F= '/^backup=/{print $2}' "${config_dir}/ardoton/receipt")"
 [[ -d "${backup_path}" ]]
 [[ -f "${backup_path}/files/instant.xml" ]]
 
 decoded="$(decode_ui_scripts "${config_dir}/ui_scripts")"
 [[ "${decoded}" == *"Unrelated User Action"* ]]
 [[ "${decoded}" == *'scripts[7] ='* ]]
-assert_all_ardourton_slots_installed "${config_dir}"
+assert_all_ardoton_slots_installed "${config_dir}"
 
 run_restore "${config_dir}"
 
@@ -238,9 +238,9 @@ run_restore "${config_dir}"
 [[ "$(hash_file "${config_dir}/ui_scripts")" == "${scripts_hash}" ]]
 [[ "$(hash_file "${config_dir}/ardour.keys")" == "${keys_hash}" ]]
 [[ "$(hash_file "${config_dir}/instant.xml")" == "${instant_hash}" ]]
-[[ ! -e "${config_dir}/themes/ardourton-ardour.colors" ]]
-[[ ! -e "${config_dir}/scripts/ardourton_beat_production.lua" ]]
-[[ ! -e "${config_dir}/ardourton/receipt" ]]
+[[ ! -e "${config_dir}/themes/ardoton-ardour.colors" ]]
+[[ ! -e "${config_dir}/scripts/ardoton_beat_production.lua" ]]
+[[ ! -e "${config_dir}/ardoton/receipt" ]]
 
 # --- Install over a representative customized fixture ---
 write_stock_fixture "${custom_dir}"
@@ -262,8 +262,8 @@ run_restore "${custom_dir}"
 /usr/bin/cmp "${custom_original}/ardour.keys" "${custom_dir}/ardour.keys"
 /usr/bin/cmp "${custom_original}/instant.xml" "${custom_dir}/instant.xml"
 [[ -f "${custom_dir}/themes/other.colors" ]]
-[[ ! -e "${custom_dir}/themes/ardourton-ardour.colors" ]]
-[[ ! -e "${custom_dir}/scripts/ardourton_beat_production.lua" ]]
+[[ ! -e "${custom_dir}/themes/ardoton-ardour.colors" ]]
+[[ ! -e "${custom_dir}/scripts/ardoton_beat_production.lua" ]]
 
 # --- Absent instant.xml creates a stub with target defaults ---
 absent_dir="${test_root}/absent-instant"
@@ -276,9 +276,9 @@ run_install "${absent_dir}"
 run_restore "${absent_dir}"
 [[ ! -e "${absent_dir}/instant.xml" ]]
 
-# --- Occupied Ardourton slots are refused before anything is touched ---
+# --- Occupied Ardoton slots are refused before anything is touched ---
 #
-# Ardourton owns Lua action slots 17-32 while installed. There is no dynamic relocation:
+# Ardoton owns Lua action slots 17-32 while installed. There is no dynamic relocation:
 # if any of those slots is already assigned, the install must abort before it can silently
 # replace a user's own action. The supported upgrade path is restore-then-install.
 
@@ -308,14 +308,14 @@ collision_case slot17-and-32 \
   "scripts = {}"$'\n'"$(user_action_entry 17 'First')"$'\n'"$(user_action_entry 32 'Last')" \
   "17" "32"
 
-# A stale Ardourton payload with no receipt is indistinguishable from a user action, and is
+# A stale Ardoton payload with no receipt is indistinguishable from a user action, and is
 # refused for the same reason: the installer must not decide on its own what to overwrite.
-collision_case stale-ardourton \
-  "scripts = {}"$'\n'"$(user_action_entry 28 'Ardourton: Add Stereo Audio Track')"$'\n'"$(user_action_entry 29 'Ardourton: Add MIDI Track')"$'\n'"$(user_action_entry 30 'Ardourton: Add Return')"$'\n'"$(user_action_entry 31 'Ardourton: Set and Toggle Loop')"$'\n'"$(user_action_entry 32 'Ardourton: Duplicate Tracks')" \
+collision_case stale-ardoton \
+  "scripts = {}"$'\n'"$(user_action_entry 28 'Ardoton: Add Stereo Audio Track')"$'\n'"$(user_action_entry 29 'Ardoton: Add MIDI Track')"$'\n'"$(user_action_entry 30 'Ardoton: Add Return')"$'\n'"$(user_action_entry 31 'Ardoton: Set and Toggle Loop')"$'\n'"$(user_action_entry 32 'Ardoton: Duplicate Tracks')" \
   "28" "29" "30" "31" "32"
 
-collision_case partial-ardourton \
-  "scripts = {}"$'\n'"$(user_action_entry 17 'Ardourton: Duplicate Time')"$'\n'"$(user_action_entry 20 'Ardourton: Lengthen Loop')"$'\n'"$(user_action_entry 28 'Ardourton: Add Stereo Audio Track')" \
+collision_case partial-ardoton \
+  "scripts = {}"$'\n'"$(user_action_entry 17 'Ardoton: Duplicate Time')"$'\n'"$(user_action_entry 20 'Ardoton: Lengthen Loop')"$'\n'"$(user_action_entry 28 'Ardoton: Add Stereo Audio Track')" \
   "17" "20" "28"
 
 # The serialized form Ardour itself writes must be detected too, not only the
@@ -345,15 +345,15 @@ write_ui_scripts_payload "${free_dir}" \
   "scripts = {}"$'\n'"$(user_action_entry 1 'User One')"$'\n'"$(user_action_entry 16 'User Sixteen')"
 run_install "${free_dir}"
 assert_expected_files_installed "${free_dir}"
-assert_all_ardourton_slots_installed "${free_dir}"
+assert_all_ardoton_slots_installed "${free_dir}"
 free_decoded="$(decode_ui_scripts "${free_dir}/ui_scripts")"
 [[ "${free_decoded}" == *"$(user_action_entry 1 'User One')"* ]]
 [[ "${free_decoded}" == *"$(user_action_entry 16 'User Sixteen')"* ]]
 
-# --- Installing twice over an Ardourton payload is refused, not doubled ---
+# --- Installing twice over an Ardoton payload is refused, not doubled ---
 # The receipt check catches the normal case; deleting the receipt leaves the stale-payload
 # check as the backstop.
-/bin/rm -f "${free_dir}/ardourton/receipt"
+/bin/rm -f "${free_dir}/ardoton/receipt"
 free_before="$(config_fingerprint "${free_dir}")"
 install_must_fail "${free_dir}" "17" "32"
 free_after="$(config_fingerprint "${free_dir}")"

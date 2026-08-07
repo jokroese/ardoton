@@ -49,7 +49,7 @@ end
 
 -- Bytecode/slot-assignment check: every manifest slot must be present in the installed
 -- action-script state and must load as a valid Ardour-compiled factory.
-local action_state_path = profile_dir .. "/ui-scripts/ardourton-actions.lua-state"
+local action_state_path = profile_dir .. "/ui-scripts/ardoton-actions.lua-state"
 local action_state = assert (io.open (action_state_path, "rb"))
 local serialized_actions = action_state:read ("*a")
 action_state:close ()
@@ -60,7 +60,7 @@ assert (load (serialized_actions, "@" .. action_state_path, "t", action_environm
 for _, entry in ipairs (manifest.slots) do
 	local slot = entry.slot
 	local action = assert (action_environment.scripts[slot], "missing action slot " .. slot)
-	local factory = assert (load (action.f, "ardourton-action-" .. slot, "b"))
+	local factory = assert (load (action.f, "ardoton-action-" .. slot, "b"))
 	assert (type (factory) == "function", "invalid action factory " .. slot)
 	assert (type (factory ()) == "function", "invalid action body " .. slot)
 end

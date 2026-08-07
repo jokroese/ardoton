@@ -1,7 +1,7 @@
 # Lua release qualification plan
 
 Status: implemented; see Implementation results  
-Target baseline: Ardourton 0.2.4 at merge commit `2e8b054`; Ardour 9.7.0 on macOS  
+Target baseline: Ardoton 0.2.4 at merge commit `2e8b054`; Ardour 9.7.0 on macOS  
 Target release: 0.2.5, unless the owner explicitly chooses a different version
 
 ## Objective
@@ -54,7 +54,7 @@ Required work:
 Out of scope:
 
 - new Lua shortcuts;
-- dynamic reassignment of Ardourton actions to arbitrary free slots;
+- dynamic reassignment of Ardoton actions to arbitrary free slots;
 - an Ardour source patch;
 - a general Ableton GUI automation framework;
 - transactional redesign of the whole installer;
@@ -92,7 +92,7 @@ uv run pytest -m "not e2e and not requires_ardour"
 uv run pytest -m "requires_ardour and not e2e"
 ```
 
-Run E2E only when no other Ardourton E2E process is active. Record any pre-existing failure;
+Run E2E only when no other Ardoton E2E process is active. Record any pre-existing failure;
 do not weaken an assertion to make the baseline green.
 
 Expected baseline:
@@ -107,19 +107,19 @@ Expected baseline:
 
 ### Required policy
 
-Ardourton owns slots 17-32 while installed. The installer must abort before changing any file
+Ardoton owns slots 17-32 while installed. The installer must abort before changing any file
 if the decoded existing `ui_scripts` assigns any of those slots.
 
-Do not silently overwrite a user action. Do not treat one Ardourton display name as proof that
+Do not silently overwrite a user action. Do not treat one Ardoton display name as proof that
 all 16 actions are present. Do not implement dynamic slot relocation in this phase.
 
 The normal supported upgrade remains:
 
-1. restore the previous Ardourton installation using its receipt;
-2. install the new version into the restored pre-Ardourton configuration.
+1. restore the previous Ardoton installation using its receipt;
+2. install the new version into the restored pre-Ardoton configuration.
 
 If slots 17-32 are present without a receipt, fail with an actionable message listing the
-occupied slots. This includes stale or partial Ardourton payloads. The user must remove or
+occupied slots. This includes stale or partial Ardoton payloads. The user must remove or
 reassign those actions in Ardour before installation.
 
 ### Installer changes
@@ -133,7 +133,7 @@ Modify `installer/macos.sh` as follows:
 4. If a target slot is occupied, print all occupied target slot numbers and exit nonzero.
 5. Preserve assignments outside 17-32 byte-for-byte.
 6. Remove the display-name sentinel at `installer/macos.sh:232-235`.
-7. When preflight succeeds, append the complete checked-in Ardourton fragment exactly once.
+7. When preflight succeeds, append the complete checked-in Ardoton fragment exactly once.
 8. Ensure all temporary decoded files are removed on success and failure.
 
 It is acceptable for the shell implementation to inspect the checked-in action-state fragment
@@ -146,23 +146,23 @@ tests, then add isolated cases for:
 
 | Existing payload | Expected result |
 |---|---|
-| only unrelated slot 7 | install succeeds; slot 7 and all Ardourton slots remain present |
+| only unrelated slot 7 | install succeeds; slot 7 and all Ardoton slots remain present |
 | user action in slot 17 | install fails before mutation and reports slot 17 |
 | user action in slot 28 | install fails before mutation and reports slot 28 |
 | user actions in slots 17 and 32 | install fails and reports both slots |
-| old Ardourton actions in slots 28-32 without a receipt | install fails as stale/occupied |
-| partial Ardourton actions in slots 17, 20, and 28 | install fails as stale/occupied |
+| old Ardoton actions in slots 28-32 without a receipt | install fails as stale/occupied |
+| partial Ardoton actions in slots 17, 20, and 28 | install fails as stale/occupied |
 | malformed or undecodable `ActionScript` | install fails before mutation |
 
 For every failure case, assert:
 
 - `ardour.keys`, `ui_config`, `ui_scripts`, and `instant.xml` retain their original hashes;
-- no Ardourton theme or script is copied;
+- no Ardoton theme or script is copied;
 - no receipt is written; and
 - no backup is required to recover from the refused install.
 
 After a successful install, decode `ui_scripts` and assert every slot/name pair from 17-32,
-not only `Ardourton: Add Stereo Audio Track`.
+not only `Ardoton: Add Stereo Audio Track`.
 
 ### Step 2 acceptance
 
@@ -175,7 +175,7 @@ Both commands pass, and no collision test leaves a partially installed profile.
 
 ## Step 3: establish Live's Duplicate Time semantics
 
-Do this before changing `ardourton_duplicate_time.lua` or writing the final multi-track
+Do this before changing `ardoton_duplicate_time.lua` or writing the final multi-track
 assertion. Use Ableton Live 12 as the behavior oracle.
 
 ### Manual Live matrix
@@ -335,7 +335,7 @@ Ardour 9.7 clamps `AudioRegion::set_fade_in_length` and `set_fade_out_length` to
 
 Update:
 
-- `profile/scripts/ardourton_clear_region_fades.lua`;
+- `profile/scripts/ardoton_clear_region_fades.lua`;
 - the S16-09 contract note;
 - `docs/installation.md`; and
 - relevant test names/comments.
@@ -505,7 +505,7 @@ an immediate transport-state response.
 Change `tools/build_lua_actions.py --check` to behave as a real check:
 
 - generate the expected content;
-- compare it with `profile/ui-scripts/ardourton-actions.lua-state`;
+- compare it with `profile/ui-scripts/ardoton-actions.lua-state`;
 - exit 0 with concise output when equal;
 - exit nonzero with a concise mismatch message when different; and
 - never rewrite the tracked file in check mode.
@@ -600,8 +600,8 @@ docs/installation.md
 docs/lua-release-qualification-plan.md
 installer/macos.sh
 profile/manifest.json
-profile/scripts/ardourton_clear_region_fades.lua
-profile/ui-scripts/ardourton-actions.lua-state
+profile/scripts/ardoton_clear_region_fades.lua
+profile/ui-scripts/ardoton-actions.lua-state
 pyproject.toml
 tests/baseline.json
 tests/e2e/conftest.py
@@ -726,7 +726,7 @@ tree with Ardour closed:
 | `git diff --check` | clean |
 
 Installer collision cases added: user action in slot 17, in slot 28, in slots 17+32, a
-stale full Ardourton payload in 28-32 without a receipt, a partial payload in 17/20/28,
+stale full Ardoton payload in 28-32 without a receipt, a partial payload in 17/20/28,
 the flat serialized form Ardour writes, an undecodable ActionScript, unrelated slots 1/7/16
 preserved byte-for-byte, and a receiptless double install. Every refusal is asserted to
 leave all four config files hash-identical with no theme, script, receipt or backup.

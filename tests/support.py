@@ -1,4 +1,4 @@
-"""Shared paths and loaders for the Ardourton regression harness."""
+"""Shared paths and loaders for the Ardoton regression harness."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ CONTRACT = ROOT / "contract"
 BASELINE_PATH = TESTS / "baseline.json"
 EXPECTATIONS_PATH = TESTS / "expectations.toml"
 KEYMAP_PATH = PROFILE / "keybindings" / "macos" / "ardour.keys"
-ACTION_STATE_PATH = PROFILE / "ui-scripts" / "ardourton-actions.lua-state"
+ACTION_STATE_PATH = PROFILE / "ui-scripts" / "ardoton-actions.lua-state"
 MANIFEST_PATH = PROFILE / "manifest.json"
 RESULTS_DIR = ROOT / "test-results"
 

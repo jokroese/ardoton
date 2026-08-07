@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Ardour theme-name="Ardourton">
+<Ardour theme-name="Ardoton">
   <Colors>
     <Color name="alert:blue" value="4C8EDAFF"/>  <!-- OneDark Blue -->
     <Color name="alert:cyan" value="4FB6B2FF"/>  <!-- OneDark Cyan -->

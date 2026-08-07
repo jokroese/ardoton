@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Clear Region Fades",
-	author = "Ardourton",
+	name = "Ardoton: Clear Region Fades",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Deactivate the fade-in and fade-out of the selected audio region(s) and
 reset both fade lengths to Ardour's 64-sample minimum, so the previous fade shape does not

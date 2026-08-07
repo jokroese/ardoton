@@ -32,7 +32,7 @@
               "kind": "Lua API",
               "claim": "Lua feasible",
               "result": "Candidate",
-              "reference": "profile/scripts/ardourton_add_audio_track.lua:22-40;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
+              "reference": "profile/scripts/ardoton_add_audio_track.lua:22-40;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
             },
             {
               "kind": "Profile binding",
@@ -70,7 +70,7 @@
               "kind": "Lua API",
               "claim": "Lua feasible",
               "result": "Candidate",
-              "reference": "profile/scripts/ardourton_add_midi_track.lua:20-46;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
+              "reference": "profile/scripts/ardoton_add_midi_track.lua:20-46;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
             },
             {
               "kind": "Profile binding",
@@ -102,7 +102,7 @@
               "kind": "Lua API",
               "claim": "Lua feasible",
               "result": "Candidate",
-              "reference": "profile/scripts/ardourton_add_return.lua:34-62;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
+              "reference": "profile/scripts/ardoton_add_return.lua:34-62;../ardour@9.7:gtk2_ardour/luainstance.cc:1975-2007"
             },
             {
               "kind": "Profile binding",

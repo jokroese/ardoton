@@ -3,7 +3,7 @@ revision = 3
 requires-python = ">=3.12"
 
 [[package]]
-name = "ardourton"
+name = "ardoton"
 version = "0.2.5"
 source = { virtual = "." }
 

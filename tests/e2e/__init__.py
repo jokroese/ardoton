@@ -1,1 +1,1 @@
-# E2E package for Ardourton GUI regression tests.
+# E2E package for Ardoton GUI regression tests.

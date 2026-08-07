@@ -77,7 +77,7 @@ Authoritative artifact used to support an evidence claim.
 - `Callback implementation`: Implementation behind an existing action or UI behavior.
 - `Lua API`: Public Lua API exposed by Ardour.
 - `Default binding`: Factory Ardour key binding.
-- `Profile binding`: Ardourton profile key binding.
+- `Profile binding`: Ardoton profile key binding.
 - `Ardour manual`: Official Ardour user documentation.
 - `Manual test`: Observed behavior in the installed Ardour build.
 - `E2E test`: Automated behavior verification.

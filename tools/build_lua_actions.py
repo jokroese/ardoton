@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate profile/ui-scripts/ardourton-actions.lua-state from profile/scripts/manifest.json.
+"""Generate profile/ui-scripts/ardoton-actions.lua-state from profile/scripts/manifest.json.
 
 Requires Ardour 9.7 installed locally: this shells out to Ardour's own bundled Lua build
 (ardour9-lua) to compile each script's `factory` function and dump its bytecode, because
@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROFILE = ROOT / "profile"
 MANIFEST_PATH = PROFILE / "scripts" / "manifest.json"
 SCRIPTS_DIR = PROFILE / "scripts"
-ACTION_STATE_PATH = PROFILE / "ui-scripts" / "ardourton-actions.lua-state"
+ACTION_STATE_PATH = PROFILE / "ui-scripts" / "ardoton-actions.lua-state"
 DUMP_SCRIPT = ROOT / "tools" / "dump_lua_action.lua"
 
 ARDOUR_LUA = Path("/Applications/Ardour9.app/Contents/MacOS/ardour9-lua")

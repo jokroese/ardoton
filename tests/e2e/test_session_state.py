@@ -26,7 +26,7 @@ def test_fixture_session_has_master_route() -> None:
 
 
 def test_beat_production_script_is_installed(isolated_home_ready) -> None:
-    script = isolated_home_ready.config_dir / "scripts" / "ardourton_beat_production.lua"
+    script = isolated_home_ready.config_dir / "scripts" / "ardoton_beat_production.lua"
     assert script.is_file()
     text = script.read_text(encoding="utf-8")
     assert "SessionInit" in text or "session" in text.lower()
