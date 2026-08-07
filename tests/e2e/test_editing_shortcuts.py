@@ -1,10 +1,10 @@
-"""Discovery probes for the three Phase 2 shortcuts that are not loop-range edits.
+"""Runtime coverage for the three Phase 2 Lua shortcuts that are not loop-range edits.
 
 Unlike the loop family, these need editor state the MCP surface does not expose directly:
-the grid type lives in the session's instant.xml, and fades and time duplication need a
-selection. Each test here dumps what it can see so the assertions can be written from an
-observed payload rather than a guess -- the same approach that settled the marker JSON
-shape in test_loop_shortcuts.
+the grid type is only observable in the session's instant.xml, and fades and time
+duplication both need a selection. Each test establishes that state through real Editor key
+dispatch or through the session fixture, then asserts against normalized state rather than
+a screenshot.
 """
 
 from __future__ import annotations
@@ -41,6 +41,8 @@ TOGGLEABLE_GRIDS = {
     "GridTypeBeatDiv16": "GridTypeBeatDiv24",
 }
 
+UNTOGGLEABLE_GRID = "GridTypeBeatDiv32"
+
 
 def _dump(label: str, payload: object) -> None:
     from support import ensure_results_dir
@@ -52,35 +54,66 @@ def _dump(label: str, payload: object) -> None:
     print(f"\n----- {label} -----\n{text}\n")
 
 
-def _instant_xml(ardour_session) -> dict[str, object]:
-    """Everything we might need to locate the editor's persisted grid type."""
-    candidates = {
-        "session_dir/instant.xml": ardour_session.session_dir / "instant.xml",
-        "config_dir/instant.xml": ardour_session.config_dir / "instant.xml",
-    }
-    out: dict[str, object] = {}
-    for label, path in candidates.items():
-        out[label] = path.read_text(encoding="utf-8") if path.is_file() else None
-    return out
-
-
-def test_probe_triplet_grid(ardour_session) -> None:
-    """S13-04. Find where the grid type is observable and whether Cmd+3 moves it.
-
-    Dumps instant.xml before, after Cmd+3, and after a session save, so we can tell both
-    what the grid was and whether the file updates without an explicit save.
-    """
-    mcp = ardour_session.mcp()
-    _dump("probe-grid-0-before", _instant_xml(ardour_session))
-
+def _toggle_grid(ardour_session) -> None:
     ardour_session.focus_main_window()
-    ardour_session.send_hotkey(KEY_3, FLAG_COMMAND)
-    time.sleep(SETTLE)
-    _dump("probe-grid-1-after-cmd3", _instant_xml(ardour_session))
+    ardour_session.send_hotkey(KEY_3, FLAG_COMMAND)  # Editor Primary-3 -> LuaAction/script-19
 
-    mcp.call("session_save")
-    time.sleep(SETTLE)
-    _dump("probe-grid-2-after-save", _instant_xml(ardour_session))
+
+@pytest.mark.parametrize(
+    ("ardour_session", "binary", "triplet"),
+    [({"grid_type": binary}, binary, triplet) for binary, triplet in TOGGLEABLE_GRIDS.items()],
+    indirect=["ardour_session"],
+    ids=list(TOGGLEABLE_GRIDS),
+)
+def test_triplet_grid_round_trips(ardour_session, coverage_tracker, binary, triplet) -> None:
+    """S13-04. Cmd+3 swaps a binary subdivision for its triplet, and back again.
+
+    The pairs come from the script's own two lookup tables; a reversed or missing entry
+    fails here rather than surfacing as a grid that quietly stops toggling.
+    """
+    assert ardour_session.editor_grid_type() == binary, "fixture did not seed the starting grid"
+
+    try:
+        _toggle_grid(ardour_session)
+        got = poll_until(ardour_session.editor_grid_type, lambda value: value == triplet)
+        assert got == triplet, f"Cmd+3 on {binary} should select {triplet}"
+
+        _toggle_grid(ardour_session)
+        got = poll_until(ardour_session.editor_grid_type, lambda value: value == binary)
+        assert got == binary, f"Cmd+3 on {triplet} should return to {binary}"
+
+        coverage_tracker["S13-04"]["e2e"] = "passed"
+    except Exception:
+        coverage_tracker["S13-04"]["e2e"] = "failed"
+        _dump(f"S13-04-{binary}", ardour_session.editor_grid_type())
+        raise
+
+
+@pytest.mark.parametrize(
+    "ardour_session", [{"grid_type": UNTOGGLEABLE_GRID}], indirect=True, ids=[UNTOGGLEABLE_GRID]
+)
+def test_triplet_grid_leaves_the_profile_default_alone(ardour_session, coverage_tracker) -> None:
+    """S13-04. The shipped 1/32 default has no triplet counterpart, so Cmd+3 does nothing.
+
+    Ardour's triplet series stops at GridTypeBeatDiv24. The four round-trip cases above
+    prove the key reaches the action in an otherwise identical session, so a grid that does
+    not move here is the documented no-op rather than a dead binding.
+    """
+    assert ardour_session.editor_grid_type() == UNTOGGLEABLE_GRID
+
+    try:
+        _toggle_grid(ardour_session)
+        # Nothing should be written at all; give a change every chance to appear first.
+        settled = poll_until(
+            ardour_session.editor_grid_type,
+            lambda value: value != UNTOGGLEABLE_GRID,
+            timeout=3.0,
+        )
+        assert settled == UNTOGGLEABLE_GRID, "Cmd+3 must not move a grid with no triplet pair"
+        coverage_tracker["S13-04"]["e2e"] = "passed"
+    except Exception:
+        coverage_tracker["S13-04"]["e2e"] = "failed"
+        raise
 
 
 SAMPLE_RATE = 48000
@@ -204,8 +237,13 @@ def test_duplicate_time_copies_the_span_across_every_track(
     # material too and silently changed what is being duplicated.
     mcp.set_loop_range(SPAN_START, SPAN_END)
     ardour_session.focus_main_window()
-    ardour_session.send_hotkey(KEY_L, FLAG_COMMAND | FLAG_SHIFT)  # select-all-in-loop-range
-    time.sleep(SETTLE)
+    # Sent twice on purpose. Selecting the same regions again is a no-op, and nothing on the
+    # MCP surface reports the Editor selection, so there is no state to poll for; repeating
+    # the key is the only way to stop a single slow or dropped dispatch from turning into a
+    # duplicate that silently had nothing to work with.
+    for _ in range(2):
+        ardour_session.send_hotkey(KEY_L, FLAG_COMMAND | FLAG_SHIFT)  # select-all-in-loop-range
+        time.sleep(SETTLE)
 
     try:
         ardour_session.send_hotkey(KEY_D, FLAG_COMMAND | FLAG_SHIFT)

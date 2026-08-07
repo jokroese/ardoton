@@ -383,6 +383,41 @@ class ArdourSession:
                     else:
                         path.unlink()
 
+    def set_editor_grid_type(self, grid_type: str) -> None:
+        """Seed the Editor grid in the copied session, before Ardour reads it.
+
+        With a session loaded, ARDOUR_UI::editor_settings takes the Editor node from the
+        session's own instant.xml and does not fall back to the one the installer writes
+        into the configuration directory
+        (../ardour@9.7:gtk2_ardour/ardour_ui_startup.cc:301-315), so this is the file a test
+        has to seed. Call it after prepare_session_copy and before launch; it edits the
+        temporary copy, never the repository fixture.
+        """
+        self.ensure_safe_config_dir()
+        path = self.session_dir / "instant.xml"
+        # The fixture session ships without one; Ardour creates it on the first instant_save.
+        tree = ET.parse(path) if path.is_file() else ET.ElementTree(ET.Element("instant"))
+        root = tree.getroot()
+        editor = root.find("Editor")
+        if editor is None:
+            editor = ET.SubElement(root, "Editor")
+        editor.set("grid-type", grid_type)
+        tree.write(path, encoding="utf-8", xml_declaration=True)
+
+    def editor_grid_type(self) -> str | None:
+        """The grid type Ardour has persisted for this session, or None if it has not.
+
+        EditingContext::grid_type_chosen calls instant_save, which rewrites the session's
+        instant.xml straight away (../ardour@9.7:gtk2_ardour/editing_context.cc:949;
+        gtk2_ardour/editor.cc:998-1005) -- no session save is needed to observe a grid
+        change.
+        """
+        path = self.session_dir / "instant.xml"
+        if not path.is_file():
+            return None
+        editor = ET.parse(path).getroot().find("Editor")
+        return None if editor is None else editor.get("grid-type")
+
     def launch(self) -> None:
         self.ensure_safe_config_dir()
         if not ARDOUR_BIN.is_file():
@@ -451,6 +486,19 @@ class ArdourSession:
             last_error = f"AX windows err={err}"
             time.sleep(0.25)
         raise DriverError(f"Timed out waiting for Ardour main window ({last_error})")
+
+    def wait_until_ready(self, settle: float = 1.0) -> None:
+        """Block until Ardour is far enough along to act on a key event.
+
+        wait_for_main_window returns as soon as a titled window exists, which is well before
+        the editor is loaded: the very first key event sent after that is dropped, so a test
+        whose first press is the one under test fails for a reason that has nothing to do
+        with the binding. Waiting for the MCP server to answer proves the session is up, and
+        the settle covers the rest of the editor's startup work.
+        """
+        self.mcp().call("session_get_info")
+        self.focus_main_window()
+        time.sleep(settle)
 
     def focus_main_window(self) -> None:
         from AppKit import NSApplicationActivateIgnoringOtherApps, NSRunningApplication
