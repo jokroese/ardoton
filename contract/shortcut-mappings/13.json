@@ -195,18 +195,18 @@
           "context": "Editing",
           "proposedMacos": "Cmd+3",
           "keyToken": "Primary-3",
-          "actionTarget": "LuaAction/toggle-triplet-grid (new)",
+          "actionTarget": "LuaAction/script-19",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "No Live-style triplet toggle action. Building blocks: Snap/grid-type-thirds|sixths|twelfths|twentyfourths. Lua can read Editor:grid_type() and call Snap access_action to map binary\u2194triplet (e.g. BeatDiv4\u2194BeatDiv6). set_grid_type is not Lua-exported. StepEditing/toggle-triplet is step-entry only and must not be used.",
+          "note": "No Live-style triplet toggle action. Building blocks: Snap/grid-type-thirds|sixths|twelfths|twentyfourths. Lua can read Editor:grid_type() and call Snap access_action to map binary\u2194triplet (e.g. BeatDiv4\u2194BeatDiv6). set_grid_type is not Lua-exported. StepEditing/toggle-triplet is step-entry only and must not be used. Implemented as profile/scripts/ardourton_toggle_triplet_grid.lua at Lua action slot 19, bound in profile/keybindings/macos/ardour.keys as Editing Primary-3. Keeps the proposed key; it displaces Transport/ToggleFollowEdits, which sits in the Global context group and which no sourceId claims. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Building block exists",
+              "claim": "Target exists",
               "result": "Confirmed",
-              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:554;1347-1356"
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:544 (LuaAction/script-1..32 are registered unconditionally for every Ardour session, independent of whether a script is assigned to the slot)"
             },
             {
               "kind": "Key conflict",
@@ -218,7 +218,7 @@
               "kind": "Lua API",
               "claim": "Lua feasible",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:968-970;1107 (grid_type + access_action Snap)"
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:554;1347-1356; profile/scripts/ardourton_toggle_triplet_grid.lua"
             }
           ]
         },
