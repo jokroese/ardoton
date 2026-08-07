@@ -369,7 +369,7 @@ class ArdourSession:
         (self.config_dir / ".a9").write_text("", encoding="utf-8")
 
     def prepare_session_copy(self) -> None:
-        fixture = TESTS / "fixtures" / "session" / "baseline"
+        fixture = TESTS / "fixtures" / "session" / self.session_dir.name
         if self.session_dir.exists():
             shutil.rmtree(self.session_dir)
         shutil.copytree(fixture, self.session_dir)
@@ -590,12 +590,17 @@ class ArdourSession:
         self.send_hotkey(1, kCGEventFlagMaskCommand)  # kVK_ANSI_S = 1
 
 
-def create_isolated_session(tmp_path: Path) -> ArdourSession:
+def create_isolated_session(tmp_path: Path, fixture: str = "baseline") -> ArdourSession:
+    fixture_dir = TESTS / "fixtures" / "session" / fixture
+    session_files = sorted(fixture_dir.glob("*.ardour"))
+    if len(session_files) != 1:
+        raise DriverError(f"fixture {fixture!r} must contain exactly one .ardour file")
+
     root = tmp_path / "ardourton-e2e"
     home = root / "home"
     config_dir = home / "Library" / "Preferences" / "Ardour9"
-    session_dir = root / "sessions" / "baseline"
-    session_file = session_dir / "Baseline.ardour"
+    session_dir = root / "sessions" / fixture
+    session_file = session_dir / session_files[0].name
 
     session = ArdourSession(
         root=root,

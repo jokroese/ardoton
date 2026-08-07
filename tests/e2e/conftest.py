@@ -27,7 +27,7 @@ def ardour_session(tmp_path, request):
         )
 
     options = dict(getattr(request, "param", None) or {})
-    session = create_isolated_session(tmp_path)
+    session = create_isolated_session(tmp_path, fixture=options.pop("fixture", "baseline"))
     grid_type = options.pop("grid_type", None)
     if grid_type is not None:
         session.set_editor_grid_type(grid_type)

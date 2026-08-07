@@ -3,10 +3,12 @@ ardour {
 	name = "Ardourton: Clear Region Fades",
 	author = "Ardourton",
 	license = "GPL-2.0-or-later",
-	description = [[Deactivate and zero the fade-in and fade-out of the selected audio
-region(s). Native Region/toggle-region-fades only toggles fade active state; this also zeroes
-fade length, which is closer to Live's "delete fades/crossfades" behavior. MIDI-only
-selections are skipped.]]
+	description = [[Deactivate the fade-in and fade-out of the selected audio region(s) and
+reset both fade lengths to Ardour's 64-sample minimum, so the previous fade shape does not
+come back if fades are re-enabled. Ardour clamps set_fade_in_length/set_fade_out_length to
+64 samples, so a zero-length fade is not representable. Native Region/toggle-region-fades
+only toggles fade active state and keeps the old length; this is closer to Live's "delete
+fades/crossfades". MIDI-only selections are skipped.]]
 }
 
 function factory ()

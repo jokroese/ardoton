@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import json
 import time
+import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 
 import pytest
 
@@ -20,7 +22,6 @@ from e2e.driver import (
     FLAG_SHIFT,
     KEY_3,
     KEY_A,
-    KEY_BACKSPACE,
     KEY_D,
     KEY_FORWARD_DELETE,
     KEY_L,
@@ -121,54 +122,159 @@ REGION_START = 0
 REGION_END = 4 * SAMPLE_RATE
 
 
-def _region_state(mcp) -> list[dict]:
-    """track_get_regions for every track.
+# --- S16-09 Clear Region Fades -------------------------------------------------------
+#
+# The audio-fades fixture ships one audio track ("Audio 1") whose region "fades" has an
+# active 12000-sample fade-in and 6000-sample fade-out. Fade state is not on the MCP
+# surface, so the assertions read the saved session XML, where AudioRegion serializes
+# fade-in-active/fade-out-active and each fade's AutomationList (whose last event is the
+# fade length). Ardour clamps set_fade_*_length to 64 samples, so "cleared" means inactive
+# with a 64-sample length -- a zero-length fade is not representable.
 
-    tracks_list also reports the Master bus, and the region tools answer "Route is not a
-    track" for one, so McpClient.tracks() filters the buses out.
+FIXTURE_FADE_IN = 12000
+FIXTURE_FADE_OUT = 6000
+MIN_FADE = 64
+
+
+@dataclass(frozen=True)
+class FadeState:
+    in_active: bool
+    out_active: bool
+    in_samples: int
+    out_samples: int
+
+
+def _fade_state(ardour_session) -> FadeState:
+    """Fade state of the fixture's audio region, from the saved session file.
+
+    The fade length is the 'when' of the fade AutomationList's last event, serialized as
+    a<superclocks>; superclocks-per-second and the sample rate come from the same file, so
+    the conversion cannot drift from the fixture.
     """
-    return [mcp.call("track_get_regions", {"id": str(track["id"])}) for track in mcp.tracks()]
+    root = ET.parse(ardour_session.session_file).getroot()
+    superclocks = int(root.find("TempoMap").get("superclocks-per-second"))
+    rate = int(root.get("sample-rate"))
+    per_sample = superclocks // rate
+
+    region = next(
+        region
+        for region in root.iterfind(".//Playlists/Playlist/Region")
+        if region.get("type") == "audio"
+    )
+
+    def fade_samples(kind: str) -> int:
+        events = region.find(f"./{kind}/AutomationList/events")
+        assert events is not None and events.text, f"no {kind} events in saved session"
+        last_when = events.text.strip().splitlines()[-1].split()[0]
+        assert last_when.startswith("a"), f"unexpected {kind} time domain: {last_when}"
+        return int(last_when[1:]) // per_sample
+
+    return FadeState(
+        in_active=region.get("fade-in-active") == "1",
+        out_active=region.get("fade-out-active") == "1",
+        in_samples=fade_samples("FadeIn"),
+        out_samples=fade_samples("FadeOut"),
+    )
 
 
-def test_probe_clear_region_fades(ardour_session) -> None:
-    """S16-09. Select every region, clear fades, and dump region state around it.
+def _saved_fade_state(ardour_session, mcp, expected: FadeState) -> FadeState:
+    """Save the session and poll the file until it shows the expected fade state."""
 
-    region_get_info declares additionalProperties, so whether fade state is reported --
-    and under which keys -- has to be observed. Both the BackSpace and forward-delete
-    chords are sent, since only one of them is reachable without Fn on a Mac keyboard.
+    def read() -> FadeState:
+        mcp.call("session_save")
+        return _fade_state(ardour_session)
 
-    The script only touches audio regions (to_audioregion), and the MCP surface has no
-    audio import, so this probe can only get as far as showing which keys the region
-    payloads carry -- the assertion needs a fixture session that ships an audio region.
+    return poll_until(read, lambda state: state == expected, interval=0.5)
+
+
+FIXTURE_STATE = FadeState(True, True, FIXTURE_FADE_IN, FIXTURE_FADE_OUT)
+CLEARED_STATE = FadeState(False, False, MIN_FADE, MIN_FADE)
+
+
+@pytest.mark.parametrize(
+    "ardour_session", [{"fixture": "audio-fades"}], indirect=True, ids=["forward-delete"]
+)
+def test_clear_fades_resets_both_fades_to_the_minimum(ardour_session, coverage_tracker) -> None:
+    """S16-09. The Delete chord deactivates both fades and resets them to 64 samples.
+
+    The profile binds the chord on both Primary-Level4-Delete and Primary-Level4-BackSpace
+    (a Mac keyboard sends BackSpace for the key labelled delete; forward delete needs Fn).
+    Only the Delete keyval can be exercised here: a synthetic BackSpace with any modifier
+    flags never reaches Ardour's bindings -- posted via CGEventPostToPid or the session
+    event tap alike -- while bare synthetic BackSpace and every modified arrow, letter and
+    forward-delete chord in this suite arrive fine. The BackSpace variant therefore stays
+    covered by the static expectation in tests/expectations.toml, and the shared Lua slot
+    is what this test verifies behaviorally.
     """
     mcp = ardour_session.mcp()
-    track_id, created = mcp.add_midi_region(REGION_START, REGION_END, name="Fades")
-    time.sleep(SETTLE)
-    _dump("probe-fades-0-tracks", {"tracks": mcp.tracks(include_buses=True), "created": created})
+    assert _fade_state(ardour_session) == FIXTURE_STATE, "fixture fades changed"
 
-    ardour_session.focus_main_window()
-    ardour_session.send_hotkey(KEY_A, FLAG_COMMAND)  # Editor/select-all-objects
-    time.sleep(SETTLE)
-    _dump("probe-fades-1-before", _region_state(mcp))
-    _dump(
-        "probe-fades-1-region-info",
-        mcp.call("region_get_info", {"regionId": str(created["regionId"])}),
-    )
+    try:
+        ardour_session.focus_main_window()
+        ardour_session.send_hotkey(KEY_A, FLAG_COMMAND)  # Editor/select-all-objects
+        time.sleep(SETTLE)
 
-    ardour_session.send_hotkey(KEY_BACKSPACE, FLAG_COMMAND | FLAG_OPTION)
-    time.sleep(SETTLE)
-    _dump("probe-fades-2-after-backspace", _region_state(mcp))
+        ardour_session.send_hotkey(KEY_FORWARD_DELETE, FLAG_COMMAND | FLAG_OPTION)
+        assert _saved_fade_state(ardour_session, mcp, CLEARED_STATE) == CLEARED_STATE
 
-    ardour_session.send_hotkey(KEY_FORWARD_DELETE, FLAG_COMMAND | FLAG_OPTION)
-    time.sleep(SETTLE)
-    _dump("probe-fades-3-after-forward-delete", _region_state(mcp))
+        mcp.call("session_undo")
+        assert _saved_fade_state(ardour_session, mcp, FIXTURE_STATE) == FIXTURE_STATE, (
+            "undo must restore the original fade lengths and active states"
+        )
 
-    assert track_id, "probe needs a track"
-    pytest.skip(
-        "S16-09 stays uncovered at runtime: clear-region-fades acts on audio regions only, "
-        "and the MCP surface cannot create one (no import tool). Covering it needs an audio "
-        "region in tests/fixtures/session/baseline."
-    )
+        mcp.call("session_redo")
+        assert _saved_fade_state(ardour_session, mcp, CLEARED_STATE) == CLEARED_STATE, (
+            "redo must clear the fades again"
+        )
+
+        coverage_tracker["S16-09"]["e2e"] = "passed"
+    except Exception:
+        coverage_tracker["S16-09"]["e2e"] = "failed"
+        _dump("S16-09-fades", vars(_fade_state(ardour_session)))
+        raise
+
+
+@pytest.mark.parametrize(
+    "ardour_session", [{"fixture": "audio-fades"}], indirect=True, ids=["mixed"]
+)
+def test_clear_fades_skips_midi_regions_in_a_mixed_selection(
+    ardour_session, coverage_tracker
+) -> None:
+    """S16-09. A selection containing a MIDI region must not fail or touch that region."""
+    mcp = ardour_session.mcp()
+    mcp.add_midi_region(REGION_START, REGION_END, name="Fades")
+    midi_before = [
+        track
+        for track in mcp.region_state()
+        if track["trackName"] and "Fades" in track["trackName"]
+    ]
+    assert midi_before and midi_before[0]["regions"], "MIDI region was not created"
+
+    try:
+        ardour_session.focus_main_window()
+        # Twice on purpose: adding the track selects it asynchronously, and that event can
+        # land after a single Cmd+A and replace the object selection it just made.
+        for _ in range(2):
+            ardour_session.send_hotkey(KEY_A, FLAG_COMMAND)  # selects the audio + MIDI regions
+            time.sleep(SETTLE)
+
+        ardour_session.send_hotkey(KEY_FORWARD_DELETE, FLAG_COMMAND | FLAG_OPTION)
+        assert _saved_fade_state(ardour_session, mcp, CLEARED_STATE) == CLEARED_STATE, (
+            "the audio region's fades must clear even with a MIDI region selected"
+        )
+
+        midi_after = [
+            track
+            for track in mcp.region_state()
+            if track["trackName"] and "Fades" in track["trackName"]
+        ]
+        assert midi_after == midi_before, "the MIDI region must be untouched"
+
+        coverage_tracker["S16-09"]["e2e"] = "passed"
+    except Exception:
+        coverage_tracker["S16-09"]["e2e"] = "failed"
+        _dump("S16-09-mixed", vars(_fade_state(ardour_session)))
+        raise
 
 
 # --- S16-18 Duplicate Time -----------------------------------------------------------
