@@ -40,6 +40,11 @@ def mcp_url(port: int) -> str:
     return f"http://127.0.0.1:{port}/mcp"
 
 
+def _numeric_first(value: str) -> tuple[int, int, str]:
+    """Sort key that orders Ardour's numeric string IDs by value, not lexically."""
+    return (0, int(value), "") if value.isdigit() else (1, 0, value)
+
+
 def poll_until[T](
     read: Callable[[], T],
     predicate: Callable[[T], bool],
@@ -133,6 +138,29 @@ class McpClient:
             return routes
         return [route for route in routes if route.get("type") != "bus"]
 
+    def add_midi_track(self, name: str) -> str:
+        """Create one MIDI track and return its route ID."""
+        before = {str(route.get("id")) for route in self.tracks()}
+        self.call("tracks_add", {"type": "midi", "count": 1, "name": name})
+        added = [route for route in self.tracks() if str(route.get("id")) not in before]
+        if not added:
+            raise DriverError(f"tracks_add did not add a track: {self.tracks(include_buses=True)}")
+        return str(added[0]["id"])
+
+    def add_midi_region_to(
+        self, track_id: str, start_sample: int, end_sample: int, name: str
+    ) -> dict:
+        created = self.call(
+            "midi_region_add_samples",
+            {
+                "trackId": track_id,
+                "startSample": start_sample,
+                "endSample": end_sample,
+                "name": name,
+            },
+        )
+        return created.get("created", created)
+
     def add_midi_region(
         self, start_sample: int, end_sample: int, name: str = "Probe"
     ) -> tuple[str, dict]:
@@ -142,22 +170,42 @@ class McpClient:
         needs material has to make its own. It is MIDI because the MCP surface has no audio
         import tool -- there is no way to conjure an audio region from here.
         """
-        before = {str(route.get("id")) for route in self.tracks()}
-        self.call("tracks_add", {"type": "midi", "count": 1, "name": name})
-        added = [route for route in self.tracks() if str(route.get("id")) not in before]
-        if not added:
-            raise DriverError(f"tracks_add did not add a track: {self.tracks(include_buses=True)}")
-        track_id = str(added[0]["id"])
-        created = self.call(
-            "midi_region_add_samples",
-            {
-                "trackId": track_id,
-                "startSample": start_sample,
-                "endSample": end_sample,
-                "name": f"{name}Region",
-            },
-        )
-        return track_id, created.get("created", created)
+        track_id = self.add_midi_track(name)
+        created = self.add_midi_region_to(track_id, start_sample, end_sample, f"{name}Region")
+        return track_id, created
+
+    def region_state(self) -> list[dict]:
+        """Per-track region layout, reduced to the fields an assertion can rely on.
+
+        track_get_regions also reports playlist IDs, BBT positions, lock/mute/hidden flags
+        and a type discriminator. Comparing the whole payload would turn every assertion
+        into a snapshot of unrelated Ardour internals, so this keeps identity (track and
+        region ID, name) and extent (start and end sample) and drops the rest. Ordering is
+        normalized because the region order in the payload follows playlist internals.
+        """
+        state: list[dict] = []
+        for track in self.tracks():
+            track_id = str(track["id"])
+            payload = self.call("track_get_regions", {"id": track_id})
+            state.append(
+                {
+                    "trackId": track_id,
+                    "trackName": track.get("name"),
+                    "regions": sorted(
+                        (
+                            {
+                                "regionId": str(region["regionId"]),
+                                "name": region["name"],
+                                "start": int(region["startSample"]),
+                                "end": int(region["endSample"]),
+                            }
+                            for region in payload.get("regions", [])
+                        ),
+                        key=lambda region: (region["start"], region["end"], region["name"]),
+                    ),
+                }
+            )
+        return sorted(state, key=lambda track: _numeric_first(track["trackId"]))
 
     @property
     def url(self) -> str:

@@ -23,7 +23,8 @@ from e2e.driver import (
     KEY_BACKSPACE,
     KEY_D,
     KEY_FORWARD_DELETE,
-    KEY_R,
+    KEY_L,
+    poll_until,
 )
 
 pytestmark = [pytest.mark.e2e, pytest.mark.requires_ardour]
@@ -137,25 +138,98 @@ def test_probe_clear_region_fades(ardour_session) -> None:
     )
 
 
-def test_probe_duplicate_time(ardour_session) -> None:
-    """S16-18. Establish a real time selection, then duplicate it.
+# --- S16-18 Duplicate Time -----------------------------------------------------------
+#
+# Live 12.4.3 duplicates the selected time across every Arrangement track and ripples later
+# material, whatever the track scope of the selection (see the Live matrix in
+# docs/lua-release-qualification-plan.md). Ardour's Session::cut_copy_section is
+# session-wide in the same way -- it walks every playlist, splits and ripples at the
+# insertion point, then pastes -- so the script keeps that operation and this asserts it.
 
-    A time selection is what the S16-11 case could not create. Switching to Range mouse
-    mode first should make Cmd+A select a time range rather than objects; this dumps the
-    region list before and after so we can see whether anything was duplicated and by how
-    much.
+SPAN_START = 0
+SPAN_END = 4 * SAMPLE_RATE
+SPAN_LENGTH = SPAN_END - SPAN_START
+# Well clear of the span, so nothing but a rippling insert can move it.
+LATER_START = 6 * SAMPLE_RATE
+LATER_END = 8 * SAMPLE_RATE
+
+
+def _spans_by_track(state: list[dict]) -> dict[str | None, list[tuple[int, int]]]:
+    """Region extents per track name, which is what the duplicate assertions are about.
+
+    Region IDs are deliberately dropped here: a redone paste is free to mint a new region
+    rather than resurrect the old one, and that is not part of the behavior under test. The
+    undo assertion compares the full normalized state instead, IDs included, because undo
+    restores the original regions rather than recreating them.
     """
+    return {
+        track["trackName"]: [(region["start"], region["end"]) for region in track["regions"]]
+        for track in state
+    }
+
+
+def test_duplicate_time_copies_the_span_across_every_track(
+    ardour_session, coverage_tracker
+) -> None:
+    """S16-18. Cmd+Shift+D duplicates the selected time in place, session-wide, undoably."""
     mcp = ardour_session.mcp()
-    mcp.add_midi_region(REGION_START, REGION_END, name="Duplicate")
-    time.sleep(SETTLE)
 
+    first = mcp.add_midi_track("DupA")
+    second = mcp.add_midi_track("DupB")
+    mcp.add_midi_region_to(first, SPAN_START, SPAN_END, "A-InSpan")
+    mcp.add_midi_region_to(second, SPAN_START, SPAN_END, "B-InSpan")
+    mcp.add_midi_region_to(second, LATER_START, LATER_END, "B-Later")
+
+    expected_before = {
+        "DupA": [(SPAN_START, SPAN_END)],
+        "DupB": [(SPAN_START, SPAN_END), (LATER_START, LATER_END)],
+    }
+    expected_after = {
+        # The copy lands immediately after the original, on every track the session has.
+        "DupA": [(SPAN_START, SPAN_END), (SPAN_END, SPAN_END + SPAN_LENGTH)],
+        "DupB": [
+            (SPAN_START, SPAN_END),
+            (SPAN_END, SPAN_END + SPAN_LENGTH),
+            # Later material is pushed back by exactly the duplicated length.
+            (LATER_START + SPAN_LENGTH, LATER_END + SPAN_LENGTH),
+        ],
+    }
+
+    before = poll_until(mcp.region_state, lambda state: _spans_by_track(state) == expected_before)
+    assert _spans_by_track(before) == expected_before, before
+
+    # The script needs selection extents, and a mouse drag is not available under the Dummy
+    # backend. Setting the loop range and then selecting through it with a real key event
+    # gives an extents pair that covers only the span -- Cmd+A would have swept in the later
+    # material too and silently changed what is being duplicated.
+    mcp.set_loop_range(SPAN_START, SPAN_END)
     ardour_session.focus_main_window()
-    ardour_session.send_hotkey(KEY_R)  # Editor/set-mouse-mode-range
+    ardour_session.send_hotkey(KEY_L, FLAG_COMMAND | FLAG_SHIFT)  # select-all-in-loop-range
     time.sleep(SETTLE)
-    ardour_session.send_hotkey(KEY_A, FLAG_COMMAND)
-    time.sleep(SETTLE)
-    _dump("probe-duplicate-0-before", _region_state(mcp))
 
-    ardour_session.send_hotkey(KEY_D, FLAG_COMMAND | FLAG_SHIFT)
-    time.sleep(SETTLE * 2)
-    _dump("probe-duplicate-1-after", _region_state(mcp))
+    try:
+        ardour_session.send_hotkey(KEY_D, FLAG_COMMAND | FLAG_SHIFT)
+        after = poll_until(mcp.region_state, lambda state: _spans_by_track(state) == expected_after)
+        assert _spans_by_track(after) == expected_after, after
+
+        copied = sum(len(regions) for regions in _spans_by_track(after).values()) - sum(
+            len(regions) for regions in expected_before.values()
+        )
+        assert copied == 2, "one copy per track, and nothing else"
+
+        mcp.call("session_undo")
+        restored = poll_until(mcp.region_state, lambda state: state == before)
+        assert restored == before, "undo must restore the exact pre-duplicate state"
+
+        mcp.call("session_redo")
+        redone = poll_until(
+            mcp.region_state, lambda state: _spans_by_track(state) == expected_after
+        )
+        assert _spans_by_track(redone) == expected_after, redone
+
+        coverage_tracker["S16-18"]["e2e"] = "passed"
+    except Exception:
+        coverage_tracker["S16-18"]["e2e"] = "failed"
+        _dump("S16-18-duplicate-before", before)
+        _dump("S16-18-duplicate-after", mcp.region_state())
+        raise

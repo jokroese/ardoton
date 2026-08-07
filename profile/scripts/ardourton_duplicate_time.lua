@@ -3,9 +3,13 @@ ardour {
 	name = "Ardourton: Duplicate Time",
 	author = "Ardourton",
 	license = "GPL-2.0-or-later",
-	description = [[Copy the selected time range and paste it immediately after itself, across
-every track it spans -- matching Live's in-place "Duplicate Time" rather than native
-copy/paste-section, which pastes at the edit point instead.]]
+	description = [[Copy the selected time range and paste it immediately after itself.
+
+The operation is session-wide, not limited to the tracks the selection covers: every
+playlist is split at the insertion point, material after it ripples back by the length of
+the range, and the copy is pasted on every track. Ableton Live 12 does the same regardless
+of how many tracks the time selection spans, so this matches Live's in-place "Duplicate
+Time" rather than native copy/paste-section, which pastes at the edit point instead.]]
 }
 
 function factory ()
