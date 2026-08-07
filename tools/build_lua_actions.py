@@ -108,6 +108,11 @@ def main() -> int:
     parser.add_argument(
         "--check",
         action="store_true",
+        help="verify the tracked action state matches the sources; never writes anything",
+    )
+    parser.add_argument(
+        "--stdout",
+        action="store_true",
         help="print the generated fragment to stdout instead of writing it to the profile",
     )
     args = parser.parse_args()
@@ -123,12 +128,32 @@ def main() -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
-    if args.check:
+    if args.stdout:
         sys.stdout.write(content)
         return 0
 
+    tracked_path = ACTION_STATE_PATH.relative_to(ROOT)
+
+    if args.check:
+        tracked = None
+        if ACTION_STATE_PATH.is_file():
+            tracked = ACTION_STATE_PATH.read_text(encoding="utf-8")
+        if tracked == content:
+            print(f"{tracked_path} matches its sources ({len(content)} bytes)")
+            return 0
+        if tracked is None:
+            print(f"error: {tracked_path} does not exist", file=sys.stderr)
+        else:
+            print(
+                f"error: {tracked_path} does not match its sources "
+                f"(tracked {len(tracked)} bytes, generated {len(content)} bytes); "
+                "run tools/build_lua_actions.py to regenerate it",
+                file=sys.stderr,
+            )
+        return 1
+
     ACTION_STATE_PATH.write_text(content, encoding="utf-8")
-    print(f"wrote {ACTION_STATE_PATH.relative_to(ROOT)} ({len(content)} bytes)")
+    print(f"wrote {tracked_path} ({len(content)} bytes)")
     return 0
 
 

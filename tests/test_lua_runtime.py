@@ -46,28 +46,54 @@ def test_check_lua_passes_against_profile() -> None:
     assert "Lua checks passed" in result.stdout
 
 
-def test_action_state_reproduces_from_scripts() -> None:
-    """The committed bytecode must regenerate byte-for-byte from the committed scripts.
-
-    string.dump keeps linedefined/lastlinedefined even when stripping debug info, so editing
-    a script's header comment changes its bytecode. Without this check the action state can
-    silently stop matching the sources it was built from.
-    """
-    executable = _ardour_lua()
-    result = subprocess.run(
+def _run_build_tool(*flags: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
         [
             sys.executable,
             str(ROOT / "tools" / "build_lua_actions.py"),
-            "--check",
+            *flags,
             "--ardour-lua",
-            str(executable),
+            str(_ardour_lua()),
         ],
         check=False,
         capture_output=True,
         text=True,
         cwd=str(ROOT),
     )
+
+
+def test_action_state_reproduces_from_scripts() -> None:
+    """The committed bytecode must regenerate byte-for-byte from the committed scripts.
+
+    string.dump keeps linedefined/lastlinedefined even when stripping debug info, so editing
+    a script's header comment changes its bytecode. Without this check the action state can
+    silently stop matching the sources it was built from. --check owns the comparison; this
+    only asserts its verdict and that it did not rewrite the tracked file.
+    """
+    tracked_before = ACTION_STATE_PATH.read_bytes()
+    result = _run_build_tool("--check")
     assert result.returncode == 0, result.stdout + result.stderr
+    assert "matches its sources" in result.stdout
+    assert ACTION_STATE_PATH.read_bytes() == tracked_before, "--check must never write"
+
+
+def test_check_mode_reports_a_mismatch(tmp_path: Path) -> None:
+    """--check must fail, name the file, and leave it untouched when sources drift."""
+    del tmp_path
+    tracked_before = ACTION_STATE_PATH.read_bytes()
+    try:
+        ACTION_STATE_PATH.write_bytes(tracked_before + b"\n-- drift\n")
+        result = _run_build_tool("--check")
+        assert result.returncode != 0
+        assert "does not match its sources" in result.stderr
+        assert ACTION_STATE_PATH.read_bytes() == tracked_before + b"\n-- drift\n"
+    finally:
+        ACTION_STATE_PATH.write_bytes(tracked_before)
+
+
+def test_stdout_mode_emits_the_fragment() -> None:
+    result = _run_build_tool("--stdout")
+    assert result.returncode == 0, result.stderr
     assert result.stdout == ACTION_STATE_PATH.read_text(encoding="utf-8")
 
 

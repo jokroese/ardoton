@@ -380,7 +380,7 @@ install_profile () {
   install_ui_scripts
 
   {
-    print -r -- "version=0.2.4"
+    print -r -- "version=0.2.5"
     print -r -- "backup=${backup_dir}"
   } > "${receipt_file}"
 
