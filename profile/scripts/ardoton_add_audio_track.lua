@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Add Stereo Audio Track",
-	author = "Ardourton",
+	name = "Ardoton: Add Stereo Audio Track",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Add a stereo audio track at the end of the session.]]
 }

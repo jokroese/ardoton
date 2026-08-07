@@ -51,7 +51,7 @@
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
           "availability": "Native",
-          "note": "Factory binds draw mode to d; Ardourton profile uses b for Live parity.",
+          "note": "Factory binds draw mode to d; Ardoton profile uses b for Live parity.",
           "status": "Proposed",
           "evidence": [
             {
@@ -199,7 +199,7 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "No Live-style triplet toggle action. Building blocks: EditorSnap/grid-type-thirds|sixths|twelfths|twentyfourths -- the Snap radio actions are registered per editing context, so Editor:access_action must name the \"EditorSnap\" group, not \"Snap\". set_grid_type is not Lua-exported. StepEditing/toggle-triplet is step-entry only and must not be used. Implemented as profile/scripts/ardourton_toggle_triplet_grid.lua at Lua action slot 19, bound in profile/keybindings/macos/ardour.keys as Editor Primary-3. The binding lives in the Editor context, not the shared Editing set: Ardour copies the Editing bindings per editing context and prefixes every action name with the context name (Bindings::relativize), so a LuaAction target there can never resolve. The stock Global Primary-3 -> Transport/ToggleFollowEdits binding is removed by the profile; it consumed the chord before the Editor context saw it, and no sourceId claims it. Verified end-to-end against Ardour 9.7 for all four binary/triplet pairs in both directions, plus the documented no-op on the shipped GridTypeBeatDiv32 default.",
+          "note": "No Live-style triplet toggle action. Building blocks: EditorSnap/grid-type-thirds|sixths|twelfths|twentyfourths -- the Snap radio actions are registered per editing context, so Editor:access_action must name the \"EditorSnap\" group, not \"Snap\". set_grid_type is not Lua-exported. StepEditing/toggle-triplet is step-entry only and must not be used. Implemented as profile/scripts/ardoton_toggle_triplet_grid.lua at Lua action slot 19, bound in profile/keybindings/macos/ardour.keys as Editor Primary-3. The binding lives in the Editor context, not the shared Editing set: Ardour copies the Editing bindings per editing context and prefixes every action name with the context name (Bindings::relativize), so a LuaAction target there can never resolve. The stock Global Primary-3 -> Transport/ToggleFollowEdits binding is removed by the profile; it consumed the chord before the Editor context saw it, and no sourceId claims it. Verified end-to-end against Ardour 9.7 for all four binary/triplet pairs in both directions, plus the documented no-op on the shipped GridTypeBeatDiv32 default.",
           "status": "Implemented",
           "evidence": [
             {
@@ -218,12 +218,12 @@
               "kind": "Lua API",
               "claim": "Lua feasible",
               "result": "Candidate",
-              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:541-570 (per-context \"EditorSnap\" radio actions);gtk2_ardour/editor.cc:1123-1140 (access_action resolves group by exact name); profile/scripts/ardourton_toggle_triplet_grid.lua"
+              "reference": "../ardour@9.7:gtk2_ardour/editing_context.cc:541-570 (per-context \"EditorSnap\" radio actions);gtk2_ardour/editor.cc:1123-1140 (access_action resolves group by exact name); profile/scripts/ardoton_toggle_triplet_grid.lua"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-3 -> LuaAction/script-19; slot 19 (Ardourton: Toggle Triplet Grid) in profile/ui-scripts/ardourton-actions.lua-state",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-3 -> LuaAction/script-19; slot 19 (Ardoton: Toggle Triplet Grid) in profile/ui-scripts/ardoton-actions.lua-state",
               "result": "Confirmed"
             }
           ]

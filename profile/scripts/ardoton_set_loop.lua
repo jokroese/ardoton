@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Set and Toggle Loop",
-	author = "Ardourton",
+	name = "Ardoton: Set and Toggle Loop",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Set the loop range from the current edit range, then toggle loop playback.]]
 }

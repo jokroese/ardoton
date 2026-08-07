@@ -1,7 +1,7 @@
 [project]
-name = "ardourton"
+name = "ardoton"
 version = "0.2.5"
-description = "Ardourton regression harness and profile tests"
+description = "Ardoton regression harness and profile tests"
 requires-python = ">=3.12"
 dependencies = []
 

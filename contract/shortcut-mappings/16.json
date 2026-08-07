@@ -95,7 +95,7 @@
           "implementationType": "Profile keybinding",
           "mappingClass": "Exact",
           "availability": "Native",
-          "note": "Crops regions on selected (or all) tracks to the edit-range selection. Primary-Tertiary-j is unbound in the Ardourton profile.",
+          "note": "Crops regions on selected (or all) tracks to the edit-range selection. Primary-Tertiary-j is unbound in the Ardoton profile.",
           "status": "Implemented",
           "evidence": [
             {
@@ -491,7 +491,7 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Live deletes fades/crossfades on selected clips. The script deactivates both fades and resets both lengths to Ardour's 64-sample minimum -- AudioRegion::set_fade_in_length/set_fade_out_length clamp below 64 samples, so a zero-length fade is not representable; re-enabling fades yields the minimal fade, not the old shape. Native Region/toggle-region-fades only toggles active state and keeps the old length. Implemented as profile/scripts/ardourton_clear_region_fades.lua at Lua action slot 18, bound on both Primary-Level4-Delete and Primary-Level4-BackSpace, matching the keymap's convention for delete actions: Mac keyboards send BackSpace for the key labelled Delete, so a Delete-only binding is unreachable without Fn. Verified end-to-end against Ardour 9.7 (clear, undo, redo, and a mixed audio/MIDI selection) via the Delete keyval; the BackSpace chord cannot be synthesized by Quartz test events and is verified statically.",
+          "note": "Live deletes fades/crossfades on selected clips. The script deactivates both fades and resets both lengths to Ardour's 64-sample minimum -- AudioRegion::set_fade_in_length/set_fade_out_length clamp below 64 samples, so a zero-length fade is not representable; re-enabling fades yields the minimal fade, not the old shape. Native Region/toggle-region-fades only toggles active state and keeps the old length. Implemented as profile/scripts/ardoton_clear_region_fades.lua at Lua action slot 18, bound on both Primary-Level4-Delete and Primary-Level4-BackSpace, matching the keymap's convention for delete actions: Mac keyboards send BackSpace for the key labelled Delete, so a Delete-only binding is unreachable without Fn. Verified end-to-end against Ardour 9.7 (clear, undo, redo, and a mixed audio/MIDI selection) via the Delete keyval; the BackSpace chord cannot be synthesized by Quartz test events and is verified statically.",
           "status": "Implemented",
           "evidence": [
             {
@@ -515,13 +515,13 @@
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6497-6664;libs/ardour/luabindings.cc:1751-1763 (AudioRegion fade setters); profile/scripts/ardourton_clear_region_fades.lua",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6497-6664;libs/ardour/luabindings.cc:1751-1763 (AudioRegion fade setters); profile/scripts/ardoton_clear_region_fades.lua",
               "result": "Candidate"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Delete -> LuaAction/script-18; slot 18 (Ardourton: Clear Region Fades) in profile/ui-scripts/ardourton-actions.lua-state",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Delete -> LuaAction/script-18; slot 18 (Ardoton: Clear Region Fades) in profile/ui-scripts/ardoton-actions.lua-state",
               "result": "Confirmed"
             }
           ]
@@ -547,13 +547,13 @@
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6497-6664;libs/ardour/luabindings.cc:1751-1763 (AudioRegion fade setters); profile/scripts/ardourton_clear_region_fades.lua",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6497-6664;libs/ardour/luabindings.cc:1751-1763 (AudioRegion fade setters); profile/scripts/ardoton_clear_region_fades.lua",
               "result": "Candidate"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-BackSpace -> LuaAction/script-18; slot 18 (Ardourton: Clear Region Fades) in profile/ui-scripts/ardourton-actions.lua-state",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-BackSpace -> LuaAction/script-18; slot 18 (Ardoton: Clear Region Fades) in profile/ui-scripts/ardoton-actions.lua-state",
               "result": "Confirmed"
             }
           ]
@@ -643,7 +643,7 @@
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "profile/scripts/ardourton_set_loop.lua:9-14",
+              "reference": "profile/scripts/ardoton_set_loop.lua:9-14",
               "result": "Candidate"
             },
             {
@@ -669,7 +669,7 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Same preferred target as S08-11. Also Primary-Left to shorten. Moves the auto-loop end by one bar, keeping the start fixed (Live steps the brace by the grid). The editor grid is deliberately not the step: the pack seeds grid-type to GridTypeBeatDiv32 as an adaptive ceiling (docs/concepts/adaptive-grid-and-snap.md), so Editor:get_grid_type_as_beats reports a 1/128 note, and the zoom-scaled resolution behind that ceiling (bbt_ruler_scale) is private and not Lua-exported. The nudge clock was the previous step source and is no longer used here: at its 5s default, shortening was a silent no-op on any loop of 5s or shorter. Step size is the script's \"bars\" param. Selecting LoopEnd and calling Editor/nudge-forward/backward is a native alternative without a dedicated action. Implemented as profile/scripts/ardourton_resize_loop_end.lua at Lua action slots 20 (lengthen) and 21 (shorten), bound in profile/keybindings/macos/ardour.keys as Editor Primary-Level4-Right and Primary-Level4-Left. Bound away from the proposed Cmd+Left/Cmd+Right because those are S15-15 (Move Selected Track Left/Right), Preferred and Implemented; the Primary-Level4 chords are unbound in the Editor context. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state, and tests/e2e/test_loop_shortcuts.py::test_resize_shortcuts_move_the_loop_end verifies the exact one-bar step against a live Ardour 9.7. Implemented on the Primary-Level4 chords rather than the proposed Cmd+Left/Right; the displacement is recorded by the Key conflict evidence.",
+          "note": "Same preferred target as S08-11. Also Primary-Left to shorten. Moves the auto-loop end by one bar, keeping the start fixed (Live steps the brace by the grid). The editor grid is deliberately not the step: the pack seeds grid-type to GridTypeBeatDiv32 as an adaptive ceiling (docs/concepts/adaptive-grid-and-snap.md), so Editor:get_grid_type_as_beats reports a 1/128 note, and the zoom-scaled resolution behind that ceiling (bbt_ruler_scale) is private and not Lua-exported. The nudge clock was the previous step source and is no longer used here: at its 5s default, shortening was a silent no-op on any loop of 5s or shorter. Step size is the script's \"bars\" param. Selecting LoopEnd and calling Editor/nudge-forward/backward is a native alternative without a dedicated action. Implemented as profile/scripts/ardoton_resize_loop_end.lua at Lua action slots 20 (lengthen) and 21 (shorten), bound in profile/keybindings/macos/ardour.keys as Editor Primary-Level4-Right and Primary-Level4-Left. Bound away from the proposed Cmd+Left/Cmd+Right because those are S15-15 (Move Selected Track Left/Right), Preferred and Implemented; the Primary-Level4 chords are unbound in the Editor context. Slot bytecode is present in profile/ui-scripts/ardoton-actions.lua-state, and tests/e2e/test_loop_shortcuts.py::test_resize_shortcuts_move_the_loop_end verifies the exact one-bar step against a live Ardour 9.7. Implemented on the Primary-Level4 chords rather than the proposed Cmd+Left/Right; the displacement is recorded by the Key conflict evidence.",
           "status": "Implemented",
           "evidence": [
             {
@@ -699,13 +699,13 @@
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:826-830 (Meter::divisions_per_bar/note_value),849 (MeterPoint derives Meter),888 (TempoMap::meter_at),903 (quarters_at),909 (sample_at_beats);libs/ardour/location.cc:354-390 (Location::set_end coerces to the session time domain and rejects an end at or before the start); profile/scripts/ardourton_resize_loop_end.lua",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:826-830 (Meter::divisions_per_bar/note_value),849 (MeterPoint derives Meter),888 (TempoMap::meter_at),903 (quarters_at),909 (sample_at_beats);libs/ardour/location.cc:354-390 (Location::set_end coerces to the session time domain and rejects an end at or before the start); profile/scripts/ardoton_resize_loop_end.lua",
               "result": "Candidate"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Right -> LuaAction/script-20; slot 20 (Ardourton: Lengthen Loop) in profile/ui-scripts/ardourton-actions.lua-state",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Right -> LuaAction/script-20; slot 20 (Ardoton: Lengthen Loop) in profile/ui-scripts/ardoton-actions.lua-state",
               "result": "Confirmed"
             }
           ]
@@ -731,13 +731,13 @@
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:826-830 (Meter::divisions_per_bar/note_value),849 (MeterPoint derives Meter),888 (TempoMap::meter_at),903 (quarters_at),909 (sample_at_beats);libs/ardour/location.cc:354-390 (Location::set_end coerces to the session time domain and rejects an end at or before the start); profile/scripts/ardourton_resize_loop_end.lua",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:826-830 (Meter::divisions_per_bar/note_value),849 (MeterPoint derives Meter),888 (TempoMap::meter_at),903 (quarters_at),909 (sample_at_beats);libs/ardour/location.cc:354-390 (Location::set_end coerces to the session time domain and rejects an end at or before the start); profile/scripts/ardoton_resize_loop_end.lua",
               "result": "Candidate"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Left -> LuaAction/script-21; slot 21 (Ardourton: Shorten Loop) in profile/ui-scripts/ardourton-actions.lua-state",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Left -> LuaAction/script-21; slot 21 (Ardoton: Shorten Loop) in profile/ui-scripts/ardoton-actions.lua-state",
               "result": "Confirmed"
             }
           ]
@@ -757,7 +757,7 @@
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
           "availability": "Native",
-          "note": "Same preferred target as S08-12. Selects regions/objects overlapping the session auto-loop on selected (or all) tracks \u2014 not Clip View brace contents. Factory used Primary-l; Ardourton binds Primary-l to Lua loop set/toggle (S16-11).",
+          "note": "Same preferred target as S08-12. Selects regions/objects overlapping the session auto-loop on selected (or all) tracks \u2014 not Clip View brace contents. Factory used Primary-l; Ardoton binds Primary-l to Lua loop set/toggle (S16-11).",
           "status": "Implemented",
           "evidence": [
             {
@@ -1031,7 +1031,7 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Live duplicates the time selection in place (insert copy immediately after). Call Session:cut_copy_section(start, end, end, CopyPaste). Native copy-paste-section pastes at edit point/playhead instead. Primary-Tertiary-d is unbound; Editor/duplicate is region duplicate on Primary-d. Implemented as profile/scripts/ardourton_duplicate_time.lua at Lua action slot 17. Track scope matches Live 12.4.3: the manual matrix in docs/lua-release-qualification-plan.md shows Live duplicates across every Arrangement track and ripples later material regardless of how many tracks the selection spans, and Ardour's cut_copy_section walks every playlist the same way. Verified end-to-end against Ardour 9.7: one copy per track immediately after the span, later material rippled by the span length, and undo/redo restore the exact states. Remaining unverified difference: Live moves the time selection onto the copy; where Ardour leaves the selection afterwards is not asserted.",
+          "note": "Live duplicates the time selection in place (insert copy immediately after). Call Session:cut_copy_section(start, end, end, CopyPaste). Native copy-paste-section pastes at edit point/playhead instead. Primary-Tertiary-d is unbound; Editor/duplicate is region duplicate on Primary-d. Implemented as profile/scripts/ardoton_duplicate_time.lua at Lua action slot 17. Track scope matches Live 12.4.3: the manual matrix in docs/lua-release-qualification-plan.md shows Live duplicates across every Arrangement track and ripples later material regardless of how many tracks the selection spans, and Ardour's cut_copy_section walks every playlist the same way. Verified end-to-end against Ardour 9.7: one copy per track immediately after the span, later material rippled by the span length, and undo/redo restore the exact states. Remaining unverified difference: Live moves the time selection onto the copy; where Ardour leaves the selection afterwards is not asserted.",
           "status": "Implemented",
           "evidence": [
             {
@@ -1049,13 +1049,13 @@
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:2540-2544;libs/ardour/ardour/session.h:1199; profile/scripts/ardourton_duplicate_time.lua",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:2540-2544;libs/ardour/ardour/session.h:1199; profile/scripts/ardoton_duplicate_time.lua",
               "result": "Candidate"
             },
             {
               "kind": "Profile binding",
               "claim": "Binding exists",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-d -> LuaAction/script-17; slot 17 (Ardourton: Duplicate Time) in profile/ui-scripts/ardourton-actions.lua-state",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Tertiary-d -> LuaAction/script-17; slot 17 (Ardoton: Duplicate Time) in profile/ui-scripts/ardoton-actions.lua-state",
               "result": "Confirmed"
             }
           ]

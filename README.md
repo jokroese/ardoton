@@ -1,6 +1,6 @@
-# Ardourton
+# Ardoton
 
-Ardourton is a project that adapts Ardour to feel familiar to Ableton Live users.
+Ardoton is a project that adapts Ardour to feel familiar to Ableton Live users.
 
 It currently supports stock Ardour 9.7 on macOS.
 

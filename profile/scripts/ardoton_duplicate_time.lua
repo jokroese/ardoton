@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Duplicate Time",
-	author = "Ardourton",
+	name = "Ardoton: Duplicate Time",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Copy the selected time range and paste it immediately after itself.
 

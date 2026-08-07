@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Add Return",
-	author = "Ardourton",
+	name = "Ardoton: Add Return",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Create a stereo return bus and add post-fader sends from selected tracks.]]
 }

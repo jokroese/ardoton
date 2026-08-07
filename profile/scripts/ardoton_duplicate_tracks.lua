@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Duplicate Tracks",
-	author = "Ardourton",
+	name = "Ardoton: Duplicate Tracks",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Open Ardour's duplicate-tracks operation for the selected tracks or busses.]]
 }

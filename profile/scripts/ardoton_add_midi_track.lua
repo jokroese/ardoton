@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Add MIDI Track",
-	author = "Ardourton",
+	name = "Ardoton: Add MIDI Track",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Add a stereo-output MIDI track without assuming an instrument plugin.]]
 }

@@ -50,8 +50,8 @@ def test_manifest_supported_platform_and_ardour() -> None:
 
 
 def test_theme_and_preferences() -> None:
-    theme = ET.parse(PROFILE / "theme" / "ardourton-ardour.colors").getroot()
-    assert theme.get("theme-name") == "Ardourton"
+    theme = ET.parse(PROFILE / "theme" / "ardoton-ardour.colors").getroot()
+    assert theme.get("theme-name") == "Ardoton"
 
     options: dict[str, str] = {}
     with (PROFILE / "preferences" / "ui-options.tsv").open(encoding="utf-8") as source:
@@ -59,7 +59,7 @@ def test_theme_and_preferences() -> None:
             name, value = line.rstrip("\n").split("\t", 1)
             assert name not in options
             options[name] = value
-    assert options["color-file"] == "ardourton"
+    assert options["color-file"] == "ardoton"
     assert options["show-toolbar-cuectrl"] == "1"
     assert len(options["stripable-color-palette"].split(":")) == 12
     assert options["snap-threshold"] == "10"

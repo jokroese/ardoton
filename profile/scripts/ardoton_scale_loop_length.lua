@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Scale Loop Length",
-	author = "Ardourton",
+	name = "Ardoton: Scale Loop Length",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Halve or double the session loop range's length, keeping its start fixed.
 
@@ -38,7 +38,7 @@ function factory (params)
 		-- surface it in the log rather than failing silently.
 		local result = loop:set_end (new_end, false)
 		if result ~= 0 then
-			print ("Ardourton: loop is already at its minimum length, cannot shorten further")
+			print ("Ardoton: loop is already at its minimum length, cannot shorten further")
 		end
 	end
 end

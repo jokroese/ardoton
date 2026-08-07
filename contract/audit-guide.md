@@ -48,6 +48,6 @@ action target does not exist; evidence for it must use `Building block exists`, 
 1. Inspect the Live source action, input, and context.
 2. Locate Ardour 9.7 action registration, callback behavior, and factory bindings.
 3. Inspect public Lua APIs when no action is sufficient.
-4. Check the proposed key against the Ardourton profile.
+4. Check the proposed key against the Ardoton profile.
 5. Record evidence, alternatives, and unresolved reasons.
 6. Run the formatter, vocabulary generator, validator, tests, Ruff, and `git diff --check`.

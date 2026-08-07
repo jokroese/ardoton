@@ -423,7 +423,7 @@
           "implementationType": "Profile keybinding",
           "mappingClass": "Similar",
           "availability": "Native",
-          "note": "Factory binds toggle-zoom to Tertiary-z; Ardourton profile overrides to x for Live parity.",
+          "note": "Factory binds toggle-zoom to Tertiary-z; Ardoton profile overrides to x for Live parity.",
           "status": "Proposed",
           "evidence": [
             {

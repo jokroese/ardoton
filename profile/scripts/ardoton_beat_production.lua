@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "SessionInit",
-	name = "Ardourton: Beat Production",
-	author = "Ardourton",
+	name = "Ardoton: Beat Production",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Create a compact beat-production session with MIDI, audio, and return tracks.]],
 	master_bus = 0

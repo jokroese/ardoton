@@ -105,7 +105,7 @@ def test_incompatible_action_state_fails(tmp_path: Path) -> None:
 
     # Replace action state with Lua source that system lua can parse but that
     # embeds invalid binary for Ardour's loader when load(..., "b") is used.
-    bad_state = fixture_profile / "ui-scripts" / "ardourton-actions.lua-state"
+    bad_state = fixture_profile / "ui-scripts" / "ardoton-actions.lua-state"
     # Valid Lua text that defines scripts[28] with non-bytecode string as f.
     bad_state.write_text(
         'scripts[28] = { n = "Bad", a = {}, f = "not-bytecode", s = "" }\n'

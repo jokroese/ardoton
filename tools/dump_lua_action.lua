@@ -8,7 +8,7 @@
 -- string.dump() output is only valid for Ardour's own bytecode loader (see
 -- tests/test_lua_runtime.py::test_incompatible_action_state_fails, which exists specifically
 -- to prove system-Lua bytecode is rejected) -- this must run via ardour9-lua, not any other
--- Lua interpreter, or the resulting profile/ui-scripts/ardourton-actions.lua-state fragment
+-- Lua interpreter, or the resulting profile/ui-scripts/ardoton-actions.lua-state fragment
 -- will fail to load in real Ardour.
 
 local script_path = assert (arg[1], "usage: dump_lua_action.lua <script.lua> <slot> <name> [params]")
@@ -49,7 +49,7 @@ assert (type (environment.factory) == "function", "no factory(): " .. script_pat
 local bytecode = assert (string.dump (environment.factory, true), "string.dump failed for " .. script_path)
 
 -- Ardour's action-script state is UTF-8 text with binary fields escaped as \NNN decimal
--- byte escapes (see existing profile/ui-scripts/ardourton-actions.lua-state). Lua's %q is
+-- byte escapes (see existing profile/ui-scripts/ardoton-actions.lua-state). Lua's %q is
 -- not safe here: for bytes >= 128 it emits the raw byte, which breaks UTF-8 stdout and the
 -- Python orchestrator that expects a text fragment.
 local function quote_lua_string (s)

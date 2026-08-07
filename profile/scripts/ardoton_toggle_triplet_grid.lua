@@ -1,7 +1,7 @@
 ardour {
 	["type"] = "EditorAction",
-	name = "Ardourton: Toggle Triplet Grid",
-	author = "Ardourton",
+	name = "Ardoton: Toggle Triplet Grid",
+	author = "Ardoton",
 	license = "GPL-2.0-or-later",
 	description = [[Toggle the editor grid between its current binary subdivision and the
 matching triplet subdivision.

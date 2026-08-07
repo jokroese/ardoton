@@ -43,7 +43,7 @@ def test_installer_macos_round_trip() -> None:
 
 
 def test_installer_never_targets_live_home_by_default_in_harness() -> None:
-    """The shell harness always sets ARDOURTON_CONFIG_DIR to a temp path."""
+    """The shell harness always sets ARDOTON_CONFIG_DIR to a temp path."""
     source = (ROOT / "tests" / "test_installer_macos.sh").read_text(encoding="utf-8")
-    assert "ARDOURTON_CONFIG_DIR=" in source
+    assert "ARDOTON_CONFIG_DIR=" in source
     assert "mktemp" in source
