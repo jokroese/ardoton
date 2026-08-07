@@ -58,8 +58,8 @@ class McpClient:
     def markers(self) -> list[dict]:
         return self.call("markers_list").get("markers", [])
 
-    def loop_range(self) -> tuple[int, int]:
-        """Start and end of the auto-loop location, in samples.
+    def loop_range_or_none(self) -> tuple[int, int] | None:
+        """Start and end of the auto-loop location, or None when the session has no loop.
 
         markers_list declares no outputSchema; these field names come from an observed
         payload (test-results/e2e/probe-markers-*.json), not from the schema.
@@ -70,7 +70,51 @@ class McpClient:
                     int(marker["locationStartSample"]),
                     int(marker["locationEndSample"]),
                 )
-        raise DriverError(f"no auto-loop location in markers_list: {self.markers()}")
+        return None
+
+    def loop_range(self) -> tuple[int, int]:
+        found = self.loop_range_or_none()
+        if found is None:
+            raise DriverError(f"no auto-loop location in markers_list: {self.markers()}")
+        return found
+
+    def tracks(self, include_buses: bool = False) -> list[dict]:
+        """Routes from tracks_list, without the buses by default.
+
+        tracks_list reports the Master bus alongside real tracks, and the region tools
+        reject a bus with "Route is not a track", so anything that reads regions has to
+        filter first. Observed type values: "bus", "midi_track", "audio_track".
+        """
+        routes = self.call("tracks_list").get("tracks", [])
+        if include_buses:
+            return routes
+        return [route for route in routes if route.get("type") != "bus"]
+
+    def add_midi_region(
+        self, start_sample: int, end_sample: int, name: str = "Probe"
+    ) -> tuple[str, dict]:
+        """Add a MIDI track holding one empty region; return (trackId, created region).
+
+        The baseline fixture session contains nothing but the Master bus, so a test that
+        needs material has to make its own. It is MIDI because the MCP surface has no audio
+        import tool -- there is no way to conjure an audio region from here.
+        """
+        before = {str(route.get("id")) for route in self.tracks()}
+        self.call("tracks_add", {"type": "midi", "count": 1, "name": name})
+        added = [route for route in self.tracks() if str(route.get("id")) not in before]
+        if not added:
+            raise DriverError(f"tracks_add did not add a track: {self.tracks(include_buses=True)}")
+        track_id = str(added[0]["id"])
+        created = self.call(
+            "midi_region_add_samples",
+            {
+                "trackId": track_id,
+                "startSample": start_sample,
+                "endSample": end_sample,
+                "name": f"{name}Region",
+            },
+        )
+        return track_id, created.get("created", created)
 
     def _request(self, method: str, params: dict) -> dict:
         self.request_id += 1

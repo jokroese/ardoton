@@ -82,38 +82,59 @@ def test_probe_triplet_grid(ardour_session) -> None:
     _dump("probe-grid-2-after-save", _instant_xml(ardour_session))
 
 
+SAMPLE_RATE = 48000
+REGION_START = 0
+REGION_END = 4 * SAMPLE_RATE
+
+
+def _region_state(mcp) -> list[dict]:
+    """track_get_regions for every track.
+
+    tracks_list also reports the Master bus, and the region tools answer "Route is not a
+    track" for one, so McpClient.tracks() filters the buses out.
+    """
+    return [mcp.call("track_get_regions", {"id": str(track["id"])}) for track in mcp.tracks()]
+
+
 def test_probe_clear_region_fades(ardour_session) -> None:
     """S16-09. Select every region, clear fades, and dump region state around it.
 
     region_get_info declares additionalProperties, so whether fade state is reported --
     and under which keys -- has to be observed. Both the BackSpace and forward-delete
     chords are sent, since only one of them is reachable without Fn on a Mac keyboard.
+
+    The script only touches audio regions (to_audioregion), and the MCP surface has no
+    audio import, so this probe can only get as far as showing which keys the region
+    payloads carry -- the assertion needs a fixture session that ships an audio region.
     """
     mcp = ardour_session.mcp()
-    tracks = mcp.call("tracks_list")
-    _dump("probe-fades-0-tracks", tracks)
-
-    def region_state() -> list[dict]:
-        states = []
-        for track in tracks.get("tracks", []):
-            track_id = track.get("id")
-            if track_id is None:
-                continue
-            states.append(mcp.call("track_get_regions", {"id": str(track_id)}))
-        return states
+    track_id, created = mcp.add_midi_region(REGION_START, REGION_END, name="Fades")
+    time.sleep(SETTLE)
+    _dump("probe-fades-0-tracks", {"tracks": mcp.tracks(include_buses=True), "created": created})
 
     ardour_session.focus_main_window()
     ardour_session.send_hotkey(KEY_A, FLAG_COMMAND)  # Editor/select-all-objects
     time.sleep(SETTLE)
-    _dump("probe-fades-1-before", region_state())
+    _dump("probe-fades-1-before", _region_state(mcp))
+    _dump(
+        "probe-fades-1-region-info",
+        mcp.call("region_get_info", {"regionId": str(created["regionId"])}),
+    )
 
     ardour_session.send_hotkey(KEY_BACKSPACE, FLAG_COMMAND | FLAG_OPTION)
     time.sleep(SETTLE)
-    _dump("probe-fades-2-after-backspace", region_state())
+    _dump("probe-fades-2-after-backspace", _region_state(mcp))
 
     ardour_session.send_hotkey(KEY_FORWARD_DELETE, FLAG_COMMAND | FLAG_OPTION)
     time.sleep(SETTLE)
-    _dump("probe-fades-3-after-forward-delete", region_state())
+    _dump("probe-fades-3-after-forward-delete", _region_state(mcp))
+
+    assert track_id, "probe needs a track"
+    pytest.skip(
+        "S16-09 stays uncovered at runtime: clear-region-fades acts on audio regions only, "
+        "and the MCP surface cannot create one (no import tool). Covering it needs an audio "
+        "region in tests/fixtures/session/baseline."
+    )
 
 
 def test_probe_duplicate_time(ardour_session) -> None:
@@ -125,24 +146,16 @@ def test_probe_duplicate_time(ardour_session) -> None:
     much.
     """
     mcp = ardour_session.mcp()
-    tracks = mcp.call("tracks_list")
-
-    def region_state() -> list[dict]:
-        states = []
-        for track in tracks.get("tracks", []):
-            track_id = track.get("id")
-            if track_id is None:
-                continue
-            states.append(mcp.call("track_get_regions", {"id": str(track_id)}))
-        return states
+    mcp.add_midi_region(REGION_START, REGION_END, name="Duplicate")
+    time.sleep(SETTLE)
 
     ardour_session.focus_main_window()
     ardour_session.send_hotkey(KEY_R)  # Editor/set-mouse-mode-range
     time.sleep(SETTLE)
     ardour_session.send_hotkey(KEY_A, FLAG_COMMAND)
     time.sleep(SETTLE)
-    _dump("probe-duplicate-0-before", region_state())
+    _dump("probe-duplicate-0-before", _region_state(mcp))
 
     ardour_session.send_hotkey(KEY_D, FLAG_COMMAND | FLAG_SHIFT)
     time.sleep(SETTLE * 2)
-    _dump("probe-duplicate-1-after", region_state())
+    _dump("probe-duplicate-1-after", _region_state(mcp))
