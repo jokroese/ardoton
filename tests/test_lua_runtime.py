@@ -3,11 +3,12 @@ from __future__ import annotations
 import re
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
 
-from support import ARDOUR_LUA, PROFILE, ROOT, TESTS
+from support import ACTION_STATE_PATH, ARDOUR_LUA, PROFILE, ROOT, TESTS
 
 pytestmark = [pytest.mark.requires_ardour]
 
@@ -43,6 +44,31 @@ def test_check_lua_passes_against_profile() -> None:
     )
     assert result.returncode == 0, result.stdout + result.stderr
     assert "Lua checks passed" in result.stdout
+
+
+def test_action_state_reproduces_from_scripts() -> None:
+    """The committed bytecode must regenerate byte-for-byte from the committed scripts.
+
+    string.dump keeps linedefined/lastlinedefined even when stripping debug info, so editing
+    a script's header comment changes its bytecode. Without this check the action state can
+    silently stop matching the sources it was built from.
+    """
+    executable = _ardour_lua()
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "tools" / "build_lua_actions.py"),
+            "--check",
+            "--ardour-lua",
+            str(executable),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        cwd=str(ROOT),
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert result.stdout == ACTION_STATE_PATH.read_text(encoding="utf-8")
 
 
 def test_incompatible_action_state_fails(tmp_path: Path) -> None:
