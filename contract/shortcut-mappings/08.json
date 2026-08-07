@@ -426,18 +426,24 @@
           "role": "Preferred",
           "context": "Editor",
           "proposedMacos": "Left arrow",
-          "keyToken": "Left",
+          "keyToken": "Secondary-Left",
           "actionTarget": "LuaAction/script-27",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Live nudges the whole clip loop brace. Preferred Lua: Locations:auto_loop_location():move_to(start - get_nudge_distance). Native alt: select both LoopStart+LoopEnd then Editor/nudge-backward (moves both ends). Session auto-loop, not clip brace. Also Right for S08-08. Implemented as profile/scripts/ardourton_nudge_loop.lua at Lua action slot 27, bound in profile/keybindings/macos/ardour.keys as Editor Secondary-Left. Bound away from the proposed bare Left because Editor Left is S16-28 (Nudge Selection Left), Preferred and Implemented; Secondary-Left is unbound in the Editor context. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
-          "status": "Proposed",
+          "note": "Live nudges the whole clip loop brace. Preferred Lua: Locations:auto_loop_location():move_to(start - get_nudge_distance). Native alt: select both LoopStart+LoopEnd then Editor/nudge-backward (moves both ends). Session auto-loop, not clip brace. Also Right for S08-08. Implemented as profile/scripts/ardourton_nudge_loop.lua at Lua action slot 27, bound in profile/keybindings/macos/ardour.keys as Editor Secondary-Left. Bound away from the proposed bare Left because Editor Left is S16-28 (Nudge Selection Left), Preferred and Implemented; Secondary-Left is unbound in the Editor context. Verified end-to-end against Ardour 9.7: the shortcut slides the loop earlier and keeps its length.",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:544 (LuaAction/script-1..32 are registered unconditionally for every Ardour session, independent of whether a script is assigned to the slot)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_loop_shortcuts.py:test_nudge_shortcuts_slide_the_loop",
               "result": "Confirmed"
             },
             {
@@ -451,6 +457,12 @@
               "claim": "Lua feasible",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;gtk2_ardour/editor_ops.cc:512-560;639-688; profile/scripts/ardourton_nudge_loop.lua",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Secondary-Left -> LuaAction/script-27; slot 27 (Ardourton: Nudge Loop Left) in profile/ui-scripts/ardourton-actions.lua-state",
+              "result": "Confirmed"
             }
           ]
         },
@@ -502,18 +514,24 @@
           "role": "Preferred",
           "context": "Editor",
           "proposedMacos": "Right arrow",
-          "keyToken": "Right",
+          "keyToken": "Secondary-Right",
           "actionTarget": "LuaAction/script-26",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Same preferred target as S08-07 (forward). move_to(start + nudge). Cross-ref S08-07. Implemented as profile/scripts/ardourton_nudge_loop.lua at Lua action slot 26, bound in profile/keybindings/macos/ardour.keys as Editor Secondary-Right. Bound away from the proposed bare Right because Editor Right is S16-28 (Nudge Selection Right), Preferred and Implemented; Secondary-Right is unbound in the Editor context. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
-          "status": "Proposed",
+          "note": "Same preferred target as S08-07 (forward). move_to(start + nudge). Cross-ref S08-07. Implemented as profile/scripts/ardourton_nudge_loop.lua at Lua action slot 26, bound in profile/keybindings/macos/ardour.keys as Editor Secondary-Right. Bound away from the proposed bare Right because Editor Right is S16-28 (Nudge Selection Right), Preferred and Implemented; Secondary-Right is unbound in the Editor context. Verified end-to-end against Ardour 9.7: the shortcut slides the loop later and keeps its length.",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:544 (LuaAction/script-1..32 are registered unconditionally for every Ardour session, independent of whether a script is assigned to the slot)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_loop_shortcuts.py:test_nudge_shortcuts_slide_the_loop",
               "result": "Confirmed"
             },
             {
@@ -527,6 +545,12 @@
               "claim": "Lua feasible",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;gtk2_ardour/editor_ops.cc:512-560; profile/scripts/ardourton_nudge_loop.lua",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Secondary-Right -> LuaAction/script-26; slot 26 (Ardourton: Nudge Loop Right) in profile/ui-scripts/ardourton-actions.lua-state",
+              "result": "Confirmed"
             }
           ]
         },
@@ -577,13 +601,19 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Live shifts the loop brace by its own length. Lua: auto_loop_location():move_to(start \u00b1 length). Session auto-loop only; no clip-brace selection context. Also Down. Implemented as profile/scripts/ardourton_move_loop_by_length.lua at Lua action slots 24 (Up, forward) and 25 (Down, back), bound in profile/keybindings/macos/ardour.keys as Editor Up and Editor Down. Keeps the proposed keys; they displaced only Editor/step-tracks-up and Editor/step-tracks-down, which no sourceId claims. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
-          "status": "Proposed",
+          "note": "Live shifts the loop brace by its own length. Lua: auto_loop_location():move_to(start \u00b1 length). Session auto-loop only; no clip-brace selection context. Also Down. Implemented as profile/scripts/ardourton_move_loop_by_length.lua at Lua action slots 24 (Up, forward) and 25 (Down, back), bound in profile/keybindings/macos/ardour.keys as Editor Up and Editor Down. Keeps the proposed keys; they displaced only Editor/step-tracks-up and Editor/step-tracks-down, which no sourceId claims. Verified end-to-end against Ardour 9.7: Up and Down move the loop by exactly its own length.",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:544 (LuaAction/script-1..32 are registered unconditionally for every Ardour session, independent of whether a script is assigned to the slot)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_loop_shortcuts.py:test_loop_length_shortcuts",
               "result": "Confirmed"
             },
             {
@@ -597,6 +627,44 @@
               "claim": "Lua feasible",
               "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:1012;1129-1130;libs/ardour/location.cc:493-514; profile/scripts/ardourton_move_loop_by_length.lua",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Up -> LuaAction/script-24; slot 24 (Ardourton: Move Loop Forward by Loop Length) in profile/ui-scripts/ardourton-actions.lua-state",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Down arrow",
+          "keyToken": "Down",
+          "actionTarget": "LuaAction/script-25",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "The paired direction of the S08-09 Preferred mapping: Up moves the loop forward by its own length, Down moves it back.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_loop_shortcuts.py:test_loop_length_shortcuts",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:gtk2_ardour/luainstance.cc:1012;1129-1130;libs/ardour/location.cc:493-514; profile/scripts/ardourton_move_loop_by_length.lua",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Down -> LuaAction/script-25; slot 25 (Ardourton: Move Loop Back by Loop Length) in profile/ui-scripts/ardourton-actions.lua-state",
+              "result": "Confirmed"
             }
           ]
         }
@@ -610,18 +678,24 @@
           "role": "Preferred",
           "context": "Editor",
           "proposedMacos": "Cmd+Up / Cmd+Down",
-          "keyToken": "Primary-Up",
+          "keyToken": "Primary-Level4-Up",
           "actionTarget": "LuaAction/script-22",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Live halves/doubles clip loop length. Lua: Location:set_end(start + length/2 or length*2) on auto_loop_location (keep start fixed). No native scale-loop action; not grid-quantized unless scripted. Also Primary-Down. Conflict with track reorder. Implemented as profile/scripts/ardourton_scale_loop_length.lua at Lua action slots 22 (double) and 23 (halve), bound in profile/keybindings/macos/ardour.keys as Editor Primary-Level4-Up and Primary-Level4-Down. Bound away from the proposed Cmd+Up/Cmd+Down because those collide with S15-15 (Move Selected Track) and S19-12 (Move Nonadjacent Tracks Without Collapsing), both Preferred and Implemented; the Primary-Level4 chords are unbound in the Editor context. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
-          "status": "Proposed",
+          "note": "Live halves/doubles clip loop length. Lua: Location:set_end(start + length/2 or length*2) on auto_loop_location (keep start fixed). No native scale-loop action; not grid-quantized unless scripted. Also Primary-Down. Conflict with track reorder. Implemented as profile/scripts/ardourton_scale_loop_length.lua at Lua action slots 22 (double) and 23 (halve), bound in profile/keybindings/macos/ardour.keys as Editor Primary-Level4-Up and Primary-Level4-Down. Bound away from the proposed Cmd+Up/Cmd+Down because those collide with S15-15 (Move Selected Track) and S19-12 (Move Nonadjacent Tracks Without Collapsing), both Preferred and Implemented; the Primary-Level4 chords are unbound in the Editor context. Verified end-to-end against Ardour 9.7: the shortcuts double and halve the loop length with the start fixed.",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
               "claim": "Target exists",
               "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:544 (LuaAction/script-1..32 are registered unconditionally for every Ardour session, independent of whether a script is assigned to the slot)",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_loop_shortcuts.py:test_loop_length_shortcuts",
               "result": "Confirmed"
             },
             {
@@ -635,6 +709,44 @@
               "claim": "Lua feasible",
               "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1262-1298;gtk2_ardour/editor_actions.cc:280-283; profile/scripts/ardourton_scale_loop_length.lua",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Up -> LuaAction/script-22; slot 22 (Ardourton: Double Loop Length) in profile/ui-scripts/ardourton-actions.lua-state",
+              "result": "Confirmed"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+Down",
+          "keyToken": "Primary-Level4-Down",
+          "actionTarget": "LuaAction/script-23",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "The paired direction of the S08-10 Preferred mapping: double on Up, halve on Down.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_loop_shortcuts.py:test_loop_length_shortcuts",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1262-1298;gtk2_ardour/editor_actions.cc:280-283; profile/scripts/ardourton_scale_loop_length.lua",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Down -> LuaAction/script-23; slot 23 (Ardourton: Halve Loop Length) in profile/ui-scripts/ardourton-actions.lua-state",
+              "result": "Confirmed"
             }
           ]
         }
@@ -648,13 +760,13 @@
           "role": "Preferred",
           "context": "Editor",
           "proposedMacos": "Cmd+Left / Cmd+Right",
-          "keyToken": "Primary-Right",
+          "keyToken": "Primary-Level4-Right",
           "actionTarget": "LuaAction/script-20",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Same preferred target as S16-12. Also Primary-Left to shorten. Moves the session auto-loop end by one bar, keeping the start fixed (Live steps the clip brace by the grid). The editor grid is deliberately not the step: the pack seeds grid-type to GridTypeBeatDiv32 as an adaptive ceiling (docs/concepts/adaptive-grid-and-snap.md), so Editor:get_grid_type_as_beats reports a 1/128 note, and the zoom-scaled resolution that makes that ceiling usable (bbt_ruler_scale) is private and not Lua-exported. The nudge clock was the previous step source and is no longer used here: at its 5s default, shortening was a silent no-op on any loop of 5s or shorter. Step size is the script's \"bars\" param. Selecting LoopEnd and calling Editor/nudge-forward/backward is a native alternative without a dedicated action. Implemented as profile/scripts/ardourton_resize_loop_end.lua at Lua action slots 20 (lengthen) and 21 (shorten), bound in profile/keybindings/macos/ardour.keys as Editor Primary-Level4-Right and Primary-Level4-Left. Bound away from the proposed Cmd+Left/Cmd+Right because those are S15-15 (Move Selected Track Left/Right), Preferred and Implemented; the Primary-Level4 chords are unbound in the Editor context. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state, and tests/e2e/test_loop_shortcuts.py::test_resize_shortcuts_move_the_loop_end verifies the exact one-bar step against a live Ardour 9.7. Status stays Proposed because this Preferred mapping's proposed key (Cmd+Left/Right) is not the key the pack actually binds -- the same reason the rest of the Lua loop family is Proposed, not a gap in verification.",
-          "status": "Proposed",
+          "note": "Same preferred target as S16-12. Also Primary-Left to shorten. Moves the session auto-loop end by one bar, keeping the start fixed (Live steps the clip brace by the grid). The editor grid is deliberately not the step: the pack seeds grid-type to GridTypeBeatDiv32 as an adaptive ceiling (docs/concepts/adaptive-grid-and-snap.md), so Editor:get_grid_type_as_beats reports a 1/128 note, and the zoom-scaled resolution that makes that ceiling usable (bbt_ruler_scale) is private and not Lua-exported. The nudge clock was the previous step source and is no longer used here: at its 5s default, shortening was a silent no-op on any loop of 5s or shorter. Step size is the script's \"bars\" param. Selecting LoopEnd and calling Editor/nudge-forward/backward is a native alternative without a dedicated action. Implemented as profile/scripts/ardourton_resize_loop_end.lua at Lua action slots 20 (lengthen) and 21 (shorten), bound in profile/keybindings/macos/ardour.keys as Editor Primary-Level4-Right and Primary-Level4-Left. Bound away from the proposed Cmd+Left/Cmd+Right because those are S15-15 (Move Selected Track Left/Right), Preferred and Implemented; the Primary-Level4 chords are unbound in the Editor context. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state, and tests/e2e/test_loop_shortcuts.py::test_resize_shortcuts_move_the_loop_end verifies the exact one-bar step against a live Ardour 9.7. Implemented on the Primary-Level4 chords rather than the proposed Cmd+Left/Right; the displacement is recorded by the Key conflict evidence.",
+          "status": "Implemented",
           "evidence": [
             {
               "kind": "Action registration",
@@ -677,7 +789,7 @@
             {
               "kind": "Key conflict",
               "claim": "Key conflict",
-              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> tab-to-transient-backwards/forwards",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> Editor/move-selected-tracks-up/down (S15-15, Preferred and Implemented), which is why this mapping binds the Primary-Level4 chords instead",
               "result": "Conflict"
             },
             {
@@ -685,6 +797,12 @@
               "claim": "Lua feasible",
               "reference": "../ardour@9.7:libs/ardour/luabindings.cc:826-830 (Meter::divisions_per_bar/note_value),849 (MeterPoint derives Meter),888 (TempoMap::meter_at),903 (quarters_at),909 (sample_at_beats);libs/ardour/location.cc:354-390 (Location::set_end coerces to the session time domain and rejects an end at or before the start); profile/scripts/ardourton_resize_loop_end.lua",
               "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Right -> LuaAction/script-20; slot 20 (Ardourton: Lengthen Loop) in profile/ui-scripts/ardourton-actions.lua-state",
+              "result": "Confirmed"
             }
           ]
         },
@@ -717,6 +835,38 @@
               "claim": "Key conflict",
               "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Left/Right -> tab-to-transient-backwards/forwards",
               "result": "Conflict"
+            }
+          ]
+        },
+        {
+          "role": "Alternative",
+          "context": "Editor",
+          "proposedMacos": "Cmd+Option+Left",
+          "keyToken": "Primary-Level4-Left",
+          "actionTarget": "LuaAction/script-21",
+          "implementationType": "Profile Lua",
+          "mappingClass": "Similar",
+          "availability": "Lua accessible",
+          "note": "The paired direction of the S08-11 Preferred mapping: lengthen on Right, shorten on Left, one bar per press.",
+          "status": "Implemented",
+          "evidence": [
+            {
+              "kind": "E2E test",
+              "claim": "Behavior verified",
+              "reference": "tests/e2e/test_loop_shortcuts.py:test_resize_shortcuts_move_the_loop_end",
+              "result": "Confirmed"
+            },
+            {
+              "kind": "Lua API",
+              "claim": "Lua feasible",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:826-830 (Meter::divisions_per_bar/note_value),849 (MeterPoint derives Meter),888 (TempoMap::meter_at),903 (quarters_at),909 (sample_at_beats);libs/ardour/location.cc:354-390 (Location::set_end coerces to the session time domain and rejects an end at or before the start); profile/scripts/ardourton_resize_loop_end.lua",
+              "result": "Candidate"
+            },
+            {
+              "kind": "Profile binding",
+              "claim": "Binding exists",
+              "reference": "profile/keybindings/macos/ardour.keys: Editor Primary-Level4-Left -> LuaAction/script-21; slot 21 (Ardourton: Shorten Loop) in profile/ui-scripts/ardourton-actions.lua-state",
+              "result": "Confirmed"
             }
           ]
         }

@@ -189,7 +189,7 @@ def test_nudge_shortcuts_slide_the_loop(
 def test_resize_shortcuts_move_the_loop_end(
     ardour_session, coverage_tracker, label, key, expected_end
 ) -> None:
-    """S08-11. Only the end moves, and it moves by exactly one bar.
+    """S08-11 and S16-12, which share slots 20/21. Only the end moves, by exactly one bar.
 
     The step used to be the nudge clock, a user preference defaulting to 5s, which made this
     a silent no-op on any loop of 5s or shorter and forced the test to measure the live nudge
@@ -209,8 +209,10 @@ def test_resize_shortcuts_move_the_loop_end(
         assert mcp.loop_range() == (LOOP_START, expected_end)
 
         coverage_tracker["S08-11"]["e2e"] = "passed"
+        coverage_tracker["S16-12"]["e2e"] = "passed"
     except Exception:
         coverage_tracker["S08-11"]["e2e"] = "failed"
+        coverage_tracker["S16-12"]["e2e"] = "failed"
         _dump(f"S08-11-{label}-markers", mcp.markers())
         raise
 

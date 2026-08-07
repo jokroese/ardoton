@@ -49,9 +49,16 @@ def test_expectation_source_ids_exist() -> None:
 
 
 def test_expectation_context_key_unique() -> None:
+    """Two rows may claim the same key only if they expect the same action.
+
+    S08-11 and S16-12 legitimately share the loop-resize bindings (one Lua slot serves both
+    Live behaviors); what this must still catch is two expectations demanding different
+    actions on one key, which the keymap could never satisfy.
+    """
     bindings, _ = load_expectations()
-    seen: set[tuple[str, str]] = set()
+    seen: dict[tuple[str, str], str] = {}
     for binding in bindings:
         pair = (binding.context, binding.key)
-        assert pair not in seen, f"duplicate expectation {pair}"
-        seen.add(pair)
+        if pair in seen:
+            assert seen[pair] == binding.action, f"conflicting expectations for {pair}"
+        seen[pair] = binding.action
