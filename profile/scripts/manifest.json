@@ -85,14 +85,14 @@
       "slot": 21,
       "source": "ardourton_resize_loop_end.lua",
       "name": "Ardourton: Shorten Loop",
-      "params": { "direction": -1 },
+      "params": { "direction": -1, "bars": 1 },
       "sourceIds": ["S08-11", "S16-12"]
     },
     {
       "slot": 20,
       "source": "ardourton_resize_loop_end.lua",
       "name": "Ardourton: Lengthen Loop",
-      "params": { "direction": 1 },
+      "params": { "direction": 1, "bars": 1 },
       "sourceIds": ["S08-11", "S16-12"]
     },
     {

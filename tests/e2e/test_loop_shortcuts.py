@@ -9,6 +9,7 @@ Editor selection, which is what keeps the S16-11 case static-only.
 from __future__ import annotations
 
 import json
+import re
 import time
 
 import pytest
@@ -110,21 +111,36 @@ def test_loop_length_shortcuts(
         raise
 
 
-def _measure_nudge_distance(ardour_session, mcp) -> int:
-    """The live nudge-clock distance in samples, read back from one whole-loop nudge.
+def _fixture_bar_samples() -> int:
+    """One bar of the fixture session, in samples.
 
-    The nudge clock is a user preference (Ardour defaults it to 5 seconds), so a test that
-    needs to know how far a nudge reaches has to measure it rather than assume a value.
+    The resize shortcut steps by a bar, so the expected distance is a property of the
+    fixture's tempo map. Read it out of the session file rather than measuring it with the
+    shortcut under test, and rather than hardcoding a number that silently stops matching if
+    the fixture is ever re-saved at a different tempo.
     """
-    mcp.set_loop_range(LOOP_START, LOOP_END)
-    time.sleep(SETTLE)
-    ardour_session.focus_main_window()
-    ardour_session.send_hotkey(KEY_RIGHT, FLAG_CONTROL)
-    time.sleep(SETTLE)
-    start, _ = mcp.loop_range()
-    distance = start - LOOP_START
-    assert distance > 0, f"nudge-right did not move the loop forward: start={start}"
-    return distance
+    from support import TESTS
+
+    session = TESTS / "fixtures" / "session" / "baseline" / "Baseline.ardour"
+    text = session.read_text(encoding="utf-8")
+
+    tempos = re.findall(r'<Tempo npm="([0-9.]+)"[^>]*?note-type="([0-9.]+)"', text)
+    meters = re.findall(r'<Meter note-value="([0-9.]+)" divisions-per-bar="([0-9.]+)"', text)
+    assert len(tempos) == 1, f"expected a constant-tempo fixture, found {len(tempos)} tempos"
+    assert len(meters) == 1, f"expected a single-meter fixture, found {len(meters)} meters"
+
+    npm, note_type = (float(value) for value in tempos[0])
+    note_value, divisions_per_bar = (float(value) for value in meters[0])
+
+    # Quarter notes per minute, then the bar length in quarter notes -- the same expression
+    # the script uses (EditingContext::get_a_grid_type_as_beats, GridTypeBar case).
+    quarters_per_minute = npm * (4.0 / note_type)
+    bar_quarters = (4.0 * divisions_per_bar) / note_value
+
+    return round(bar_quarters / quarters_per_minute * 60.0 * SAMPLE_RATE)
+
+
+BAR = _fixture_bar_samples()
 
 
 @pytest.mark.parametrize(
@@ -164,41 +180,39 @@ def test_nudge_shortcuts_slide_the_loop(
 
 
 @pytest.mark.parametrize(
-    ("label", "key", "shorter"),
+    ("label", "key", "expected_end"),
     [
-        ("shorten", KEY_LEFT, True),
-        ("lengthen", KEY_RIGHT, False),
+        ("shorten", KEY_LEFT, LOOP_END - BAR),
+        ("lengthen", KEY_RIGHT, LOOP_END + BAR),
     ],
 )
 def test_resize_shortcuts_move_the_loop_end(
-    ardour_session, coverage_tracker, label, key, shorter
+    ardour_session, coverage_tracker, label, key, expected_end
 ) -> None:
-    """S08-11. Only the end moves, and it moves by one nudge.
+    """S08-11 and S16-12, which share slots 20/21. Only the end moves, by exactly one bar.
 
-    Location::set_end rejects an end at or before the start, so a shorten only lands on a
-    loop that is longer than one nudge -- and Ardour's default nudge (5s) is longer than the
-    4s loop the other cases use. Measure the live nudge distance first and size the loop
-    around it, so this tests the script rather than the nudge-clock preference.
+    The step used to be the nudge clock, a user preference defaulting to 5s, which made this
+    a silent no-op on any loop of 5s or shorter and forced the test to measure the live nudge
+    distance and size the loop around it. A bar is a property of the session's tempo map, so
+    the distance is now known up front and asserted exactly.
     """
     mcp = ardour_session.mcp()
-    nudge = _measure_nudge_distance(ardour_session, mcp)
-    loop_end = LOOP_START + max(LOOP_LENGTH, nudge * 2)
-    mcp.set_loop_range(LOOP_START, loop_end)
+    mcp.set_loop_range(LOOP_START, LOOP_END)
     time.sleep(SETTLE)
-    assert mcp.loop_range() == (LOOP_START, loop_end), "loop range was not established"
+    assert mcp.loop_range() == (LOOP_START, LOOP_END), "loop range was not established"
 
     try:
         ardour_session.focus_main_window()
         ardour_session.send_hotkey(key, FLAG_COMMAND | FLAG_OPTION)
         time.sleep(SETTLE)
-        start, end = mcp.loop_range()
 
-        assert start == LOOP_START, "resize must leave the loop start alone"
-        assert (end < loop_end) if shorter else (end > loop_end)
+        assert mcp.loop_range() == (LOOP_START, expected_end)
 
         coverage_tracker["S08-11"]["e2e"] = "passed"
+        coverage_tracker["S16-12"]["e2e"] = "passed"
     except Exception:
         coverage_tracker["S08-11"]["e2e"] = "failed"
+        coverage_tracker["S16-12"]["e2e"] = "failed"
         _dump(f"S08-11-{label}-markers", mcp.markers())
         raise
 

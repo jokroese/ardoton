@@ -7,18 +7,64 @@ import json
 import os
 import shutil
 import signal
+import socket
 import subprocess
 import time
 import urllib.request
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from collections.abc import Callable
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from support import ARDOUR_BIN, REAL_CONFIG, ROOT, TESTS
 
 WINDOW_WIDTH = 1440
 WINDOW_HEIGHT = 900
-MCP_PORT = 4820
+
+
+def free_localhost_port() -> int:
+    """A localhost TCP port that is free right now.
+
+    Ardour's MCP surface defaults to 4820 for everyone, so two E2E runs sharing this machine
+    would answer each other's requests. Binding port 0 lets the OS pick from the ephemeral
+    range, which it does not hand out again immediately, so the gap between closing this
+    socket and Ardour binding the port is not a practical collision risk.
+    """
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+        probe.bind(("127.0.0.1", 0))
+        return int(probe.getsockname()[1])
+
+
+def mcp_url(port: int) -> str:
+    """The endpoint MCPHttp serves (../ardour@9.7:libs/surfaces/mcp_http/mcp_http.cc:180)."""
+    return f"http://127.0.0.1:{port}/mcp"
+
+
+def _numeric_first(value: str) -> tuple[int, int, str]:
+    """Sort key that orders Ardour's numeric string IDs by value, not lexically."""
+    return (0, int(value), "") if value.isdigit() else (1, 0, value)
+
+
+def poll_until[T](
+    read: Callable[[], T],
+    predicate: Callable[[T], bool],
+    timeout: float = 10.0,
+    interval: float = 0.25,
+) -> T:
+    """Read repeatedly until the predicate holds, and return the last value either way.
+
+    Ardour applies most of these edits on its own GUI thread, so the state a test wants is
+    usually there within a few milliseconds but occasionally is not. Callers keep their own
+    assertion on the returned value; this only decides how long to wait, and it replaces
+    both the immediate read that assumed the edit had landed and the fixed sleeps that
+    assumed it would within a second.
+    """
+    deadline = time.monotonic() + timeout
+    value = read()
+    while not predicate(value) and time.monotonic() < deadline:
+        time.sleep(interval)
+        value = read()
+    return value
 
 
 class DriverError(RuntimeError):
@@ -30,7 +76,9 @@ class AccessibilityPermissionError(DriverError):
 
 
 class McpClient:
-    def __init__(self) -> None:
+    def __init__(self, port: int, pid: int | None = None) -> None:
+        self.port = port
+        self.pid = pid
         self.request_id = 0
         self._request(
             "initialize",
@@ -90,6 +138,29 @@ class McpClient:
             return routes
         return [route for route in routes if route.get("type") != "bus"]
 
+    def add_midi_track(self, name: str) -> str:
+        """Create one MIDI track and return its route ID."""
+        before = {str(route.get("id")) for route in self.tracks()}
+        self.call("tracks_add", {"type": "midi", "count": 1, "name": name})
+        added = [route for route in self.tracks() if str(route.get("id")) not in before]
+        if not added:
+            raise DriverError(f"tracks_add did not add a track: {self.tracks(include_buses=True)}")
+        return str(added[0]["id"])
+
+    def add_midi_region_to(
+        self, track_id: str, start_sample: int, end_sample: int, name: str
+    ) -> dict:
+        created = self.call(
+            "midi_region_add_samples",
+            {
+                "trackId": track_id,
+                "startSample": start_sample,
+                "endSample": end_sample,
+                "name": name,
+            },
+        )
+        return created.get("created", created)
+
     def add_midi_region(
         self, start_sample: int, end_sample: int, name: str = "Probe"
     ) -> tuple[str, dict]:
@@ -99,22 +170,46 @@ class McpClient:
         needs material has to make its own. It is MIDI because the MCP surface has no audio
         import tool -- there is no way to conjure an audio region from here.
         """
-        before = {str(route.get("id")) for route in self.tracks()}
-        self.call("tracks_add", {"type": "midi", "count": 1, "name": name})
-        added = [route for route in self.tracks() if str(route.get("id")) not in before]
-        if not added:
-            raise DriverError(f"tracks_add did not add a track: {self.tracks(include_buses=True)}")
-        track_id = str(added[0]["id"])
-        created = self.call(
-            "midi_region_add_samples",
-            {
-                "trackId": track_id,
-                "startSample": start_sample,
-                "endSample": end_sample,
-                "name": f"{name}Region",
-            },
-        )
-        return track_id, created.get("created", created)
+        track_id = self.add_midi_track(name)
+        created = self.add_midi_region_to(track_id, start_sample, end_sample, f"{name}Region")
+        return track_id, created
+
+    def region_state(self) -> list[dict]:
+        """Per-track region layout, reduced to the fields an assertion can rely on.
+
+        track_get_regions also reports playlist IDs, BBT positions, lock/mute/hidden flags
+        and a type discriminator. Comparing the whole payload would turn every assertion
+        into a snapshot of unrelated Ardour internals, so this keeps identity (track and
+        region ID, name) and extent (start and end sample) and drops the rest. Ordering is
+        normalized because the region order in the payload follows playlist internals.
+        """
+        state: list[dict] = []
+        for track in self.tracks():
+            track_id = str(track["id"])
+            payload = self.call("track_get_regions", {"id": track_id})
+            state.append(
+                {
+                    "trackId": track_id,
+                    "trackName": track.get("name"),
+                    "regions": sorted(
+                        (
+                            {
+                                "regionId": str(region["regionId"]),
+                                "name": region["name"],
+                                "start": int(region["startSample"]),
+                                "end": int(region["endSample"]),
+                            }
+                            for region in payload.get("regions", [])
+                        ),
+                        key=lambda region: (region["start"], region["end"], region["name"]),
+                    ),
+                }
+            )
+        return sorted(state, key=lambda track: _numeric_first(track["trackId"]))
+
+    @property
+    def url(self) -> str:
+        return mcp_url(self.port)
 
     def _request(self, method: str, params: dict) -> dict:
         self.request_id += 1
@@ -122,12 +217,17 @@ class McpClient:
             {"jsonrpc": "2.0", "id": self.request_id, "method": method, "params": params}
         ).encode()
         request = urllib.request.Request(
-            f"http://127.0.0.1:{MCP_PORT}/mcp",
+            self.url,
             payload,
             {"Content-Type": "application/json", "Accept": "application/json"},
         )
-        with urllib.request.urlopen(request, timeout=5) as response:
-            body = json.load(response)
+        try:
+            with urllib.request.urlopen(request, timeout=5) as response:
+                body = json.load(response)
+        except OSError as exc:
+            raise DriverError(
+                f"MCP request {method!r} to {self.url} (Ardour pid {self.pid}) failed: {exc}"
+            ) from exc
         if "error" in body:
             raise DriverError(str(body["error"]))
         return body["result"]
@@ -171,29 +271,41 @@ class ArdourSession:
     session_file: Path
     process: subprocess.Popen | None = None
     real_config_before: dict[str, str] | None = None
+    mcp_port: int = field(default_factory=free_localhost_port)
+
+    @property
+    def mcp_url(self) -> str:
+        return mcp_url(self.mcp_port)
 
     def enable_mcp(self) -> None:
         config_path = self.config_dir / "config"
         config = ET.parse(config_path)
         protocols = ET.SubElement(config.getroot(), "ControlProtocols")
+        # MCPHttp::set_state reads "port" off the Protocol node and falls back to the 4820
+        # default (../ardour@9.7:libs/surfaces/mcp_http/mcp_http.cc:75;104-110).
         ET.SubElement(
             protocols,
             "Protocol",
             name="MCP HTTP Server (Experimental)",
             active="1",
             config="",
+            port=str(self.mcp_port),
         )
         config.write(config_path, encoding="utf-8", xml_declaration=True)
 
     def mcp(self) -> McpClient:
+        pid = self.process.pid if self.process is not None else None
         last_error: Exception | None = None
         for _ in range(10):
             try:
-                return McpClient()
+                return McpClient(self.mcp_port, pid)
             except Exception as exc:
                 last_error = exc
                 time.sleep(0.25)
-        raise DriverError(f"MCP HTTP server did not start: {last_error}")
+        raise DriverError(
+            f"MCP HTTP server did not start on 127.0.0.1:{self.mcp_port} "
+            f"(Ardour pid {pid}): {last_error}"
+        )
 
     def ensure_safe_config_dir(self) -> None:
         resolved = self.config_dir.resolve()
@@ -257,7 +369,7 @@ class ArdourSession:
         (self.config_dir / ".a9").write_text("", encoding="utf-8")
 
     def prepare_session_copy(self) -> None:
-        fixture = TESTS / "fixtures" / "session" / "baseline"
+        fixture = TESTS / "fixtures" / "session" / self.session_dir.name
         if self.session_dir.exists():
             shutil.rmtree(self.session_dir)
         shutil.copytree(fixture, self.session_dir)
@@ -270,6 +382,41 @@ class ArdourSession:
                         shutil.rmtree(path)
                     else:
                         path.unlink()
+
+    def set_editor_grid_type(self, grid_type: str) -> None:
+        """Seed the Editor grid in the copied session, before Ardour reads it.
+
+        With a session loaded, ARDOUR_UI::editor_settings takes the Editor node from the
+        session's own instant.xml and does not fall back to the one the installer writes
+        into the configuration directory
+        (../ardour@9.7:gtk2_ardour/ardour_ui_startup.cc:301-315), so this is the file a test
+        has to seed. Call it after prepare_session_copy and before launch; it edits the
+        temporary copy, never the repository fixture.
+        """
+        self.ensure_safe_config_dir()
+        path = self.session_dir / "instant.xml"
+        # The fixture session ships without one; Ardour creates it on the first instant_save.
+        tree = ET.parse(path) if path.is_file() else ET.ElementTree(ET.Element("instant"))
+        root = tree.getroot()
+        editor = root.find("Editor")
+        if editor is None:
+            editor = ET.SubElement(root, "Editor")
+        editor.set("grid-type", grid_type)
+        tree.write(path, encoding="utf-8", xml_declaration=True)
+
+    def editor_grid_type(self) -> str | None:
+        """The grid type Ardour has persisted for this session, or None if it has not.
+
+        EditingContext::grid_type_chosen calls instant_save, which rewrites the session's
+        instant.xml straight away (../ardour@9.7:gtk2_ardour/editing_context.cc:949;
+        gtk2_ardour/editor.cc:998-1005) -- no session save is needed to observe a grid
+        change.
+        """
+        path = self.session_dir / "instant.xml"
+        if not path.is_file():
+            return None
+        editor = ET.parse(path).getroot().find("Editor")
+        return None if editor is None else editor.get("grid-type")
 
     def launch(self) -> None:
         self.ensure_safe_config_dir()
@@ -339,6 +486,19 @@ class ArdourSession:
             last_error = f"AX windows err={err}"
             time.sleep(0.25)
         raise DriverError(f"Timed out waiting for Ardour main window ({last_error})")
+
+    def wait_until_ready(self, settle: float = 1.0) -> None:
+        """Block until Ardour is far enough along to act on a key event.
+
+        wait_for_main_window returns as soon as a titled window exists, which is well before
+        the editor is loaded: the very first key event sent after that is dropped, so a test
+        whose first press is the one under test fails for a reason that has nothing to do
+        with the binding. Waiting for the MCP server to answer proves the session is up, and
+        the settle covers the rest of the editor's startup work.
+        """
+        self.mcp().call("session_get_info")
+        self.focus_main_window()
+        time.sleep(settle)
 
     def focus_main_window(self) -> None:
         from AppKit import NSApplicationActivateIgnoringOtherApps, NSRunningApplication
@@ -430,12 +590,17 @@ class ArdourSession:
         self.send_hotkey(1, kCGEventFlagMaskCommand)  # kVK_ANSI_S = 1
 
 
-def create_isolated_session(tmp_path: Path) -> ArdourSession:
+def create_isolated_session(tmp_path: Path, fixture: str = "baseline") -> ArdourSession:
+    fixture_dir = TESTS / "fixtures" / "session" / fixture
+    session_files = sorted(fixture_dir.glob("*.ardour"))
+    if len(session_files) != 1:
+        raise DriverError(f"fixture {fixture!r} must contain exactly one .ardour file")
+
     root = tmp_path / "ardourton-e2e"
     home = root / "home"
     config_dir = home / "Library" / "Preferences" / "Ardour9"
-    session_dir = root / "sessions" / "baseline"
-    session_file = session_dir / "Baseline.ardour"
+    session_dir = root / "sessions" / fixture
+    session_file = session_dir / session_files[0].name
 
     session = ArdourSession(
         root=root,

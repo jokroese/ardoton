@@ -85,6 +85,93 @@ context = "Editor"
 key = "Primary-Level4-u"
 action = "Editor/toggle-layer-display"
 
+[[binding]]
+source_id = "S08-07"
+context = "Editor"
+key = "Secondary-Left"
+action = "LuaAction/script-27"
+
+[[binding]]
+source_id = "S08-08"
+context = "Editor"
+key = "Secondary-Right"
+action = "LuaAction/script-26"
+
+[[binding]]
+source_id = "S08-09"
+context = "Editor"
+key = "Up"
+action = "LuaAction/script-24"
+
+[[binding]]
+source_id = "S08-09"
+context = "Editor"
+key = "Down"
+action = "LuaAction/script-25"
+
+[[binding]]
+source_id = "S08-10"
+context = "Editor"
+key = "Primary-Level4-Up"
+action = "LuaAction/script-22"
+
+[[binding]]
+source_id = "S08-10"
+context = "Editor"
+key = "Primary-Level4-Down"
+action = "LuaAction/script-23"
+
+[[binding]]
+source_id = "S08-11"
+context = "Editor"
+key = "Primary-Level4-Left"
+action = "LuaAction/script-21"
+
+[[binding]]
+source_id = "S08-11"
+context = "Editor"
+key = "Primary-Level4-Right"
+action = "LuaAction/script-20"
+
+# Cmd+3 must sit in the Editor context, not the shared Editing set: Ardour prefixes the
+# Editing set's action names per editing context (Bindings::relativize), so a LuaAction
+# target there can never resolve.
+[[binding]]
+source_id = "S13-04"
+context = "Editor"
+key = "Primary-3"
+action = "LuaAction/script-19"
+
+[[binding]]
+source_id = "S16-09"
+context = "Editor"
+key = "Primary-Level4-Delete"
+action = "LuaAction/script-18"
+
+[[binding]]
+source_id = "S16-09"
+context = "Editor"
+key = "Primary-Level4-BackSpace"
+action = "LuaAction/script-18"
+
+[[binding]]
+source_id = "S16-12"
+context = "Editor"
+key = "Primary-Level4-Left"
+action = "LuaAction/script-21"
+
+[[binding]]
+source_id = "S16-12"
+context = "Editor"
+key = "Primary-Level4-Right"
+action = "LuaAction/script-20"
+
+[[binding]]
+source_id = "S16-18"
+context = "Editor"
+key = "Primary-Tertiary-d"
+action = "LuaAction/script-17"
+
 [[exclusive]]
 source_id = "S20-06"
 key = "F9"

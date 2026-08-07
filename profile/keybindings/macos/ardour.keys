@@ -24,11 +24,16 @@
       <Binding key="Primary-1" action="Editing/next-grid-choice" group="Grid Settings + Editor Modes" />
       <Binding key="Primary-2" action="Editing/prev-grid-choice" group="Grid Settings + Editor Modes" />
       <Binding key="Primary-4" action="Editing/cycle-snap-mode" group="Grid Settings + Editor Modes" />
-      <Binding key="Primary-3" action="LuaAction/script-19" group="Grid Settings + Editor Modes" />
     </Press>
   </Bindings>
   <Bindings name="Editor">
     <Press>
+      <!-- Toggle Triplet Grid sits here, not in the Editing set above. Ardour copies the
+           shared "Editing" bindings per editing context and prefixes every action name with
+           the context name (Bindings::relativize, ../ardour@9.7:libs/gtkmm2ext/bindings.cc:542),
+           so LuaAction/script-19 there resolves as EditorLuaAction/script-19 and never fires.
+           Only Editing/* actions survive that rewrite. -->
+      <Binding key="Primary-3" action="LuaAction/script-19" group="Grid Settings + Editor Modes" />
       <Binding key="Secondary-equal" action="Editor/expand-tracks" group="Changing What's Visible" />
       <Binding key="Secondary-minus" action="Editor/shrink-tracks" group="Changing What's Visible" />
       <Binding key="Primary-Tertiary-underscore" action="Editor/zoom-to-session" group="Changing What's Visible" />
@@ -271,7 +276,6 @@
       <Binding key="grave" action="Transport/ToggleClick" group="Global Transport Modes" />
       <Binding key="Primary-grave" action="MIDI/panic" group="Global MIDI commands" />
       <Binding key="Secondary-grave" action="Transport/ToggleExternalSync" group="Global Transport &amp; Recording Control" />
-      <Binding key="Primary-3" action="Transport/ToggleFollowEdits" group="Global Transport Modes" />
       <Binding key="7" action="Transport/ToggleAutoReturn" group="Global Transport Modes" />
       <Binding key="Primary-7" action="Transport/ToggleAutoPlay" group="Global Transport Modes" />
       <Binding key="8" action="Transport/TogglePunch" group="Global Transport Modes" />

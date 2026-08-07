@@ -35,13 +35,13 @@ function factory ()
 
 		local to_triplet = binary_to_triplet[current]
 		if to_triplet then
-			Editor:access_action ("Snap", to_triplet)
+			Editor:access_action ("EditorSnap", to_triplet)
 			return
 		end
 
 		local to_binary = triplet_to_binary[current]
 		if to_binary then
-			Editor:access_action ("Snap", to_binary)
+			Editor:access_action ("EditorSnap", to_binary)
 			return
 		end
 	end

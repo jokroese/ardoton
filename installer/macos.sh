@@ -44,6 +44,27 @@ fail () {
   exit 1
 }
 
+typeset -ga temporary_files=()
+
+remove_temporary_files () {
+  local path
+  for path in "${temporary_files[@]}"; do
+    /bin/rm -f "${path}"
+  done
+  temporary_files=()
+}
+
+# Every mktemp in this script goes through here so the EXIT trap can clean up after a
+# `fail` as reliably as after a normal return. The path comes back in ${temporary_path}
+# rather than on stdout: a command substitution would register it in a subshell's array,
+# where the trap in this shell would never see it.
+temporary_file () {
+  temporary_path="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ardourton-$1.XXXXXX")"
+  temporary_files+=("${temporary_path}")
+}
+
+trap remove_temporary_files EXIT INT TERM
+
 check_ardour_closed () {
   if [[ "${ARDOURTON_SKIP_PROCESS_CHECK:-0}" == "1" ]]; then
     return
@@ -106,7 +127,8 @@ merge_ui_option () {
   local option_name="$2"
   local option_value="$3"
   local temporary
-  temporary="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ardourton-ui.XXXXXX")"
+  temporary_file ui
+  temporary="${temporary_path}"
 
   /usr/bin/awk -v name="${option_name}" -v value="${option_value}" '
     BEGIN { found = 0; ui = 0 }
@@ -163,7 +185,8 @@ merge_instant_attr () {
   local attr_name="$3"
   local attr_value="$4"
   local temporary
-  temporary="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ardourton-instant.XXXXXX")"
+  temporary_file instant
+  temporary="${temporary_path}"
 
   /usr/bin/awk -v element="${element}" -v attr="${attr_name}" -v value="${attr_value}" '
     BEGIN {
@@ -214,25 +237,92 @@ install_instant_xml () {
   done
 }
 
+action_state_fragment () {
+  print -r -- "${profile_dir}/ui-scripts/ardourton-actions.lua-state"
+}
+
+# Decode the existing <ActionScript> payload of $1 into the file $2. A configuration with no
+# ui_scripts yet decodes to an empty script table. Returns nonzero when the element is
+# present but cannot be read, so callers can refuse rather than overwrite.
+decode_action_script () {
+  local ui_scripts="$1"
+  local destination="$2"
+  local encoded
+
+  if [[ ! -f "${ui_scripts}" ]]; then
+    print -r -- "scripts = {}" > "${destination}"
+    return 0
+  fi
+
+  encoded="$(/usr/bin/sed -n 's#.*<ActionScript[^>]*>\([^<]*\)</ActionScript>.*#\1#p' "${ui_scripts}")"
+  [[ -n "${encoded}" ]] || return 1
+  print -rn -- "${encoded}" | /usr/bin/base64 -D > "${destination}" 2>/dev/null || return 1
+  return 0
+}
+
+# The slot range Ardourton claims, read off the checked-in fragment rather than hardcoded,
+# so the reserved range and the payload can never disagree.
+reserved_slot_range () {
+  local -a slots
+  slots=(${(f)"$(/usr/bin/grep -o -E 'scripts\[[0-9]+\]' "$(action_state_fragment)" |
+    /usr/bin/sed -E 's/[^0-9]//g' | /usr/bin/sort -n -u)"})
+  (( ${#slots} > 0 )) || fail "The Ardourton action-state fragment declares no slots."
+  print -r -- "${slots[1]} ${slots[-1]}"
+}
+
+# Slot numbers inside the reserved range that the decoded payload in $1 already assigns.
+occupied_reserved_slots () {
+  local decoded="$1"
+  local low high
+  read -r low high <<< "$(reserved_slot_range)"
+  # `scripts[N]` followed by `=` or `[` is an assignment target in both the flat form Ardour
+  # serializes and the table-constructor form hand-written payloads use.
+  /usr/bin/grep -o -E 'scripts\[[0-9]+\][[:space:]]*[=[]' "${decoded}" 2>/dev/null |
+    /usr/bin/sed -E 's/[^0-9]//g' | /usr/bin/sort -n -u |
+    /usr/bin/awk -v low="${low}" -v high="${high}" '$1 >= low && $1 <= high' || true
+}
+
+# Runs before anything is created, copied or merged: Ardourton owns the reserved slots while
+# installed and will not silently replace whatever is already in them.
+preflight_ui_scripts () {
+  local ui_scripts="${config_dir}/ui_scripts"
+  local decoded occupied low high
+  temporary_file preflight
+  decoded="${temporary_path}"
+
+  if ! decode_action_script "${ui_scripts}" "${decoded}"; then
+    fail "Could not read the <ActionScript> payload in ${ui_scripts}. Repair or remove that file before installing."
+  fi
+
+  occupied="$(occupied_reserved_slots "${decoded}" | /usr/bin/tr '\n' ' ')"
+  occupied="${occupied%% }"
+  [[ -n "${occupied}" ]] || return 0
+
+  read -r low high <<< "$(reserved_slot_range)"
+  print -u2 -- "Ardourton: Lua action slots ${low}-${high} are reserved for Ardourton, but these are already in use: ${occupied}"
+  print -u2 -- "Ardourton: Nothing has been changed."
+  print -u2 -- "Ardourton: If a previous Ardourton version is installed, restore it first with restore.command, then install this version."
+  print -u2 -- "Ardourton: Otherwise remove or reassign those actions in Ardour (Menu > Window > Scripting), then install again."
+  exit 1
+}
+
 install_ui_scripts () {
   local ui_scripts="${config_dir}/ui_scripts"
-  local fragment="${profile_dir}/ui-scripts/ardourton-actions.lua-state"
+  local fragment
+  fragment="$(action_state_fragment)"
   local decoded encoded temporary
-  decoded="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ardourton-actions.XXXXXX")"
-  temporary="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ardourton-scripts.XXXXXX")"
+  temporary_file actions
+  decoded="${temporary_path}"
+  temporary_file scripts
+  temporary="${temporary_path}"
 
-  if [[ -f "${ui_scripts}" ]]; then
-    encoded="$(/usr/bin/sed -n 's#.*<ActionScript[^>]*>\([^<]*\)</ActionScript>.*#\1#p' "${ui_scripts}")"
-    [[ -n "${encoded}" ]] || fail "Could not read Ardour's ui_scripts file."
-    print -rn -- "${encoded}" | /usr/bin/base64 -D > "${decoded}"
-  else
-    print -r -- "scripts = {}" > "${decoded}"
-  fi
+  decode_action_script "${ui_scripts}" "${decoded}" ||
+    fail "Could not read the <ActionScript> payload in ${ui_scripts}."
 
-  if ! /usr/bin/grep -q 'Ardourton: Add Stereo Audio Track' "${decoded}"; then
-    print >> "${decoded}"
-    /bin/cat "${fragment}" >> "${decoded}"
-  fi
+  # Preflight already proved every reserved slot is free, so the fragment is appended
+  # unconditionally and exactly once.
+  print >> "${decoded}"
+  /bin/cat "${fragment}" >> "${decoded}"
 
   encoded="$(/usr/bin/base64 < "${decoded}" | /usr/bin/tr -d '\n')"
 
@@ -263,6 +353,7 @@ install_profile () {
   check_ardour_closed
   check_version
   [[ ! -f "${receipt_file}" ]] || fail "Ardourton is already installed. Restore it first."
+  preflight_ui_scripts
 
   /bin/mkdir -p "${config_dir}" "${state_dir}" "${backup_root}"
 
@@ -289,7 +380,7 @@ install_profile () {
   install_ui_scripts
 
   {
-    print -r -- "version=0.2.4"
+    print -r -- "version=0.2.5"
     print -r -- "backup=${backup_dir}"
   } > "${receipt_file}"
 

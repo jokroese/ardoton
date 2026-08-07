@@ -8,6 +8,12 @@ from support import ARDOUR_BIN
 
 @pytest.fixture
 def ardour_session(tmp_path, request):
+    """An isolated Ardour with the profile installed and the baseline session open.
+
+    Parametrize indirectly with a dict to change the starting state, for example
+    ``{"grid_type": "GridTypeBeatDiv4"}``. Only the temporary copy is touched; the
+    repository fixture and the real configuration stay as they are.
+    """
     if not ARDOUR_BIN.is_file():
         pytest.skip(f"Ardour not found at {ARDOUR_BIN}")
 
@@ -20,10 +26,17 @@ def ardour_session(tmp_path, request):
             pytrace=False,
         )
 
-    session = create_isolated_session(tmp_path)
+    options = dict(getattr(request, "param", None) or {})
+    session = create_isolated_session(tmp_path, fixture=options.pop("fixture", "baseline"))
+    grid_type = options.pop("grid_type", None)
+    if grid_type is not None:
+        session.set_editor_grid_type(grid_type)
+    assert not options, f"unknown ardour_session options: {sorted(options)}"
+
     try:
         session.launch()
         session.wait_for_main_window(timeout=90.0)
+        session.wait_until_ready()
         yield session
     except Exception:
         session.terminate()
