@@ -45,11 +45,12 @@ def _dump(label: str, payload: object) -> None:
 
 
 def test_probe_loop_shortcut(ardour_session) -> None:
-    """Discovery probe: prove the loop round-trip works and record the marker JSON shape.
+    """Smoke test for the round trip, and a state dump for debugging the rest of the module.
 
-    markers_list ships no outputSchema, so the field names used by
-    McpClient.loop_range() are a guess until this runs once. Read the dumped payload in
-    test-results/e2e/ before trusting the assertions in the rest of this module.
+    markers_list declares no outputSchema, so McpClient.loop_range() reads field names that
+    were observed rather than specified. This dumps the payload on every run so a change in
+    that shape shows up here first, with the data attached, rather than as a KeyError
+    somewhere less obvious.
     """
     mcp = ardour_session.mcp()
     mcp.set_loop_range(LOOP_START, LOOP_END)

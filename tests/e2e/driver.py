@@ -61,16 +61,14 @@ class McpClient:
     def loop_range(self) -> tuple[int, int]:
         """Start and end of the auto-loop location, in samples.
 
-        markers_list has no declared outputSchema, so the exact key names are discovered
-        empirically by test_probe_loop_shortcut rather than assumed here.
+        markers_list declares no outputSchema; these field names come from an observed
+        payload (test-results/e2e/probe-markers-*.json), not from the schema.
         """
         for marker in self.markers():
-            name = str(marker.get("location_name") or marker.get("name") or "")
-            flags = str(marker.get("flags") or "")
-            if "loop" in name.lower() or "loop" in flags.lower():
+            if marker.get("isAutoLoop"):
                 return (
-                    int(marker["location_start_sample"]),
-                    int(marker["location_end_sample"]),
+                    int(marker["locationStartSample"]),
+                    int(marker["locationEndSample"]),
                 )
         raise DriverError(f"no auto-loop location in markers_list: {self.markers()}")
 
