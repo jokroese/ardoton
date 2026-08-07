@@ -491,7 +491,7 @@
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Live deletes fades/crossfades on selected clips. Native Region/toggle-region-fades only toggles fade active state; set_fade_in/out_length(0) plus deactivate is closer. Implemented as profile/scripts/ardourton_clear_region_fades.lua, assigned to Lua action slot 18 and bound in profile/keybindings/macos/ardour.keys. Slot 18's bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
+          "note": "Live deletes fades/crossfades on selected clips. Native Region/toggle-region-fades only toggles fade active state; set_fade_in/out_length(0) plus deactivate is closer. Implemented as profile/scripts/ardourton_clear_region_fades.lua, assigned to Lua action slot 18 and bound in profile/keybindings/macos/ardour.keys. Bound on both Primary-Level4-Delete and Primary-Level4-BackSpace, matching the keymap's existing convention for delete actions: Mac keyboards send BackSpace for the key labelled Delete, so a Delete-only binding is unreachable without Fn. Slot 18's bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
           "status": "Proposed",
           "evidence": [
             {

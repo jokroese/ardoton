@@ -41,9 +41,38 @@ class McpClient:
             },
         )
 
+    def call(self, tool: str, arguments: dict | None = None) -> dict:
+        """Invoke any MCP tool and return its structuredContent."""
+        result = self._request("tools/call", {"name": tool, "arguments": arguments or {}})
+        return result.get("structuredContent", result)
+
     def transport_state(self) -> dict:
-        result = self._request("tools/call", {"name": "transport_get_state", "arguments": {}})
-        return result["structuredContent"]
+        return self.call("transport_get_state")
+
+    def set_loop_range(self, start_sample: int, end_sample: int) -> dict:
+        return self.call(
+            "markers_set_auto_loop_samples",
+            {"startSample": start_sample, "endSample": end_sample},
+        )
+
+    def markers(self) -> list[dict]:
+        return self.call("markers_list").get("markers", [])
+
+    def loop_range(self) -> tuple[int, int]:
+        """Start and end of the auto-loop location, in samples.
+
+        markers_list has no declared outputSchema, so the exact key names are discovered
+        empirically by test_probe_loop_shortcut rather than assumed here.
+        """
+        for marker in self.markers():
+            name = str(marker.get("location_name") or marker.get("name") or "")
+            flags = str(marker.get("flags") or "")
+            if "loop" in name.lower() or "loop" in flags.lower():
+                return (
+                    int(marker["location_start_sample"]),
+                    int(marker["location_end_sample"]),
+                )
+        raise DriverError(f"no auto-loop location in markers_list: {self.markers()}")
 
     def _request(self, method: str, params: dict) -> dict:
         self.request_id += 1
@@ -394,6 +423,19 @@ KEY_L = 37
 KEY_F9 = 101
 KEY_S = 1
 KEY_C = 8
+KEY_D = 2
+KEY_R = 15
+KEY_A = 0
+KEY_3 = 20
+KEY_LEFT = 123
+KEY_RIGHT = 124
+KEY_DOWN = 125
+KEY_UP = 126
+# The key labelled "delete" on a Mac keyboard sends BackSpace; forward delete needs Fn.
+KEY_BACKSPACE = 51
+KEY_FORWARD_DELETE = 117
 
 FLAG_SHIFT = 1 << 17  # kCGEventFlagMaskShift
+FLAG_CONTROL = 1 << 18  # kCGEventFlagMaskControl
+FLAG_OPTION = 1 << 19  # kCGEventFlagMaskAlternate
 FLAG_COMMAND = 1 << 20  # kCGEventFlagMaskCommand

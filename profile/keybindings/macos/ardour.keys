@@ -109,6 +109,7 @@
       <Binding key="Primary-Level4-Left" action="LuaAction/script-21" group="Looping" />
       <Binding key="Primary-Level4-Right" action="LuaAction/script-20" group="Looping" />
       <Binding key="Primary-Level4-Delete" action="LuaAction/script-18" group="Basic Editing" />
+      <Binding key="Primary-Level4-BackSpace" action="LuaAction/script-18" group="Basic Editing" />
       <Binding key="Primary-Tertiary-d" action="LuaAction/script-17" group="Basic Editing" />
       <Binding key="Page_Down" action="Editor/scroll-tracks-down" group="Changing What's Visible" />
       <Binding key="Page_Up" action="Editor/scroll-tracks-up" group="Changing What's Visible" />
