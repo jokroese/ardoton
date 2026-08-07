@@ -115,7 +115,7 @@ assert_expected_files_installed "${config_dir}"
 assert_grid_snap_defaults "${config_dir}"
 
 # Receipt version matches the profile manifest.
-/usr/bin/grep -q '^version=0\.2\.3$' "${config_dir}/ardourton/receipt"
+/usr/bin/grep -q '^version=0\.2\.4$' "${config_dir}/ardourton/receipt"
 /usr/bin/grep -q '^backup=' "${config_dir}/ardourton/receipt"
 backup_path="$(/usr/bin/awk -F= '/^backup=/{print $2}' "${config_dir}/ardourton/receipt")"
 [[ -d "${backup_path}" ]]

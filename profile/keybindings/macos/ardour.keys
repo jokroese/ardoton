@@ -24,6 +24,7 @@
       <Binding key="Primary-1" action="Editing/next-grid-choice" group="Grid Settings + Editor Modes" />
       <Binding key="Primary-2" action="Editing/prev-grid-choice" group="Grid Settings + Editor Modes" />
       <Binding key="Primary-4" action="Editing/cycle-snap-mode" group="Grid Settings + Editor Modes" />
+      <Binding key="Primary-3" action="LuaAction/script-19" group="Grid Settings + Editor Modes" />
     </Press>
   </Bindings>
   <Bindings name="Editor">
@@ -85,14 +86,16 @@
       <Binding key="v" action="Region/set-region-sync-position" group="Region Operations" />
       <Binding key="Secondary-v" action="Editor/ToggleJadeo" group="Basic Editing" />
       <Binding key="Tertiary-v" action="Editor/ToggleVerticalSummary" group="Basic Editing" />
-      <Binding key="Up" action="Editor/step-tracks-up" group="Changing What's Visible" />
+      <Binding key="Up" action="LuaAction/script-24" group="Looping" />
       <Binding key="Secondary-Up" action="Editor/select-prev-route" group="Selecting" />
       <Binding key="Secondary-Tertiary-Up" action="Editor/select-prev-stripable" group="Selecting" />
       <Binding key="Primary-Up" action="Editor/move-selected-tracks-up" group="Changing What's Visible" />
-      <Binding key="Down" action="Editor/step-tracks-down" group="Changing What's Visible" />
+      <Binding key="Primary-Level4-Up" action="LuaAction/script-22" group="Looping" />
+      <Binding key="Down" action="LuaAction/script-25" group="Looping" />
       <Binding key="Secondary-Down" action="Editor/select-next-route" group="Selecting" />
       <Binding key="Secondary-Tertiary-Down" action="Editor/select-next-stripable" group="Selecting" />
       <Binding key="Primary-Down" action="Editor/move-selected-tracks-down" group="Changing What's Visible" />
+      <Binding key="Primary-Level4-Down" action="LuaAction/script-23" group="Looping" />
       <Binding key="Secondary-Tertiary-Left" action="Editor/playhead-to-previous-region-boundary" group="Moving the Playhead in the Editor" />
       <Binding key="Primary-Secondary-Left" action="Editor/playhead-to-previous-region-sync" group="Moving the Playhead in the Editor" />
       <Binding key="Primary-Left" action="Editor/move-selected-tracks-up" group="Changing What's Visible" />
@@ -101,6 +104,13 @@
       <Binding key="Primary-Secondary-Right" action="Editor/playhead-to-next-region-sync" group="Moving the Playhead in the Editor" />
       <Binding key="Primary-Right" action="Editor/move-selected-tracks-down" group="Changing What's Visible" />
       <Binding key="Primary-Tertiary-Right" action="Editor/selected-marker-to-next-region-boundary" group="Markers &amp; Locations" />
+      <Binding key="Secondary-Left" action="LuaAction/script-27" group="Looping" />
+      <Binding key="Secondary-Right" action="LuaAction/script-26" group="Looping" />
+      <Binding key="Primary-Level4-Left" action="LuaAction/script-21" group="Looping" />
+      <Binding key="Primary-Level4-Right" action="LuaAction/script-20" group="Looping" />
+      <Binding key="Primary-Level4-Delete" action="LuaAction/script-18" group="Basic Editing" />
+      <Binding key="Primary-Level4-BackSpace" action="LuaAction/script-18" group="Basic Editing" />
+      <Binding key="Primary-Tertiary-d" action="LuaAction/script-17" group="Basic Editing" />
       <Binding key="Page_Down" action="Editor/scroll-tracks-down" group="Changing What's Visible" />
       <Binding key="Page_Up" action="Editor/scroll-tracks-up" group="Changing What's Visible" />
       <Binding key="KP_Subtract" action="Editor/nudge-backward" group="Selecting" />

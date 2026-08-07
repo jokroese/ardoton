@@ -1,0 +1,120 @@
+{
+  "$comment": "Shared registry of Ardourton Lua action scripts. tools/build_lua_actions.py and tests/check_lua.lua both read this file instead of hardcoding slot numbers and file lists. Slots are Ardour's LuaAction/script-N action-script slots (1-32, see gtk2_ardour/ardour_ui.h MAX_LUA_ACTION_SCRIPTS). Ardourton allocates from the top of the range down to avoid a typical user's own personal scripts, which normally start at slot 1.",
+  "unslotted": [
+    "ardourton_beat_production.lua"
+  ],
+  "slots": [
+    {
+      "slot": 32,
+      "source": "ardourton_duplicate_tracks.lua",
+      "name": "Ardourton: Duplicate Tracks",
+      "params": {},
+      "sourceIds": ["S05-04"]
+    },
+    {
+      "slot": 31,
+      "source": "ardourton_set_loop.lua",
+      "name": "Ardourton: Set and Toggle Loop",
+      "params": {},
+      "sourceIds": ["S16-11"]
+    },
+    {
+      "slot": 30,
+      "source": "ardourton_add_return.lua",
+      "name": "Ardourton: Add Return",
+      "params": {},
+      "sourceIds": ["S19-03"]
+    },
+    {
+      "slot": 29,
+      "source": "ardourton_add_midi_track.lua",
+      "name": "Ardourton: Add MIDI Track",
+      "params": {},
+      "sourceIds": ["S19-02"]
+    },
+    {
+      "slot": 28,
+      "source": "ardourton_add_audio_track.lua",
+      "name": "Ardourton: Add Stereo Audio Track",
+      "params": {},
+      "sourceIds": ["S19-01"]
+    },
+    {
+      "slot": 27,
+      "source": "ardourton_nudge_loop.lua",
+      "name": "Ardourton: Nudge Loop Left",
+      "params": { "direction": -1 },
+      "sourceIds": ["S08-07"]
+    },
+    {
+      "slot": 26,
+      "source": "ardourton_nudge_loop.lua",
+      "name": "Ardourton: Nudge Loop Right",
+      "params": { "direction": 1 },
+      "sourceIds": ["S08-08"]
+    },
+    {
+      "slot": 25,
+      "source": "ardourton_move_loop_by_length.lua",
+      "name": "Ardourton: Move Loop Back by Loop Length",
+      "params": { "direction": -1 },
+      "sourceIds": ["S08-09"]
+    },
+    {
+      "slot": 24,
+      "source": "ardourton_move_loop_by_length.lua",
+      "name": "Ardourton: Move Loop Forward by Loop Length",
+      "params": { "direction": 1 },
+      "sourceIds": ["S08-09"]
+    },
+    {
+      "slot": 23,
+      "source": "ardourton_scale_loop_length.lua",
+      "name": "Ardourton: Halve Loop Length",
+      "params": { "numerator": 1, "denominator": 2 },
+      "sourceIds": ["S08-10"]
+    },
+    {
+      "slot": 22,
+      "source": "ardourton_scale_loop_length.lua",
+      "name": "Ardourton: Double Loop Length",
+      "params": { "numerator": 2, "denominator": 1 },
+      "sourceIds": ["S08-10"]
+    },
+    {
+      "slot": 21,
+      "source": "ardourton_resize_loop_end.lua",
+      "name": "Ardourton: Shorten Loop",
+      "params": { "direction": -1 },
+      "sourceIds": ["S08-11", "S16-12"]
+    },
+    {
+      "slot": 20,
+      "source": "ardourton_resize_loop_end.lua",
+      "name": "Ardourton: Lengthen Loop",
+      "params": { "direction": 1 },
+      "sourceIds": ["S08-11", "S16-12"]
+    },
+    {
+      "slot": 19,
+      "source": "ardourton_toggle_triplet_grid.lua",
+      "name": "Ardourton: Toggle Triplet Grid",
+      "params": {},
+      "sourceIds": ["S13-04"]
+    },
+    {
+      "slot": 18,
+      "source": "ardourton_clear_region_fades.lua",
+      "name": "Ardourton: Clear Region Fades",
+      "params": {},
+      "sourceIds": ["S16-09"]
+    },
+    {
+      "slot": 17,
+      "source": "ardourton_duplicate_time.lua",
+      "name": "Ardourton: Duplicate Time",
+      "params": {},
+      "sourceIds": ["S16-18"]
+    }
+  ]
+}

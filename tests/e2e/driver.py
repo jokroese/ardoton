@@ -41,9 +41,80 @@ class McpClient:
             },
         )
 
+    def call(self, tool: str, arguments: dict | None = None) -> dict:
+        """Invoke any MCP tool and return its structuredContent."""
+        result = self._request("tools/call", {"name": tool, "arguments": arguments or {}})
+        return result.get("structuredContent", result)
+
     def transport_state(self) -> dict:
-        result = self._request("tools/call", {"name": "transport_get_state", "arguments": {}})
-        return result["structuredContent"]
+        return self.call("transport_get_state")
+
+    def set_loop_range(self, start_sample: int, end_sample: int) -> dict:
+        return self.call(
+            "markers_set_auto_loop_samples",
+            {"startSample": start_sample, "endSample": end_sample},
+        )
+
+    def markers(self) -> list[dict]:
+        return self.call("markers_list").get("markers", [])
+
+    def loop_range_or_none(self) -> tuple[int, int] | None:
+        """Start and end of the auto-loop location, or None when the session has no loop.
+
+        markers_list declares no outputSchema; these field names come from an observed
+        payload (test-results/e2e/probe-markers-*.json), not from the schema.
+        """
+        for marker in self.markers():
+            if marker.get("isAutoLoop"):
+                return (
+                    int(marker["locationStartSample"]),
+                    int(marker["locationEndSample"]),
+                )
+        return None
+
+    def loop_range(self) -> tuple[int, int]:
+        found = self.loop_range_or_none()
+        if found is None:
+            raise DriverError(f"no auto-loop location in markers_list: {self.markers()}")
+        return found
+
+    def tracks(self, include_buses: bool = False) -> list[dict]:
+        """Routes from tracks_list, without the buses by default.
+
+        tracks_list reports the Master bus alongside real tracks, and the region tools
+        reject a bus with "Route is not a track", so anything that reads regions has to
+        filter first. Observed type values: "bus", "midi_track", "audio_track".
+        """
+        routes = self.call("tracks_list").get("tracks", [])
+        if include_buses:
+            return routes
+        return [route for route in routes if route.get("type") != "bus"]
+
+    def add_midi_region(
+        self, start_sample: int, end_sample: int, name: str = "Probe"
+    ) -> tuple[str, dict]:
+        """Add a MIDI track holding one empty region; return (trackId, created region).
+
+        The baseline fixture session contains nothing but the Master bus, so a test that
+        needs material has to make its own. It is MIDI because the MCP surface has no audio
+        import tool -- there is no way to conjure an audio region from here.
+        """
+        before = {str(route.get("id")) for route in self.tracks()}
+        self.call("tracks_add", {"type": "midi", "count": 1, "name": name})
+        added = [route for route in self.tracks() if str(route.get("id")) not in before]
+        if not added:
+            raise DriverError(f"tracks_add did not add a track: {self.tracks(include_buses=True)}")
+        track_id = str(added[0]["id"])
+        created = self.call(
+            "midi_region_add_samples",
+            {
+                "trackId": track_id,
+                "startSample": start_sample,
+                "endSample": end_sample,
+                "name": f"{name}Region",
+            },
+        )
+        return track_id, created.get("created", created)
 
     def _request(self, method: str, params: dict) -> dict:
         self.request_id += 1
@@ -394,6 +465,19 @@ KEY_L = 37
 KEY_F9 = 101
 KEY_S = 1
 KEY_C = 8
+KEY_D = 2
+KEY_R = 15
+KEY_A = 0
+KEY_3 = 20
+KEY_LEFT = 123
+KEY_RIGHT = 124
+KEY_DOWN = 125
+KEY_UP = 126
+# The key labelled "delete" on a Mac keyboard sends BackSpace; forward delete needs Fn.
+KEY_BACKSPACE = 51
+KEY_FORWARD_DELETE = 117
 
 FLAG_SHIFT = 1 << 17  # kCGEventFlagMaskShift
+FLAG_CONTROL = 1 << 18  # kCGEventFlagMaskControl
+FLAG_OPTION = 1 << 19  # kCGEventFlagMaskAlternate
 FLAG_COMMAND = 1 << 20  # kCGEventFlagMaskCommand

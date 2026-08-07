@@ -487,23 +487,23 @@
           "context": "Editor",
           "proposedMacos": "Cmd+Option+Delete",
           "keyToken": "Primary-Level4-Delete",
-          "actionTarget": "Region/clear-region-fades (new)",
+          "actionTarget": "LuaAction/script-18",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Live deletes fades/crossfades on selected clips. Native Region/toggle-region-fades only toggles fade active state; set_fade_in/out_length(0) plus deactivate is closer. Lua can call AudioRegion fade setters via existing region APIs; Primary-Level4-Delete is unbound.",
+          "note": "Live deletes fades/crossfades on selected clips. Native Region/toggle-region-fades only toggles fade active state; set_fade_in/out_length(0) plus deactivate is closer. Implemented as profile/scripts/ardourton_clear_region_fades.lua, assigned to Lua action slot 18 and bound in profile/keybindings/macos/ardour.keys. Bound on both Primary-Level4-Delete and Primary-Level4-BackSpace, matching the keymap's existing convention for delete actions: Mac keyboards send BackSpace for the key labelled Delete, so a Delete-only binding is unreachable without Fn. Slot 18's bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Building block exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:1384-1390;1429-1432;editor_ops.cc:6497-6664",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:544 (LuaAction/script-1..32 are registered unconditionally for every Ardour session, independent of whether a script is assigned to the slot)",
               "result": "Confirmed"
             },
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6497-6664;libs/ardour/luabindings.cc",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:6497-6664;libs/ardour/luabindings.cc:1751-1763 (AudioRegion fade setters); profile/scripts/ardourton_clear_region_fades.lua",
               "result": "Candidate"
             }
           ]
@@ -615,17 +615,17 @@
           "context": "Editor",
           "proposedMacos": "Cmd+Left / Cmd+Right",
           "keyToken": "Primary-Right",
-          "actionTarget": "LuaAction/ardourton-resize-loop-end (new)",
+          "actionTarget": "LuaAction/script-20",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Same preferred target as S08-11. Also Primary-Left to shorten. Adjust auto-loop end by nudge distance (Live uses grid). Selecting LoopEnd and calling Editor/nudge-forward/backward is a native alternative without a dedicated action.",
+          "note": "Same preferred target as S08-11. Also Primary-Left to shorten. Adjust auto-loop end by nudge distance (Live uses grid). Selecting LoopEnd and calling Editor/nudge-forward/backward is a native alternative without a dedicated action. Implemented as profile/scripts/ardourton_resize_loop_end.lua at Lua action slots 20 (lengthen) and 21 (shorten), bound in profile/keybindings/macos/ardour.keys as Editor Primary-Level4-Right and Primary-Level4-Left. Bound away from the proposed Cmd+Left/Cmd+Right because those are S15-15 (Move Selected Track Left/Right), Preferred and Implemented; the Primary-Level4 chords are unbound in the Editor context. Slot bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Building block exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;gtk2_ardour/editor_ops.cc:512-560",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:544 (LuaAction/script-1..32 are registered unconditionally for every Ardour session, independent of whether a script is assigned to the slot)",
               "result": "Confirmed"
             },
             {
@@ -637,7 +637,7 @@
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:1271;gtk2_ardour/luainstance.cc:962",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:280-283;gtk2_ardour/editor_ops.cc:512-560; profile/scripts/ardourton_resize_loop_end.lua",
               "result": "Candidate"
             }
           ]
@@ -927,23 +927,23 @@
           "context": "Editor",
           "proposedMacos": "Cmd+Shift+D",
           "keyToken": "Primary-Tertiary-d",
-          "actionTarget": "LuaAction/ardourton-duplicate-time (new)",
+          "actionTarget": "LuaAction/script-17",
           "implementationType": "Profile Lua",
           "mappingClass": "Similar",
           "availability": "Lua accessible",
-          "note": "Live duplicates the time selection in place (insert copy immediately after). Call Session:cut_copy_section(start, end, end, CopyPaste). Native copy-paste-section pastes at edit point/playhead instead. Primary-Tertiary-d is unbound; Editor/duplicate is region duplicate on Primary-d.",
+          "note": "Live duplicates the time selection in place (insert copy immediately after). Call Session:cut_copy_section(start, end, end, CopyPaste). Native copy-paste-section pastes at edit point/playhead instead. Primary-Tertiary-d is unbound; Editor/duplicate is region duplicate on Primary-d. Implemented as profile/scripts/ardourton_duplicate_time.lua, assigned to Lua action slot 17 and bound in profile/keybindings/macos/ardour.keys. Slot 17's bytecode is present in profile/ui-scripts/ardourton-actions.lua-state; runtime behavior has not yet been manually verified in Ardour, so status stays Proposed.",
           "status": "Proposed",
           "evidence": [
             {
               "kind": "Action registration",
-              "claim": "Building block exists",
-              "reference": "../ardour@9.7:gtk2_ardour/editor_ops.cc:2457-2481;libs/ardour/session.cc:7741-7811;libs/ardour/luabindings.cc:2540-2544",
+              "claim": "Target exists",
+              "reference": "../ardour@9.7:gtk2_ardour/editor_actions.cc:544 (LuaAction/script-1..32 are registered unconditionally for every Ardour session, independent of whether a script is assigned to the slot)",
               "result": "Confirmed"
             },
             {
               "kind": "Lua API",
               "claim": "Lua feasible",
-              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:2540-2544;libs/ardour/ardour/session.h:1199",
+              "reference": "../ardour@9.7:libs/ardour/luabindings.cc:2540-2544;libs/ardour/ardour/session.h:1199; profile/scripts/ardourton_duplicate_time.lua",
               "result": "Candidate"
             }
           ]
