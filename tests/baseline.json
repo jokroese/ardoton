@@ -4,7 +4,7 @@
   "ardour_lua_version": "ardour-lua version 9.7.0",
   "manifest_version": "0.2.4",
   "macos_keymap_sha256": "527da873d955d4ed806bc8400bfddf9284d8031a0821cd2a358cf788beb10038",
-  "lua_action_state_sha256": "79d94cd9f1eeefc94f177b177118d36c2a7aef95ae82cb69781ed8f338927f5b",
+  "lua_action_state_sha256": "04db0d5244c11f2de4769502af2faf577404243c28d4981322b9d70529dc13f2",
   "lua_action_slots": {
     "17": "Ardourton: Duplicate Time",
     "18": "Ardourton: Clear Region Fades",
